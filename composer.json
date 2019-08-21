@@ -1,0 +1,24 @@
+{
+    "name": "quid5/main",
+    "type": "library",
+    "description": "A modern PHP framework and CMS",
+    "keywords": ["quid","framework"],
+    "homepage": "https://github.com/emondpph/quid5",
+    "license": " GPL-3.0",
+    "authors": [
+        {
+            "name": "Pierre-Philippe Emond",
+            "email": "emondpph@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0",
+		"quid5/base": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Quid\\Main\\": "src/",
+			"Quid\\Main\\Test\\": "test/"
+        }
+    }
+}
