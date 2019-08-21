@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=7.2.0"
+        "php": ">=7.2.0",
+		"quid/base": "5.26"
     },
     "autoload": {
         "psr-4": {
