@@ -12,9 +12,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2.0",
-	"quid5/base": "*",
-	"psr/container": "^1.0"
+        "php": ">=7.1.0"
     },
     "autoload": {
         "psr-4": {
