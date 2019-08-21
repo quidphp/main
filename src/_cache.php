@@ -7,7 +7,7 @@ use Quid\Base;
 trait _cache
 {
 	// cache
-	protected $cache = array(); // tableau avec les éléments mis en cache dans l'objet
+	protected $cache = []; // tableau avec les éléments mis en cache dans l'objet
 	
 	
 	// cache
@@ -21,7 +21,7 @@ trait _cache
 			$key = Base\Obj::cast($key);
 			$key = Base\Str::cast($key,'-');
 			
-			if(is_string($key) && strlen($key))
+			if(\is_string($key) && \strlen($key))
 			{
 				if($closure === null)
 				$return = Base\Arr::unsetRef($key,$this->cache);
@@ -51,7 +51,7 @@ trait _cache
 	// vide le tableau de cache
 	public function emptyCache():self 
 	{
-		$this->cache = array();
+		$this->cache = [];
 		
 		return $this;
 	}

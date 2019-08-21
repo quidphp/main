@@ -15,8 +15,8 @@ class Extenders extends Base\Test
 		$ex2 = new Main\Extender("Quid\Base");
 
 		// construct
-		$s = new Main\Extenders(array('ex'=>$ex));
-		assert($s->isNotEmpty());
+		$s = new Main\Extenders(['ex'=>$ex]);
+		\assert($s->isNotEmpty());
 
 		// onPrepareThis
 
@@ -24,7 +24,7 @@ class Extenders extends Base\Test
 
 		// set
 		$s->set('ex2',$ex2);
-		assert($s->count() === 2);
+		\assert($s->count() === 2);
 		
 		return true;
 	}

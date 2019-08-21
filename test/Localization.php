@@ -11,7 +11,7 @@ class Localization extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// construct
-		$l = new Main\Localization(array('lat'=>2.2,'lng'=>2.1,'countryCode'=>'US','input'=>'test'));
+		$l = new Main\Localization(['lat'=>2.2,'lng'=>2.1,'countryCode'=>'US','input'=>'test']);
 		$l2 = clone $l;
 
 		// toString
@@ -19,25 +19,25 @@ class Localization extends Base\Test
 		// onPrepareReplace
 
 		// cast
-		assert($l->_cast() === $l->toArray());
+		\assert($l->_cast() === $l->toArray());
 
 		// inUsa
-		assert($l->inUsa());
+		\assert($l->inUsa());
 
 		// lat
-		assert($l->lat() === 2.2);
+		\assert($l->lat() === 2.2);
 
 		// lng
-		assert($l->lng() === 2.1);
+		\assert($l->lng() === 2.1);
 
 		// latLng
-		assert($l->latLng() === array('lat'=>2.2,'lng'=>2.1));
+		\assert($l->latLng() === ['lat'=>2.2,'lng'=>2.1]);
 
 		// input
-		assert($l->input() === 'test');
+		\assert($l->input() === 'test');
 
 		// countryCode
-		assert($l->countryCode() === 'US');
+		\assert($l->countryCode() === 'US');
 		
 		return true;
 	}

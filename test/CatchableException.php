@@ -14,8 +14,8 @@ class CatchableException extends Base\Test
 		$e = new Main\CatchableException('well');
 
 		// exception
-		assert($e instanceof Main\Contract\Catchable);
-		assert($e->getCode() === 32);
+		\assert($e instanceof Main\Contract\Catchable);
+		\assert($e->getCode() === 32);
 		
 		return true;
 	}

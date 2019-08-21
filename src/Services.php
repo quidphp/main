@@ -11,11 +11,11 @@ class Services extends Map
 	
 	
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
-	protected static $allow = array('set','unset','remove','sort','clone'); // méthodes permises
+	protected static $allow = ['set','unset','remove','sort','clone']; // méthodes permises
 	protected static $sortDefault = 'getKey'; // défini la méthode pour sort par défaut
 	
 	
@@ -23,7 +23,7 @@ class Services extends Map
 	// construit l'objet services
 	public function __construct(?array $value=null) 
 	{
-		if(is_array($value))
+		if(\is_array($value))
 		{
 			$this->sets($value);
 			$this->sortDefault();
@@ -38,26 +38,26 @@ class Services extends Map
 	// le init config de role est lancé avant l'ajout
 	public function set($key,$value):parent 
 	{
-		if(!is_string($key))
+		if(!\is_string($key))
 		static::throw('onlyStringKeyAllowed');
 		
 		if($this->exists($key))
 		static::throw('alreadyIn',$key);
 		
 		$class = null;
-		$args = array();
+		$args = [];
 		
-		if(is_string($value))
+		if(\is_string($value))
 		$class = $value;
 		
-		elseif(is_array($value))
+		elseif(\is_array($value))
 		{
-			$class = current($value);
+			$class = \current($value);
 			$args = Base\Arr::spliceFirst($value);
-			$args = array_values($args);
+			$args = \array_values($args);
 		}
 		
-		if(!is_string($class) || !is_subclass_of($class,Service::class,true))
+		if(!\is_string($class) || !\is_subclass_of($class,Service::class,true))
 		static::throw('notSubClassOfService',$class);
 		
 		$value = new $class($key,...$args);

@@ -13,8 +13,8 @@ trait _nav
 		$return = new static();
 		$slice = Base\Nav::pageSlice($page,$limit,$this->arr());
 		
-		if(is_array($slice))
-		$return = $this->gets(...array_keys($slice));
+		if(\is_array($slice))
+		$return = $this->gets(...\array_keys($slice));
 		
 		return $return;
 	}

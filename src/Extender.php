@@ -11,8 +11,8 @@ class Extender extends Map
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
+	public static $config = [
+		'option'=>[
 			'type'=>'class', // l'extender emmagasine des noms de classe ou des objets
 			'methodIgnore'=>null, // nom d'une méthode statique, si elle retourne true il faut ignorer la classe
 			'onlyClass'=>true, // la méthode dans base/autoload charge seulement les classes à partir du nom de fichier
@@ -20,18 +20,18 @@ class Extender extends Map
 			'exists'=>true, // fait une vérification si la classe existe
 			'overloadKeyPrepend'=>null, // permet de spécifier une overload key, et ne pas avoir à charger la classe
 			'mustExtend'=>true, // les classes du même nom doivent étendre celles déjà dans l'objet
-			'args'=>null) // permet de spécifier les arguments lors de la création de l'objet, si type est obj
-	);
+			'args'=>null] // permet de spécifier les arguments lors de la création de l'objet, si type est obj
+	];
 	
 	
 	// map
-	protected static $allow = array('set','unset','remove','filter','serialize','clone'); // méthodes permises
-	protected static $after = array('extendSync'); // appelé après chaque changement à l'objet
+	protected static $allow = ['set','unset','remove','filter','serialize','clone']; // méthodes permises
+	protected static $after = ['extendSync']; // appelé après chaque changement à l'objet
 
 	
 	// dynamique
-	protected $extend = array(); // garde en mémoire les clés de classe étendus
-	protected $overload = array(); // garde en mémoire les overloads effectués
+	protected $extend = []; // garde en mémoire les clés de classe étendus
+	protected $overload = []; // garde en mémoire les overloads effectués
 	
 	
 	// construct
@@ -42,7 +42,7 @@ class Extender extends Map
 		
 		if(!empty($namespaces))
 		{
-			$namespaces = array_values((array) $namespaces);
+			$namespaces = \array_values((array) $namespaces);
 			$this->addNamespace(...$namespaces);
 		}
 		
@@ -72,7 +72,7 @@ class Extender extends Map
 	// doit se retrouver dans le tableau extend
 	public function isExtended($value):bool 
 	{
-		return (is_string($value) && array_key_exists($value,$this->extend))? true:false;
+		return (\is_string($value) && \array_key_exists($value,$this->extend))? true:false;
 	}
 	
 	
@@ -85,8 +85,8 @@ class Extender extends Map
 		
 		foreach ($values as $value) 
 		{
-			if(is_object($value))
-			$value = get_class($value);
+			if(\is_object($value))
+			$value = \get_class($value);
 			
 			$this->set(null,$value);
 		}
@@ -110,7 +110,7 @@ class Extender extends Map
 				$classes = Autoload::findMany($value,false,$onlyClass,true);
 				
 				if(!empty($classes))
-				$this->add(...array_values($classes));
+				$this->add(...\array_values($classes));
 			}
 		}
 		
@@ -137,13 +137,13 @@ class Extender extends Map
 		if($key !== null)
 		static::throw('onlyNullKeyAllowed');
 		
-		if(!is_string($value))
+		if(!\is_string($value))
 		static::throw('notString',$value);
 		
-		if($exists === true && !class_exists($value,true))
+		if($exists === true && !\class_exists($value,true))
 		static::throw('classNotExists',$value);
 		
-		if(!empty($subClass) && !is_subclass_of($value,$subClass,true))
+		if(!empty($subClass) && !\is_subclass_of($value,$subClass,true))
 		static::throw($value,'notSubClassOf',$subClass);
 		
 		if(empty($methodIgnore) || !$value::$methodIgnore())
@@ -155,14 +155,14 @@ class Extender extends Map
 				$class = $this->get($key);
 				
 				if($type === 'obj')
-				$class = get_class($class);
+				$class = \get_class($class);
 				
 				if($value === $class)
 				static::throw('alreadyIn',$value);
 				
 				if($mustExtend === true)
 				{
-					if(!is_subclass_of($value,$class,true))
+					if(!\is_subclass_of($value,$class,true))
 					static::throw($value,'toReplaceMustExtend',$class);
 					
 					else
@@ -172,13 +172,13 @@ class Extender extends Map
 			
 			if($type === 'obj')
 			{
-				$args = array_values((array) $args);
+				$args = \array_values((array) $args);
 				$value = new $value(...$args);
 			}
 			
 			parent::set($key,$value);
 			
-			if(!empty($extend) && !array_key_exists($key,$this->extend))
+			if(!empty($extend) && !\array_key_exists($key,$this->extend))
 			$this->extend[$key] = $extend;
 		}
 		
@@ -203,7 +203,7 @@ class Extender extends Map
 		$data =& $this->arr();
 		foreach ($this->extend as $key => $oldClass) 
 		{
-			if(!array_key_exists($key,$data))
+			if(!\array_key_exists($key,$data))
 			unset($this->extend[$key]);
 		}
 		
@@ -220,16 +220,16 @@ class Extender extends Map
 		
 		foreach ($this->arr() as $value) 
 		{
-			if(is_object($value))
-			$value = get_class($value);
+			if(\is_object($value))
+			$value = \get_class($value);
 			
-			if(is_string($prepend) && !empty($prepend))
+			if(\is_string($prepend) && !empty($prepend))
 			{
 				$key = Base\Fqcn::name($value);
 				$key = Base\Fqcn::append($prepend,$key);
 			}
 			
-			elseif(method_exists($value,'getOverloadKey'))
+			elseif(\method_exists($value,'getOverloadKey'))
 			$key = $value::getOverloadKey();
 			
 			else
@@ -269,7 +269,7 @@ class Extender extends Map
 		{
 			$replace = null;
 			
-			if($extend === true && array_key_exists($key,$this->extend))
+			if($extend === true && \array_key_exists($key,$this->extend))
 			$replace = $this->extend[$key];
 			
 			if(empty($replace))

@@ -11,13 +11,13 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 	
 	
 	// config
-	public static $config = array(
+	public static $config = [
 		'code'=>31, // code de l'exception
-		'option'=>array( // option pour error lors de onCatched
+		'option'=>[ // option pour error lors de onCatched
 			'cleanBuffer'=>false,
 			'html'=>false,
-			'kill'=>false)
-	);
+			'kill'=>false]
+	];
 	
 	
 	// dynamique
@@ -93,9 +93,9 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 		{
 			$key = Base\Arr::valueFirst($args);
 			
-			if(is_string($key) && !empty($key))
+			if(\is_string($key) && !empty($key))
 			{
-				$return = array();
+				$return = [];
 				$return['key'][] = 'exception';
 				$return['key'][] = static::className(true);
 				$return['key'][] = $key;
@@ -121,8 +121,8 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 			
 			if(!empty($messageArgs))
 			{
-				$safe = $lang->safe(...array_values($messageArgs));
-				if(is_string($safe))
+				$safe = $lang->safe(...\array_values($messageArgs));
+				if(\is_string($safe))
 				$return = $safe;
 			}
 		}
@@ -214,7 +214,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 	// retourne les parents d'une throwable
 	public static function stack(\Throwable $throwable,bool $reverse=false):array
 	{
-		$return = array();
+		$return = [];
 		
 		while($throwable = $throwable->getPrevious())
 		{
@@ -222,7 +222,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 		}
 		
 		if($reverse === true)
-		$return = array_reverse($return);
+		$return = \array_reverse($return);
 		
 		return $return;
 	}
@@ -233,7 +233,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 	// utiliser pour le stack trace dans core/error
 	public static function output(\Throwable $throwable):string
 	{
-		$return = get_class($throwable);
+		$return = \get_class($throwable);
 		$return .= " (#".$throwable->getCode().") -> ";
 		$return .= $throwable->getMessage();
 		$return .= " -> ";

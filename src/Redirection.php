@@ -11,11 +11,11 @@ class Redirection extends Map
 	
 	
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
-	protected static $allow = array('set','unset','remove','empty','overwrite','serialize'); // méthodes permises
+	protected static $allow = ['set','unset','remove','empty','overwrite','serialize']; // méthodes permises
 	
 		
 	// onPrepareKey
@@ -25,12 +25,12 @@ class Redirection extends Map
 	protected function onPrepareKey($return) 
 	{
 		if($return instanceof Request)
-		$return = $return->absolute(array('encode'=>false));
+		$return = $return->absolute(['encode'=>false]);
 		
-		elseif(is_string($return))
-		$return = Base\Uri::absolute($return,null,array('encode'=>false));
+		elseif(\is_string($return))
+		$return = Base\Uri::absolute($return,null,['encode'=>false]);
 		
-		if(is_string($return))
+		if(\is_string($return))
 		$return = Base\Uri::remove('scheme',$return);
 		
 		return $return;
@@ -44,10 +44,10 @@ class Redirection extends Map
 	protected function onPrepareValue($return) 
 	{
 		if($return instanceof Request)
-		$return = $return->absolute(array('encode'=>false));
+		$return = $return->absolute(['encode'=>false]);
 		
-		elseif(is_string($return))
-		$return = Base\Uri::absolute($return,null,array('encode'=>false));
+		elseif(\is_string($return))
+		$return = Base\Uri::absolute($return,null,['encode'=>false]);
 		
 		return $return;
 	}
@@ -61,7 +61,7 @@ class Redirection extends Map
 		if($return instanceof self)
 		{
 			$array = $return->toArray();
-			$return = array();
+			$return = [];
 			
 			foreach ($array as $key => $value) 
 			{
@@ -82,7 +82,7 @@ class Redirection extends Map
 		
 		foreach ($keys as $key) 
 		{
-			$return = is_string($this->get($key));
+			$return = \is_string($this->get($key));
 			
 			if($return === false)
 			break;
@@ -100,7 +100,7 @@ class Redirection extends Map
 		$return = null;
 		$key = $this->onPrepareKey($key);
 		
-		if(is_string($key))
+		if(\is_string($key))
 		$return = $this->onPrepareReturn(Base\Uri::redirection($key,$this->toArray()));
 		
 		return $return;
@@ -112,13 +112,13 @@ class Redirection extends Map
 	// support pour les uri avec un *, tel que défini dans base/uri
 	public function gets(...$keys):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($keys as $key) 
 		{
 			$key = $this->onPrepareKey($key);
 			
-			if(is_string($key))
+			if(\is_string($key))
 			$return[$key] = $this->get($key);
 		}
 		
@@ -146,7 +146,7 @@ class Redirection extends Map
 	{
 		$value = $this->onPrepareValue($value);
 		
-		if(!is_string($value) || empty($value))
+		if(!\is_string($value) || empty($value))
 		static::throw('invalidValue');
 		
 		return parent::set($key,$value);
@@ -161,7 +161,7 @@ class Redirection extends Map
 	{
 		$value = $this->onPrepareReplace($value);
 		
-		if(is_array($value) && $this->checkBefore(false,...array_values($value)))
+		if(\is_array($value) && $this->checkBefore(false,...\array_values($value)))
 		$this->sets($value);
 		
 		else

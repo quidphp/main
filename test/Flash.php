@@ -15,23 +15,23 @@ class Flash extends Base\Test
 		
 		// map
 		$f['test'] = 2;
-		assert($f->get('test') === 2);
-		assert($f->get('test') === null);
+		\assert($f->get('test') === 2);
+		\assert($f->get('test') === null);
 		$f['test'] = 2;
 		$f['bla'] = 3;
-		assert($f->gets('bla','test') === array('bla'=>3,'test'=>2));
+		\assert($f->gets('bla','test') === ['bla'=>3,'test'=>2]);
 		$f['test'] = 2;
 		$f['bla'] = 3;
-		assert(isset($f['test']));
-		assert($f['test'] === 2);
-		assert(!isset($f['test']));
-		assert($f['bla'] === 3);
-		assert($f->isEmpty()); 
+		\assert(isset($f['test']));
+		\assert($f['test'] === 2);
+		\assert(!isset($f['test']));
+		\assert($f['bla'] === 3);
+		\assert($f->isEmpty()); 
 		$f['test'] = 2;
-		assert($f->keys() === array('test'));
+		\assert($f->keys() === ['test']);
 		$f['test3'] = 2;
 		$f['test4'] = 2;
-		assert($f instanceof Main\Flash);
+		\assert($f instanceof Main\Flash);
 		
 		return true;
 	}

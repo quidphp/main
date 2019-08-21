@@ -11,33 +11,33 @@ class Video extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// construct
-		$data = array('abs'=>'http://google.com','namez'=>'LOL','description'=>'OK','html'=>'<div></div>');
-		$video = new Main\Video($data,array('absolute'=>'abs','name'=>'namez'));
+		$data = ['abs'=>'http://google.com','namez'=>'LOL','description'=>'OK','html'=>'<div></div>'];
+		$video = new Main\Video($data,['absolute'=>'abs','name'=>'namez']);
 
 		// toString
 
 		// grab
 
 		// name
-		assert($video->name() === 'LOL');
+		\assert($video->name() === 'LOL');
 
 		// date
-		assert($video->date() === null);
+		\assert($video->date() === null);
 
 		// description
-		assert($video->description() === 'OK');
+		\assert($video->description() === 'OK');
 
 		// absolute
-		assert($video->absolute() === 'http://google.com');
+		\assert($video->absolute() === 'http://google.com');
 
 		// thumbnail
-		assert($video->thumbnail() === null);
+		\assert($video->thumbnail() === null);
 
 		// html
-		assert($video->html() === '<div></div>');
+		\assert($video->html() === '<div></div>');
 
 		// input
-		assert($video->input() === null);
+		\assert($video->input() === null);
 		
 		return true;
 	}

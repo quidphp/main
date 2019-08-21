@@ -21,63 +21,63 @@ class RequestHistory extends Base\Test
 		$rh->add($request3);
 		$rh->add($request4);
 		$rh->add($request);
-		assert($rh->add($request2) === $rh);
+		\assert($rh->add($request2) === $rh);
 
 		// onPrepareValue
 
 		// onPrepareReturns
 
 		// cast
-		assert($rh->_cast() === 5);
+		\assert($rh->_cast() === 5);
 
 		// hasUri
-		assert($rh->hasUri("http://google.com"));
-		assert(!$rh->hasUri("https://google.com"));
+		\assert($rh->hasUri("http://google.com"));
+		\assert(!$rh->hasUri("https://google.com"));
 
 		// hasCurrentUri
-		assert($rh->hasCurrentUri());
+		\assert($rh->hasCurrentUri());
 
 		// add
-		assert($rh->add($request3)->isCount(6));
-		assert($rh->add($request2)->isCount(7));
+		\assert($rh->add($request3)->isCount(6));
+		\assert($rh->add($request2)->isCount(7));
 
 		// addUnique
-		assert($rh->addUnique($request2)->isCount(5));
+		\assert($rh->addUnique($request2)->isCount(5));
 
 		// previous
-		assert($rh->previous()['absolute'] === 'http://google.com');
+		\assert($rh->previous()['absolute'] === 'http://google.com');
 
 		// previousRequest
-		assert($rh->previousRequest()->absolute() === 'http://google.com');
+		\assert($rh->previousRequest()->absolute() === 'http://google.com');
 
 		// absolute
-		assert(Base\Arr::isUni($rh->absolute()));
+		\assert(Base\Arr::isUni($rh->absolute()));
 
 		// request
-		assert($rh->request()[0] instanceof Main\Request);
+		\assert($rh->request()[0] instanceof Main\Request);
 
 		// all
-		assert(count($rh->all()) === 5);
-		assert(count($rh->all()[0]) === 4);
+		\assert(\count($rh->all()) === 5);
+		\assert(\count($rh->all()[0]) === 4);
 
 		// extra
-		assert(Main\RequestHistory::extra() === array('redirectable'=>true));
-		assert(Main\RequestHistory::extra(true) === array('redirectable'));
+		\assert(Main\RequestHistory::extra() === ['redirectable'=>true]);
+		\assert(Main\RequestHistory::extra(true) === ['redirectable']);
 
 		// isArrayValid
-		assert(!Main\RequestHistory::isArrayValid(array('Asd')));
+		\assert(!Main\RequestHistory::isArrayValid(['Asd']));
 
 		// map
-		assert($rh->in($request4));
-		assert(!$rh->in(new Main\Request('bla.com')));
+		\assert($rh->in($request4));
+		\assert(!$rh->in(new Main\Request('bla.com')));
 
 		// nav
-		assert($rh->pageSlice(1,2)->isCount(2));
-		assert($rh->pageFirst(2) === 1);
-		assert($rh->pagePrev(2,2) === 1);
-		assert($rh->pageNext(2,2) === 3);
-		assert($rh->pageLast(2) === 3);
-		assert(count($rh->general(1,2)) === 9);
+		\assert($rh->pageSlice(1,2)->isCount(2));
+		\assert($rh->pageFirst(2) === 1);
+		\assert($rh->pagePrev(2,2) === 1);
+		\assert($rh->pageNext(2,2) === 3);
+		\assert($rh->pageLast(2) === 3);
+		\assert(\count($rh->general(1,2)) === 9);
 		
 		return true;
 	}

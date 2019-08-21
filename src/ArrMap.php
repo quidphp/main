@@ -7,11 +7,11 @@ use Quid\Base;
 abstract class ArrMap extends ArrObj 
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// dynamique
-	protected $data = array(); // données de la map
+	protected $data = []; // données de la map
 	
 	
 	// toString
@@ -86,10 +86,10 @@ abstract class ArrMap extends ArrObj
 	public function serialize():string
 	{
 		$return = '';
-		$data = get_object_vars($this);
+		$data = \get_object_vars($this);
 		
-		if(is_array($data))
-		$return = serialize($data);
+		if(\is_array($data))
+		$return = \serialize($data);
 		
 		return $return;
 	}
@@ -100,13 +100,13 @@ abstract class ArrMap extends ArrObj
 	// si une des propritétés n'existe pas, envoie une exception
 	public function unserialize($data)
 	{
-		$data = unserialize($data);
+		$data = \unserialize($data);
 		
-		if(is_array($data))
+		if(\is_array($data))
 		{
 			foreach ($data as $key => $value) 
 			{
-				if(is_string($key) && property_exists($this,$key))
+				if(\is_string($key) && \property_exists($this,$key))
 				$this->$key = $value;
 				
 				else
@@ -227,7 +227,7 @@ abstract class ArrMap extends ArrObj
 	public function empty() 
 	{
 		$data =& $this->arr();
-		$data = array();
+		$data = [];
 		
 		return $this;
 	}

@@ -7,7 +7,7 @@ use Quid\Base;
 trait _option
 {
 	// option
-	protected $option = array(); // tableau des options
+	protected $option = []; // tableau des options
 	
 	
 	// isOption
@@ -81,7 +81,7 @@ trait _option
 	// méthode appelé lorsque le tableau option est vide
 	protected function loadOption():self
 	{
-		if(property_exists($this,'config') && !empty(static::$config['option']) && is_array(static::$config['option']))
+		if(\property_exists($this,'config') && !empty(static::$config['option']) && \is_array(static::$config['option']))
 		$this->option = static::$config['option'];
 		
 		return $this;

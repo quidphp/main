@@ -11,14 +11,14 @@ class Concatenator extends Map
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
+	public static $config = [
+		'option'=>[
 			'empty'=>true, // si le fichier est effacé au lancement du trigger
 			'start'=>null, // contenu à mettre en début de rendu, peut être une callable
 			'end'=>null, // contenu à mettre en fin de rendu, peut être une callable
 			'separator'=>null, // séparateur entre entrée
 			'callable'=>null, // permet de spécifier un callable en fin de trigger
-			'entry'=>array(
+			'entry'=>[
 				'start'=>null, // contenu à mettre en début d'entrée, peut être une callable
 				'end'=>null, // contenu à mettre en fin d'entrée, peut être une callable
 				'lineStart'=>null, // ligne de départ pour les fichiers dans l'entrée
@@ -28,12 +28,12 @@ class Concatenator extends Map
 				'extension'=>null, // extension pour les fichiers
 				'dig'=>true, // s'il faut creuser dans le dossier
 				'remove'=>null, // si c'est un dossier, permet d'exclure des classes
-				'priority'=>null)) // priority si c'est un dossier, permet de mettre des fichiers en avant
-	);
+				'priority'=>null]] // priority si c'est un dossier, permet de mettre des fichiers en avant
+	];
 	
 	
 	// map
-	protected static $allow = array('unset','serialize','clone'); // méthodes permises
+	protected static $allow = ['unset','serialize','clone']; // méthodes permises
 
 
 	// construct
@@ -54,7 +54,7 @@ class Concatenator extends Map
 		if(!empty($value))
 		{
 			$data =& $this->arr();
-			$array = array($value,$option);
+			$array = [$value,$option];
 			$data[] = $array;
 		}
 		
@@ -79,7 +79,7 @@ class Concatenator extends Map
 	// est utilisé lors du trigger
 	public function parse():array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($this->arr() as $array) 
 		{
@@ -103,12 +103,12 @@ class Concatenator extends Map
 		$option = Base\Arr::plus($this->getOption('entry'),$option);
 		
 		if($value instanceof \Closure)
-		$values = array($value);
+		$values = [$value];
 		else
 		$values = $this->getEntryFiles($value,$option);
 
 		if(!empty($values))
-		$return = array($values,$option);
+		$return = [$values,$option];
 		
 		return $return;
 	}
@@ -119,12 +119,12 @@ class Concatenator extends Map
 	// méthode protégé
 	protected function getEntryFiles($value,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if($value instanceof File)
 		$value = $value->path();
 		
-		if(is_string($value))
+		if(\is_string($value))
 		{
 			$value = Base\Finder::shortcut($value);
 			
@@ -136,11 +136,11 @@ class Concatenator extends Map
 			
 			elseif(Base\Dir::is($value))
 			{
-				$in = array('type'=>'file');
+				$in = ['type'=>'file'];
 				if(!empty($option['extension']))
 				$in['extension'] = $option['extension'];
 				
-				$return = Base\Dir::getVisible($value,$option['dig'],array('in'=>$in));
+				$return = Base\Dir::getVisible($value,$option['dig'],['in'=>$in]);
 				
 				if(!empty($return))
 				{
@@ -172,7 +172,7 @@ class Concatenator extends Map
 		$callable = $this->getOption('callable');
 		$return = '';
 		
-		if(is_string($start))
+		if(\is_string($start))
 		$return .= $start;
 		
 		$int = 0;
@@ -180,9 +180,9 @@ class Concatenator extends Map
 		{
 			$content = $this->makeEntry(...$entry);
 			
-			if(strlen($content))
+			if(\strlen($content))
 			{
-				if(is_string($separator) && $int > 0)
+				if(\is_string($separator) && $int > 0)
 				$return .= $separator;
 				
 				$return .= $content;
@@ -190,7 +190,7 @@ class Concatenator extends Map
 			}
 		}
 		
-		if(is_string($end))
+		if(\is_string($end))
 		$return .= $end;
 		
 		if(static::classIsCallable($callable))
@@ -226,7 +226,7 @@ class Concatenator extends Map
 		$start = (static::classIsCallable($option['start']))? $option['start']($option):$option['start'];
 		$end = (static::classIsCallable($option['end']))? $option['end']($option):$option['end'];
 		
-		if(is_string($start))
+		if(\is_string($start))
 		$return .= $start;
 		
 		$str = '';
@@ -238,11 +238,11 @@ class Concatenator extends Map
 			else
 			$content = Base\File::read(true,true,$value);
 			
-			if(is_string($content))
+			if(\is_string($content))
 			{
 				$content = $this->prepareEntryFile($content,$option);
 				
-				if(strlen($str) && is_string($separator))
+				if(\strlen($str) && \is_string($separator))
 				$str .= $separator;
 				
 				$str .= $content;
@@ -253,7 +253,7 @@ class Concatenator extends Map
 		}
 		$return .= $str;
 		
-		if(is_string($end))
+		if(\is_string($end))
 		$return .= $end;
 		
 		return $return;
@@ -269,13 +269,13 @@ class Concatenator extends Map
 		$lineEnd = $option['lineEnd'];
 		$content = $option['content'];
 		
-		if(is_int($lineStart))
+		if(\is_int($lineStart))
 		$return = Base\Str::lineSplice(0,$lineStart,null,$return);
 		
-		if(is_string($return) && is_int($lineEnd))
+		if(\is_string($return) && \is_int($lineEnd))
 		$return = Base\Str::lineSplice(-$lineEnd,$lineEnd,null,$return);
 		
-		if(is_string($return) && static::classIsCallable($content))
+		if(\is_string($return) && static::classIsCallable($content))
 		$return = $content($return);
 		
 		return $return;

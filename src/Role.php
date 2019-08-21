@@ -7,15 +7,15 @@ use Quid\Base;
 abstract class Role extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'permission'=>0, // code de permission du rôle
-		'can'=>array(), // permission générale
+		'can'=>[], // permission générale
 		'ignore'=>false, // si le role est ignoré pour roles
-	);
+	];
 	
 	
 	// cacheStatic
-	protected static $cacheStatic = array();
+	protected static $cacheStatic = [];
 	
 	
 	// construct
@@ -56,7 +56,7 @@ abstract class Role extends Root
 	// serialize une chaîne vide comme l'objet n'a pas de propriété
 	public function serialize():string
 	{
-		return serialize('');
+		return \serialize('');
 	}
 	
 	
@@ -64,7 +64,7 @@ abstract class Role extends Root
 	// envoie une exception si unserialize n'est pas vide
 	public function unserialize($data):self
 	{
-		$data = unserialize($data);
+		$data = \unserialize($data);
 		
 		if(!empty($data))
 		static::throw();
@@ -126,7 +126,7 @@ abstract class Role extends Root
 	{
 		$return = static::get($path);;
 		
-		if(!is_bool($return))
+		if(!\is_bool($return))
 		static::throw('invalidReturn',$path);
 		
 		return $return;
@@ -150,14 +150,14 @@ abstract class Role extends Root
 		$name = static::name();
 		$fqcn = static::class;
 		
-		if(is_scalar($value))
-		$value = array($value);
+		if(\is_scalar($value))
+		$value = [$value];
 		
-		if(is_array($value))
+		if(\is_array($value))
 		{
 			if(Base\Arr::isIndexed($value))
 			{
-				if(in_array($permission,$value,true) || in_array($fqcn,$value,true) || in_array($name,$value,true))
+				if(\in_array($permission,$value,true) || \in_array($fqcn,$value,true) || \in_array($name,$value,true))
 				$return = true;
 			}
 			
@@ -167,9 +167,9 @@ abstract class Role extends Root
 				
 				if(!empty($replace))
 				{
-					$callable = array(Base\Number::class,'cast');
+					$callable = [Base\Number::class,'cast'];
 					$value = Base\Arr::valuesReplace($replace,$value);
-					$value = array_map($callable,$value);
+					$value = \array_map($callable,$value);
 					
 					if(Base\Validate::isAnd($value,$permission))
 					$return = true;
