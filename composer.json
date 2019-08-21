@@ -13,7 +13,8 @@
     ],
     "require": {
         "php": ">=7.2.0",
-	"quid5/base": "*"
+	"quid5/base": "*",
+	"psr/container": "^1.0"
     },
     "autoload": {
         "psr-4": {
