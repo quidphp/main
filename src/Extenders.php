@@ -10,11 +10,11 @@ class Extenders extends Map
 	
 	
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
-	protected static $allow = array('set','unset','remove','filter','sort','serialize','clone'); // méthodes permises
+	protected static $allow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
 	protected static $is = true; // renvoie à la méthode is
 	
 	
@@ -50,7 +50,7 @@ class Extenders extends Map
 	// renvoie au set de map
 	public function set($key,$value):parent
 	{
-		if(!is_string($key))
+		if(!\is_string($key))
 		static::throw('onlyAcceptsStringKeys');
 		
 		return parent::set($key,$value);

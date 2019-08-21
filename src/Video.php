@@ -11,29 +11,29 @@ class Video extends Map
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
+	public static $config = [
+		'option'=>[
 			'name'=>'name',
 			'date'=>'date',
 			'description'=>'description',
 			'absolute'=>'absolute',
 			'thumbnail'=>'thumbnail',
-			'html'=>'html')
-	);
+			'html'=>'html']
+	];
 	
 	
 	// map
-	protected static $allow = array('overwrite','serialize','clone'); // méthodes permises
+	protected static $allow = ['overwrite','serialize','clone']; // méthodes permises
 	
 	
 	// construct
 	// créer l'objet video, le premier argument doit être un tableau ou une chaîne json
 	public function __construct($value,?array $option=null) 
 	{
-		if(is_string($value))
+		if(\is_string($value))
 		$value = Base\Json::decode($value);
 		
-		if(is_array($value))
+		if(\is_array($value))
 		$this->overwrite($value);
 		
 		else
@@ -60,7 +60,7 @@ class Video extends Map
 		$return = null;
 		$realKey = $this->getOption($key);
 		
-		if(is_string($realKey))
+		if(\is_string($realKey))
 		$return = $this->get($realKey);
 		
 		elseif(static::classIsCallable($realKey))
@@ -78,7 +78,7 @@ class Video extends Map
 		$return = null;
 		$name = $this->grab('name');
 		
-		if(is_string($name))
+		if(\is_string($name))
 		$return = $name;
 		
 		return $return;
@@ -94,15 +94,15 @@ class Video extends Map
 		$return = null;
 		$date = $this->grab('date');
 		
-		if(is_string($date))
+		if(\is_string($date))
 		{
 			$date = Base\Date::time($date,'sql');
 			
-			if(is_int($date))
+			if(\is_int($date))
 			{
 				$return = $date;
 				
-				if(is_scalar($format))
+				if(\is_scalar($format))
 				$return = Base\Date::format($format,$return);
 			}
 		}
@@ -120,11 +120,11 @@ class Video extends Map
 		$return = null;
 		$description = $this->grab('description');
 		
-		if(is_string($description))
+		if(\is_string($description))
 		{
 			$return = $description;
 			
-			if(is_int($length))
+			if(\is_int($length))
 			$return = Base\Str::excerpt($length,$return);
 		}
 		
@@ -140,7 +140,7 @@ class Video extends Map
 		$return = null;
 		$absolute = $this->grab('absolute');
 		
-		if(is_string($absolute))
+		if(\is_string($absolute))
 		$return = Base\Uri::absolute($absolute);
 		
 		return $return;
@@ -155,7 +155,7 @@ class Video extends Map
 		$return = null;
 		$thumbnail = $this->grab('thumbnail');
 		
-		if(is_string($thumbnail))
+		if(\is_string($thumbnail))
 		$return = Base\Uri::absolute($thumbnail);
 		
 		return $return;
@@ -170,7 +170,7 @@ class Video extends Map
 		$return = null;
 		$html = $this->grab('html');
 		
-		if(is_string($html))
+		if(\is_string($html))
 		$return = $html;
 		
 		return $return;

@@ -11,19 +11,19 @@ class File extends Res
 	
 	
 	// config
-	public static $config = array(
+	public static $config = [
 		'group'=>null, // groupe par défaut, par défaut rien, si tu mets false la classe getClass ne cherchera pas de classe
 		'mime'=>null, // définit le mime par défaut à utiliser (par exemple lors de la création d'une ressource temporaire)
 		'type'=>null, // permet de set un type au fichier
-		'types'=>array(), // défini les options à mettre selon le type
-		'option'=>array(
+		'types'=>[], // défini les options à mettre selon le type
+		'option'=>[
 			'create'=>false, // crée le fichier si non existant
 			'read'=>null, // option pour read
-			'write'=>null), // option pour write
-		'storageClass'=>array(), // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
-		'utilClass'=>array(), // défini les classes utilités
-		'groupClass'=>array() // défini la classe à utiliser selon le mimeGroup du fichier
-	);
+			'write'=>null], // option pour write
+		'storageClass'=>[], // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
+		'utilClass'=>[], // défini les classes utilités
+		'groupClass'=>[] // défini la classe à utiliser selon le mimeGroup du fichier
+	];
 	
 	
 	// construct
@@ -46,7 +46,7 @@ class File extends Res
 		$mimeGroup = static::defaultMimeGroup();
 		$resource = $this->resource();
 		
-		if(is_string($mimeGroup))
+		if(\is_string($mimeGroup))
 		$return = (Base\Res::isEmpty($resource) || (Base\Res::isMimeGroup($group,$resource)))? true:false;
 		
 		else
@@ -76,7 +76,7 @@ class File extends Res
 		$return = (array) $option;
 		$type = static::$config['type'] ?? null;
 		
-		if(is_string($type) && array_key_exists($type,static::$config['types']))
+		if(\is_string($type) && \array_key_exists($type,static::$config['types']))
 		$return = Base\Arrs::replace($return,static::$config['types'][$type]);
 		
 		if(empty($option['mime']))
@@ -85,13 +85,13 @@ class File extends Res
 			{
 				$mime = null;
 				
-				if(is_string($value))
+				if(\is_string($value))
 				$mime = Base\Path::mime($value);
 				
 				if(empty($mime))
 				$mime = static::defaultExtension();
 				
-				if(is_string($mime))
+				if(\is_string($mime))
 				$return['mime'] = $mime;
 			}
 		}
@@ -168,7 +168,7 @@ class File extends Res
 	{
 		$return = static::class;
 		
-		if(!in_array($return,static::$config['storageClass'],true) && !in_array($return,static::$config['groupClass'],true) && !in_array($return,static::$config['utilClass'],true))
+		if(!\in_array($return,static::$config['storageClass'],true) && !\in_array($return,static::$config['groupClass'],true) && !\in_array($return,static::$config['utilClass'],true))
 		{
 			$dirname = static::getDirnameFromValue($value);
 			$storage = null;
@@ -188,7 +188,7 @@ class File extends Res
 				if(empty($group))
 				$group = static::defaultMimeGroup();
 				
-				if(is_string($group))
+				if(\is_string($group))
 				$return = static::getClassFromGroup($group) ?? static::class;
 			}
 		}
@@ -204,7 +204,7 @@ class File extends Res
 	// retourne la classe à utiliser à partir du groupe
 	public static function getClassFromGroup(string $group):?string 
 	{
-		return (array_key_exists($group,static::$config['groupClass']))? static::$config['groupClass'][$group]:null;
+		return (\array_key_exists($group,static::$config['groupClass']))? static::$config['groupClass'][$group]:null;
 	}
 	
 	
@@ -214,7 +214,7 @@ class File extends Res
 	{
 		$return = null;
 		
-		if(is_string($value))
+		if(\is_string($value))
 		$return = Base\Path::dirname($value);
 		
 		elseif(Base\Res::is($value))
@@ -235,7 +235,7 @@ class File extends Res
 		
 		foreach (static::$config['storageClass'] as $class) 
 		{
-			if(is_a($class,Contract\FileStorage::class,true))
+			if(\is_a($class,Contract\FileStorage::class,true))
 			{
 				$storage = $class::storageDirname();
 				if($storage === $value || Base\Finder::isParent($storage,$value))
@@ -280,7 +280,7 @@ class File extends Res
 	// comme new, mais create est true par défaut
 	public static function newCreate($value,?array $option=null):self
 	{
-		return static::newOverload($value,Base\Arr::plus($option,array('create'=>true)));
+		return static::newOverload($value,Base\Arr::plus($option,['create'=>true]));
 	}
 	
 	

@@ -7,12 +7,12 @@ use Quid\Base;
 abstract class ServiceRequest extends Service
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'target'=>null, // cible du service
-		'option'=>array( // option par défaut pour request
+		'option'=>[ // option par défaut pour request
 			'ping'=>2,
-			'responseCode'=>200)
-	);
+			'responseCode'=>200]
+	];
 	
 	
 	// target
@@ -22,7 +22,7 @@ abstract class ServiceRequest extends Service
 	{
 		$return = static::$config['target'] ?? null;
 		
-		if(is_string($return) && !empty($return) && !empty($replace))
+		if(\is_string($return) && !empty($return) && !empty($replace))
 		{
 			$replace = Base\Arr::keysWrap("%","%",$replace);
 			$return = Base\Str::replace($replace,$return);

@@ -7,7 +7,7 @@ use Quid\Base;
 trait _inst
 {
 	// inst
-	protected static $inst = array(); // tableau avec les instances
+	protected static $inst = []; // tableau avec les instances
 	
 	
 	// onPrepareSetInst
@@ -46,7 +46,7 @@ trait _inst
 	// retourne vrai si l'objet courant est dans inst
 	public function inInst():bool 
 	{
-		return (in_array($this,static::$inst,true))? true:false;
+		return (\in_array($this,static::$inst,true))? true:false;
 	}
 	
 	
@@ -71,14 +71,14 @@ trait _inst
 	{
 		$value = $this->instName();
 		
-		if(!array_key_exists($value,static::$inst))
+		if(!\array_key_exists($value,static::$inst))
 		{
 			$this->onPrepareSetInst();
 			static::$inst[$value] = $this;
 			$this->onSetInst();
 		}
 		
-		elseif(array_key_exists($value,static::$inst) && static::$inst[$value] !== $this)
+		elseif(\array_key_exists($value,static::$inst) && static::$inst[$value] !== $this)
 		static::throw('nameAlreadyExistsForAnother');
 		
 		else
@@ -97,7 +97,7 @@ trait _inst
 	{
 		$value = $this->instName();
 		
-		if(is_string($value) && array_key_exists($value,static::$inst))
+		if(\is_string($value) && \array_key_exists($value,static::$inst))
 		{
 			$this->onPrepareUnsetInst();
 			unset(static::$inst[$value]);
@@ -126,13 +126,13 @@ trait _inst
 	{
 		$return = false;
 		
-		if(is_int($value) && array_key_exists($value,array_keys(static::$inst)))
+		if(\is_int($value) && \array_key_exists($value,\array_keys(static::$inst)))
 		$return = true;
 		
-		elseif(is_string($value) && array_key_exists($value,static::$inst))
+		elseif(\is_string($value) && \array_key_exists($value,static::$inst))
 		$return = true;
 		
-		elseif($value instanceof self && in_array($value,static::$inst,true))
+		elseif($value instanceof self && \in_array($value,static::$inst,true))
 		$return = true;
 		
 		return $return;
@@ -146,13 +146,13 @@ trait _inst
 	{
 		$return = null;
 		
-		if(is_int($value))
+		if(\is_int($value))
 		$value = Base\Arr::indexKey($value,static::$inst);
 		
-		if(is_string($value) && array_key_exists($value,static::$inst))
+		if(\is_string($value) && \array_key_exists($value,static::$inst))
 		$return = static::$inst[$value];
 		
-		elseif($value instanceof self && in_array($value,static::$inst,true))
+		elseif($value instanceof self && \in_array($value,static::$inst,true))
 		$return = $value;
 		
 		if($throw === true && !$return instanceof self)

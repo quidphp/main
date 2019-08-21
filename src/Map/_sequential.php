@@ -13,7 +13,7 @@ trait _sequential
 		$this->checkAllowed('sequential');
 		$return = $this->onPrepareThis('sequential');
 		$data =& $return->arr();
-		$data = array_values($data);
+		$data = \array_values($data);
 		
 		return $return;
 	}

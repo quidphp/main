@@ -7,7 +7,7 @@ use Quid\Base;
 trait _attr
 {
 	// dynamique
-	protected $attr = array(); // propriété pour conserver le tableau des attributs de l'objet
+	protected $attr = []; // propriété pour conserver le tableau des attributs de l'objet
 	
 	
 	// makeAttr
