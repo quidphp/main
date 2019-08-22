@@ -17,8 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-        	"Quid\\Base\\": "src/",
-			"Quid\\Base\\Test\\": "test/"
+        	"Quid\\Main\\": "src/",
+			"Quid\\Main\\Test\\": "test/"
         }
     }
 }
