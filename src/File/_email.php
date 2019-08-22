@@ -12,9 +12,9 @@ trait _email
 	
 	
 	// config
-	public static $configFileEmail = [
-		'mailer'=>[]
-	];
+	public static $configFileEmail = array(
+		'mailer'=>array()
+	);
 	
 	
 	// contentType
@@ -48,10 +48,10 @@ trait _email
 	{
 		$return = null;
 		
-		if(\is_string($key) && \array_key_exists($key,static::$config['mailer']))
+		if(is_string($key) && array_key_exists($key,static::$config['mailer']))
 		$return = static::$config['mailer'][$key];
 		else
-		$return = \current(static::$config['mailer']);
+		$return = current(static::$config['mailer']);
 		
 		if(empty($return))
 		static::throw('noMailerAtKey',$key);

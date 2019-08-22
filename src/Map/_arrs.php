@@ -15,7 +15,7 @@ trait _arrs
 		if($return instanceof self)
 		$return = $return;
 		
-		elseif(!\is_scalar($return))
+		elseif(!is_scalar($return))
 		$return = Base\Obj::cast($return);
 		
 		return $return;
@@ -30,7 +30,7 @@ trait _arrs
 		$return = parent::onPrepareReplace($return);
 		
 		if(Base\Arr::isUni($return))
-		$return = Base\Arrs::sets($return,[]);
+		$return = Base\Arrs::sets($return,array());
 		
 		return $return;
 	}

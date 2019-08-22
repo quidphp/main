@@ -6,11 +6,11 @@ namespace Quid\Main;
 class Update extends Map
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// allow
-	protected static $allow = ['set','serialize','clone']; // méthode permises
+	protected static $allow = array('set','serialize','clone'); // méthode permises
 	
 	
 	// set

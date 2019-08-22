@@ -11,22 +11,22 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	
 	
 	// config
-	public static $config = [
-		'base'=>[ // toutes les méthodes renvoyé à base
+	public static $config = array(
+		'base'=>array( // toutes les méthodes renvoyé à base
 			'isLang','isIp','isCsrf','isCaptcha','isDesktop','isMobile','isOldIe','isMac','isLinux','isWindows','isBot',
 			'getPrefix','expire','timestampCurrent','timestampPrevious','timestampDifference','requestCount','resetRequestCount',
 			'userAgent','browserCap','browserName','browserPlatform','browserDevice','env','type','ip','fingerprint',
 			'lang','csrf','refreshCsrf','captcha','refreshCaptcha','emptyCaptcha','version',
-			'remember','setRemember','setsRemember','unsetRemember','emptyRemember'],
-		'option'=>[
-			'structure'=>[ // callables de structure additionnelles dans data, se merge à celle dans base/session
+			'remember','setRemember','setsRemember','unsetRemember','emptyRemember'),
+		'option'=>array(
+			'structure'=>array( // callables de structure additionnelles dans data, se merge à celle dans base/session
 				'flash'=>'structureFlash',
 				'history'=>'structureHistory',
 				'timeout'=>'structureTimeout',
-				'com'=>'structureCom'],
+				'com'=>'structureCom'),
 			'setCookie'=>true, // le cookie est réenvoyé à chaque démarrage de la session
-			'registerShutdown'=>true] // le setSaveHandler créer la shutdown function pour session_write_close
-	];
+			'registerShutdown'=>true) // le setSaveHandler créer la shutdown function pour session_write_close
+	);
 	
 	
 	// dynamique
@@ -35,7 +35,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
 
 	// map
-	protected static $allow = ['set','unset','remove','sort','empty']; // méthodes permises
+	protected static $allow = array('set','unset','remove','sort','empty'); // méthodes permises
 	
 	
 	// construct
@@ -104,13 +104,13 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	{
 		$return = null;
 		
-		if(\in_array($key,static::$config['base'],true))
+		if(in_array($key,static::$config['base'],true))
 		{
 			$this->checkReady();
 			$return = Base\Session::$key(...$args);
 		}
 		
-		elseif(\method_exists(Base\Session::class,$key))
+		elseif(method_exists(Base\Session::class,$key))
 		$return = Base\Session::$key(...$args);
 		
 		else
@@ -124,7 +124,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	// applique la classe de storage
 	protected function setStorageClass(string $value):self 
 	{
-		if(\class_exists($value,true) && Base\Classe::hasInterface(Contract\Session::class,$value))
+		if(class_exists($value,true) && Base\Classe::hasInterface(Contract\Session::class,$value))
 		$this->class = $value;
 		
 		else
@@ -146,7 +146,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	// retourne vrai si la session est démarré et lié
 	public function isStarted():bool 
 	{
-		return (\session_status() === PHP_SESSION_ACTIVE)? true:false;
+		return (session_status() === PHP_SESSION_ACTIVE)? true:false;
 	}
 	
 	
@@ -186,15 +186,15 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	// merge avec la structure de base/session
 	public function getStructure():array
 	{
-		$return = [];
+		$return = array();
 		$structure = $this->getOption('structure');
 		
-		if(\is_array($structure))
+		if(is_array($structure))
 		{
 			foreach ($structure as $key => $value) 
 			{
-				if(\is_string($value))
-				$structure[$key] = [$this,$value];
+				if(is_string($value))
+				$structure[$key] = array($this,$value);
 			}
 		}
 		
@@ -301,7 +301,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	// retourne un tableau contenant un maximum d'information sur la session
 	public function info():array 
 	{
-		$return = ['class'=>static::class];
+		$return = array('class'=>static::class);
 		$return['storageClass'] = $this->getStorageClass();
 		$return['option'] = $this->option();
 		$return = Base\Arr::append($return,Base\Session::info());
@@ -330,7 +330,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	protected function checkSid($sid):self 
 	{ 
 		$prefix = Base\Session::getPrefix();
-		if(!\is_string($sid) || !Base\Session::validateId($sid,$prefix))
+		if(!is_string($sid) || !Base\Session::validateId($sid,$prefix))
 		static::throw();
 		
 		return $this;
@@ -604,7 +604,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 		$return = false;
 		$this->checkStarted();
 		
-		if(!\is_string($name) || empty($name))
+		if(!is_string($name) || empty($name))
 		static::throw('invalidName');
 		
 		if($path !== Base\Session::getSavePath())
@@ -729,7 +729,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 		$storage = $this->storage;
 		
 		$gc = $class::sessionGarbageCollect($path,$name,$lifetime,$storage);
-		if(\is_int($gc))
+		if(is_int($gc))
 		$return = true;
 		
 		return $return;

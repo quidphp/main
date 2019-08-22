@@ -20,7 +20,7 @@ trait _classeObj
 	// retourne l'objet cloner pour certaines méthodes
 	public function onPrepareThis(string $method):Main\Map
 	{
-		return (\in_array($method,['filter','sortBy'],true))? $this->clone():$this;
+		return (in_array($method,array('filter','sortBy'),true))? $this->clone():$this;
 	}
 	
 	
@@ -36,7 +36,7 @@ trait _classeObj
 	// retourne un tableau associatif avec le clé et le résultat d'une méthode
 	public function pair(string $method,...$args):array 
 	{
-		$return = [];
+		$return = array();
 		$type = static::classeOrObj();
 		
 		foreach ($this->arr() as $key => $value) 
@@ -67,7 +67,7 @@ trait _classeObj
 			else
 			$str = $value::$method(...$args);
 			
-			if(\is_scalar($str) || $str === null)
+			if(is_scalar($str) || $str === null)
 			$return .= $str;
 			
 			else
@@ -89,12 +89,12 @@ trait _classeObj
 		if(static::classIsCallable($condition))
 		$return = (Base\Call::withObj($this,$condition,$value,$key,...$args) === true)? true:false;
 		
-		elseif(\is_array($condition))
+		elseif(is_array($condition))
 		{
 			foreach ($condition as $k => $v) 
 			{
 				$return = false;
-				if(\is_string($k))
+				if(is_string($k))
 				{
 					if($type === 'obj')
 					{
@@ -121,7 +121,7 @@ trait _classeObj
 	// retourne un tableau avec des classes ou objets
 	public function group(string $method,...$args):array 
 	{
-		$return = [];
+		$return = array();
 		$type = static::classeOrObj();
 		
 		foreach ($this->arr() as $key => $value) 
@@ -131,12 +131,12 @@ trait _classeObj
 			else
 			$k = $value::$method(...$args);
 			
-			if(\is_object($k))
+			if(is_object($k))
 			$k = Base\Obj::cast($k);
 			
 			if(Base\Arr::isKey($k))
 			{
-				if(!\array_key_exists($k,$return))
+				if(!array_key_exists($k,$return))
 				$return[$k] = new static();
 				
 				$data =& $return[$k]->arr();

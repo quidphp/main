@@ -11,8 +11,8 @@ class Importer extends Map
 	
 	
 	// config
-	public static $config = [
-		'option'=>[
+	public static $config = array(
+		'option'=>array(
 			'action'=>'insert', // action par défaut
 			'empty'=>false, // empty lors du trigger, booléean
 			'slim'=>true, // réduit la taille du tableau de retour dans prepareReturn
@@ -22,20 +22,20 @@ class Importer extends Map
 			'update'=>null, // option pour update
 			'delete'=>null, // option pour delete
 			'truncate'=>null, // option pour truncate
-			'lineCallback'=>null] // callable pour chaque ligne
-	];
+			'lineCallback'=>null) // callable pour chaque ligne
+	);
 	
 	
 	// map
-	protected static $allow = ['set','unset','empty']; // méthodes permises
-	protected static $after = ['clean']; // lance la méthode clean après chaque modification
+	protected static $allow = array('set','unset','empty'); // méthodes permises
+	protected static $after = array('clean'); // lance la méthode clean après chaque modification
 	
 
 	// dynamique
 	protected $source = null; // store l'instance de la source
 	protected $target = null; // store la target
-	protected $required = []; // store les colonnes qui ne peuvent pas être vide
-	protected $callable = []; // store les callbacks pour les différentes colonnes
+	protected $required = array(); // store les colonnes qui ne peuvent pas être vide
+	protected $callable = array(); // store les callbacks pour les différentes colonnes
 	
 	
 	// construct
@@ -98,10 +98,10 @@ class Importer extends Map
 	{
 		$value = Base\Obj::cast($value);
 		
-		if(!\is_scalar($key))
+		if(!is_scalar($key))
 		static::throw('keyMustBeScalar');
 		
-		if(!\is_scalar($value))
+		if(!is_scalar($value))
 		static::throw('valueMustBeScalar');
 		
 		parent::set($key,$value);
@@ -175,7 +175,7 @@ class Importer extends Map
 		$return = null;
 		$value = $this->get($key);
 		
-		if(\is_scalar($value))
+		if(is_scalar($value))
 		{
 			$return[0] = $key;
 			$return[1] = $value;
@@ -191,7 +191,7 @@ class Importer extends Map
 	// retourne un tableau multidimensionnel avec tous les liens colonnes et callable
 	public function getMaps():array
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($this->arr() as $key => $value) 
 		{
@@ -220,7 +220,7 @@ class Importer extends Map
 	// émule l'insertion des lignes
 	public function emulate($offset=true,$length=true,?array $option=null):array
 	{
-		$return = ['total'=>[],'data'=>[]];
+		$return = array('total'=>array(),'data'=>array());
 		$option = Base\Arr::plus($this->option(),$option);
 		$source = $this->source(true);
 		$i = 0;
@@ -242,11 +242,11 @@ class Importer extends Map
 	// calcul le total des lignes valides et non valides
 	protected function makeTotal(array $data):array 
 	{
-		$return = ['valid'=>0,'invalid'=>0,'save'=>0,'noSave'=>0,'insert'=>0,'update'=>0,'delete'=>0];
+		$return = array('valid'=>0,'invalid'=>0,'save'=>0,'noSave'=>0,'insert'=>0,'update'=>0,'delete'=>0);
 		
 		foreach ($data as $key => $value) 
 		{
-			if(\is_array($value) && \array_key_exists('valid',$value))
+			if(is_array($value) && array_key_exists('valid',$value))
 			{
 				if($value['valid'] === true)
 				$return['valid']++;
@@ -261,7 +261,7 @@ class Importer extends Map
 				$return['noSave']++;
 				
 				$action = $value['action'];
-				if(\array_key_exists($action,$return))
+				if(array_key_exists($action,$return))
 				$return[$action]++;
 			}
 		}
@@ -297,17 +297,17 @@ class Importer extends Map
 	// si required est true, utilise la méthode base/validate isReallyEmpty
 	public function one(array $value):array
 	{
-		$return = ['action'=>null,'valid'=>false,'error'=>null,'save'=>false,'int'=>null,'data'=>[],'source'=>$value];
+		$return = array('action'=>null,'valid'=>false,'error'=>null,'save'=>false,'int'=>null,'data'=>array(),'source'=>$value);
 		$maps = $this->checkMaps();
-		$keys = \array_keys($maps);
+		$keys = array_keys($maps);
 		
 		if(Base\Arr::keysExists($keys,$value))
 		{
-			$line = [];
+			$line = array();
 			
 			foreach ($value as $k => $v) 
 			{
-				if(\array_key_exists($k,$maps))
+				if(array_key_exists($k,$maps))
 				{
 					$original = $v;
 					$col = $maps[$k][1];
@@ -319,7 +319,7 @@ class Importer extends Map
 					
 					if($v === false || ($required === true && Base\Validate::isReallyEmpty($v)))
 					{
-						$return['error'] = [$col=>$original];
+						$return['error'] = array($col=>$original);
 						break;
 					}
 					
@@ -334,7 +334,7 @@ class Importer extends Map
 		}
 		
 		else
-		static::throw('invalidLine',...\array_values($value));
+		static::throw('invalidLine',...array_values($value));
 		
 		return $return;
 	}
@@ -347,7 +347,7 @@ class Importer extends Map
 	{
 		if(!empty($return['data']))
 		{
-			\ksort($return['data']);
+			ksort($return['data']);
 			
 			if(empty($return['error']))
 			$return['valid'] = true;
@@ -374,7 +374,7 @@ class Importer extends Map
 	// prépare et insère les lignes dans la table de données
 	public function trigger($offset=true,$length=true,?array $option=null):array
 	{
-		$return = ['total'=>[],'data'=>[]];
+		$return = array('total'=>array(),'data'=>array());
 		$option = Base\Arr::plus($this->option(),$option);
 		$target = $this->target();
 		$onBefore = $option['onBefore'] ?? null;
@@ -401,10 +401,10 @@ class Importer extends Map
 				if($action === 'insert')
 				$save = $target->targetInsert($data,$option['insert'] ?? null);
 				
-				elseif($action === 'update' && \is_int($int))
+				elseif($action === 'update' && is_int($int))
 				$save = $target->targetUpdate($data,$int,$option['update'] ?? null);
 				
-				elseif($action === 'delete' && \is_int($int))
+				elseif($action === 'delete' && is_int($int))
 				$save = $target->targetDelete($int,$option['delete'] ?? null);
 				
 				else

@@ -10,7 +10,7 @@ abstract class Service extends Root
 	
 	
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// dynamique

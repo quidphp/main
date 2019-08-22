@@ -12,10 +12,10 @@ trait _log
 	
 	
 	// config
-	public static $configFileLog = [
+	public static $configFileLog = array(
 		'type'=>'dump',
 		'deleteTrim'=>null
-	];
+	);
 	
 	
 	// log

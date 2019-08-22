@@ -10,10 +10,10 @@ class Flash extends Map
 	
 	
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// map
-	protected static $allow = ['set','unset','serialize','empty']; // méthodes permises
+	protected static $allow = array('set','unset','serialize','empty'); // méthodes permises
 }
 ?>

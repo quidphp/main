@@ -22,13 +22,13 @@ class Extender extends Base\Test
 		// addNamespace
 
 		// isExtended
-		\assert(!$ex->isExtended('test'));
+		assert(!$ex->isExtended('test'));
 
 		// set
 
 		// extended
-		\assert($ex->extended()->isEmpty());
-		\assert($ex->isNotEmpty());
+		assert($ex->extended()->isEmpty());
+		assert($ex->isNotEmpty());
 
 		// extendSync
 
@@ -39,10 +39,10 @@ class Extender extends Base\Test
 		// alias
 
 		// getKey
-		\assert(Main\Extender::getKey('TestClass') === 'TestClass');
+		assert(Main\Extender::getKey('TestClass') === 'TestClass');
 
 		// map
-		\assert($ex->get('Extender') === __CLASS__);
+		assert($ex->get('Extender') === __CLASS__);
 		
 		return true;
 	}

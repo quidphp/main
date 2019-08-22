@@ -11,13 +11,13 @@ class Request extends Map
 	
 	
 	// config
-	public static $config = [
-		'ipAllowed'=>[ // paramètre par défaut pour la méhode isIpAllowed
+	public static $config = array(
+		'ipAllowed'=>array( // paramètre par défaut pour la méhode isIpAllowed
 			'whiteList'=>null, // tableau de ip whiteList
 			'blackList'=>null, // tableau de ip blackList
 			'range'=>true, // comparaison range
-			'level'=>null], // comparaison de niveau dans le ip
-		'option'=>[ // options pour la requête
+			'level'=>null), // comparaison de niveau dans le ip
+		'option'=>array( // options pour la requête
 			'decode'=>false, // l'uri dans setUri est décodé
 			'uri'=>null, // encode l'uri de sortie si utilise output, relative ou absolute
 			'idLength'=>null, // longueur du id de la requête
@@ -36,21 +36,21 @@ class Request extends Map
 			'port'=>null, // pour curl
 			'sslCipher'=>null, // pour curl
 			'userAgent'=>null, // pour curl
-			'postJson'=>false], // le tableau post est encodé en json, pour curl
-		'default'=>[ // ces défaut sont appliqués à chaque création d'objet
-			'scheme'=>[Base\Request::class,'scheme'], // scheme de request par défaut
-			'host'=>[Base\Request::class,'host'], // host de request par défaut
-			'port'=>[Base\Request::class,'port'], // port de request par défaut
+			'postJson'=>false), // le tableau post est encodé en json, pour curl
+		'default'=>array( // ces défaut sont appliqués à chaque création d'objet
+			'scheme'=>array(Base\Request::class,'scheme'), // scheme de request par défaut
+			'host'=>array(Base\Request::class,'host'), // host de request par défaut
+			'port'=>array(Base\Request::class,'port'), // port de request par défaut
 			'path'=>'/', // path par défaut
 			'method'=>'get', // method par défaut
-			'lang'=>[Base\Lang::class,'current'], // lang par défaut
-			'ip'=>[Base\Server::class,'ip'], // ip du serveur par défaut
-			'timestamp'=>[Base\Date::class,'getTimestamp']] // timestamp de date par défaut 
-	];
+			'lang'=>array(Base\Lang::class,'current'), // lang par défaut
+			'ip'=>array(Base\Server::class,'ip'), // ip du serveur par défaut
+			'timestamp'=>array(Base\Date::class,'getTimestamp')) // timestamp de date par défaut 
+	);
 	
 	
 	// required
-	protected static $required = ['id','scheme','host','path','method']; // propriété requise, ne peuvent pas être null
+	protected static $required = array('id','scheme','host','path','method'); // propriété requise, ne peuvent pas être null
 	
 	
 	// dynamique
@@ -65,10 +65,10 @@ class Request extends Map
 	protected $fragment = null; // fragment de la requête
 	protected $method = null; // method de la requête
 	protected $ip = null; // ip de la requête
-	protected $headers = []; // headers de la requête
+	protected $headers = array(); // headers de la requête
 	protected $timestamp = null; // timestamp de la requête
 	protected $lang = null; // lang de la requête, peut provenir de path
-	protected $files = []; // contient les données de fichier
+	protected $files = array(); // contient les données de fichier
 	protected $live = false; // défini si la requête représente la live
 	protected $log = null; // permet de conserver des datas à logger
 	
@@ -88,10 +88,10 @@ class Request extends Map
 		
 		$this->option($option);
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$this->setUri($value);
 		
-		elseif(\is_array($value))
+		elseif(is_array($value))
 		$this->change($value);
 		
 		if(empty($this->id))
@@ -112,9 +112,9 @@ class Request extends Map
 		
 		if(!empty($args))
 		{
-			$key = \current($args);
+			$key = current($args);
 			
-			if(\is_string($key) && \property_exists($this,$key) && \method_exists($this,$key))
+			if(is_string($key) && property_exists($this,$key) && method_exists($this,$key))
 			$return = $this->$key();
 			
 			else
@@ -163,7 +163,7 @@ class Request extends Map
 	// retourne tout l'objet sous forme de tableau
 	public function toArray():array
 	{
-		return \get_object_vars($this);
+		return get_object_vars($this);
 	}
 	
 	
@@ -226,7 +226,7 @@ class Request extends Map
 			if($return === null)
 			$return = $base;
 			
-			elseif(\is_array($return))
+			elseif(is_array($return))
 			$return = Base\Arrs::replace($base,$return);
 		}
 		
@@ -241,7 +241,7 @@ class Request extends Map
 	{
 		if($fill === true)
 		{
-			$change = [];
+			$change = array();
 			foreach (static::default() as $key => $value) 
 			{
 				if($this->$key === null)
@@ -281,7 +281,7 @@ class Request extends Map
 		if($absolute === true)
 		$parse = $this->parse();
 		else
-		$parse = ['path'=>$this->path(),'query'=>$this->query(),'fragment'=>$this->fragment()];
+		$parse = array('path'=>$this->path(),'query'=>$this->query(),'fragment'=>$this->fragment());
 		
 		$return = Base\Uri::build($parse);
 		
@@ -309,7 +309,7 @@ class Request extends Map
 	// retourne l'uri relative de la requête, base uri va vérifier qu'elle existe
 	public function relativeExists(?array $option=null) 
 	{
-		return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getOption('uri'),$option,['exists'=>true]));
+		return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getOption('uri'),$option,array('exists'=>true)));
 	}
 	
 	
@@ -395,9 +395,9 @@ class Request extends Map
 		$return['ssl'] = $this->isSsl();
 		$return['timestamp'] = $this->timestamp();
 		$return['ip'] = $this->ip();
-		$return['post'] = Base\Arr::combine(\array_keys($this->post()),true);
-		$return['files'] = Base\Arr::combine(\array_keys($this->files()),true);
-		$return['headers'] = Base\Arr::combine(\array_keys($this->headers()),true);
+		$return['post'] = Base\Arr::combine(array_keys($this->post()),true);
+		$return['files'] = Base\Arr::combine(array_keys($this->files()),true);
+		$return['headers'] = Base\Arr::combine(array_keys($this->headers()),true);
 		$return['lang'] = $this->lang();
 		$return['userAgent'] = $this->userAgent();
 		$return['referer'] = $this->referer();
@@ -434,7 +434,7 @@ class Request extends Map
 	// retourne le tableau parse de l'objet
 	public function parse():array 
 	{
-		$return = [];
+		$return = array();
 		$return['scheme'] = $this->scheme();
 		$return['user'] = $this->user();
 		$return['pass'] = $this->pass();
@@ -455,11 +455,11 @@ class Request extends Map
 	{
 		foreach ($value as $key => $value) 
 		{
-			if(\is_string($key))
+			if(is_string($key))
 			{
-				$method = 'set'.\ucfirst($key);
+				$method = 'set'.ucfirst($key);
 				
-				if(\method_exists($this,$method))
+				if(method_exists($this,$method))
 				$this->$method($value);
 			}
 		}
@@ -482,7 +482,7 @@ class Request extends Map
 			if($key === 'lang')
 			$key = 'langHeader';
 			
-			$method = 'set'.\ucfirst($key);
+			$method = 'set'.ucfirst($key);
 			Base\Request::$method($value);
 		}
 		
@@ -665,7 +665,7 @@ class Request extends Map
 		$post = $this->post();
 		$genuine = Base\Html::getGenuineName();
 		
-		if(!empty($genuine) && !empty($post) && \array_key_exists($genuine,$post) && empty($post['genuine']))
+		if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post['genuine']))
 		$return = true;
 		
 		return $return;
@@ -676,7 +676,7 @@ class Request extends Map
 	// retourne vrai si la requête courante contient un user
 	public function hasUser():bool 
 	{
-		return (\is_string($this->user()))? true:false;
+		return (is_string($this->user()))? true:false;
 	}
 	
 	
@@ -684,7 +684,7 @@ class Request extends Map
 	// retourne vrai si la requête courante contient un pass
 	public function hasPass():bool 
 	{
-		return (\is_string($this->pass()))? true:false;
+		return (is_string($this->pass()))? true:false;
 	}
 	
 	
@@ -692,7 +692,7 @@ class Request extends Map
 	// retourne vrai si la requête courante contient un fragment
 	public function hasFragment():bool 
 	{
-		return (\is_string($this->fragment()))? true:false;
+		return (is_string($this->fragment()))? true:false;
 	}
 	
 	
@@ -854,7 +854,7 @@ class Request extends Map
 	// retourne vrai si le ip est celui fourni
 	public function isIp($value):bool 
 	{
-		return (\is_string($value) && $value === $this->ip())? true:false;
+		return (is_string($value) && $value === $this->ip())? true:false;
 	}
 	
 	
@@ -966,7 +966,7 @@ class Request extends Map
 			$this->property('scheme',$value);
 			
 			$port = Base\Http::port($value);
-			if(\is_int($port) && $port !== $this->port)
+			if(is_int($port) && $port !== $this->port)
 			$this->setPort($port);
 		}
 		
@@ -1389,10 +1389,10 @@ class Request extends Map
 	// value peut être null
 	public function setQuery($value):self
 	{
-		if(\is_array($value))
+		if(is_array($value))
 		$value = Base\Uri::buildQuery($value,false);
 		
-		if(\is_string($value) || $value === null)
+		if(is_string($value) || $value === null)
 		$this->property('query',$value);
 		
 		else
@@ -1406,7 +1406,7 @@ class Request extends Map
 	// retourne la query string de la requête sous forme de tableau
 	public function queryArray():array
 	{
-		return (\is_string($this->query))? Base\Uri::parseQuery($this->query):[];
+		return (is_string($this->query))? Base\Uri::parseQuery($this->query):array();
 	}
 	
 	
@@ -1487,7 +1487,7 @@ class Request extends Map
 		{
 			$langHeader = $this->langHeader();
 			
-			if(\is_string($value) && \is_string($langHeader) && \strpos($langHeader,$value) !== false)
+			if(is_string($value) && is_string($langHeader) && strpos($langHeader,$value) !== false)
 			$header = false;
 			
 			if($header === true)
@@ -1565,7 +1565,7 @@ class Request extends Map
 	public function setMethod(string $value):self
 	{
 		if(Base\Http::isMethod($value))
-		$this->property('method',\strtolower($value));
+		$this->property('method',strtolower($value));
 		
 		else
 		static::throw();
@@ -1636,11 +1636,11 @@ class Request extends Map
 		$name = Base\Session::getCsrfName();
 		$attr = Base\Session::getCsrfOption();
 
-		if(\is_string($name) && !empty($attr['length']))
+		if(is_string($name) && !empty($attr['length']))
 		{
 			$csrf = $this->get($name);
 			
-			if(!empty($csrf) && \is_string($csrf) && \strlen($csrf) === $attr['length'])
+			if(!empty($csrf) && is_string($csrf) && strlen($csrf) === $attr['length'])
 			$return = $csrf;
 		}
 		
@@ -1655,11 +1655,11 @@ class Request extends Map
 		$return = null;
 		$name = Base\Session::getCaptchaName();
 
-		if(\is_string($name))
+		if(is_string($name))
 		{
 			$captcha = $this->get($name);
 			
-			if(!empty($captcha) && \is_string($captcha))
+			if(!empty($captcha) && is_string($captcha))
 			$return = $captcha;
 		}
 		
@@ -1732,7 +1732,7 @@ class Request extends Map
 		$return = null;
 		$referer = $this->header('Referer');
 		
-		if(\is_string($referer) && !empty($referer))
+		if(is_string($referer) && !empty($referer))
 		{
 			if($internal === false || Base\Uri::isInternal($referer,$hosts))
 			$return = $referer;
@@ -1791,7 +1791,7 @@ class Request extends Map
 	// value doit être un tableau
 	public function setHeaders(array $values):self
 	{
-		$this->property('headers',[]);
+		$this->property('headers',array());
 		$this->addHeaders($values);
 		
 		return $this;
@@ -1804,7 +1804,7 @@ class Request extends Map
 	{
 		foreach ($values as $key => $value) 
 		{
-			if(\is_string($key))
+			if(is_string($key))
 			$this->setHeader($key,$value);
 		}
 		
@@ -1840,7 +1840,7 @@ class Request extends Map
 	// retourne les capacités du browser en fonction du userAgent
 	public function browserCap():?array
 	{
-		return (\is_string($userAgent = $this->userAgent()))? Base\Browser::cap($userAgent):null;
+		return (is_string($userAgent = $this->userAgent()))? Base\Browser::cap($userAgent):null;
 	}
 	
 	
@@ -1848,7 +1848,7 @@ class Request extends Map
 	// retourne le nom du browser du userAgent
 	public function browserName():?string
 	{
-		return (\is_string($userAgent = $this->userAgent()))? Base\Browser::name($userAgent):null;
+		return (is_string($userAgent = $this->userAgent()))? Base\Browser::name($userAgent):null;
 	}
 	
 	
@@ -1856,7 +1856,7 @@ class Request extends Map
 	// retourne la plateforme du browser du userAgent
 	public function browserPlatform():?string
 	{
-		return (\is_string($userAgent = $this->userAgent()))? Base\Browser::platform($userAgent):null;
+		return (is_string($userAgent = $this->userAgent()))? Base\Browser::platform($userAgent):null;
 	}
 	
 	
@@ -1864,7 +1864,7 @@ class Request extends Map
 	// retourne le device du browser du userAgent
 	public function browserDevice():?string
 	{
-		return (\is_string($userAgent = $this->userAgent()))? Base\Browser::device($userAgent):null;
+		return (is_string($userAgent = $this->userAgent()))? Base\Browser::device($userAgent):null;
 	}
 	
 	
@@ -1872,7 +1872,7 @@ class Request extends Map
 	// change le tableau de fichier si existant
 	protected function setFiles(?array $value=null):self 
 	{
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		$this->files = $value;
 		
 		return $this;
@@ -1902,7 +1902,7 @@ class Request extends Map
 		$return = null;
 		$return = Base\Path::redirect($this->path(true),$this->getOptionBase('safe'),$this->getOptionBase('lang'));
 		
-		if(\is_string($return) && $absolute === true)
+		if(is_string($return) && $absolute === true)
 		$return = Base\Uri::absolute($return);
 		
 		return $return;
@@ -1916,7 +1916,7 @@ class Request extends Map
 	// gère externalPost, redirection, unsafe et request
 	public function manageRedirect(?Redirection $redirection=null):array 
 	{
-		$return = ['type'=>null,'code'=>null,'location'=>null];
+		$return = array('type'=>null,'code'=>null,'location'=>null);
 		$isAjax = $this->isAjax();
 		$isSafe = $this->isPathSafe();
 		$isExternalPost = $this->isExternalPost();
@@ -1988,8 +1988,8 @@ class Request extends Map
 	public function curl(?array $option=null):Res
 	{
 		$return = null;
-		$lowOption = ['userAgent'=>$this->userAgent()];
-		$highOption = ['uri'=>['encode'=>true],'ssl'=>$this->isSsl(),'port'=>$this->port()];
+		$lowOption = array('userAgent'=>$this->userAgent());
+		$highOption = array('uri'=>array('encode'=>true),'ssl'=>$this->isSsl(),'port'=>$this->port());
 		$option = Base\Arr::plus($lowOption,$this->option(),$option,$highOption);
 		
 		$uri = $this->absolute($option['uri']);
@@ -2015,12 +2015,12 @@ class Request extends Map
 		$return = null;
 		$option = Base\Arr::plus($this->option(),$option);
 		
-		if(!empty($option['ping']) && \is_int($option['ping']))
+		if(!empty($option['ping']) && is_int($option['ping']))
 		{
 			$host = $this->host();
 			$port = $this->port();
 			
-			if(\is_string($option['proxyHost']) && \is_int($option['proxyPort']))
+			if(is_string($option['proxyHost']) && is_int($option['proxyPort']))
 			static::checkPing($option['proxyHost'],$option['proxyPort'],$option['ping']);
 			
 			else
@@ -2033,34 +2033,34 @@ class Request extends Map
 		$code = null;
 		
 		if(empty($exec) || empty($exec['meta']['info']))
-		$throw = ['requestFailed']; 
+		$throw = array('requestFailed'); 
 		
 		$info = $exec['meta']['info'];
 		
 		if(empty($throw) && (!empty($info['errorNo']) || !empty($info['error'])))
-		$throw = [$info['errorNo'],$info['error']]; 
+		$throw = array($info['errorNo'],$info['error']); 
 		
 		if(empty($throw) && empty($exec['resource']))
-		$throw = ['responseHasNoResource'];
+		$throw = array('responseHasNoResource');
 		
 		if(empty($throw) && !Base\Res::isPhpTemp($exec['resource']))
-		$throw = ['responseHasInvalidResource'];
+		$throw = array('responseHasInvalidResource');
 		
-		if(empty($throw) && (empty($exec['header']) || !\is_array($exec['header'])))
-		$throw = ['responseHasNoHeader'];
+		if(empty($throw) && (empty($exec['header']) || !is_array($exec['header'])))
+		$throw = array('responseHasNoHeader');
 		
 		$code = Base\Header::code($exec['header']);
 		
-		if(empty($throw) && !\is_int($code))
-		$throw = ['responseHasNoCode'];
+		if(empty($throw) && !is_int($code))
+		$throw = array('responseHasNoCode');
 		
 		if(!empty($option['responseCode']))
 		{
 			$responseCode = (array) $option['responseCode'];
 			
-			if(!\in_array($code,$responseCode,true))
+			if(!in_array($code,$responseCode,true))
 			{
-				$strCode = \implode(', ',$responseCode);
+				$strCode = implode(', ',$responseCode);
 				$code = ($code === null)? 0:$code;
 				static::catchable(null,'responseCodeShouldBe',$strCode,'not',$code);
 			}
@@ -2069,7 +2069,7 @@ class Request extends Map
 		if(!empty($throw))
 		static::throw(...$throw);
 		
-		$return = [];
+		$return = array();
 		$return['header'] = $exec['header'];
 		$return['resource'] = $exec['resource'];
 		$return['timestamp'] = Base\Date::timestamp();
@@ -2099,14 +2099,14 @@ class Request extends Map
 	// retourne le tableau des défauts pour une nouvelle requête
 	public static function default(?array $value=null):array 
 	{
-		$return = [];
-		$value = (\is_array($value))? Base\Arr::plus(static::$config['default'],$value):static::$config['default'];
+		$return = array();
+		$value = (is_array($value))? Base\Arr::plus(static::$config['default'],$value):static::$config['default'];
 		
 		foreach ($value as $key => $value) 
 		{
-			if(\is_string($key))
+			if(is_string($key))
 			{
-				if(\is_string($value))
+				if(is_string($value))
 				$return[$key] = $value;
 				
 				elseif(static::classIsCallable($value))

@@ -38,20 +38,20 @@ trait _queue
 		
 		if(!empty($queues))
 		{
-			$maxTime = (\is_int($timeLimit))? (Base\Date::timestamp() + $timeLimit):null;
+			$maxTime = (is_int($timeLimit))? (Base\Date::timestamp() + $timeLimit):null;
 
 			foreach ($queues as $key => $obj) 
 			{
-				if(\method_exists($obj,'unqueue'))
+				if(method_exists($obj,'unqueue'))
 				{
 					$return[$key] = $obj->unqueue();
 					
 					$obj->onUnqueue();
 					
-					if(\is_numeric($sleep))
+					if(is_numeric($sleep))
 					Base\Response::sleep($sleep);
 					
-					if(\is_int($maxTime) && Base\Date::timestamp() > $maxTime)
+					if(is_int($maxTime) && Base\Date::timestamp() > $maxTime)
 					break;
 				}
 				

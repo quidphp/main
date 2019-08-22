@@ -11,11 +11,11 @@ class Files extends Map
 	
 	
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// map
-	protected static $allow = ['add','set','unset','remove','empty','unsetAfterCount','filter','sort','sequential','clone']; // méthodes permises
+	protected static $allow = array('add','set','unset','remove','empty','unsetAfterCount','filter','sort','sequential','clone'); // méthodes permises
 	
 	
 	// construct
@@ -94,15 +94,15 @@ class Files extends Map
 	// peut envoyer une exception
 	public function dirMethod(string $method,...$args):self
 	{
-		if(\strpos($method,'get') === 0)
+		if(strpos($method,'get') === 0)
 		{
 			$files = Base\Dir::$method(...$args);
 			
-			if(\is_array($files))
+			if(is_array($files))
 			{
 				foreach ($files as $v) 
 				{
-					if(!\is_dir($v))
+					if(!is_dir($v))
 					$this->set(null,$v);
 				}
 			}

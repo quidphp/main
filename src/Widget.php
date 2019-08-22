@@ -10,11 +10,11 @@ abstract class Widget extends Root
 	
 	
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// dynamique
-	protected $callback = []; // tableau de callback pour la classe
+	protected $callback = array(); // tableau de callback pour la classe
 
 
 	// toString
@@ -65,7 +65,7 @@ abstract class Widget extends Root
 	// retourne un callback lié, si existant
 	public function callback(string $key):?callable 
 	{
-		return (\array_key_exists($key,$this->callback))? $this->callback[$key]:null;
+		return (array_key_exists($key,$this->callback))? $this->callback[$key]:null;
 	}
 }
 ?>

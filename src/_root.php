@@ -62,7 +62,7 @@ trait _root
 	// cast l'objet en array
 	public function toArray():array
 	{
-		return \get_object_vars($this);
+		return get_object_vars($this);
 	}
 	
 	
@@ -118,7 +118,7 @@ trait _root
 	// retourne un tableau d'aide sur l'objet de la classe
 	public function help(bool $deep=true):array
 	{
-		return Base\Obj::info($this,\get_object_vars($this),\get_class_methods($this),$deep);
+		return Base\Obj::info($this,get_object_vars($this),get_class_methods($this),$deep);
 	}
 }
 ?>

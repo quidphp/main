@@ -7,17 +7,17 @@ use Quid\Base;
 class Autoload
 {
 	// config
-	public static $config = [
-		'alias'=>[], // liste d'alias pour le lazy load
+	public static $config = array(
+		'alias'=>array(), // liste d'alias pour le lazy load
 		'aliasEnding'=>'Alias', // fin de nom de classe pour les alias automatique
-		'closure'=>[], // tableau de nom de classe avec closure, pour charger des classes sans inclure de fichiers
-		'overload'=>[] // garde une copie des noms de classe overloadés
-	];
+		'closure'=>array(), // tableau de nom de classe avec closure, pour charger des classes sans inclure de fichiers
+		'overload'=>array() // garde une copie des noms de classe overloadés
+	);
 	
 	
 	// dynamique
-	protected $attr = []; // attribut de construction
-	protected $hit = []; // classe trouvé
+	protected $attr = array(); // attribut de construction
+	protected $hit = array(); // classe trouvé
 	protected $miss = null; // classe non trouvé
 	
 	
@@ -25,7 +25,7 @@ class Autoload
 	// construit l'objet autoload
 	public function __construct(string $type,bool $miss=false,?string $init=null,?array $arg=null) 
 	{
-		$attr = ['type'=>$type,'miss'=>$miss,'init'=>$init,'arg'=>$arg];
+		$attr = array('type'=>$type,'miss'=>$miss,'init'=>$init,'arg'=>$arg);
 		$this->setAttr($attr);
 		
 		return;
@@ -60,7 +60,7 @@ class Autoload
 		$return = false;
 		$init = $this->attr()['init'];
 		
-		if(\is_string($init) && \stripos($class,'quid') !== 0 && \method_exists($class,$init))
+		if(is_string($init) && stripos($class,'quid') !== 0 && method_exists($class,$init))
 		{
 			$class::$init();
 			$return = true;
@@ -76,7 +76,7 @@ class Autoload
 	// méthode protégé
 	protected function storeHit(?string $key,string $value):self
 	{
-		if(\is_string($key))
+		if(is_string($key))
 		$this->hit[$key] = $value;
 		
 		else
@@ -93,10 +93,10 @@ class Autoload
 	{
 		if($this->attr()['miss'] === true)
 		{
-			if(!\is_array($this->miss))
+			if(!is_array($this->miss))
 			$this->miss = (array) $this->miss;
 			
-			if(!\in_array($value,$this->miss,true))
+			if(!in_array($value,$this->miss,true))
 			$this->miss[] = $value;
 		}
 		
@@ -112,13 +112,13 @@ class Autoload
 		$type = $this->attr()['type'];
 		
 		if($type === 'psr4')
-		$return = [$this,'findPsr4'];
+		$return = array($this,'findPsr4');
 		
 		elseif($type === 'alias')
-		$return = [$this,'findAlias'];
+		$return = array($this,'findAlias');
 		
 		elseif($type === 'closure')
-		$return = [$this,'findClosure'];
+		$return = array($this,'findClosure');
 		
 		return $return;
 	}
@@ -132,7 +132,7 @@ class Autoload
 		$callable = $this->getCallable();
 		
 		if(!empty($callable))
-		$return = \spl_autoload_register($callable,$throw,$prepend);
+		$return = spl_autoload_register($callable,$throw,$prepend);
 		
 		return $return;
 	}
@@ -146,7 +146,7 @@ class Autoload
 		$callable = $this->getCallable();
 		
 		if(!empty($callable))
-		$return = \spl_autoload_unregister($callable);
+		$return = spl_autoload_unregister($callable);
 		
 		return $return;
 	}
@@ -190,18 +190,18 @@ class Autoload
 		
 		foreach ($psr4 as $key => $value) 
 		{
-			if($class !== $key && \strpos($class,$key) === 0)
+			if($class !== $key && strpos($class,$key) === 0)
 			{
-				$len = (\strlen($key) + 1);
-				$after = \substr($class,$len);
+				$len = (strlen($key) + 1);
+				$after = substr($class,$len);
 				
-				if(\is_string($after) && \strlen($after))
+				if(is_string($after) && strlen($after))
 				{
 					$extension = static::phpExtension();
-					$after = \str_replace("\\","/",$after);
+					$after = str_replace("\\","/",$after);
 					$value .= "/".$after.".".$extension;
 					
-					if(\file_exists($value))
+					if(file_exists($value))
 					{
 						$return = $value;
 						break;
@@ -225,14 +225,14 @@ class Autoload
 		if(empty($class))
 		{
 			$ending = static::aliasEnding();
-			$length = \strlen($ending);
+			$length = strlen($ending);
 			
-			if(\substr($alias,-$length) === $ending)
-			$class = \substr($alias,0,-$length);
+			if(substr($alias,-$length) === $ending)
+			$class = substr($alias,0,-$length);
 		}
 		
 		if(!empty($class))
-		$return = \class_alias($class,$alias,true);
+		$return = class_alias($class,$alias,true);
 		
 		if($return === false)
 		$this->storeMiss($alias);
@@ -295,7 +295,7 @@ class Autoload
 	{
 		$return = null;
 		
-		if(\array_key_exists($key,static::$config['alias']))
+		if(array_key_exists($key,static::$config['alias']))
 		{
 			$return = static::$config['alias'][$key];
 			
@@ -325,7 +325,7 @@ class Autoload
 	{
 		foreach ($keyValue as $key => $value) 
 		{
-			if(\is_string($key) && \is_string($value))
+			if(is_string($key) && is_string($value))
 			static::$config['alias'][$key] = $value;
 		}
 		
@@ -337,7 +337,7 @@ class Autoload
 	// enlève un alias de static config
 	public static function unsetAlias(string $key):void 
 	{
-		if(\array_key_exists($key,static::$config['alias']))
+		if(array_key_exists($key,static::$config['alias']))
 		unset(static::$config['alias'][$key]);
 		
 		return;
@@ -377,13 +377,13 @@ class Autoload
 	public static function getClosure(string $value,bool $delete=false):?\Closure
 	{
 		$return = null;
-		$explode = \explode('\\',$value);
+		$explode = explode('\\',$value);
 		
 		if(!empty($explode))
 		{
 			$copy = $explode;
-			$className = \array_pop($copy);
-			$namespace = \implode('\\',$copy);
+			$className = array_pop($copy);
+			$namespace = implode('\\',$copy);
 			
 			if(!empty($namespace) && !empty(static::$config['closure'][$namespace][$className]))
 			{
@@ -414,8 +414,8 @@ class Autoload
 	// possible de creuser dans le namespace si dig est true
 	public static function getClosureByNamespace(string $namespace,bool $onlyClass=false,bool $dig=false):array 
 	{
-		$return = [];
-		$looper = [];
+		$return = array();
+		$looper = array();
 		
 		if($dig === false)
 		{
@@ -427,7 +427,7 @@ class Autoload
 		{
 			foreach (static::$config['closure'] as $ns => $classes) 
 			{
-				if(\stripos($ns,$namespace) === 0)
+				if(stripos($ns,$namespace) === 0)
 				$looper[$ns] = $classes;
 			}
 		}
@@ -438,7 +438,7 @@ class Autoload
 			{
 				if($onlyClass === false || Base\Classe::isNameClass($name))
 				{
-					$fqcn = Base\Fqcn::str([$ns,$name]);
+					$fqcn = Base\Fqcn::str(array($ns,$name));
 					$return[] = $fqcn;
 				}
 			}
@@ -493,7 +493,7 @@ class Autoload
 	{
 		foreach ($keyValue as $key => $value) 
 		{
-			if(\is_string($key) && \is_string($value))
+			if(is_string($key) && is_string($value))
 			static::$config['overload'][$key] = $value;
 		}
 		
@@ -505,7 +505,7 @@ class Autoload
 	// enlève un overload
 	public static function unsetOverload(string $key):void 
 	{
-		if(\array_key_exists($key,static::$config['overload']))
+		if(array_key_exists($key,static::$config['overload']))
 		unset(static::$config['overload'][$key]);
 		
 		return;
@@ -526,7 +526,7 @@ class Autoload
 	// le dossier a priorité
 	public static function findOneOrMany($value,bool $dig=true,bool $onlyClass=false,bool $declared=false):array 
 	{
-		$return = [];
+		$return = array();
 		$value = (array) $value;
 		
 		foreach ($value as $target) 
@@ -537,9 +537,9 @@ class Autoload
 			{
 				foreach ($target as $v) 
 				{
-					if(\is_string($v))
+					if(is_string($v))
 					{
-						$array = [];
+						$array = array();
 						
 						$dir = static::findMany($v,$dig,$onlyClass,$declared);
 						if(!empty($dir))
@@ -579,7 +579,7 @@ class Autoload
 		if(empty($return) && $declared === true && Base\Classe::isAny($value,true))
 		$return = true;
 		
-		if(!empty($return) && $onlyClass === true && !\class_exists($value,true))
+		if(!empty($return) && $onlyClass === true && !class_exists($value,true))
 		$return = null;
 		
 		return $return;
@@ -595,12 +595,12 @@ class Autoload
 		$return = null;
 		$path = Base\Autoload::getDirPath($value);
 		
-		if(!empty($path) && \is_dir($path))
+		if(!empty($path) && is_dir($path))
 		{
 			if($onlyClass === true)
-			$opt = ['fqcnClass'=>true,'fqcnTrait'=>false,'fqcnInterface'=>false];
+			$opt = array('fqcnClass'=>true,'fqcnTrait'=>false,'fqcnInterface'=>false);
 			else
-			$opt = ['fqcnClass'=>true,'fqcnTrait'=>true,'fqcnInterface'=>true];
+			$opt = array('fqcnClass'=>true,'fqcnTrait'=>true,'fqcnInterface'=>true);
 			
 			$return = Base\Dir::getFqcn($path,$value,$dig,null,$opt);
 		}
@@ -631,7 +631,7 @@ class Autoload
 	// retourne vrai si la classe existe, autoload est false
 	public static function exists(string $class):bool 
 	{
-		return (\class_exists($class,false) || \trait_exists($class,false) || \interface_exists($class,false))? true:false;
+		return (class_exists($class,false) || trait_exists($class,false) || interface_exists($class,false))? true:false;
 	}
 	
 	

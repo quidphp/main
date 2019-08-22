@@ -110,7 +110,7 @@ trait _arr
 		$return = $this->onPrepareThis('splice');
 		$replace = $return->onPrepareReplace($replace);
 		
-		if(\is_array($replace) || $replace === null)
+		if(is_array($replace) || $replace === null)
 		{
 			if(empty($replace) || $return->checkBefore(true,$replace))
 			{
@@ -134,7 +134,7 @@ trait _arr
 		$return = $this->onPrepareThis('splice');
 		$replace = $return->onPrepareReplace($replace);
 		
-		if(\is_array($replace) || $replace === null)
+		if(is_array($replace) || $replace === null)
 		{
 			if(empty($replace) || $return->checkBefore(true,$replace))
 			{
@@ -158,7 +158,7 @@ trait _arr
 		$return = $this->onPrepareThis('insert');
 		$replace = $return->onPrepareReplace($replace);
 		
-		if(\is_array($replace) || $replace === null)
+		if(is_array($replace) || $replace === null)
 		{
 			$return->checkBefore(true,$replace);
 			
@@ -181,7 +181,7 @@ trait _arr
 		$return = $this->onPrepareThis('insert');
 		$replace = $return->onPrepareReplace($replace);
 		
-		if(\is_array($replace) || $replace === null)
+		if(is_array($replace) || $replace === null)
 		{
 			$return->checkBefore(true,$replace);
 			

@@ -38,7 +38,7 @@ trait _flash
 	// efface les valeurs après lecture
 	public function gets(...$keys):array
 	{
-		$return = [];
+		$return = array();
 		
 		if($this->exists(...$keys))
 		{

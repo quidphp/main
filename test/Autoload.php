@@ -16,7 +16,7 @@ class Autoload extends Base\Test
 		// setAttr
 		
 		// attr
-		\assert(\count($a->attr()) === 4);
+		assert(count($a->attr()) === 4);
 		
 		// initClass
 		
@@ -25,14 +25,14 @@ class Autoload extends Base\Test
 		// storeMiss
 		
 		// getCallable
-		\assert(\is_callable($a->getCallable()));
+		assert(is_callable($a->getCallable()));
 		
 		// register
-		\assert($a->register() === true);
+		assert($a->register() === true);
 		
 		// unregister
-		\assert($a->unregister() === true);
-		\assert($a->unregister() === false);
+		assert($a->unregister() === true);
+		assert($a->unregister() === false);
 		
 		// findPsr4
 		
@@ -53,36 +53,36 @@ class Autoload extends Base\Test
 		// unsetAlias
 		
 		// allAlias
-		\assert(!empty(Main\Autoload::allAlias()));
+		assert(!empty(Main\Autoload::allAlias()));
 		
 		// aliasEnding
-		\assert(Main\Autoload::aliasEnding() === 'Alias');
+		assert(Main\Autoload::aliasEnding() === 'Alias');
 
 		// registerAlias
 		
 		// getClosure
 		
 		// setClosure
-		\assert(Main\Autoload::setClosure('Test\Ok\What','James',function() {}) === null);
-		\assert(Main\Autoload::setClosure('Test\Ok\What\Lol','_noway',function() {}) === null);
+		assert(Main\Autoload::setClosure('Test\Ok\What','James',function() {}) === null);
+		assert(Main\Autoload::setClosure('Test\Ok\What\Lol','_noway',function() {}) === null);
 			
 		// getClosureByNamespace
-		\assert(Main\Autoload::getClosureByNamespace('test') === []);
-		\assert(Main\Autoload::getClosureByNamespace('Test\Ok\What') === ['Test\Ok\What\James']);
-		\assert(Main\Autoload::getClosureByNamespace('Test\Ok') === []);
-		\assert(Main\Autoload::getClosureByNamespace('Test\Ok',true,true) === ['Test\Ok\What\James']);
-		\assert(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,false) === ['Test\Ok\What\James']);
-		\assert(\count(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,true)) === 2);
-		\assert(Main\Autoload::getClosureByNamespace('xyz') === []);
+		assert(Main\Autoload::getClosureByNamespace('test') === array());
+		assert(Main\Autoload::getClosureByNamespace('Test\Ok\What') === array('Test\Ok\What\James'));
+		assert(Main\Autoload::getClosureByNamespace('Test\Ok') === array());
+		assert(Main\Autoload::getClosureByNamespace('Test\Ok',true,true) === array('Test\Ok\What\James'));
+		assert(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,false) === array('Test\Ok\What\James'));
+		assert(count(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,true)) === 2);
+		assert(Main\Autoload::getClosureByNamespace('xyz') === array());
 		
 		// allClosure
-		\assert(Base\Arrs::is(Main\Autoload::allClosure()));
+		assert(Base\Arrs::is(Main\Autoload::allClosure()));
 		
 		// registerClosure
 		
 		// getOverload
-		\assert(Main\Autoload::getOverload('james',Classe::class) === Classe::class);
-		\assert(Main\Autoload::getOverload('james') === null);
+		assert(Main\Autoload::getOverload('james',Classe::class) === Classe::class);
+		assert(Main\Autoload::getOverload('james') === null);
 
 		// setOverload
 
@@ -91,25 +91,25 @@ class Autoload extends Base\Test
 		// unsetOverload
 		
 		// allOverload
-		\assert(\is_array(Main\Autoload::allOverload()));
+		assert(is_array(Main\Autoload::allOverload()));
 		
 		// findOneOrMany
-		\assert(!empty(Main\Autoload::findOneOrMany([__NAMESPACE__],false,true,true)));
-		\assert(Main\Autoload::findOneOrMany(\Datetime::class,true,true,true) === [\Datetime::class]);
+		assert(!empty(Main\Autoload::findOneOrMany(array(__NAMESPACE__),false,true,true)));
+		assert(Main\Autoload::findOneOrMany(\Datetime::class,true,true,true) === array(\Datetime::class));
 		
 		// findOne
-		\assert(Main\Autoload::findOne(\Datetime::class,true,true) === true);
-		\assert(Main\Autoload::findOne(\Datetime::class,true,false) === null);
+		assert(Main\Autoload::findOne(\Datetime::class,true,true) === true);
+		assert(Main\Autoload::findOne(\Datetime::class,true,false) === null);
 		
 		// findMany
-		\assert(!empty(Main\Autoload::findMany(__NAMESPACE__,false,true,true)));
+		assert(!empty(Main\Autoload::findMany(__NAMESPACE__,false,true,true)));
 		
 		// requireFile
 		
 		// exists
 		
 		// phpExtension
-		\assert(Main\Autoload::phpExtension() === 'php');
+		assert(Main\Autoload::phpExtension() === 'php');
 		
 		return true;
 	}

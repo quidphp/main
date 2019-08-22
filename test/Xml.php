@@ -17,20 +17,20 @@ class Xml extends Base\Test
 
 		// clone
 		$xml2 = clone $xml;
-		\assert($xml2 !== $xml);
+		assert($xml2 !== $xml);
 
 		// cast
-		\assert(\strlen($xml2->_cast()) === 84);
+		assert(strlen($xml2->_cast()) === 84);
 
 		// xml
-		\assert($xml->xml() instanceof \SimpleXMLElement);
+		assert($xml->xml() instanceof \SimpleXMLElement);
 
 		// output
-		\assert(\strlen($xml2->output()) === 84);
+		assert(strlen($xml2->output()) === 84);
 
 		// sitemap
-		\assert($xml->sitemap('https://google.com','test.ok') === $xml);
-		\assert(\strlen($xml->output()) === 161);
+		assert($xml->sitemap('https://google.com','test.ok') === $xml);
+		assert(strlen($xml->output()) === 161);
 		
 		return true;
 	}

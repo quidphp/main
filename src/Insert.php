@@ -6,11 +6,11 @@ namespace Quid\Main;
 class Insert extends Map
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// allow
-	protected static $allow = ['set','push','unshift','serialize','clone']; // méthode permises
+	protected static $allow = array('set','push','unshift','serialize','clone'); // méthode permises
 	
 	
 	// set

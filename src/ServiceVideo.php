@@ -7,11 +7,11 @@ use Quid\Base;
 abstract class ServiceVideo extends ServiceRequest
 {
 	// config
-	public static $config = [
-		'required'=>[], // clés requises
-		'video'=>[], // permet de convertir une clé vers une autre, passé comme option dans l'objet vidéo
+	public static $config = array(
+		'required'=>array(), // clés requises
+		'video'=>array(), // permet de convertir une clé vers une autre, passé comme option dans l'objet vidéo
 		'target'=>null
-	];
+	);
 	
 	
 	// query
@@ -24,7 +24,7 @@ abstract class ServiceVideo extends ServiceRequest
 		$response = $request->trigger();
 		$json = $response->body(true);
 		
-		if(\is_array($json) && !empty($json))
+		if(is_array($json) && !empty($json))
 		{
 			$json['input'] = $value;
 			$return = static::makeVideo($json);
@@ -41,7 +41,7 @@ abstract class ServiceVideo extends ServiceRequest
 	// retourne la requête à utiliser pour aller chercher l'objet video
 	public function request($value,?array $option=null):Request 
 	{
-		return static::makeRequest(static::target(['value'=>$value]),Base\Arr::plus($this->option(),$option));
+		return static::makeRequest(static::target(array('value'=>$value)),Base\Arr::plus($this->option(),$option));
 	}
 	
 	
@@ -53,10 +53,10 @@ abstract class ServiceVideo extends ServiceRequest
 		$option = static::videoOption();
 		$required = static::videoRequired();
 		
-		if(\is_string($value))
+		if(is_string($value))
 		$value = Base\Json::decode($value);
 
-		if(\is_array($value) && !empty($value) && Base\Arr::keysExists($required,$value))
+		if(is_array($value) && !empty($value) && Base\Arr::keysExists($required,$value))
 		$return = Video::newOverload($value,$option);
 		
 		return $return;

@@ -56,7 +56,7 @@ trait _readOnly
 	{
 		foreach ($values as $value) 
 		{
-			if(!\in_array($value,static::allowedReadOnlyMethods()))
+			if(!in_array($value,static::allowedReadOnlyMethods()))
 			$this->checkReadOnly();
 			
 			if(!$this->isAllowed($value))
@@ -71,7 +71,7 @@ trait _readOnly
 	// retourne les méthodes permises même si readOnly est true
 	public static function allowedReadOnlyMethods():array
 	{
-		return ['filter','jsonSerialize','serialize','clone'];
+		return array('filter','jsonSerialize','serialize','clone');
 	}
 }
 ?>

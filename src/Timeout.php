@@ -7,14 +7,14 @@ use Quid\Base;
 class Timeout extends Map
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'max'=>1, // après combien de tentative le timeout est déclenché
 		'timeout'=>600 // durée du timeout
-	];
+	);
 	
 	
 	// map
-	protected static $allow = ['set','unset','serialize','empty']; // méthodes permises
+	protected static $allow = array('set','unset','serialize','empty'); // méthodes permises
 	
 	
 	// isTimedOut
@@ -32,9 +32,9 @@ class Timeout extends Map
 		$return = false;
 		$value = $this->get($key);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
-			if(\is_int($value['count']) && \is_int($value['max']) && $value['count'] >= $value['max'])
+			if(is_int($value['count']) && is_int($value['max']) && $value['count'] >= $value['max'])
 			$return = true;
 		}
 		
@@ -58,10 +58,10 @@ class Timeout extends Map
 		$key = $this->onPrepareKey($key);
 		$current = null;
 		
-		if(!\is_string($key))
+		if(!is_string($key))
 		static::throw('invalidKey');
 		
-		if(!\is_array($value) && $value !== null)
+		if(!is_array($value) && $value !== null)
 		static::throw('invalidValue');
 		
 		if($merge === true)
@@ -100,7 +100,7 @@ class Timeout extends Map
 		$return = null;
 		$value = $this->get($key);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			if($resetOnTimeout === true)
 			{
@@ -189,7 +189,7 @@ class Timeout extends Map
 	{
 		$value = $this->get($key);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			if($resetOnTimeout === true)
 			{
@@ -212,9 +212,9 @@ class Timeout extends Map
 		$data =& $this->arr();
 		$key = $this->onPrepareKey($key);
 		
-		if(\array_key_exists($key,$data))
+		if(array_key_exists($key,$data))
 		{
-			$timestamp = (\is_int($timestamp))? $timestamp:Base\Date::timestamp();
+			$timestamp = (is_int($timestamp))? $timestamp:Base\Date::timestamp();
 			$data[$key]['timestamp'] = $timestamp;
 		}
 		
@@ -230,7 +230,7 @@ class Timeout extends Map
 		$data =& $this->arr();
 		$key = $this->onPrepareKey($key);
 		
-		if(\array_key_exists($key,$data))
+		if(array_key_exists($key,$data))
 		$data[$key]['timestamp'] = null;
 		
 		return $this;
@@ -245,9 +245,9 @@ class Timeout extends Map
 		$return = null;
 		$value = $this->get($key);
 		
-		if(\is_array($value) && $this->isMaxed($key))
+		if(is_array($value) && $this->isMaxed($key))
 		{
-			if(\is_int($value['timeout']) && \is_int($value['timestamp']))
+			if(is_int($value['timeout']) && is_int($value['timestamp']))
 			{
 				$current = Base\Date::timestamp();
 				$expire = ($value['timestamp'] + $value['timeout']) - $current;
@@ -293,12 +293,12 @@ class Timeout extends Map
 		$return['count'] = (empty($return['count']))? 0:$return['count'];
 		$return['timestamp'] = (empty($return['timestamp']))? null:$return['timestamp'];
 		
-		if(\array_key_exists('max',$return) && \array_key_exists('timeout',$return))
+		if(array_key_exists('max',$return) && array_key_exists('timeout',$return))
 		{
-			if(!\is_int($return['max']) || $return['max'] <= 0)
+			if(!is_int($return['max']) || $return['max'] <= 0)
 			static::throw($return['max'],'invalidMax');
 			
-			if(!\is_int($return['timeout']) || $return['timeout'] <= 0)
+			if(!is_int($return['timeout']) || $return['timeout'] <= 0)
 			static::throw($return['timeout'],'invalidTimeout');
 		}
 		

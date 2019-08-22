@@ -7,14 +7,14 @@ use Quid\Base;
 trait _calendar
 {
 	// config
-	public static $configWidgetCalendar = [
-		'option'=>[
+	public static $configWidgetCalendar = array(
+		'option'=>array(
 			'formatCurrent'=>'calendar', // format de date pour le mois 
-			'attr'=>[ // attr pour le output
+			'attr'=>array( // attr pour le output
 				'head'=>'head',
 				'current'=>'current',
-				'body'=>'body']]
-	];
+				'body'=>'body'))
+	);
 	
 	
 	// dynamique
@@ -49,10 +49,10 @@ trait _calendar
 	{
 		$value = Base\Date::time($value);
 		
-		if(\is_int($value))
+		if(is_int($value))
 		$this->timestamp = Base\Date::floorMonth($value);
 		
-		if(!\is_int($this->timestamp))
+		if(!is_int($this->timestamp))
 		static::throw('invalidTimestamp');
 		
 		return $this;
@@ -89,7 +89,7 @@ trait _calendar
 	// peut être utilisé comme attribut html
 	public function parseTimestamp(int $value):array 
 	{
-		$return = [];
+		$return = array();
 		$value = Base\Date::floorDay($value);
 		$format = $this->format();
 		
@@ -107,7 +107,7 @@ trait _calendar
 		
 		$return['data-timestamp'] = $value;
 		
-		if(\is_string($format))
+		if(is_string($format))
 		$return['data-format'] = Base\Date::format($format,$value);
 		
 		return $return;
@@ -139,11 +139,11 @@ trait _calendar
 		$return = false;
 		$selected = $this->selected();
 		
-		if(\is_array($selected))
+		if(is_array($selected))
 		{
 			foreach ($selected as $v) 
 			{
-				if(\is_numeric($v) && Base\Date::isDay($v,null,$value))
+				if(is_numeric($v) && Base\Date::isDay($v,null,$value))
 				{
 					$return = true;
 					break;
@@ -159,10 +159,10 @@ trait _calendar
 	// permet de mettre un ou plusieurs timestamp comme sélectionné
 	public function setSelected($value):self 
 	{
-		if(\is_numeric($value))
-		$value = [$value];
+		if(is_numeric($value))
+		$value = array($value);
 		
-		if(\is_array($value) && !empty($value))
+		if(is_array($value) && !empty($value))
 		$this->selected = Base\Arr::cast($value);
 		
 		return $this;
@@ -251,15 +251,15 @@ trait _calendar
 	protected function tableHead():string
 	{
 		$return = '';
-		$ths = [];
+		$ths = array();
 		$daysShort = Base\Date::getDaysShort();
 		
-		if(!empty($daysShort) && \count($daysShort) === 7)
+		if(!empty($daysShort) && count($daysShort) === 7)
 		{
 			foreach ($daysShort as $value) 
 			{
 				$span = Base\Html::span($value);
-				$ths[] = [$span];
+				$ths[] = array($span);
 			}
 		}
 		
@@ -276,45 +276,45 @@ trait _calendar
 		$return = '';
 		$structure = $this->structure();
 		$callback = $this->callback('day');
-		$trs = [];
+		$trs = array();
 		
 		foreach ($structure as $weekNo => $weekDays) 
 		{
-			if(\is_array($weekDays))
+			if(is_array($weekDays))
 			{
-				$tds = [];
+				$tds = array();
 				
 				foreach ($weekDays as $timestamp) 
 				{
-					if(\is_int($timestamp))
+					if(is_int($timestamp))
 					{
 						$day = Base\Date::day($timestamp);
 						
-						if(\is_int($day))
+						if(is_int($day))
 						{
 							$attr = $this->parseTimestamp($timestamp);
 							
 							if(!empty($callback))
 							{
 								$td = $callback($day,$timestamp,$attr,$this);
-								if(!\is_array($td))
-								$td = [$td,$attr];
+								if(!is_array($td))
+								$td = array($td,$attr);
 							}
 							
 							else
 							{
 								$span = Base\Html::span($day);
-								$td = [$span,$attr];
+								$td = array($span,$attr);
 							}
 							
-							if(\is_array($td))
+							if(is_array($td))
 							$tds[] = $td;
 						}
 					}
 				}
 				
 				if(!empty($tds))
-				$trs[] = [$tds];
+				$trs[] = array($tds);
 			}
 		}
 		

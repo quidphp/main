@@ -8,10 +8,10 @@ use Quid\Base;
 trait _storage
 {
 	// config
-	public static $configFileStorage = [
+	public static $configFileStorage = array(
 		'dirname'=>null, // dirname par défaut
 		'inc'=>0 // chiffre qui s'auto incrémente à chaque ajout d'un élément de cette classe
-	];
+	);
 	
 	
 	// isStorageDataValid
@@ -72,7 +72,7 @@ trait _storage
 	// retourne les données à mettre dans le fichier
 	public static function storageData(...$values)
 	{
-		return (\count($values) === 1)? $values[0]:$values;
+		return (count($values) === 1)? $values[0]:$values;
 	}
 	
 	
@@ -100,10 +100,10 @@ trait _storage
 		
 		if(!empty($paths))
 		{
-			if(\is_int($limit))
+			if(is_int($limit))
 			$paths = Base\Arr::unsetAfterCount($limit,$paths);
 			
-			$return->add(...\array_keys($paths));
+			$return->add(...array_keys($paths));
 		}
 		
 		return $return;
@@ -120,7 +120,7 @@ trait _storage
 		$paths = Base\Dir::getFormatSortSkip($dirname,$limit,$format,$sort,false,$option);
 		
 		if(!empty($paths))
-		$return->add(...\array_keys($paths));
+		$return->add(...array_keys($paths));
 		
 		return $return;
 	}
@@ -148,7 +148,7 @@ trait _storage
 		{
 			$path = static::storagePath(...$values);
 			$data = static::storageData(...$values);
-			$file = new static($path,['create'=>true]);
+			$file = new static($path,array('create'=>true));
 			
 			if(!empty($file))
 			{

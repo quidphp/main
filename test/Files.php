@@ -17,7 +17,7 @@ class Files extends Base\Test
 		$image = Main\File::new($mediaJpg);
 		$binary = Main\File::new($mediaPdf);
 		$_file_ = Base\Finder::shortcut("[assertCommon]/class.php");
-		$_dir_ = \dirname($_file_);
+		$_dir_ = dirname($_file_);
 		
 		// construct
 		$files = new Main\Files($_file_,$image);
@@ -27,45 +27,45 @@ class Files extends Base\Test
 		// onPrepareReturns
 
 		// safeBasename
-		\assert($files->safeBasename() === ['class.php','jpg.jpg']);
+		assert($files->safeBasename() === array('class.php','jpg.jpg'));
 
 		// set
-		\assert($files->set(2,$binary) === $files);
+		assert($files->set(2,$binary) === $files);
 
 		// add
 
 		// dirMethod
-		\assert($files3->dirMethod('getPhp',$_dir_)->count() > 3);
+		assert($files3->dirMethod('getPhp',$_dir_)->count() > 3);
 
 		// dir
-		\assert($files->dir(\dirname($_dir_),true,['in'=>['visible'=>true]])->count() > 5);
+		assert($files->dir(dirname($_dir_),true,array('in'=>array('visible'=>true)))->count() > 5);
 		
 		// dirVisible
 		
 		// dirExtension
-		\assert($files4->dirExtension($_dir_,'js')->isEmpty());
-		\assert($files4->dirExtension($_dir_,'php')->count() > 3);
+		assert($files4->dirExtension($_dir_,'js')->isEmpty());
+		assert($files4->dirExtension($_dir_,'php')->count() > 3);
 
 		// concatenate
-		\assert($files3->unsetAfterCount(2)->concatenate(true)->size() > 0);
+		assert($files3->unsetAfterCount(2)->concatenate(true)->size() > 0);
 
 		// concatenateString
-		\assert(\strlen($files3->concatenateString()) > 300);
+		assert(strlen($files3->concatenateString()) > 300);
 
 		// unlink
 		
 		// obj
-		\assert($files->filter(['extension'=>'pdf'])->keys() === [2,11]);
-		\assert(\count($files->pair('basename')) > 5);
+		assert($files->filter(array('extension'=>'pdf'))->keys() === array(2,11));
+		assert(count($files->pair('basename')) > 5);
 
 		// map
 		$files[8] = $_file_;
-		\assert($files[8] instanceof Main\File);
-		\assert(\is_resource($files[8]->resource()));
-		\assert($files->gets(1,3,2,4,10101010)->isCount(4));
-		\assert($files->gets(3,1,2,4,10101010)->keys() === [3,1,2,4]);
-		\assert($files->clone() !== $files);
-		\assert($files->gets(3,1,2,4,10101010)->sequential()->keys() === [0,1,2,3]);
+		assert($files[8] instanceof Main\File);
+		assert(is_resource($files[8]->resource()));
+		assert($files->gets(1,3,2,4,10101010)->isCount(4));
+		assert($files->gets(3,1,2,4,10101010)->keys() === array(3,1,2,4));
+		assert($files->clone() !== $files);
+		assert($files->gets(3,1,2,4,10101010)->sequential()->keys() === array(0,1,2,3));
 
 		// cleanup
 		Base\Dir::empty("[assertCurrent]");

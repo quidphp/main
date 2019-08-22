@@ -12,18 +12,18 @@ class File extends Base\Test
 	{
 		// construct
 		$storage = "[assertCurrent]";
-		$file = new Main\File($storage."/test.php",['create'=>true]);
+		$file = new Main\File($storage."/test.php",array('create'=>true));
 		$_file_ = Base\Finder::shortcut("[assertCommon]/class.php");
-		$_dir_ = \dirname($_file_);
-		\assert($file->write("test\ntest2\n3") === $file);
-		\assert(\strlen($file->jsonSerialize()) === 12);
-		\assert(\count($file->toArray()) === 3);
+		$_dir_ = dirname($_file_);
+		assert($file->write("test\ntest2\n3") === $file);
+		assert(strlen($file->jsonSerialize()) === 12);
+		assert(count($file->toArray()) === 3);
 
 		// isResourceValid
-		\assert($file->isResourceValid());
+		assert($file->isResourceValid());
 
 		// checkResourceValid
-		\assert($file->checkResourceValid() === $file);
+		assert($file->checkResourceValid() === $file);
 
 		// prepareOption
 
@@ -34,24 +34,24 @@ class File extends Base\Test
 		// unlinkOnShutdown
 		
 		// files
-		\assert($file->files()->count() === 1);
+		assert($file->files()->count() === 1);
 		
 		// defaultMimeGroup
-		\assert($file::defaultMimeGroup() === null);
+		assert($file::defaultMimeGroup() === null);
 
 		// defaultExtension
-		\assert($file::defaultExtension() === null);
+		assert($file::defaultExtension() === null);
 
 		// getClass
 
 		// getClassFromGroup
 
 		// getDirnameFromValue
-		\assert(Main\File::getDirnameFromValue($file) === $file->dirname());
-		\assert(Main\File::getDirnameFromValue($_file_) === $_dir_);
+		assert(Main\File::getDirnameFromValue($file) === $file->dirname());
+		assert(Main\File::getDirnameFromValue($_file_) === $_dir_);
 
 		// getClassFromDirname
-		\assert($file::getClassFromDirname($_dir_) === null);
+		assert($file::getClassFromDirname($_dir_) === null);
 
 		// new
 
@@ -60,11 +60,11 @@ class File extends Base\Test
 		// newOverload
 		
 		// newFiles
-		\assert($file::newFiles() instanceof Main\Files);
+		assert($file::newFiles() instanceof Main\Files);
 		
 		// res
-		\assert(\is_resource($file->resource()));
-		\assert(!empty($file->_cast()));
+		assert(is_resource($file->resource()));
+		assert(!empty($file->_cast()));
 		
 		return true;
 	}

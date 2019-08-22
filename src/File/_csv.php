@@ -7,24 +7,24 @@ use Quid\Base;
 trait _csv
 {
 	// config
-	public static $configFileCsv = [
+	public static $configFileCsv = array(
 		'group'=>'csv',
-		'option'=>[
-			'read'=>[ // option pour read
+		'option'=>array(
+			'read'=>array( // option pour read
 				'csv'=>true,
 				'delimiter'=>';',
 				'enclosure'=>'"',
-				'escape'=>"\\"],
-			'write'=>[ // option pour write
+				'escape'=>"\\"),
+			'write'=>array( // option pour write
 				'csv'=>true,
 				'delimiter'=>';',
 				'enclosure'=>'"',
-				'escape'=>"\\"],
+				'escape'=>"\\"),
 			'toUtf8'=>null, // lance la méthode utf8_encode
 			'whiteSpace'=>true, // lance la méthode base/str removeWhiteSpace
 			'forbiddenCodePoint'=>true, // lance méthode base/str fixUnicode
-			'cast'=>true] // cast les valeurs numérique
-	];
+			'cast'=>true) // cast les valeurs numérique
+	);
 	
 
 	// lineReturn
@@ -49,7 +49,7 @@ trait _csv
 		$return = Base\Call::map('string',$closure,$return,$this->option());
 		
 		$cast = $this->getOption('cast');
-		if($cast === true && \is_array($return))
+		if($cast === true && is_array($return))
 		$return = Base\Arrs::cast($return);
 		
 		return $return;

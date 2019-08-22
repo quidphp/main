@@ -10,6 +10,6 @@ class Insensitive extends Map
 	
 	
 	// config
-	public static $config = [];
+	public static $config = array();
 }
 ?>

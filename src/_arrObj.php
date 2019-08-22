@@ -65,7 +65,7 @@ trait _arrObj
 	// retourne le nombre d'élément dans le tableau
 	final public function count():int
 	{
-		return \count($this->arr());
+		return count($this->arr());
 	}
 	
 	

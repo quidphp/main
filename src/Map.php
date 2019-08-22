@@ -7,14 +7,14 @@ use Quid\Base;
 class Map extends ArrMap
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// map
 	protected static $is = null; // les valeurs doivent passés ce test de validation ou exception, si is est true renvoie à la méthode dynamique is
 	protected static $allow = null; // méthodes permises par la classe
 	protected static $deny = null; // méthodes interdites par la classe
-	protected static $after = []; // les méthodes after, peut y avoir arguments ou non, est public car pourrait être changé dans app
+	protected static $after = array(); // les méthodes after, peut y avoir arguments ou non, est public car pourrait être changé dans app
 
 	
 	// construct
@@ -92,10 +92,10 @@ class Map extends ArrMap
 		if($return instanceof self)
 		$return = $return;
 		
-		elseif(!\is_scalar($return))
+		elseif(!is_scalar($return))
 		$return = Base\Obj::cast($return);
 		
-		if(\is_array($return))
+		if(is_array($return))
 		$return = Base\Arrs::keyPrepare($return);
 		
 		return $return;
@@ -125,7 +125,7 @@ class Map extends ArrMap
 	// utilise la méthode magique quid toArray
 	protected function onPrepareReplace($return) 
 	{
-		if(\is_object($return) && \method_exists($return,'toArray'))
+		if(is_object($return) && method_exists($return,'toArray'))
 		$return = $return->toArray();
 		
 		return $return;
@@ -199,7 +199,7 @@ class Map extends ArrMap
 	// prepare les clés pour les méthodes qui soumettent plusieurs clés comme exists, gets et unset
 	protected function prepareKeys(...$keys):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($keys as $key) 
 		{
@@ -220,7 +220,7 @@ class Map extends ArrMap
 	// prépare plusieurs valeurs pour les méthodes qui soumette plusieurs valeurs comme in et remove
 	protected function prepareValues(...$values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
@@ -241,7 +241,7 @@ class Map extends ArrMap
 	// prépare plusieurs valeurs utilisé par une méthode de remplacement
 	protected function prepareReplaces(...$values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $value) 
 		{
@@ -263,10 +263,10 @@ class Map extends ArrMap
 			foreach ($values as $value) 
 			{
 				$exception = false;
-				$is = (static::$is === true)? [$this,'is']:static::$is;
+				$is = (static::$is === true)? array($this,'is'):static::$is;
 				$call = (static::$is === true)? 'is':static::$is;
 				
-				if($array === true && \is_array($value))
+				if($array === true && is_array($value))
 				{
 					if(!Base\Arr::validate($is,$value))
 					$exception = true;
@@ -292,15 +292,15 @@ class Map extends ArrMap
 		foreach (static::$after as $key => $value) 
 		{
 			$method = null;
-			$arg = [];
+			$arg = array();
 			
-			if(\is_string($key))
+			if(is_string($key))
 			{
 				$method = $key;
 				$arg = (array) $value;
 			}
 			
-			elseif(\is_string($value))
+			elseif(is_string($value))
 			$method = $value;
 			
 			if(!empty($method))
@@ -532,7 +532,7 @@ class Map extends ArrMap
 		
 		if(!empty($condition))
 		{
-			foreach (\array_reverse($this->arr(),true) as $key => $value) 
+			foreach (array_reverse($this->arr(),true) as $key => $value) 
 			{
 				if($this->filterCondition($condition,$key,$value,...$args) === true)
 				{
@@ -569,7 +569,7 @@ class Map extends ArrMap
 	// retourne une valeur d'un index dans la map
 	public function index($index)
 	{
-		return (\is_int($index))? $this->onPrepareReturn(Base\Arr::index($index,$this->arr())):null;
+		return (is_int($index))? $this->onPrepareReturn(Base\Arr::index($index,$this->arr())):null;
 	}
 	
 	
@@ -705,7 +705,7 @@ class Map extends ArrMap
 		$data =& $return->arr();
 		$value = $return->onPrepareReplace($value);
 		
-		if(\is_array($value) && $this->checkBefore(false,...\array_values($value)))
+		if(is_array($value) && $this->checkBefore(false,...array_values($value)))
 		$data = $value;
 		
 		else
@@ -722,7 +722,7 @@ class Map extends ArrMap
 		$this->checkAllowed('empty');
 		$return = $this->onPrepareThis('empty');
 		$data =& $return->arr();
-		$data = [];
+		$data = array();
 		
 		return $this->checkAfter();
 	}
@@ -745,12 +745,12 @@ class Map extends ArrMap
 		if(static::$allow === null && static::$deny === null)
 		$return = true;
 		
-		elseif(\is_string($value))
+		elseif(is_string($value))
 		{
-			if(empty(static::$allow) || (\is_array(static::$allow) && \in_array($value,static::$allow,true)))
+			if(empty(static::$allow) || (is_array(static::$allow) && in_array($value,static::$allow,true)))
 			$return = true;
 			
-			if(!empty(static::$deny) && \in_array($value,static::$deny,true))
+			if(!empty(static::$deny) && in_array($value,static::$deny,true))
 			$return = false;
 		}
 		

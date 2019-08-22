@@ -7,16 +7,16 @@ use Quid\Base;
 abstract class ServiceMailer extends Service
 {
 	// config
-	public static $config = [
+	public static $config = array(
 		'queue'=>null, // queue pour email
 		'log'=>null, // classe pour log
-		'option'=>[
+		'option'=>array(
 			'key'=>null, // clé pour le service
 			'name'=>null, // nom from par défaut
 			'email'=>null, // email form par défaut
 			'username'=>null, // username pour connexion smtp
-			'password'=>null] // password pour connection smtp
-	];
+			'password'=>null) // password pour connection smtp
+	);
 	
 
 	// dispatch
@@ -81,9 +81,9 @@ abstract class ServiceMailer extends Service
 		if(Base\Validate::isEmail($email))
 		{
 			$name = $this->getOption('name');
-			$return = ['email'=>$email];
+			$return = array('email'=>$email);
 			
-			if(\is_string($name))
+			if(is_string($name))
 			$return['name'] = $name;
 		}
 		
@@ -144,11 +144,11 @@ abstract class ServiceMailer extends Service
 		$return = null;
 		$value = $this->messageCastObj($value);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		{
 			foreach ($value as $k => $v) 
 			{
-				if(\is_object($v) && \method_exists($v,'toEmail'))
+				if(is_object($v) && method_exists($v,'toEmail'))
 				$value[$k] = $v->toEmail();
 			}
 			
@@ -172,7 +172,7 @@ abstract class ServiceMailer extends Service
 	// méthode protégé
 	protected function messageCastObj($return) 
 	{
-		if(\is_object($return) && \method_exists($return,'sendEmail'))
+		if(is_object($return) && method_exists($return,'sendEmail'))
 		$return = $return->sendEmail();
 		
 		return $return;
@@ -192,7 +192,7 @@ abstract class ServiceMailer extends Service
 		if(!empty($error))
 		$return['error'] = $error;
 		
-		$strip = ['password'];
+		$strip = array('password');
 		$return = Base\Arr::keysStrip($strip,$return);
 
 		return $return;
@@ -238,7 +238,7 @@ abstract class ServiceMailer extends Service
 		$return = null;
 		$value = $this->messageCastObj($value);
 		
-		if($value === null || \is_array($value))
+		if($value === null || is_array($value))
 		{
 			$value = Base\Email::prepareTestMessage($value);
 			$return = $this->sendNowOrOnCloseDown($value,$onCloseDown);
@@ -255,7 +255,7 @@ abstract class ServiceMailer extends Service
 	// permet d'envoyer plusieurs messages à partir d'un tableau multidimensionnel
 	public function sendLoop(array $values,bool $onCloseDown=false):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $key => $value) 
 		{
@@ -302,7 +302,7 @@ abstract class ServiceMailer extends Service
 		$return = null;
 		$value = $this->messageCastObj($value);
 		
-		if($value === null || \is_array($value))
+		if($value === null || is_array($value))
 		{
 			$value = Base\Email::prepareTestMessage($value);
 			$return = $this->queue($value);
@@ -319,7 +319,7 @@ abstract class ServiceMailer extends Service
 	// permet de queue plusieurs messages à partir d'un tableau multidimensionnel
 	public function queueLoop(array $values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $key => $value) 
 		{
@@ -348,7 +348,7 @@ abstract class ServiceMailer extends Service
 	// permet de dispatch plusieurs messages à partir d'un tableau multidimensionnel
 	public function dispatchLoop(array $values):array 
 	{
-		$return = [];
+		$return = array();
 		
 		foreach ($values as $key => $value) 
 		{
@@ -379,7 +379,7 @@ abstract class ServiceMailer extends Service
 	{
 		$return = static::$config['queue'];
 		
-		if(\is_string($return) && !\is_a($return,Contract\Queue::class,true))
+		if(is_string($return) && !is_a($return,Contract\Queue::class,true))
 		static::throw('invalidQueueClass',$return);
 		
 		return $return;
@@ -393,7 +393,7 @@ abstract class ServiceMailer extends Service
 	{
 		$return = static::$config['log'];
 		
-		if(\is_string($return) && !\is_a($return,Contract\Log::class,true))
+		if(is_string($return) && !is_a($return,Contract\Log::class,true))
 		static::throw('invalidLogClass',$return);
 		
 		return $return;
@@ -412,7 +412,7 @@ abstract class ServiceMailer extends Service
 	// change la méthode de dispatch
 	public static function setDispatch(string $value):void 
 	{
-		if(\in_array($value,['send','sendOnCloseDown','queue'],true))
+		if(in_array($value,array('send','sendOnCloseDown','queue'),true))
 		static::$dispatch = $value;
 		
 		else

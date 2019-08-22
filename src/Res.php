@@ -7,11 +7,11 @@ use Quid\Base;
 class Res extends ArrObj
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// base
-	protected static $base = [ // tableau des méthodes en clé et condtion (check) en valeur
+	protected static $base = array( // tableau des méthodes en clé et condtion (check) en valeur
 		'isEmpty'=>null,
 		'isNotEmpty'=>null,
 		'isReadable'=>null,
@@ -100,7 +100,7 @@ class Res extends ArrObj
 		'pathToUri'=>'isFile',
 		'pathToUriOrBase64'=>'isReadable',
 		'position'=>'isSeekableTellable',
-		'lineCount'=>['isSeekableTellable','isReadable'],
+		'lineCount'=>array('isSeekableTellable','isReadable'),
 		'passthru'=>'isReadable',
 		'base64'=>'isReadable',
 		'lock'=>'isLockable',
@@ -110,7 +110,7 @@ class Res extends ArrObj
 		'toScreen'=>'isResponsable',
 		'concatenate'=>'isWritable',
 		'setPhpContextOption'=>null
-	];
+	);
 	
 	
 	// dynamique
@@ -222,7 +222,7 @@ class Res extends ArrObj
 	// la resource est crée lors de l'appel à la méthode resource
 	public function setResource($value,?array $option=null):self 
 	{
-		$this->resource = [$value,$option];
+		$this->resource = array($value,$option);
 		
 		return $this;
 	}
@@ -246,10 +246,10 @@ class Res extends ArrObj
 		$return = null;
 		$remember = null;
 		
-		if(\is_resource($this->resource))
+		if(is_resource($this->resource))
 		$return = $this->resource;
 		
-		elseif(\is_array($this->resource))
+		elseif(is_array($this->resource))
 		{
 			$value = $remember = $this->resource[0];
 			$option = $this->resource[1];
@@ -258,14 +258,14 @@ class Res extends ArrObj
 			if($value instanceof self)
 			$value = $value->resource();
 			
-			elseif(!\is_resource($value))
+			elseif(!is_resource($value))
 			$value = Base\Res::open($value,$option);
 			
-			if(\is_resource($value))
+			if(is_resource($value))
 			$return = $this->resource = $value;
 		}
 		
-		if(!\is_resource($return))
+		if(!is_resource($return))
 		static::throw('cannotOpen',$remember);
 		
 		return $this->resource;
@@ -281,7 +281,7 @@ class Res extends ArrObj
 		$return = null;
 		$found = false;
 		
-		if(\array_key_exists($method,static::$base))
+		if(array_key_exists($method,static::$base))
 		{
 			$found = true;
 			$condition = static::$base[$method];
@@ -320,7 +320,7 @@ class Res extends ArrObj
 	{
 		foreach ($methods as $method) 
 		{
-			if(\method_exists($this,$method) && $this->$method() !== true)
+			if(method_exists($this,$method) && $this->$method() !== true)
 			static::throw($method);
 			
 			elseif($this->base($method,false) !== true)
@@ -839,7 +839,7 @@ class Res extends ArrObj
 	{
 		$rename = Base\Res::rename($target,$this->resource());
 		
-		if(\is_resource($rename))
+		if(is_resource($rename))
 		$this->setResource($rename);
 		
 		else
@@ -856,7 +856,7 @@ class Res extends ArrObj
 	{
 		$rename = Base\Res::changeDirname($dirname,$this->resource());
 		
-		if(\is_resource($rename))
+		if(is_resource($rename))
 		$this->setResource($rename);
 		
 		else
@@ -873,7 +873,7 @@ class Res extends ArrObj
 	{
 		$rename = Base\Res::changeBasename($basename,$this->resource());
 		
-		if(\is_resource($rename))
+		if(is_resource($rename))
 		$this->setResource($rename);
 		
 		else
@@ -890,7 +890,7 @@ class Res extends ArrObj
 	{
 		$rename = Base\Res::changeExtension($extension,$this->resource());
 		
-		if(\is_resource($rename))
+		if(is_resource($rename))
 		$this->setResource($rename);
 		
 		else
@@ -907,7 +907,7 @@ class Res extends ArrObj
 	{
 		$rename = Base\Res::removeExtension($this->resource());
 		
-		if(\is_resource($rename))
+		if(is_resource($rename))
 		$this->setResource($rename);
 		
 		else
@@ -924,7 +924,7 @@ class Res extends ArrObj
 	{
 		$rename = Base\Res::moveUploaded($target,$this->resource());
 		
-		if(\is_resource($rename))
+		if(is_resource($rename))
 		$this->setResource($rename);
 		
 		else
@@ -1000,12 +1000,12 @@ class Res extends ArrObj
 	public function toFile($value,?array $option=null):File 
 	{
 		$return = null;
-		$option = Base\Arr::plus(['create'=>true],$option);
+		$option = Base\Arr::plus(array('create'=>true),$option);
 		$this->check('isResponsable');
 		$mimeGroup = $this->mimeGroup();
 		$class = File::class;
 		
-		if(\is_string($mimeGroup))
+		if(is_string($mimeGroup))
 		$class = File::getClassFromGroup($mimeGroup) ?? $class;
 		
 		$return = $class::newOverload($value,$option);

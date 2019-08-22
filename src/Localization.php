@@ -7,11 +7,11 @@ use Quid\Base;
 class Localization extends Map
 {
 	// config
-	public static $config = [];
+	public static $config = array();
 	
 	
 	// map
-	protected static $allow = ['overwrite','jsonSerialize','serialize','clone']; // méthodes permises
+	protected static $allow = array('overwrite','jsonSerialize','serialize','clone'); // méthodes permises
 
 	
 	// construct
@@ -19,10 +19,10 @@ class Localization extends Map
 	// une string json ou un array doit être fourni
 	public function __construct($value) 
 	{
-		if(\is_string($value))
+		if(is_string($value))
 		$value = Base\Json::decode($value);
 		
-		if(\is_array($value))
+		if(is_array($value))
 		$this->overwrite($value);
 		
 		else
@@ -47,19 +47,19 @@ class Localization extends Map
 	{
 		$return = null;
 		
-		if(\is_array($value) && Base\Arr::keysExists(['lat','lng','countryCode','input'],$value))
+		if(is_array($value) && Base\Arr::keysExists(array('lat','lng','countryCode','input'),$value))
 		{
-			if(!(\is_numeric($value['lat']) && \is_numeric($value['lng'])))
+			if(!(is_numeric($value['lat']) && is_numeric($value['lng'])))
 			static::throw('invalidLatLng');
 			
-			if(!(\is_string($value['countryCode']) && \strlen($value['countryCode']) === 2))
+			if(!(is_string($value['countryCode']) && strlen($value['countryCode']) === 2))
 			static::throw('invalidCountryCode');
 			
-			if(\is_string($value['input']))
+			if(is_string($value['input']))
 			$return = $value;
 		}
 		
-		if(!\is_array($return))
+		if(!is_array($return))
 		static::throw('invalidFormat');
 		
 		return $return;
@@ -70,7 +70,7 @@ class Localization extends Map
 	// retourne vrai si le pays de la localization est USA
 	public function inUsa() 
 	{
-		return (\strtoupper($this->countryCode()) === 'US')? true:false;
+		return (strtoupper($this->countryCode()) === 'US')? true:false;
 	}
 	
 	
@@ -94,7 +94,7 @@ class Localization extends Map
 	// retourne le tableau latlng
 	public function latLng():array
 	{
-		return ['lat'=>$this->lat(),'lng'=>$this->lng()];
+		return array('lat'=>$this->lat(),'lng'=>$this->lng());
 	}
 	
 	
