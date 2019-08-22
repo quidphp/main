@@ -22,17 +22,17 @@ class Request extends Base\Test
 		$r2 = new Main\Request($uri);
 		$r3 = new Main\Request("/lavieestbelle.jpg?test=ok&james=bla");
 		$r4 = new Main\Request($uri);
-		$r4->change(array('host'=>'bla.com','fragment'=>null));
-		$r5 = new Main\Request($encodedUri,array('decode'=>true));
+		$r4->change(['host'=>'bla.com','fragment'=>null]);
+		$r5 = new Main\Request($encodedUri,['decode'=>true]);
 		$r6 = new Main\Request($mediaJpg);
 		$r7 = new Main\Request("http://google.com/en/lavieestblel");
 		$r8 = new Main\Request("/fr/lavieestblel.jpg");
 		$r9 = new Main\Request("http://google.com/en/la/viees/tblel");
 		$post = new Main\Request('/');
-		$post->change(array('post'=>array('-captcha-'=>'abc','-csrf-'=>Base\Str::random(40),'test'=>'123','Ok'=>'LOL','james'=>'true')));
-		$filesArray = array('ok'=>array('name'=>array('test.jpg','ok.lala'),'tmp_name'=>array('ok','ok'),'type'=>array('ok','ok'),'size'=>array(200,0),'error'=>array(0,0)));
-		$files = new Main\Request(array('uri'=>'/','post'=>array('well'=>'no','ok'=>array('bla.php')),'files'=>$filesArray));
-		$file = new Main\Request(array('uri'=>'/','post'=>array('well'=>'no','ok'=>'bla.php'),'files'=>array('ok'=>array('name'=>'test.jpg','error'=>'ok'))));
+		$post->change(['post'=>['-captcha-'=>'abc','-csrf-'=>Base\Str::random(40),'test'=>'123','Ok'=>'LOL','james'=>'true']]);
+		$filesArray = ['ok'=>['name'=>['test.jpg','ok.lala'],'tmp_name'=>['ok','ok'],'type'=>['ok','ok'],'size'=>[200,0],'error'=>[0,0]]];
+		$files = new Main\Request(['uri'=>'/','post'=>['well'=>'no','ok'=>['bla.php']],'files'=>$filesArray]);
+		$file = new Main\Request(['uri'=>'/','post'=>['well'=>'no','ok'=>'bla.php'],'files'=>['ok'=>['name'=>'test.jpg','error'=>'ok']]]);
 		$current = Main\Request::live();
 		$current2 = Main\Request::live();
 		$currentReset = Main\Request::live();
@@ -44,8 +44,8 @@ class Request extends Base\Test
 		$redi = new Main\Request("/en/james/ok");
 		$doubleSlash = new Main\Request("/sada//ok");
 		$endSlash = new Main\Request("/asdok/ok/");
-		$externalPost = new Main\Request(array('uri'=>'/external','method'=>'post','headers'=>array('referer'=>'https://google.com')));
-		$redirection = new Main\Redirection(array("/en/james/ok"=>"/lol/ok"));
+		$externalPost = new Main\Request(['uri'=>'/external','method'=>'post','headers'=>['referer'=>'https://google.com']]);
+		$redirection = new Main\Redirection(["/en/james/ok"=>"/lol/ok"]);
 		assert($current->id() === Base\Request::id());
 
 		// invoke
@@ -145,7 +145,7 @@ class Request extends Base\Test
 		assert(count($r->parse()) === 8);
 
 		// change
-		assert($r2->change(array('user'=>'bla','pass'=>'LOL','ajax'=>true)) === $r2);
+		assert($r2->change(['user'=>'bla','pass'=>'LOL','ajax'=>true]) === $r2);
 
 		// property
 
@@ -179,7 +179,7 @@ class Request extends Base\Test
 
 		// isExternalPost
 		assert($r2->isExternalPost());
-		assert(!$r2->isExternalPost(array('google.com')));
+		assert(!$r2->isExternalPost(['google.com']));
 
 		// isStandard
 		assert($r->isStandard());
@@ -401,13 +401,13 @@ class Request extends Base\Test
 		assert(count($r->pathinfo()) === 3);
 
 		// changePathinfo
-		assert($r9->changePathinfo(array('basename'=>'blop.text'))->path() === '/en/la/viees/blop.text');
+		assert($r9->changePathinfo(['basename'=>'blop.text'])->path() === '/en/la/viees/blop.text');
 
 		// keepPathinfo
-		assert($r9->keepPathinfo(array('dirname'))->path() === '/en/la/viees');
+		assert($r9->keepPathinfo(['dirname'])->path() === '/en/la/viees');
 
 		// removePathinfo
-		assert($r9->removePathinfo(array('dirname'))->path() === '/viees');
+		assert($r9->removePathinfo(['dirname'])->path() === '/viees');
 
 		// dirname
 		assert($r->dirname() === '/');
@@ -478,7 +478,7 @@ class Request extends Base\Test
 		assert($r9->pathAppend('ok/la/vie')->path() === '/ok/la/vie/viees/ok/la/vie');
 
 		// pathExplode
-		assert($r->pathExplode() === array('lavieestlaide'));
+		assert($r->pathExplode() === ['lavieestlaide']);
 		assert(count($r8->pathExplode()) === 2);
 
 		// pathGet
@@ -488,14 +488,14 @@ class Request extends Base\Test
 		assert($r->pathCount() === 1);
 
 		// pathSlice
-		assert($r->pathSlice(0,2) === array('lavieestlaide'));
+		assert($r->pathSlice(0,2) === ['lavieestlaide']);
 		assert(count($r8->pathSlice(0,2)) === 2);
 
 		// pathSplice
-		assert($r9->pathSplice(0,3,array('lol'))->path() === '/lol/viees/ok/la/vie');
+		assert($r9->pathSplice(0,3,['lol'])->path() === '/lol/viees/ok/la/vie');
 
 		// pathInsert
-		assert($r9->pathInsert(1,array('lol2'))->path() === '/lol/lol2/viees/ok/la/vie');
+		assert($r9->pathInsert(1,['lol2'])->path() === '/lol/lol2/viees/ok/la/vie');
 
 		// pathMatch
 		assert($r8->pathMatch() === 'lavieestblel.jpg');
@@ -508,26 +508,26 @@ class Request extends Base\Test
 
 		// setQuery
 		assert($r3->setQuery('test=2&bla=3&james=oui') === $r3);
-		assert($r3->queryArray() === array('test'=>2,'bla'=>3,'james'=>'oui'));
-		assert($r3->setQuery(array('ok'=>'3','bla'=>3,'ok'=>'yes')));
+		assert($r3->queryArray() === ['test'=>2,'bla'=>3,'james'=>'oui']);
+		assert($r3->setQuery(['ok'=>'3','bla'=>3,'ok'=>'yes']));
 		assert($r3->query() === 'ok=yes&bla=3');
-		assert($r3->queryArray() === array('ok'=>3,'bla'=>3,'ok'=>'yes'));
+		assert($r3->queryArray() === ['ok'=>3,'bla'=>3,'ok'=>'yes']);
 
 		// queryArray
-		assert($r3->queryArray() === array('ok'=>3,'bla'=>3,'ok'=>'yes'));
-		assert($r5->queryArray() === array('james'=>'lala','ka'=>'éo','space'=>'la uy'));
+		assert($r3->queryArray() === ['ok'=>3,'bla'=>3,'ok'=>'yes']);
+		assert($r5->queryArray() === ['james'=>'lala','ka'=>'éo','space'=>'la uy']);
 
 		// getQuery
 		assert($r3->getQuery('ok') === 'yes');
 
 		// getsQuery
-		assert($r3->getsQuery('ok','bla','z') === array('ok'=>'yes','bla'=>3,'z'=>null));
+		assert($r3->getsQuery('ok','bla','z') === ['ok'=>'yes','bla'=>3,'z'=>null]);
 
 		// addQuery
 		assert($r3->addQuery('ok2',2)->query() === 'ok=yes&bla=3&ok2=2');
 
 		// setsQuery
-		assert($r3->setsQuery(array('james'=>'NO'))->query() === 'ok=yes&bla=3&ok2=2&james=NO');
+		assert($r3->setsQuery(['james'=>'NO'])->query() === 'ok=yes&bla=3&ok2=2&james=NO');
 
 		// unsetQuery
 		assert($r3->unsetQuery('james','ok2')->query() === 'ok=yes&bla=3');
@@ -584,12 +584,12 @@ class Request extends Base\Test
 		assert($r3->scheme() === 'https');
 
 		// post
-		assert($r->post() === array());
+		assert($r->post() === []);
 		$r['-genuine-'] = 'what';
 		$r['password'] = 123;
 		$r['bla'] = '<b>OK</b>';
-		assert($r->post(false,true) === array('-genuine-'=>'what','password'=>123,'bla'=>'OK'));
-		assert($r->post(true,true) === array('password'=>123,'bla'=>'OK'));
+		assert($r->post(false,true) === ['-genuine-'=>'what','password'=>123,'bla'=>'OK']);
+		assert($r->post(true,true) === ['password'=>123,'bla'=>'OK']);
 		assert($post->post()['test'] === 123);
 		assert($post->post()['james'] === 'true');
 		assert($files->post(true,true,true)['ok'][0] === 'bla.php');
@@ -608,8 +608,8 @@ class Request extends Base\Test
 		assert($post->captcha() === 'abc');
 
 		// setPost
-		$r3->setPost(array('james'=>'noWay'));
-		assert($r3->post() === array('james'=>'noWay'));
+		$r3->setPost(['james'=>'noWay']);
+		assert($r3->post() === ['james'=>'noWay']);
 
 		// ip
 		assert(Base\Ip::is($r->ip()));
@@ -632,8 +632,8 @@ class Request extends Base\Test
 		assert($r2->setReferer('https://google.com/test') === $r2);
 		assert($r2->referer() === "https://google.com/test");
 		assert($r2->referer(true) === null);
-		assert($r2->referer(true,array('abc.com','google.com')) === "https://google.com/test");
-		assert($r2->referer(true,array('abc.com','google.comz')) === null);
+		assert($r2->referer(true,['abc.com','google.com']) === "https://google.com/test");
+		assert($r2->referer(true,['abc.com','google.comz']) === null);
 		assert($r2->referer(true,'google.com') === "https://google.com/test");
 		assert(count($r2->headers()) === 4);
 		assert($r2->setReferer(null) === $r2);
@@ -658,7 +658,7 @@ class Request extends Base\Test
 		assert(!empty($r->setHeaders(Base\Request::headers())->headers()));
 
 		// addHeaders
-		assert($current->addHeaders(array('ok'=>'bla')) === $current);
+		assert($current->addHeaders(['ok'=>'bla']) === $current);
 
 		// setHeader
 		assert($current->setHeader('accept','*') === $current);
@@ -670,8 +670,8 @@ class Request extends Base\Test
 		assert(count($current->headers()) === $count);
 
 		// fingerprint
-		assert(!empty($current->fingerprint(array('User-Agent'))));
-		assert($current->fingerprint(array('User-Agent')) === Base\Request::fingerprint(array('User-Agent')));
+		assert(!empty($current->fingerprint(['User-Agent'])));
+		assert($current->fingerprint(['User-Agent']) === Base\Request::fingerprint(['User-Agent']));
 
 		// browserCap
 		assert(count($r2->browserCap()) === 10);
@@ -700,13 +700,13 @@ class Request extends Base\Test
 		assert($current->redirect() === null);
 
 		// manageRedirect
-		assert($badExtension->manageRedirect() === array('type'=>null,'code'=>null,'location'=>null));
-		assert($externalPost->manageRedirect() === array('type'=>'externalPost','code'=>400,'location'=>null));
-		assert($doubleSlash->manageRedirect($redirection) === array('type'=>'unsafe','code'=>302,'location'=>Base\Request::schemeHost()));
-		assert($nl->manageRedirect() === array('type'=>null,'code'=>null,'location'=>null));
+		assert($badExtension->manageRedirect() === ['type'=>null,'code'=>null,'location'=>null]);
+		assert($externalPost->manageRedirect() === ['type'=>'externalPost','code'=>400,'location'=>null]);
+		assert($doubleSlash->manageRedirect($redirection) === ['type'=>'unsafe','code'=>302,'location'=>Base\Request::schemeHost()]);
+		assert($nl->manageRedirect() === ['type'=>null,'code'=>null,'location'=>null]);
 		assert($redi->manageRedirect($redirection)['type'] === 'redirection');
-		assert($redi->manageRedirect() === array('type'=>null,'code'=>null,'location'=>null));
-		assert($endSlash->manageRedirect($redirection) === array('type'=>'request','code'=>302,'location'=>'/en/asdok/ok'));
+		assert($redi->manageRedirect() === ['type'=>null,'code'=>null,'location'=>null]);
+		assert($endSlash->manageRedirect($redirection) === ['type'=>'request','code'=>302,'location'=>'/en/asdok/ok']);
 
 		// curl
 		$curl = $r->curl();
@@ -721,7 +721,7 @@ class Request extends Base\Test
 
 		// map
 		$r3['james'] = 'ok';
-		assert($r3->post() === array('james'=>'ok'));
+		assert($r3->post() === ['james'=>'ok']);
 		$r3['james2'] = 'ok';
 		assert($r3->exists('james','james2'));
 		assert(!empty($serialize = serialize($r3)));
@@ -735,7 +735,7 @@ class Request extends Base\Test
 		// default
 		$currentReset->setHeaders($currentReset->headers());
 		assert(count(Main\Request::default(Main\Request::$config['default'])) === 8);
-		assert(Main\Request::default(array('method'=>'post'))['method'] === 'post');
+		assert(Main\Request::default(['method'=>'post'])['method'] === 'post');
 		
 		return true;
 	}

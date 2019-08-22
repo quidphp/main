@@ -11,15 +11,15 @@ class RequestHistory extends Map
 	
 	
 	// config
-	public static $config = array(
-		'extra'=>array('redirectable'=>true) // clé extra à utiliser pour générer la string de requête
-	);
+	public static $config = [
+		'extra'=>['redirectable'=>true] // clé extra à utiliser pour générer la string de requête
+	];
 	
 	
 	// map
 	protected static $is = 'string'; // validate pour l'objet
-	protected static $allow = array('unshift','push','remove','unsetAfterCount','empty','serialize'); // méthodes permises
-	protected static $after = array('unsetAfterCount'=>50); // maximum de requête conservés
+	protected static $allow = ['unshift','push','remove','unsetAfterCount','empty','serialize']; // méthodes permises
+	protected static $after = ['unsetAfterCount'=>50]; // maximum de requête conservés
 	
 	
 	// onPrepareValue
@@ -157,7 +157,7 @@ class RequestHistory extends Map
 	// retourne toutes les uris absoluts de requête dans un tableau
 	public function absolute():array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($this->all() as $key => $value) 
 		{
@@ -172,7 +172,7 @@ class RequestHistory extends Map
 	// retourne un tableau avec tous les objets requêtes
 	public function request():array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($this->all() as $key => $value) 
 		{
@@ -187,7 +187,7 @@ class RequestHistory extends Map
 	// retourne toutes les requête
 	public function all():array 
 	{
-		$return = array();
+		$return = [];
 		$extra = static::extra(true);
 		
 		foreach ($this->arr() as $key => $value) 
@@ -206,7 +206,7 @@ class RequestHistory extends Map
 	// retourne le tableau extra
 	public static function extra(bool $keys=false):array 
 	{
-		$return = static::$config['extra'] ?? array();
+		$return = static::$config['extra'] ?? [];
 		
 		if($keys === true && !empty($return))
 		$return = array_keys($return);
@@ -219,7 +219,7 @@ class RequestHistory extends Map
 	// retourne vrai si le tableau est valide pour créer une requête
 	public static function isArrayValid($value):bool 
 	{
-		return (is_array($value) && Base\Arr::keysExists(array('absolute','method','timestamp'),$value))? true:false;
+		return (is_array($value) && Base\Arr::keysExists(['absolute','method','timestamp'],$value))? true:false;
 	}
 }
 ?>

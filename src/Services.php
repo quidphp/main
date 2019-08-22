@@ -11,11 +11,11 @@ class Services extends Map
 	
 	
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
-	protected static $allow = array('set','unset','remove','sort','clone'); // méthodes permises
+	protected static $allow = ['set','unset','remove','sort','clone']; // méthodes permises
 	protected static $sortDefault = 'getKey'; // défini la méthode pour sort par défaut
 	
 	
@@ -45,7 +45,7 @@ class Services extends Map
 		static::throw('alreadyIn',$key);
 		
 		$class = null;
-		$args = array();
+		$args = [];
 		
 		if(is_string($value))
 		$class = $value;

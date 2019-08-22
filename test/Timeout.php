@@ -20,19 +20,19 @@ class Timeout extends Base\Test
 		assert(!$t->isMaxed('none'));
 
 		// set
-		assert($t->set('test',array('max'=>3,'timeout'=>400)) === $t);
-		assert($t->set(array('array',1,2,3),array('max'=>3,'timeout'=>400))->isCount(2));
-		assert($t->set(array('array',1,2,3),array('max'=>4))->get('array')['timeout'] = 600);
+		assert($t->set('test',['max'=>3,'timeout'=>400]) === $t);
+		assert($t->set(['array',1,2,3],['max'=>3,'timeout'=>400])->isCount(2));
+		assert($t->set(['array',1,2,3],['max'=>4])->get('array')['timeout'] = 600);
 		assert($t->exists('test'));
-		assert($t->exists(array('array',1,2,3)));
-		assert($t->sets(array('test3'=>null))->isCount(3));
+		assert($t->exists(['array',1,2,3]));
+		assert($t->sets(['test3'=>null])->isCount(3));
 
 		// change
-		assert($t->change('test',array('timeout'=>399))->get('test')['timeout'] === 399);
-		assert($t->change('test',array('timeout'=>398))->get('test')['max'] === 3);
+		assert($t->change('test',['timeout'=>399])->get('test')['timeout'] === 399);
+		assert($t->change('test',['timeout'=>398])->get('test')['max'] === 3);
 
 		// changes
-		assert($t->changes(array('test'=>array('timeout'=>397)))->get('test')['timeout'] === 397);
+		assert($t->changes(['test'=>['timeout'=>397]])->get('test')['timeout'] === 397);
 
 		// getCount
 		assert($t->getCount('test2') === null);
@@ -63,8 +63,8 @@ class Timeout extends Base\Test
 		assert(!$t->isTimedOut('test'));
 		assert($t->addCount('test',2) === $t);
 		assert($t->isTimedOut('test'));
-		assert($t->addCount(array('array',1,2,3)) === $t);
-		assert($t->addCount(array('array',1,2,3))->getCount(array('array',1,2,3)) === 2);
+		assert($t->addCount(['array',1,2,3]) === $t);
+		assert($t->addCount(['array',1,2,3])->getCount(['array',1,2,3]) === 2);
 
 		// increment
 		assert($t->increment('test') === $t);
@@ -101,10 +101,10 @@ class Timeout extends Base\Test
 		assert($t->resetAll() === $t);
 
 		// checkValueValid
-		assert($t::checkValueValid(array('timeout'=>8,'max'=>10)) === array('timeout'=>8,'max'=>10,'count'=>0,'timestamp'=>null));
+		assert($t::checkValueValid(['timeout'=>8,'max'=>10]) === ['timeout'=>8,'max'=>10,'count'=>0,'timestamp'=>null]);
 
 		// map
-		assert($t->sets(array('test'=>array('timeout'=>398),'test3'=>array('timeout'=>397)))->get('test3')['timeout'] === 397);
+		assert($t->sets(['test'=>['timeout'=>398],'test3'=>['timeout'=>397]])->get('test3')['timeout'] === 397);
 		assert(is_string(serialize($t)));
 		assert($t->unset('test')->isCount(2));
 		assert($t->empty() === $t);

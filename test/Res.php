@@ -17,9 +17,9 @@ class Res extends Base\Test
 		$path3 = Base\File::path("[assertCurrent]/arrayAccess.php");
 
 		// construct
-		$res = new Main\Res($path,array('create'=>true));
-		$resNew = new Main\Res($pathNew,array('create'=>true));
-		$res3 = new Main\Res($path3,array('create'=>true));
+		$res = new Main\Res($path,['create'=>true]);
+		$resNew = new Main\Res($pathNew,['create'=>true]);
+		$res3 = new Main\Res($path3,['create'=>true]);
 		$temp = new Main\Res("php://temp");
 		$tempConcat = new Main\Res("php://temp");
 		$res->write("lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3");
@@ -80,7 +80,7 @@ class Res extends Base\Test
 		assert($tempConcat->mime() === null);
 		assert($tempConcat->mimeGroup() === null);
 		assert($res->mimeGroup() === 'php');
-		assert($res->mimeFamilies() === array('text'));
+		assert($res->mimeFamilies() === ['text']);
 		assert($res->mimeFamily() === 'text');
 		
 		// jsonSerialize
@@ -163,7 +163,7 @@ class Res extends Base\Test
 		assert(!$res->isScheme('file'));
 
 		// isExtension
-		assert($res->isExtension(array('php')));
+		assert($res->isExtension(['php']));
 
 		// isMimeGroup
 		assert($res->isMimeGroup('php'));
@@ -212,7 +212,7 @@ class Res extends Base\Test
 		assert($res->isStart());
 
 		// lines
-		assert($res->lines(0,0) === array());
+		assert($res->lines(0,0) === []);
 
 		// line
 		assert($res->seekRewind()->line() === "lorem ipsum lorem ipsum");
@@ -255,13 +255,13 @@ class Res extends Base\Test
 		assert($temp->overwrite('loremIpsum2')->read() === 'loremIpsum2');
 
 		// prepend
-		assert(strlen($temp->prepend('ok',array('newline'=>true))->read()) === 14);
+		assert(strlen($temp->prepend('ok',['newline'=>true])->read()) === 14);
 
 		// append
-		assert(strlen($temp->append('ok',array('newline'=>true))->read()) === 17);
+		assert(strlen($temp->append('ok',['newline'=>true])->read()) === 17);
 
 		// lineSplice
-		assert(strlen($temp->lineSplice(0,1,array('ookkk','line2'))->read()) === 26);
+		assert(strlen($temp->lineSplice(0,1,['ookkk','line2'])->read()) === 26);
 
 		// lineSpliceFirst
 		assert(strlen($temp->lineSpliceFirst("first\nok")->read()) === 29);

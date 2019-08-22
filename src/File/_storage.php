@@ -8,10 +8,10 @@ use Quid\Base;
 trait _storage
 {
 	// config
-	public static $configFileStorage = array(
+	public static $configFileStorage = [
 		'dirname'=>null, // dirname par défaut
 		'inc'=>0 // chiffre qui s'auto incrémente à chaque ajout d'un élément de cette classe
-	);
+	];
 	
 	
 	// isStorageDataValid
@@ -148,7 +148,7 @@ trait _storage
 		{
 			$path = static::storagePath(...$values);
 			$data = static::storageData(...$values);
-			$file = new static($path,array('create'=>true));
+			$file = new static($path,['create'=>true]);
 			
 			if(!empty($file))
 			{

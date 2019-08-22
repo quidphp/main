@@ -7,11 +7,11 @@ use Quid\Base;
 class Localization extends Map
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
-	protected static $allow = array('overwrite','jsonSerialize','serialize','clone'); // méthodes permises
+	protected static $allow = ['overwrite','jsonSerialize','serialize','clone']; // méthodes permises
 
 	
 	// construct
@@ -47,7 +47,7 @@ class Localization extends Map
 	{
 		$return = null;
 		
-		if(is_array($value) && Base\Arr::keysExists(array('lat','lng','countryCode','input'),$value))
+		if(is_array($value) && Base\Arr::keysExists(['lat','lng','countryCode','input'],$value))
 		{
 			if(!(is_numeric($value['lat']) && is_numeric($value['lng'])))
 			static::throw('invalidLatLng');
@@ -94,7 +94,7 @@ class Localization extends Map
 	// retourne le tableau latlng
 	public function latLng():array
 	{
-		return array('lat'=>$this->lat(),'lng'=>$this->lng());
+		return ['lat'=>$this->lat(),'lng'=>$this->lng()];
 	}
 	
 	

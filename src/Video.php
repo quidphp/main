@@ -11,19 +11,19 @@ class Video extends Map
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
+	public static $config = [
+		'option'=>[
 			'name'=>'name',
 			'date'=>'date',
 			'description'=>'description',
 			'absolute'=>'absolute',
 			'thumbnail'=>'thumbnail',
-			'html'=>'html')
-	);
+			'html'=>'html']
+	];
 	
 	
 	// map
-	protected static $allow = array('overwrite','serialize','clone'); // méthodes permises
+	protected static $allow = ['overwrite','serialize','clone']; // méthodes permises
 	
 	
 	// construct

@@ -36,7 +36,7 @@ trait _session
 	public function sessionWrite(string $data):bool
 	{
 		$return = true;
-		$this->overwrite($data,array('callback'=>null));
+		$this->overwrite($data,['callback'=>null]);
 
 		return $return;
 	}
@@ -110,7 +110,7 @@ trait _session
 		if(!static::sessionExists($path,$name,$sid))
 		{
 			$path = static::sessionPath($path,$name,$sid);
-			$return = static::new($path,array('create'=>true));
+			$return = static::new($path,['create'=>true]);
 			$return->resource();
 		}
 		
@@ -145,7 +145,7 @@ trait _session
 		$files = Base\Dir::getFormatSmaller($dir,$timestamp,'dateAccess');
 		
 		if(!is_array($not))
-		$not = array($not);
+		$not = [$not];
 		
 		foreach ($not as $k => $v) 
 		{

@@ -7,14 +7,14 @@ use Quid\Base;
 trait _calendar
 {
 	// config
-	public static $configWidgetCalendar = array(
-		'option'=>array(
+	public static $configWidgetCalendar = [
+		'option'=>[
 			'formatCurrent'=>'calendar', // format de date pour le mois 
-			'attr'=>array( // attr pour le output
+			'attr'=>[ // attr pour le output
 				'head'=>'head',
 				'current'=>'current',
-				'body'=>'body'))
-	);
+				'body'=>'body']]
+	];
 	
 	
 	// dynamique
@@ -89,7 +89,7 @@ trait _calendar
 	// peut être utilisé comme attribut html
 	public function parseTimestamp(int $value):array 
 	{
-		$return = array();
+		$return = [];
 		$value = Base\Date::floorDay($value);
 		$format = $this->format();
 		
@@ -160,7 +160,7 @@ trait _calendar
 	public function setSelected($value):self 
 	{
 		if(is_numeric($value))
-		$value = array($value);
+		$value = [$value];
 		
 		if(is_array($value) && !empty($value))
 		$this->selected = Base\Arr::cast($value);
@@ -251,7 +251,7 @@ trait _calendar
 	protected function tableHead():string
 	{
 		$return = '';
-		$ths = array();
+		$ths = [];
 		$daysShort = Base\Date::getDaysShort();
 		
 		if(!empty($daysShort) && count($daysShort) === 7)
@@ -259,7 +259,7 @@ trait _calendar
 			foreach ($daysShort as $value) 
 			{
 				$span = Base\Html::span($value);
-				$ths[] = array($span);
+				$ths[] = [$span];
 			}
 		}
 		
@@ -276,13 +276,13 @@ trait _calendar
 		$return = '';
 		$structure = $this->structure();
 		$callback = $this->callback('day');
-		$trs = array();
+		$trs = [];
 		
 		foreach ($structure as $weekNo => $weekDays) 
 		{
 			if(is_array($weekDays))
 			{
-				$tds = array();
+				$tds = [];
 				
 				foreach ($weekDays as $timestamp) 
 				{
@@ -298,13 +298,13 @@ trait _calendar
 							{
 								$td = $callback($day,$timestamp,$attr,$this);
 								if(!is_array($td))
-								$td = array($td,$attr);
+								$td = [$td,$attr];
 							}
 							
 							else
 							{
 								$span = Base\Html::span($day);
-								$td = array($span,$attr);
+								$td = [$span,$attr];
 							}
 							
 							if(is_array($td))
@@ -314,7 +314,7 @@ trait _calendar
 				}
 				
 				if(!empty($tds))
-				$trs[] = array($tds);
+				$trs[] = [$tds];
 			}
 		}
 		

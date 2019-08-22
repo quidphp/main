@@ -11,7 +11,7 @@ class Update extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// construct
-		$array = array(1=>'test','bla'=>'OK');
+		$array = [1=>'test','bla'=>'OK'];
 		$u = new Main\Update($array);
 		
 		// map

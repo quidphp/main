@@ -11,16 +11,16 @@ class Map extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// prepare
-		$array = array('test'=>'ok','what'=>'LOL','james'=>2,3);
+		$array = ['test'=>'ok','what'=>'LOL','james'=>2,3];
 
 		// construct
 		$map = new Main\Map($array);
-		$onlyNumeric = new Main\Map(array(1,2,3));
+		$onlyNumeric = new Main\Map([1,2,3]);
 		$empty = new Main\Map();
-		$recursive = new Main\Map(array($map,$empty,$onlyNumeric));
+		$recursive = new Main\Map([$map,$empty,$onlyNumeric]);
 
 		// arrMap
-		assert($map->toArray() === array('test'=>'ok','what'=>'LOL','james'=>2,3));
+		assert($map->toArray() === ['test'=>'ok','what'=>'LOL','james'=>2,3]);
 		$map[0] = 3;
 		assert(strlen($map->toJson()) === 42);
 		assert($map->_cast() === $map->toArray());
@@ -43,11 +43,11 @@ class Map extends Base\Test
 		assert($empty->isEmpty());
 		assert($map->isNotEmpty());
 		assert($map->isCount(3));
-		assert($map->isCount(array(1,2,3)));
+		assert($map->isCount([1,2,3]));
 		assert($map->isMinCount(3));
-		assert($map->isMinCount(array(1,2,3)));
+		assert($map->isMinCount([1,2,3]));
 		assert($map->isMaxCount(3));
-		assert($map->isMaxCount(array(1,2,3)));
+		assert($map->isMaxCount([1,2,3]));
 		assert($map->each(function($value,$key,$index) use($map) {
 			assert($this === $map);
 			assert(is_int($index));
@@ -138,14 +138,14 @@ class Map extends Base\Test
 		assert($map->checkIn('ok','LOL') === $map);
 
 		// keys
-		assert($map->keys() === array('test','what','james'));
+		assert($map->keys() === ['test','what','james']);
 
 		// search
 		assert($map->search(2) === 'james');
 
 		// values
-		assert($map->values() === array('ok','LOL',2));
-		assert($map->values('int') === array(2));
+		assert($map->values() === ['ok','LOL',2]);
+		assert($map->values('int') === [2]);
 
 		// first
 		assert($map->first() === 'ok');
@@ -170,28 +170,28 @@ class Map extends Base\Test
 		assert($map->get('addsasda') === null);
 
 		// gets
-		assert($map->gets('test') === array('test'=>'ok'));
-		assert($map->gets('what','test') === array('what'=>'LOL','test'=>'ok'));
+		assert($map->gets('test') === ['test'=>'ok']);
+		assert($map->gets('what','test') === ['what'=>'LOL','test'=>'ok']);
 
 		// index
 		assert($map->index(0) === 'ok');
 
 		// indexes
-		assert($map->indexes(0,1) === array('ok','LOL'));
+		assert($map->indexes(0,1) === ['ok','LOL']);
 
 		// slice
 		assert(count($map->slice('test','james')) === 3);
 
 		// sliceIndex
-		assert($map->sliceIndex(0,1) === array('test'=>'ok'));
+		assert($map->sliceIndex(0,1) === ['test'=>'ok']);
 
 		// set
 		assert($map->set('test','ok2') instanceof Main\Map);
 		assert($map->get('test') === 'ok2');
-		assert($map->sets(array('test'=>'ok22','non'=>false))->count() === 4);
+		assert($map->sets(['test'=>'ok22','non'=>false])->count() === 4);
 
 		// sets
-		assert($map->sets(array('okz'=>'WAAAA'))['okz'] === 'WAAAA');
+		assert($map->sets(['okz'=>'WAAAA'])['okz'] === 'WAAAA');
 		assert($map->unset('okz'));
 
 		// unset
@@ -200,7 +200,7 @@ class Map extends Base\Test
 		assert($map->unset('what','james')->count() === 0);
 
 		// remove
-		$map->sets(array(1,2,2));
+		$map->sets([1,2,2]);
 		assert($map->remove(2)->count() === 1);
 
 		// push
@@ -210,13 +210,13 @@ class Map extends Base\Test
 		assert($map->unshift(1)->count() === 3);
 
 		// overwrite
-		assert($map->overwrite(array('test'=>2))->count() === 1);
+		assert($map->overwrite(['test'=>2])->count() === 1);
 
 		// makeOverwrite
 
 		// empty
 		assert($map->empty()->count() === 0);
-		assert($map->overwrite(array('test'=>2))->count() === 1);
+		assert($map->overwrite(['test'=>2])->count() === 1);
 
 		// isSensitive
 		assert(Main\Map::isSensitive());

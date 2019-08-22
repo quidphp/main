@@ -11,8 +11,8 @@ class Video extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// construct
-		$data = array('abs'=>'http://google.com','namez'=>'LOL','description'=>'OK','html'=>'<div></div>');
-		$video = new Main\Video($data,array('absolute'=>'abs','name'=>'namez'));
+		$data = ['abs'=>'http://google.com','namez'=>'LOL','description'=>'OK','html'=>'<div></div>'];
+		$video = new Main\Video($data,['absolute'=>'abs','name'=>'namez']);
 
 		// toString
 

@@ -15,7 +15,7 @@ class Extenders extends Base\Test
 		$ex2 = new Main\Extender("Quid\Base");
 
 		// construct
-		$s = new Main\Extenders(array('ex'=>$ex));
+		$s = new Main\Extenders(['ex'=>$ex]);
 		assert($s->isNotEmpty());
 
 		// onPrepareThis

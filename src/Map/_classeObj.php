@@ -20,7 +20,7 @@ trait _classeObj
 	// retourne l'objet cloner pour certaines méthodes
 	public function onPrepareThis(string $method):Main\Map
 	{
-		return (in_array($method,array('filter','sortBy'),true))? $this->clone():$this;
+		return (in_array($method,['filter','sortBy'],true))? $this->clone():$this;
 	}
 	
 	
@@ -36,7 +36,7 @@ trait _classeObj
 	// retourne un tableau associatif avec le clé et le résultat d'une méthode
 	public function pair(string $method,...$args):array 
 	{
-		$return = array();
+		$return = [];
 		$type = static::classeOrObj();
 		
 		foreach ($this->arr() as $key => $value) 
@@ -121,7 +121,7 @@ trait _classeObj
 	// retourne un tableau avec des classes ou objets
 	public function group(string $method,...$args):array 
 	{
-		$return = array();
+		$return = [];
 		$type = static::classeOrObj();
 		
 		foreach ($this->arr() as $key => $value) 

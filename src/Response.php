@@ -7,11 +7,11 @@ use Quid\Base;
 class Response extends Res
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
-	protected static $allow = array('clone'); // méthodes permises
+	protected static $allow = ['clone']; // méthodes permises
 
 
 	// dynamique
@@ -54,7 +54,7 @@ class Response extends Res
 	// retourne tout l'objet sous forme de tableau sauf cache et index
 	public function toArray():array
 	{
-		return Base\Arr::unsets(array('cache','index'),get_object_vars($this));
+		return Base\Arr::unsets(['cache','index'],get_object_vars($this));
 	}
 	
 	
@@ -104,7 +104,7 @@ class Response extends Res
 	// traite un tableau exec, en provenance de request curlExec
 	protected function setExec(array $exec):self 
 	{
-		if(Base\Arr::keysExists(array('header','resource','timestamp'),$exec))
+		if(Base\Arr::keysExists(['header','resource','timestamp'],$exec))
 		{
 			$this->setHeaders($exec['header']);
 			$this->setResource($exec['resource']);

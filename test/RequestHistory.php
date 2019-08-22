@@ -61,11 +61,11 @@ class RequestHistory extends Base\Test
 		assert(count($rh->all()[0]) === 4);
 
 		// extra
-		assert(Main\RequestHistory::extra() === array('redirectable'=>true));
-		assert(Main\RequestHistory::extra(true) === array('redirectable'));
+		assert(Main\RequestHistory::extra() === ['redirectable'=>true]);
+		assert(Main\RequestHistory::extra(true) === ['redirectable']);
 
 		// isArrayValid
-		assert(!Main\RequestHistory::isArrayValid(array('Asd')));
+		assert(!Main\RequestHistory::isArrayValid(['Asd']));
 
 		// map
 		assert($rh->in($request4));

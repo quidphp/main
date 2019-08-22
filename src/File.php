@@ -11,19 +11,19 @@ class File extends Res
 	
 	
 	// config
-	public static $config = array(
+	public static $config = [
 		'group'=>null, // groupe par défaut, par défaut rien, si tu mets false la classe getClass ne cherchera pas de classe
 		'mime'=>null, // définit le mime par défaut à utiliser (par exemple lors de la création d'une ressource temporaire)
 		'type'=>null, // permet de set un type au fichier
-		'types'=>array(), // défini les options à mettre selon le type
-		'option'=>array(
+		'types'=>[], // défini les options à mettre selon le type
+		'option'=>[
 			'create'=>false, // crée le fichier si non existant
 			'read'=>null, // option pour read
-			'write'=>null), // option pour write
-		'storageClass'=>array(), // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
-		'utilClass'=>array(), // défini les classes utilités
-		'groupClass'=>array() // défini la classe à utiliser selon le mimeGroup du fichier
-	);
+			'write'=>null], // option pour write
+		'storageClass'=>[], // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
+		'utilClass'=>[], // défini les classes utilités
+		'groupClass'=>[] // défini la classe à utiliser selon le mimeGroup du fichier
+	];
 	
 	
 	// construct
@@ -280,7 +280,7 @@ class File extends Res
 	// comme new, mais create est true par défaut
 	public static function newCreate($value,?array $option=null):self
 	{
-		return static::newOverload($value,Base\Arr::plus($option,array('create'=>true)));
+		return static::newOverload($value,Base\Arr::plus($option,['create'=>true]));
 	}
 	
 	

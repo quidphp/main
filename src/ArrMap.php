@@ -7,11 +7,11 @@ use Quid\Base;
 abstract class ArrMap extends ArrObj 
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// dynamique
-	protected $data = array(); // données de la map
+	protected $data = []; // données de la map
 	
 	
 	// toString
@@ -227,7 +227,7 @@ abstract class ArrMap extends ArrObj
 	public function empty() 
 	{
 		$data =& $this->arr();
-		$data = array();
+		$data = [];
 		
 		return $this;
 	}

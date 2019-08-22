@@ -11,14 +11,14 @@ class Error extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// construct 
-		$error = new Main\Error(array("test",__FILE__,$line = __LINE__,E_USER_WARNING),1);
-		$notice = new Main\Error(array("test",__FILE__,__LINE__),2);
+		$error = new Main\Error(["test",__FILE__,$line = __LINE__,E_USER_WARNING],1);
+		$notice = new Main\Error(["test",__FILE__,__LINE__],2);
 		$exception = new Main\Exception("numero1");
 		$exception2 = new Main\Exception("numero2",$exception);
 		$exception3 = new Main\Exception("numero3",$exception2);
-		$silent = new Main\Error(array('message'=>"silentz",'file'=>__FILE__,'line'=>__LINE__),21);
-		$warning = new Main\Error(array("warningz",__FILE__,__LINE__),22);
-		$fatal = new Main\Error(array("fatalz",__FILE__,__LINE__),23);
+		$silent = new Main\Error(['message'=>"silentz",'file'=>__FILE__,'line'=>__LINE__],21);
+		$warning = new Main\Error(["warningz",__FILE__,__LINE__],22);
+		$fatal = new Main\Error(["fatalz",__FILE__,__LINE__],23);
 		$e = new Main\Error("ok");
 		$ex = new Main\Error($exception);
 		$ex2 = new Main\Error($exception2);
@@ -89,7 +89,7 @@ class Error extends Base\Test
 
 		// getStack
 		assert($error->getStack() === null);
-		assert($ex->getStack() === array());
+		assert($ex->getStack() === []);
 		assert(count($ex2->getStack()) === 1);
 
 		// setStack
@@ -136,8 +136,8 @@ class Error extends Base\Test
 		assert(Base\Html::is($error->html()));
 		assert(is_string($error->html()));
 		assert(!empty($silent->html()));
-		$x = new Main\Error($e->toArray(),null,array('htmlDepth'=>7));
-		$y = new Main\Error($x->toArray(),null,array('htmlDepth'=>7));
+		$x = new Main\Error($e->toArray(),null,['htmlDepth'=>7]);
+		$y = new Main\Error($x->toArray(),null,['htmlDepth'=>7]);
 		assert($x->html() !== $y->html()); // id est différent
 
 		// getOutput

@@ -7,7 +7,7 @@ use Quid\Base;
 trait _option
 {
 	// option
-	protected $option = array(); // tableau des options
+	protected $option = []; // tableau des options
 	
 	
 	// isOption

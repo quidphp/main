@@ -27,7 +27,7 @@ class Files extends Base\Test
 		// onPrepareReturns
 
 		// safeBasename
-		assert($files->safeBasename() === array('class.php','jpg.jpg'));
+		assert($files->safeBasename() === ['class.php','jpg.jpg']);
 
 		// set
 		assert($files->set(2,$binary) === $files);
@@ -38,7 +38,7 @@ class Files extends Base\Test
 		assert($files3->dirMethod('getPhp',$_dir_)->count() > 3);
 
 		// dir
-		assert($files->dir(dirname($_dir_),true,array('in'=>array('visible'=>true)))->count() > 5);
+		assert($files->dir(dirname($_dir_),true,['in'=>['visible'=>true]])->count() > 5);
 		
 		// dirVisible
 		
@@ -55,7 +55,7 @@ class Files extends Base\Test
 		// unlink
 		
 		// obj
-		assert($files->filter(array('extension'=>'pdf'))->keys() === array(2,11));
+		assert($files->filter(['extension'=>'pdf'])->keys() === [2,11]);
 		assert(count($files->pair('basename')) > 5);
 
 		// map
@@ -63,9 +63,9 @@ class Files extends Base\Test
 		assert($files[8] instanceof Main\File);
 		assert(is_resource($files[8]->resource()));
 		assert($files->gets(1,3,2,4,10101010)->isCount(4));
-		assert($files->gets(3,1,2,4,10101010)->keys() === array(3,1,2,4));
+		assert($files->gets(3,1,2,4,10101010)->keys() === [3,1,2,4]);
 		assert($files->clone() !== $files);
-		assert($files->gets(3,1,2,4,10101010)->sequential()->keys() === array(0,1,2,3));
+		assert($files->gets(3,1,2,4,10101010)->sequential()->keys() === [0,1,2,3]);
 
 		// cleanup
 		Base\Dir::empty("[assertCurrent]");

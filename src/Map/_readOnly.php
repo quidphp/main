@@ -71,7 +71,7 @@ trait _readOnly
 	// retourne les méthodes permises même si readOnly est true
 	public static function allowedReadOnlyMethods():array
 	{
-		return array('filter','jsonSerialize','serialize','clone');
+		return ['filter','jsonSerialize','serialize','clone'];
 	}
 }
 ?>

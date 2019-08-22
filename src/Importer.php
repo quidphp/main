@@ -11,8 +11,8 @@ class Importer extends Map
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
+	public static $config = [
+		'option'=>[
 			'action'=>'insert', // action par défaut
 			'empty'=>false, // empty lors du trigger, booléean
 			'slim'=>true, // réduit la taille du tableau de retour dans prepareReturn
@@ -22,20 +22,20 @@ class Importer extends Map
 			'update'=>null, // option pour update
 			'delete'=>null, // option pour delete
 			'truncate'=>null, // option pour truncate
-			'lineCallback'=>null) // callable pour chaque ligne
-	);
+			'lineCallback'=>null] // callable pour chaque ligne
+	];
 	
 	
 	// map
-	protected static $allow = array('set','unset','empty'); // méthodes permises
-	protected static $after = array('clean'); // lance la méthode clean après chaque modification
+	protected static $allow = ['set','unset','empty']; // méthodes permises
+	protected static $after = ['clean']; // lance la méthode clean après chaque modification
 	
 
 	// dynamique
 	protected $source = null; // store l'instance de la source
 	protected $target = null; // store la target
-	protected $required = array(); // store les colonnes qui ne peuvent pas être vide
-	protected $callable = array(); // store les callbacks pour les différentes colonnes
+	protected $required = []; // store les colonnes qui ne peuvent pas être vide
+	protected $callable = []; // store les callbacks pour les différentes colonnes
 	
 	
 	// construct
@@ -191,7 +191,7 @@ class Importer extends Map
 	// retourne un tableau multidimensionnel avec tous les liens colonnes et callable
 	public function getMaps():array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($this->arr() as $key => $value) 
 		{
@@ -220,7 +220,7 @@ class Importer extends Map
 	// émule l'insertion des lignes
 	public function emulate($offset=true,$length=true,?array $option=null):array
 	{
-		$return = array('total'=>array(),'data'=>array());
+		$return = ['total'=>[],'data'=>[]];
 		$option = Base\Arr::plus($this->option(),$option);
 		$source = $this->source(true);
 		$i = 0;
@@ -242,7 +242,7 @@ class Importer extends Map
 	// calcul le total des lignes valides et non valides
 	protected function makeTotal(array $data):array 
 	{
-		$return = array('valid'=>0,'invalid'=>0,'save'=>0,'noSave'=>0,'insert'=>0,'update'=>0,'delete'=>0);
+		$return = ['valid'=>0,'invalid'=>0,'save'=>0,'noSave'=>0,'insert'=>0,'update'=>0,'delete'=>0];
 		
 		foreach ($data as $key => $value) 
 		{
@@ -297,13 +297,13 @@ class Importer extends Map
 	// si required est true, utilise la méthode base/validate isReallyEmpty
 	public function one(array $value):array
 	{
-		$return = array('action'=>null,'valid'=>false,'error'=>null,'save'=>false,'int'=>null,'data'=>array(),'source'=>$value);
+		$return = ['action'=>null,'valid'=>false,'error'=>null,'save'=>false,'int'=>null,'data'=>[],'source'=>$value];
 		$maps = $this->checkMaps();
 		$keys = array_keys($maps);
 		
 		if(Base\Arr::keysExists($keys,$value))
 		{
-			$line = array();
+			$line = [];
 			
 			foreach ($value as $k => $v) 
 			{
@@ -319,7 +319,7 @@ class Importer extends Map
 					
 					if($v === false || ($required === true && Base\Validate::isReallyEmpty($v)))
 					{
-						$return['error'] = array($col=>$original);
+						$return['error'] = [$col=>$original];
 						break;
 					}
 					
@@ -374,7 +374,7 @@ class Importer extends Map
 	// prépare et insère les lignes dans la table de données
 	public function trigger($offset=true,$length=true,?array $option=null):array
 	{
-		$return = array('total'=>array(),'data'=>array());
+		$return = ['total'=>[],'data'=>[]];
 		$option = Base\Arr::plus($this->option(),$option);
 		$target = $this->target();
 		$onBefore = $option['onBefore'] ?? null;

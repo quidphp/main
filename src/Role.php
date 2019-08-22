@@ -7,15 +7,15 @@ use Quid\Base;
 abstract class Role extends Root
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'permission'=>0, // code de permission du rôle
-		'can'=>array(), // permission générale
+		'can'=>[], // permission générale
 		'ignore'=>false, // si le role est ignoré pour roles
-	);
+	];
 	
 	
 	// cacheStatic
-	protected static $cacheStatic = array();
+	protected static $cacheStatic = [];
 	
 	
 	// construct
@@ -151,7 +151,7 @@ abstract class Role extends Root
 		$fqcn = static::class;
 		
 		if(is_scalar($value))
-		$value = array($value);
+		$value = [$value];
 		
 		if(is_array($value))
 		{
@@ -167,7 +167,7 @@ abstract class Role extends Root
 				
 				if(!empty($replace))
 				{
-					$callable = array(Base\Number::class,'cast');
+					$callable = [Base\Number::class,'cast'];
 					$value = Base\Arr::valuesReplace($replace,$value);
 					$value = array_map($callable,$value);
 					

@@ -11,14 +11,14 @@ class Concatenator extends Map
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
+	public static $config = [
+		'option'=>[
 			'empty'=>true, // si le fichier est effacé au lancement du trigger
 			'start'=>null, // contenu à mettre en début de rendu, peut être une callable
 			'end'=>null, // contenu à mettre en fin de rendu, peut être une callable
 			'separator'=>null, // séparateur entre entrée
 			'callable'=>null, // permet de spécifier un callable en fin de trigger
-			'entry'=>array(
+			'entry'=>[
 				'start'=>null, // contenu à mettre en début d'entrée, peut être une callable
 				'end'=>null, // contenu à mettre en fin d'entrée, peut être une callable
 				'lineStart'=>null, // ligne de départ pour les fichiers dans l'entrée
@@ -28,12 +28,12 @@ class Concatenator extends Map
 				'extension'=>null, // extension pour les fichiers
 				'dig'=>true, // s'il faut creuser dans le dossier
 				'remove'=>null, // si c'est un dossier, permet d'exclure des classes
-				'priority'=>null)) // priority si c'est un dossier, permet de mettre des fichiers en avant
-	);
+				'priority'=>null]] // priority si c'est un dossier, permet de mettre des fichiers en avant
+	];
 	
 	
 	// map
-	protected static $allow = array('unset','serialize','clone'); // méthodes permises
+	protected static $allow = ['unset','serialize','clone']; // méthodes permises
 
 
 	// construct
@@ -54,7 +54,7 @@ class Concatenator extends Map
 		if(!empty($value))
 		{
 			$data =& $this->arr();
-			$array = array($value,$option);
+			$array = [$value,$option];
 			$data[] = $array;
 		}
 		
@@ -79,7 +79,7 @@ class Concatenator extends Map
 	// est utilisé lors du trigger
 	public function parse():array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($this->arr() as $array) 
 		{
@@ -103,12 +103,12 @@ class Concatenator extends Map
 		$option = Base\Arr::plus($this->getOption('entry'),$option);
 		
 		if($value instanceof \Closure)
-		$values = array($value);
+		$values = [$value];
 		else
 		$values = $this->getEntryFiles($value,$option);
 
 		if(!empty($values))
-		$return = array($values,$option);
+		$return = [$values,$option];
 		
 		return $return;
 	}
@@ -119,7 +119,7 @@ class Concatenator extends Map
 	// méthode protégé
 	protected function getEntryFiles($value,array $option):array 
 	{
-		$return = array();
+		$return = [];
 		
 		if($value instanceof File)
 		$value = $value->path();
@@ -136,11 +136,11 @@ class Concatenator extends Map
 			
 			elseif(Base\Dir::is($value))
 			{
-				$in = array('type'=>'file');
+				$in = ['type'=>'file'];
 				if(!empty($option['extension']))
 				$in['extension'] = $option['extension'];
 				
-				$return = Base\Dir::getVisible($value,$option['dig'],array('in'=>$in));
+				$return = Base\Dir::getVisible($value,$option['dig'],['in'=>$in]);
 				
 				if(!empty($return))
 				{

@@ -7,17 +7,17 @@ use Quid\Base;
 class Autoload
 {
 	// config
-	public static $config = array(
-		'alias'=>array(), // liste d'alias pour le lazy load
+	public static $config = [
+		'alias'=>[], // liste d'alias pour le lazy load
 		'aliasEnding'=>'Alias', // fin de nom de classe pour les alias automatique
-		'closure'=>array(), // tableau de nom de classe avec closure, pour charger des classes sans inclure de fichiers
-		'overload'=>array() // garde une copie des noms de classe overloadés
-	);
+		'closure'=>[], // tableau de nom de classe avec closure, pour charger des classes sans inclure de fichiers
+		'overload'=>[] // garde une copie des noms de classe overloadés
+	];
 	
 	
 	// dynamique
-	protected $attr = array(); // attribut de construction
-	protected $hit = array(); // classe trouvé
+	protected $attr = []; // attribut de construction
+	protected $hit = []; // classe trouvé
 	protected $miss = null; // classe non trouvé
 	
 	
@@ -25,7 +25,7 @@ class Autoload
 	// construit l'objet autoload
 	public function __construct(string $type,bool $miss=false,?string $init=null,?array $arg=null) 
 	{
-		$attr = array('type'=>$type,'miss'=>$miss,'init'=>$init,'arg'=>$arg);
+		$attr = ['type'=>$type,'miss'=>$miss,'init'=>$init,'arg'=>$arg];
 		$this->setAttr($attr);
 		
 		return;
@@ -112,13 +112,13 @@ class Autoload
 		$type = $this->attr()['type'];
 		
 		if($type === 'psr4')
-		$return = array($this,'findPsr4');
+		$return = [$this,'findPsr4'];
 		
 		elseif($type === 'alias')
-		$return = array($this,'findAlias');
+		$return = [$this,'findAlias'];
 		
 		elseif($type === 'closure')
-		$return = array($this,'findClosure');
+		$return = [$this,'findClosure'];
 		
 		return $return;
 	}
@@ -414,8 +414,8 @@ class Autoload
 	// possible de creuser dans le namespace si dig est true
 	public static function getClosureByNamespace(string $namespace,bool $onlyClass=false,bool $dig=false):array 
 	{
-		$return = array();
-		$looper = array();
+		$return = [];
+		$looper = [];
 		
 		if($dig === false)
 		{
@@ -438,7 +438,7 @@ class Autoload
 			{
 				if($onlyClass === false || Base\Classe::isNameClass($name))
 				{
-					$fqcn = Base\Fqcn::str(array($ns,$name));
+					$fqcn = Base\Fqcn::str([$ns,$name]);
 					$return[] = $fqcn;
 				}
 			}
@@ -526,7 +526,7 @@ class Autoload
 	// le dossier a priorité
 	public static function findOneOrMany($value,bool $dig=true,bool $onlyClass=false,bool $declared=false):array 
 	{
-		$return = array();
+		$return = [];
 		$value = (array) $value;
 		
 		foreach ($value as $target) 
@@ -539,7 +539,7 @@ class Autoload
 				{
 					if(is_string($v))
 					{
-						$array = array();
+						$array = [];
 						
 						$dir = static::findMany($v,$dig,$onlyClass,$declared);
 						if(!empty($dir))
@@ -598,9 +598,9 @@ class Autoload
 		if(!empty($path) && is_dir($path))
 		{
 			if($onlyClass === true)
-			$opt = array('fqcnClass'=>true,'fqcnTrait'=>false,'fqcnInterface'=>false);
+			$opt = ['fqcnClass'=>true,'fqcnTrait'=>false,'fqcnInterface'=>false];
 			else
-			$opt = array('fqcnClass'=>true,'fqcnTrait'=>true,'fqcnInterface'=>true);
+			$opt = ['fqcnClass'=>true,'fqcnTrait'=>true,'fqcnInterface'=>true];
 			
 			$return = Base\Dir::getFqcn($path,$value,$dig,null,$opt);
 		}

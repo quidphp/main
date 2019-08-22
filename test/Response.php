@@ -15,7 +15,7 @@ class Response extends Base\Test
 		$mediaJson = "[assertMedia]/json.json";
 
 		// construct
-		$response = new Main\Response($mediaJpg,array('followLocation'=>true));
+		$response = new Main\Response($mediaJpg,['followLocation'=>true]);
 		$response3 = new Main\Response($mediaJson);
 		$response2 = clone $response;
 		assert($response2 !== $response);
@@ -42,7 +42,7 @@ class Response extends Base\Test
 		// setHeaders
 
 		// headers
-		assert(in_array(count($response->headers()),array(8,10),true));
+		assert(in_array(count($response->headers()),[8,10],true));
 
 		// setResource
 
@@ -62,7 +62,7 @@ class Response extends Base\Test
 		// body
 		assert(!empty($response->body()));
 		assert($response3->body() === '[1,2,3]');
-		assert($response3->body(true) === array(1,2,3));
+		assert($response3->body(true) === [1,2,3]);
 
 		// is200
 		assert($response->is200());
@@ -113,7 +113,7 @@ class Response extends Base\Test
 		assert($response->code() === 200);
 
 		// protocol
-		assert(in_array($response->protocol(),array('HTTP/1.1','HTTP/2','HTTP/2.0'),true));
+		assert(in_array($response->protocol(),['HTTP/1.1','HTTP/2','HTTP/2.0'],true));
 
 		// statusText
 		assert($response->statusText() === 'OK');

@@ -11,8 +11,8 @@ class Error extends Root
 
 	
 	// config
-	public static $config = array(
-		'option'=>array( // tableau d'options
+	public static $config = [
+		'option'=>[ // tableau d'options
 			'lang'=>null, // langue de l'erreur
 			'cast'=>'titleMessage', // méthode à utiliser pour cast
 			'errorLog'=>true, // l'erreur est loggé dans php.log
@@ -25,20 +25,20 @@ class Error extends Root
 			'cleanBuffer'=>null, // vide le buffer
 			'com'=>false, // met l'erreur dans com
 			'log'=>null, // classes pour log, peut être string ou array, s'il y a en plusieurs utilise seulement le premier qui fonctionne
-			'kill'=>true), // fin de php
+			'kill'=>true], // fin de php
 		'default'=>22, // code par défaut si vide
 		'throwMethod'=>'throwCommon', // nom de la méthode throw utilisé à travers quid
-		'type'=>array( // description des types
-			1=>array('key'=>'error','name'=>'Error'),
-			2=>array('key'=>'notice','name'=>'Notice'),
-			3=>array('key'=>'deprecated','name'=>'Deprecated'),
-			11=>array('key'=>'assert','name'=>'Assertion'),
-			21=>array('key'=>'silent','name'=>'Silent','html'=>false,'kill'=>false,'cleanBuffer'=>false),
-			22=>array('key'=>'warning','name'=>'Warning','kill'=>false,'cleanBuffer'=>false),
-			23=>array('key'=>'fatal','name'=>'Fatal'),
-			31=>array('key'=>'exception','name'=>'Exception'),
-			32=>array('key'=>'catchableException','name'=>'Catchable Exception'))
-	); 
+		'type'=>[ // description des types
+			1=>['key'=>'error','name'=>'Error'],
+			2=>['key'=>'notice','name'=>'Notice'],
+			3=>['key'=>'deprecated','name'=>'Deprecated'],
+			11=>['key'=>'assert','name'=>'Assertion'],
+			21=>['key'=>'silent','name'=>'Silent','html'=>false,'kill'=>false,'cleanBuffer'=>false],
+			22=>['key'=>'warning','name'=>'Warning','kill'=>false,'cleanBuffer'=>false],
+			23=>['key'=>'fatal','name'=>'Fatal'],
+			31=>['key'=>'exception','name'=>'Exception'],
+			32=>['key'=>'catchableException','name'=>'Catchable Exception']]
+	]; 
 	
 
 	// lang
@@ -51,7 +51,7 @@ class Error extends Root
 	protected $code = null; // code de l'erreur
 	protected $file = null; // fichier de l'erreur
 	protected $line = null; // ligne de l'erreur
-	protected $trace = array(); // trace de l'erreur
+	protected $trace = []; // trace de l'erreur
 	protected $info = null; // info sur l'erreur
 	protected $stack = null; // stack pour les exceptions
 	protected $content = null; // contenu additionnelle pour les exceptions
@@ -111,7 +111,7 @@ class Error extends Root
 	// utilisé par logError
 	public function toArray():array 
 	{
-		$return = array();
+		$return = [];
 		$return['message'] = $this->getMessage();
 		$return['code'] = $this->getCode();
 		$return['file'] = $this->getFile();
@@ -287,7 +287,7 @@ class Error extends Root
 
 		if(empty($trace))
 		{
-			$unshift = array('file'=>$this->getFile(),'line'=>$this->getLine());
+			$unshift = ['file'=>$this->getFile(),'line'=>$this->getLine()];
 			array_unshift($this->trace,$unshift);
 		}
 		
@@ -362,17 +362,17 @@ class Error extends Root
 	protected function prepare($value=null,?int $code=null):self
 	{
 		if(is_string($value))
-		$value = array($value);
+		$value = [$value];
 		
 		elseif(!is_array($value))
-		$value = array();
+		$value = [];
 		
 		if(is_array($value))
 		{
-			$message = Base\Arr::keysFirstValue(array('message',0),$value);
-			$file = Base\Arr::keysFirstValue(array('file',1),$value);
-			$line = Base\Arr::keysFirstValue(array('line',2),$value);
-			$info = Base\Arr::keysFirstValue(array('info',3),$value);
+			$message = Base\Arr::keysFirstValue(['message',0],$value);
+			$file = Base\Arr::keysFirstValue(['file',1],$value);
+			$line = Base\Arr::keysFirstValue(['line',2],$value);
+			$info = Base\Arr::keysFirstValue(['info',3],$value);
 			$trace = (array_key_exists('trace',$value) && is_array($value['trace']))? $value['trace']:Base\Debug::trace();
 			
 			if(empty($code))
@@ -383,7 +383,7 @@ class Error extends Root
 			
 			if(!is_string($file) || !is_int($line))
 			{
-				$traceBefore = Base\Debug::traceBeforeClass(array(static::class,self::class),true);
+				$traceBefore = Base\Debug::traceBeforeClass([static::class,self::class],true);
 				if(!empty($trace) && array_key_exists('file',$traceBefore) && array_key_exists('line',$traceBefore))
 				{
 					$file = $traceBefore['file'];
@@ -456,7 +456,7 @@ class Error extends Root
 	// retourne le tableau de type pour l'erreur
 	public function getType():array
 	{
-		$return = array();
+		$return = [];
 		$code = $this->getCode();
 		
 		if(array_key_exists($code,static::$config['type']) && is_array(static::$config['type'][$code]))
@@ -628,7 +628,7 @@ class Error extends Root
 		if(!empty($logs))
 		{
 			if(!is_array($logs))
-			$logs = array($logs);
+			$logs = [$logs];
 			
 			foreach ($logs as $log) 
 			{
@@ -704,7 +704,7 @@ class Error extends Root
 	// retourne les valeurs pour le output de l'erreur
 	public function getOutput(bool $showTrace=true):array
 	{
-		$return = array();
+		$return = [];
 		
 		// title
 		$title = $this->title();
@@ -772,7 +772,7 @@ class Error extends Root
 		if($errorReporting !== 0)
 		{
 			$code = static::grabCode($errorCode);
-			$error = new static(array($message,$file,$line,$errorCode),$code,$option);
+			$error = new static([$message,$file,$line,$errorCode],$code,$option);
 			
 			$return = $error->trigger();
 		}
@@ -796,7 +796,7 @@ class Error extends Root
 	public static function assert(string $file,int $line,$code=null,?string $message=null,?array $option=null):self
 	{
 		$code = static::grabCode("assert");
-		$error = new static(array($message,$file,$line),$code,$option);
+		$error = new static([$message,$file,$line],$code,$option);
 		
 		return $error->trigger();
 	}
@@ -954,12 +954,12 @@ class Error extends Root
 	// initialise la prise en charge des erreurs, exception et assertion
 	public static function init():void
 	{
-		Base\Error::setHandler(array(static::class,'handler'));
-		Base\Exception::setHandler(array(static::class,'exception'));
-		Base\Assert::setHandler(array(static::class,'assert'));
-		Base\Uri::setNotFound(array(CatchableException::class,'throw'));
-		Base\File::setNotFound(array(CatchableException::class,'throw'));
-		Base\Obj::setCastError(array(Exception::class,'throw'));
+		Base\Error::setHandler([static::class,'handler']);
+		Base\Exception::setHandler([static::class,'exception']);
+		Base\Assert::setHandler([static::class,'assert']);
+		Base\Uri::setNotFound([CatchableException::class,'throw']);
+		Base\File::setNotFound([CatchableException::class,'throw']);
+		Base\Obj::setCastError([Exception::class,'throw']);
 		
 		return;
 	}

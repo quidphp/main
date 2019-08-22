@@ -7,7 +7,7 @@ use Quid\Base;
 trait _cache
 {
 	// cache
-	protected $cache = array(); // tableau avec les éléments mis en cache dans l'objet
+	protected $cache = []; // tableau avec les éléments mis en cache dans l'objet
 	
 	
 	// cache
@@ -51,7 +51,7 @@ trait _cache
 	// vide le tableau de cache
 	public function emptyCache():self 
 	{
-		$this->cache = array();
+		$this->cache = [];
 		
 		return $this;
 	}

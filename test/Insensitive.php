@@ -11,8 +11,8 @@ class Insensitive extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// construct
-		$ins = new Main\Insensitive(array('test'=>'James','ok'=>2));
-		$vins = new Main\Insensitive(array('test','TEST','OK'));
+		$ins = new Main\Insensitive(['test'=>'James','ok'=>2]);
+		$vins = new Main\Insensitive(['test','TEST','OK']);
 		$ins2 = new Main\Insensitive();
 		
 		// map
@@ -21,7 +21,7 @@ class Insensitive extends Base\Test
 		unset($ins2['tEST']);
 		$ins2['tést'] = 'OKé';
 		assert($ins2['TÉST'] === 'OKé');
-		assert($ins->append(array('test'=>'meh'),array('TEST'=>'LOL'))->toArray() === array('ok'=>2,'TEST'=>'LOL'));
+		assert($ins->append(['test'=>'meh'],['TEST'=>'LOL'])->toArray() === ['ok'=>2,'TEST'=>'LOL']);
 		assert($ins->prepend(22,33,'testz')[0] === 22);
 		assert($ins->append(22,33,'testz')[5] === 'testz');
 		assert($ins->remove(22,33,'testz') === $ins);
@@ -31,9 +31,9 @@ class Insensitive extends Base\Test
 		assert($ins2->in('OKÉ'));
 		assert($ins2->search('OKÉ') === 'tést');
 		assert($vins->count() === 3);
-		assert($vins->keys('test') === array(0,1));
-		assert($ins2->gets('TÉST') === array('TÉST'=>'OKé'));
-		assert($ins2->slice('TÉST',true) === array('tést'=>'OKé'));
+		assert($vins->keys('test') === [0,1]);
+		assert($ins2->gets('TÉST') === ['TÉST'=>'OKé']);
+		assert($ins2->slice('TÉST',true) === ['tést'=>'OKé']);
 		assert($ins->set('TeSt',2)->count(2));
 		assert($ins->get('test') === 2);
 		assert($ins->unset('TeST')->count() === 1);

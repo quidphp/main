@@ -10,6 +10,6 @@ abstract class ArrObj extends Root implements \ArrayAccess, \Countable, \Iterato
 	
 	
 	// config
-	public static $config = array();
+	public static $config = [];
 }
 ?>

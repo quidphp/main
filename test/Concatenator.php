@@ -19,7 +19,7 @@ class Concatenator extends Base\Test
 		$c = new Main\Concatenator();
 
 		// add
-		$option = array('extension'=>'php','priority'=>array('class.php'));
+		$option = ['extension'=>'php','priority'=>['class.php']];
 		assert($c->add($_dir_,$option) === $c);
 		
 		// addStr

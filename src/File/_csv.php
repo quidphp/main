@@ -7,24 +7,24 @@ use Quid\Base;
 trait _csv
 {
 	// config
-	public static $configFileCsv = array(
+	public static $configFileCsv = [
 		'group'=>'csv',
-		'option'=>array(
-			'read'=>array( // option pour read
+		'option'=>[
+			'read'=>[ // option pour read
 				'csv'=>true,
 				'delimiter'=>';',
 				'enclosure'=>'"',
-				'escape'=>"\\"),
-			'write'=>array( // option pour write
+				'escape'=>"\\"],
+			'write'=>[ // option pour write
 				'csv'=>true,
 				'delimiter'=>';',
 				'enclosure'=>'"',
-				'escape'=>"\\"),
+				'escape'=>"\\"],
 			'toUtf8'=>null, // lance la méthode utf8_encode
 			'whiteSpace'=>true, // lance la méthode base/str removeWhiteSpace
 			'forbiddenCodePoint'=>true, // lance méthode base/str fixUnicode
-			'cast'=>true) // cast les valeurs numérique
-	);
+			'cast'=>true] // cast les valeurs numérique
+	];
 	
 
 	// lineReturn

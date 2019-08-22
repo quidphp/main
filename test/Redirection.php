@@ -13,7 +13,7 @@ class Redirection extends Base\Test
 		// prepare
 		$request = new Main\Request('/jamesReq');
 		$request2 = new Main\Request('jamesReq2');
-		$r = new Main\Redirection(array('/test.jpg'=>'/test2.jpg','/james/ok'=>'https://google.com'));
+		$r = new Main\Redirection(['/test.jpg'=>'/test2.jpg','/james/ok'=>'https://google.com']);
 		assert($r->set($request,$request2)->isCount(3));
 		assert($r->set("james/james2/*","https://google.com/james/james3/*")->isCount(4));
 

@@ -11,7 +11,7 @@ class Insert extends Base\Test
 	public static function trigger(array $data):bool
 	{
 		// construct
-		$i = new Main\Insert(array('ok'=>2));
+		$i = new Main\Insert(['ok'=>2]);
 		
 		// map
 		assert($i->set('ok2',3)->isCount(2));

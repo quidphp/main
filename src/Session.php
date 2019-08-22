@@ -11,22 +11,22 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	
 	
 	// config
-	public static $config = array(
-		'base'=>array( // toutes les méthodes renvoyé à base
+	public static $config = [
+		'base'=>[ // toutes les méthodes renvoyé à base
 			'isLang','isIp','isCsrf','isCaptcha','isDesktop','isMobile','isOldIe','isMac','isLinux','isWindows','isBot',
 			'getPrefix','expire','timestampCurrent','timestampPrevious','timestampDifference','requestCount','resetRequestCount',
 			'userAgent','browserCap','browserName','browserPlatform','browserDevice','env','type','ip','fingerprint',
 			'lang','csrf','refreshCsrf','captcha','refreshCaptcha','emptyCaptcha','version',
-			'remember','setRemember','setsRemember','unsetRemember','emptyRemember'),
-		'option'=>array(
-			'structure'=>array( // callables de structure additionnelles dans data, se merge à celle dans base/session
+			'remember','setRemember','setsRemember','unsetRemember','emptyRemember'],
+		'option'=>[
+			'structure'=>[ // callables de structure additionnelles dans data, se merge à celle dans base/session
 				'flash'=>'structureFlash',
 				'history'=>'structureHistory',
 				'timeout'=>'structureTimeout',
-				'com'=>'structureCom'),
+				'com'=>'structureCom'],
 			'setCookie'=>true, // le cookie est réenvoyé à chaque démarrage de la session
-			'registerShutdown'=>true) // le setSaveHandler créer la shutdown function pour session_write_close
-	);
+			'registerShutdown'=>true] // le setSaveHandler créer la shutdown function pour session_write_close
+	];
 	
 	
 	// dynamique
@@ -35,7 +35,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
 
 	// map
-	protected static $allow = array('set','unset','remove','sort','empty'); // méthodes permises
+	protected static $allow = ['set','unset','remove','sort','empty']; // méthodes permises
 	
 	
 	// construct
@@ -186,7 +186,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	// merge avec la structure de base/session
 	public function getStructure():array
 	{
-		$return = array();
+		$return = [];
 		$structure = $this->getOption('structure');
 		
 		if(is_array($structure))
@@ -194,7 +194,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 			foreach ($structure as $key => $value) 
 			{
 				if(is_string($value))
-				$structure[$key] = array($this,$value);
+				$structure[$key] = [$this,$value];
 			}
 		}
 		
@@ -301,7 +301,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	// retourne un tableau contenant un maximum d'information sur la session
 	public function info():array 
 	{
-		$return = array('class'=>static::class);
+		$return = ['class'=>static::class];
 		$return['storageClass'] = $this->getStorageClass();
 		$return['option'] = $this->option();
 		$return = Base\Arr::append($return,Base\Session::info());

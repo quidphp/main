@@ -14,7 +14,7 @@ class Com extends Base\Test
 		$boot = $data['boot'];
 		$fr = $boot->attr('assert/lang/fr');
 		$en = $boot->attr('assert/lang/en');
-		$lang = new Main\Lang(array('en','fr'));
+		$lang = new Main\Lang(['en','fr']);
 		$lang->changeLang('fr')->overwrite($fr::$config);
 		$lang->changeLang('en')->overwrite($en::$config);
 
@@ -33,8 +33,8 @@ class Com extends Base\Test
 		assert($com4->_cast() === '');
 
 		// is
-		assert($com->is(array('pos','ok')));
-		assert(!$com->is(array(null,'ok')));
+		assert($com->is(['pos','ok']));
+		assert(!$com->is([null,'ok']));
 
 		// isType
 		assert($com->isType('neg'));
@@ -48,14 +48,14 @@ class Com extends Base\Test
 		assert($com->type('posz') === 'posz');
 
 		// getType
-		assert($com->getType() === array('neg','pos','neutral'));
+		assert($com->getType() === ['neg','pos','neutral']);
 
 		// setType
 
 		// payload
-		assert($com->payload('neg',array('login','loginAttempt'),null) === array('neg','login/loginAttempt',null,null));
-		assert($com->payload('neg','login/ok',null,null,array()) === array('neg','login/ok',null,null));
-		assert($com->payload('neutral','row/1',null,null,array('neg','no change',null,null,array('pos','tryAgain')))[4][0][4][0] === array('pos','tryAgain',null,null));
+		assert($com->payload('neg',['login','loginAttempt'],null) === ['neg','login/loginAttempt',null,null]);
+		assert($com->payload('neg','login/ok',null,null,[]) === ['neg','login/ok',null,null]);
+		assert($com->payload('neutral','row/1',null,null,['neg','no change',null,null,['pos','tryAgain']])[4][0][4][0] === ['pos','tryAgain',null,null]);
 
 		// update
 
@@ -64,14 +64,14 @@ class Com extends Base\Test
 		// push
 
 		// append
-		assert($com->append(null,array('login','userInactive')) === $com);
+		assert($com->append(null,['login','userInactive']) === $com);
 		assert($com->append('neg','login/alreadyConnected') === $com);
-		assert($com->in(array('neg','login/alreadyConnected')));
-		assert($com->in(array('neg',array('login/alreadyConnected'))));
-		assert($com->in(array('neg',array('login','alreadyConnected'))));
-		assert($com->search(array('neg','login/alreadyConnected')) === 1);
-		assert($com->search(array('neg',array('login','alreadyConnected'))) === 1);
-		assert($com->search(array('neg','login/alreadyConnectedzzz')) === null);
+		assert($com->in(['neg','login/alreadyConnected']));
+		assert($com->in(['neg',['login/alreadyConnected']]));
+		assert($com->in(['neg',['login','alreadyConnected']]));
+		assert($com->search(['neg','login/alreadyConnected']) === 1);
+		assert($com->search(['neg',['login','alreadyConnected']]) === 1);
+		assert($com->search(['neg','login/alreadyConnectedzzz']) === null);
 		assert(!empty($com->toArray()));
 		assert(!empty($com->toJson()));
 
@@ -79,28 +79,28 @@ class Com extends Base\Test
 		assert($com->prepend(null,'login/cantFindUser') === $com);
 
 		// pos
-		assert($com->pos(array('login','success')) === $com);
+		assert($com->pos(['login','success']) === $com);
 		assert($com2->pos("Ça passe, tout est OK") === $com2);
 
 		// posPrepend
 		assert($com3->posPrepend('noway!') === $com3);
 
 		// neg
-		assert($com->neg(array('login/alreadyConnected')) === $com);
-		assert($com2->neg(array("Grosse erreur")) === $com2);
-		assert($com2->neg(array("Grosse","erreur2")) === $com2);
+		assert($com->neg(['login/alreadyConnected']) === $com);
+		assert($com2->neg(["Grosse erreur"]) === $com2);
+		assert($com2->neg(["Grosse","erreur2"]) === $com2);
 
 		// negPrepend
 		assert($com3->negPrepend('noway!') === $com3);
 
 		// neutral
 		assert($com3->neutral('User #1',null) === $com3);
-		assert($com4->neutral('Row #1',null,null,array('neg','noChange'),array('neutral','active',null,null,array('neg','not a number')),array('neutral','name',null,null,array('neg','not long enough'),array('neg','i dont like')))->isCount(1));
+		assert($com4->neutral('Row #1',null,null,['neg','noChange'],['neutral','active',null,null,['neg','not a number']],['neutral','name',null,null,['neg','not long enough'],['neg','i dont like']])->isCount(1));
 		assert($com4->posPrepend('Your thing went ok')->isCount(2));
-		assert($com4->append(null,'noway')->last() === array('neg','noway',null,null));
+		assert($com4->append(null,'noway')->last() === ['neg','noway',null,null]);
 		$com9 = clone $com4;
-		assert(strlen($com9->neutralPrepend('Row #1',array('replace'=>'ok'),"#id",array('pos',"okidou"))->output($lang)) === 487);
-		assert(strlen($com9->neutral('Row #1',array('replace2'=>'ok2'),array('data-ok'=>true),array('pos',"END"))->output($lang)) === 536);
+		assert(strlen($com9->neutralPrepend('Row #1',['replace'=>'ok'],"#id",['pos',"okidou"])->output($lang)) === 487);
+		assert(strlen($com9->neutral('Row #1',['replace2'=>'ok2'],['data-ok'=>true],['pos',"END"])->output($lang)) === 536);
 
 		// neutralPrepend
 		assert($com3->neutralPrepend('noway!!') === $com3);
@@ -111,7 +111,7 @@ class Com extends Base\Test
 		assert($com->neg('login/success')->isCount(5));
 
 		// posNegPrepend
-		assert($com3->posNegPrepend('well','ok')->first() === array('neg','ok',null,null));
+		assert($com3->posNegPrepend('well','ok')->first() === ['neg','ok',null,null]);
 
 		// posNegLogStrict
 
@@ -152,7 +152,7 @@ class Com extends Base\Test
 		assert($com5->keepType('neutral')->isCount(1));
 
 		// prepareIn
-		assert(Base\Arrs::is($com5->prepareIn('neutral','pos',array('test2'=>array('ok','deux')))));
+		assert(Base\Arrs::is($com5->prepareIn('neutral','pos',['test2'=>['ok','deux']])));
 
 		// prepare
 
@@ -161,9 +161,9 @@ class Com extends Base\Test
 		assert(!$com->isEmpty());
 		assert($com2->output($lang) === "<ul><li class='pos'><span>Ça passe, tout est OK</span></li><li class='neg'><span>Grosse erreur</span></li><li class='neg'><span>Grosse/erreur2</span></li></ul>");
 		assert(strlen($com4->output($lang)) === 439);
-		assert($comAttr->append('pos','login',null,array('data-fake'=>1)) === $comAttr);
+		assert($comAttr->append('pos','login',null,['data-fake'=>1]) === $comAttr);
 		assert($comAttr->output($lang) === "<ul><li class='pos' data-fake='1'><span>login</span></li></ul>");
-		assert($comAttr->append('pos','login',null,null,array('neg','logout',null,'myclass #id')) === $comAttr);
+		assert($comAttr->append('pos','login',null,null,['neg','logout',null,'myclass #id']) === $comAttr);
 		assert($comAttr->output($lang) === "<ul><li class='pos' data-fake='1'><span>login</span><ul><li class='neg myclass' id='id'><span>logout</span></li></ul></li></ul>");
 
 		// outputNeg
@@ -200,7 +200,7 @@ class Com extends Base\Test
 
 		// map
 		assert(!$com->exists(0));
-		assert($com->push(array('pos','ok')));
+		assert($com->push(['pos','ok']));
 		assert($com->exists(0));
 		
 		return true;

@@ -30,7 +30,7 @@ trait _arrs
 		$return = parent::onPrepareReplace($return);
 		
 		if(Base\Arr::isUni($return))
-		$return = Base\Arrs::sets($return,array());
+		$return = Base\Arrs::sets($return,[]);
 		
 		return $return;
 	}

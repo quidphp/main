@@ -6,11 +6,11 @@ namespace Quid\Main;
 class CatchableException extends Exception implements Contract\Catchable
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'code'=>32, // code de l'exception
-		'option'=>array(
-			'com'=>true)
-	);
+		'option'=>[
+			'com'=>true]
+	];
 }
 
 // config

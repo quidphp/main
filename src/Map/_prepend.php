@@ -24,7 +24,7 @@ trait _prepend
 		Base\Arr::setRef($key,$value,$return->arr());
 		
 		elseif(Base\Arr::isKey($key))
-		$return->prepend(array($key=>$value));
+		$return->prepend([$key=>$value]);
 		
 		return $return->checkAfter();
 	}

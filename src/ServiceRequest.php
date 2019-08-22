@@ -7,12 +7,12 @@ use Quid\Base;
 abstract class ServiceRequest extends Service
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'target'=>null, // cible du service
-		'option'=>array( // option par défaut pour request
+		'option'=>[ // option par défaut pour request
 			'ping'=>2,
-			'responseCode'=>200)
-	);
+			'responseCode'=>200]
+	];
 	
 	
 	// target

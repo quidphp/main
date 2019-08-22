@@ -19,7 +19,7 @@ class Flash extends Base\Test
 		assert($f->get('test') === null);
 		$f['test'] = 2;
 		$f['bla'] = 3;
-		assert($f->gets('bla','test') === array('bla'=>3,'test'=>2));
+		assert($f->gets('bla','test') === ['bla'=>3,'test'=>2]);
 		$f['test'] = 2;
 		$f['bla'] = 3;
 		assert(isset($f['test']));
@@ -28,7 +28,7 @@ class Flash extends Base\Test
 		assert($f['bla'] === 3);
 		assert($f->isEmpty()); 
 		$f['test'] = 2;
-		assert($f->keys() === array('test'));
+		assert($f->keys() === ['test']);
 		$f['test3'] = 2;
 		$f['test4'] = 2;
 		assert($f instanceof Main\Flash);

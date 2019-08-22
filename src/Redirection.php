@@ -11,11 +11,11 @@ class Redirection extends Map
 	
 	
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
-	protected static $allow = array('set','unset','remove','empty','overwrite','serialize'); // méthodes permises
+	protected static $allow = ['set','unset','remove','empty','overwrite','serialize']; // méthodes permises
 	
 		
 	// onPrepareKey
@@ -25,10 +25,10 @@ class Redirection extends Map
 	protected function onPrepareKey($return) 
 	{
 		if($return instanceof Request)
-		$return = $return->absolute(array('encode'=>false));
+		$return = $return->absolute(['encode'=>false]);
 		
 		elseif(is_string($return))
-		$return = Base\Uri::absolute($return,null,array('encode'=>false));
+		$return = Base\Uri::absolute($return,null,['encode'=>false]);
 		
 		if(is_string($return))
 		$return = Base\Uri::remove('scheme',$return);
@@ -44,10 +44,10 @@ class Redirection extends Map
 	protected function onPrepareValue($return) 
 	{
 		if($return instanceof Request)
-		$return = $return->absolute(array('encode'=>false));
+		$return = $return->absolute(['encode'=>false]);
 		
 		elseif(is_string($return))
-		$return = Base\Uri::absolute($return,null,array('encode'=>false));
+		$return = Base\Uri::absolute($return,null,['encode'=>false]);
 		
 		return $return;
 	}
@@ -61,7 +61,7 @@ class Redirection extends Map
 		if($return instanceof self)
 		{
 			$array = $return->toArray();
-			$return = array();
+			$return = [];
 			
 			foreach ($array as $key => $value) 
 			{
@@ -112,7 +112,7 @@ class Redirection extends Map
 	// support pour les uri avec un *, tel que défini dans base/uri
 	public function gets(...$keys):array
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($keys as $key) 
 		{

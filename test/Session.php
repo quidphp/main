@@ -15,7 +15,7 @@ class Session extends Base\Test
 		$boot = $data['boot'];
 		$class = $boot->attr('assert/fileSession');
 		$type = $boot->type();
-		$default = array('type'=>$type,'env'=>$boot->env(),'version'=>$boot->version());
+		$default = ['type'=>$type,'env'=>$boot->env(),'version'=>$boot->version()];
 
 		// construct
 		$s = new Main\Session($class,$default);
@@ -48,7 +48,7 @@ class Session extends Base\Test
 		assert(is_int($s->getLifetime()));
 		assert($s->getExpire() > Base\Date::getTimestamp());
 		assert(count($s->getGarbageCollect()) === 3);
-		assert(in_array(count($s->getCookieParams()),array(5,6),true));
+		assert(in_array(count($s->getCookieParams()),[5,6],true));
 		assert(count($s->ini()) === 31);
 		assert(is_int($s->expire()));
 		assert(is_int($s->timestampCurrent()));
@@ -77,7 +77,7 @@ class Session extends Base\Test
 		$s->setRemember('username','test');
 		assert($s->remember('username') === 'test');
 		$s->unsetRemember('username');
-		assert($s->remember() === array());
+		assert($s->remember() === []);
 		$s->emptyRemember();
 		assert($s->remember() === null);
 		assert(is_string($s->env()));

@@ -11,11 +11,11 @@ class Files extends Map
 	
 	
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
-	protected static $allow = array('add','set','unset','remove','empty','unsetAfterCount','filter','sort','sequential','clone'); // méthodes permises
+	protected static $allow = ['add','set','unset','remove','empty','unsetAfterCount','filter','sort','sequential','clone']; // méthodes permises
 	
 	
 	// construct

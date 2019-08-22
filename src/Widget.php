@@ -10,11 +10,11 @@ abstract class Widget extends Root
 	
 	
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// dynamique
-	protected $callback = array(); // tableau de callback pour la classe
+	protected $callback = []; // tableau de callback pour la classe
 
 
 	// toString

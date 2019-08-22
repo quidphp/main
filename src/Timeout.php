@@ -7,14 +7,14 @@ use Quid\Base;
 class Timeout extends Map
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'max'=>1, // après combien de tentative le timeout est déclenché
 		'timeout'=>600 // durée du timeout
-	);
+	];
 	
 	
 	// map
-	protected static $allow = array('set','unset','serialize','empty'); // méthodes permises
+	protected static $allow = ['set','unset','serialize','empty']; // méthodes permises
 	
 	
 	// isTimedOut

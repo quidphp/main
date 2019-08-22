@@ -11,20 +11,20 @@ class Com extends Map
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
-			'default'=>'neg'), // type par défaut
-		'all'=>array('neg','pos','neutral') // tous les types
-	);
+	public static $config = [
+		'option'=>[
+			'default'=>'neg'], // type par défaut
+		'all'=>['neg','pos','neutral'] // tous les types
+	];
 	
 	
 	// map
-	protected static $allow = array('push','unshift','unset','empty','splice','index','serialize','jsonSerialize','clone'); // méthodes permises
+	protected static $allow = ['push','unshift','unset','empty','splice','index','serialize','jsonSerialize','clone']; // méthodes permises
 	protected static $is = true; // les valeurs doivent passés la méthode is
 	
 	
 	// dynamique
-	protected $type = array(); // conserve les types acceptés par l'objet (comme pos, neg)
+	protected $type = []; // conserve les types acceptés par l'objet (comme pos, neg)
 	
 	
 	// construct
@@ -134,7 +134,7 @@ class Com extends Map
 		
 		if(is_array($value) && Base\Arr::validate('string',$value))
 		{
-			$this->data = array();
+			$this->data = [];
 			$this->type = array_values($value);
 		}
 		
@@ -174,12 +174,12 @@ class Com extends Map
 		
 		if(is_string($path) && !empty($path))
 		{
-			$return = array($type,$path,$replace,$attr);
+			$return = [$type,$path,$replace,$attr];
 			$return = Base\Obj::cast($return);
 			
 			if(!empty($ins))
 			{
-				$deep = array();
+				$deep = [];
 				
 				foreach ($ins as $in) 
 				{
@@ -240,23 +240,23 @@ class Com extends Map
 	// méthode protégé
 	protected function update(string $method,array $value,array $return):array
 	{
-		if(in_array($method,array('unshift','push'),true))
+		if(in_array($method,['unshift','push'],true))
 		{
 			if(array_key_exists(2,$value) && is_array($value[2]) && !empty($value[2]))
-			$return[2] = Base\Arr::replace($return[2] ?? array(),$value[2]);
+			$return[2] = Base\Arr::replace($return[2] ?? [],$value[2]);
 			
 			if(array_key_exists(3,$value) && !empty($value[3]))
 			$return[3] = Base\Attr::append($return[3] ?? null,$value[3]);
 			
 			if(array_key_exists(4,$value) && is_array($value[4]) && !empty($value[4]))
 			{
-				$return[4] = (!empty($return[4]))? $return[4]:array();
+				$return[4] = (!empty($return[4]))? $return[4]:[];
 				
 				foreach ($value[4] as $z) 
 				{
 					if(is_array($z) && array_key_exists(0,$z) && array_key_exists(1,$z) && !empty($return[4]))
 					{
-						$find = array($z[0],$z[1]);
+						$find = [$z[0],$z[1]];
 						$val = $this->find($find,$return[4]);
 						
 						if(!empty($val))
@@ -295,7 +295,7 @@ class Com extends Map
 		{
 			if(is_array($value) && array_key_exists(0,$value) && array_key_exists(1,$value))
 			{
-				$find = array($value[0],$value[1]);
+				$find = [$value[0],$value[1]];
 				$k = $this->search($find);
 				if(is_int($k))
 				{
@@ -323,7 +323,7 @@ class Com extends Map
 		{
 			if(is_array($value) && array_key_exists(0,$value) && array_key_exists(1,$value))
 			{
-				$find = array($value[0],$value[1]);
+				$find = [$value[0],$value[1]];
 				$k = $this->search($find);
 				if(is_int($k))
 				{
@@ -441,13 +441,13 @@ class Com extends Map
 	{
 		if(strlen($type))
 		{
-			$option = Base\Arr::plus(array('com'=>false,'log'=>true,'strict'=>false),$option);
+			$option = Base\Arr::plus(['com'=>false,'log'=>true,'strict'=>false],$option);
 			
 			if($option['com'] === true)
 			$this->posNeg($pos,$neg);
 			
 			if($option['log'] === true && !empty($log))
-			$log::logOnCloseDown($type,array('key'=>$type,'bool'=>$bool,'pos'=>$pos,'neg'=>$neg));
+			$log::logOnCloseDown($type,['key'=>$type,'bool'=>$bool,'pos'=>$pos,'neg'=>$neg]);
 			
 			if($option['strict'] === true && !empty($neg))
 			static::throw($type,$neg);
@@ -471,7 +471,7 @@ class Com extends Map
 	public function stripFloor():self 
 	{
 		$data =& $this->arr();
-		$keep = array();
+		$keep = [];
 		
 		foreach ($data as $key => $value) 
 		{
@@ -536,7 +536,7 @@ class Com extends Map
 	{
 		$first = $this->first();
 		$data =& $this->arr();
-		$data = array($first);
+		$data = [$first];
 		
 		return $this;
 	}
@@ -548,7 +548,7 @@ class Com extends Map
 	{
 		$last = $this->last();
 		$data =& $this->arr();
-		$data = array($last);
+		$data = [$last];
 		
 		return $this;
 	}
@@ -593,7 +593,7 @@ class Com extends Map
 	// n'ajoute pas à l'objet
 	public function prepareIn(string $type,?string $inType=null,array $array,?array $replace=null):array 
 	{
-		$return = array();
+		$return = [];
 		$this->checkType($type);
 		$inType = $this->type($inType);
 		
@@ -604,15 +604,15 @@ class Com extends Map
 			if(is_string($key))
 			{
 				if(is_string($value))
-				$value = array($value);
+				$value = [$value];
 				
 				if(is_array($value))
 				{
-					$in = array($type,$key,$replace,null);
+					$in = [$type,$key,$replace,null];
 					
 					foreach ($value as $v) 
 					{
-						$in[] = array($inType,$v,$replace,null);
+						$in[] = [$inType,$v,$replace,null];
 					}
 				}
 			}
@@ -636,7 +636,7 @@ class Com extends Map
 		
 		if(static::is($value))
 		{
-			$return = array();
+			$return = [];
 			$type = current($value);
 			$this->checkType($type);
 			$path = (array_key_exists(1,$value))? $value[1]:null;
@@ -715,7 +715,7 @@ class Com extends Map
 		$types = $this->getType();
 		
 		if(is_string($types))
-		$types = array($types);
+		$types = [$types];
 		
 		if(empty($types) || !is_array($types))
 		static::throw('invalidTypes');

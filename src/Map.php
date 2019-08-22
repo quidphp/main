@@ -7,14 +7,14 @@ use Quid\Base;
 class Map extends ArrMap
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// map
 	protected static $is = null; // les valeurs doivent passés ce test de validation ou exception, si is est true renvoie à la méthode dynamique is
 	protected static $allow = null; // méthodes permises par la classe
 	protected static $deny = null; // méthodes interdites par la classe
-	protected static $after = array(); // les méthodes after, peut y avoir arguments ou non, est public car pourrait être changé dans app
+	protected static $after = []; // les méthodes after, peut y avoir arguments ou non, est public car pourrait être changé dans app
 
 	
 	// construct
@@ -199,7 +199,7 @@ class Map extends ArrMap
 	// prepare les clés pour les méthodes qui soumettent plusieurs clés comme exists, gets et unset
 	protected function prepareKeys(...$keys):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($keys as $key) 
 		{
@@ -220,7 +220,7 @@ class Map extends ArrMap
 	// prépare plusieurs valeurs pour les méthodes qui soumette plusieurs valeurs comme in et remove
 	protected function prepareValues(...$values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $value) 
 		{
@@ -241,7 +241,7 @@ class Map extends ArrMap
 	// prépare plusieurs valeurs utilisé par une méthode de remplacement
 	protected function prepareReplaces(...$values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $value) 
 		{
@@ -263,7 +263,7 @@ class Map extends ArrMap
 			foreach ($values as $value) 
 			{
 				$exception = false;
-				$is = (static::$is === true)? array($this,'is'):static::$is;
+				$is = (static::$is === true)? [$this,'is']:static::$is;
 				$call = (static::$is === true)? 'is':static::$is;
 				
 				if($array === true && is_array($value))
@@ -292,7 +292,7 @@ class Map extends ArrMap
 		foreach (static::$after as $key => $value) 
 		{
 			$method = null;
-			$arg = array();
+			$arg = [];
 			
 			if(is_string($key))
 			{
@@ -722,7 +722,7 @@ class Map extends ArrMap
 		$this->checkAllowed('empty');
 		$return = $this->onPrepareThis('empty');
 		$data =& $return->arr();
-		$data = array();
+		$data = [];
 		
 		return $this->checkAfter();
 	}

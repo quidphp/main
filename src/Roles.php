@@ -11,15 +11,15 @@ class Roles extends Extender
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
+	public static $config = [
+		'option'=>[
 			'methodIgnore'=>'isIgnored',
-			'subClass'=>Role::class)
-	);
+			'subClass'=>Role::class]
+	];
 	
 	
 	// map
-	protected static $allow = array('set','unset','remove','filter','sort','serialize','clone'); // méthodes permises
+	protected static $allow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
 	protected static $sortDefault = 'permission'; // défini la méthode pour sort par défaut
 	
 	
@@ -56,7 +56,7 @@ class Roles extends Extender
 	public function nobody():?Role 
 	{
 		$return = null;
-		$value = $this->first(array('isNobody'=>true));
+		$value = $this->first(['isNobody'=>true]);
 		
 		if(is_string($value))
 		$return = new $value();

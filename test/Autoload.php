@@ -67,13 +67,13 @@ class Autoload extends Base\Test
 		assert(Main\Autoload::setClosure('Test\Ok\What\Lol','_noway',function() {}) === null);
 			
 		// getClosureByNamespace
-		assert(Main\Autoload::getClosureByNamespace('test') === array());
-		assert(Main\Autoload::getClosureByNamespace('Test\Ok\What') === array('Test\Ok\What\James'));
-		assert(Main\Autoload::getClosureByNamespace('Test\Ok') === array());
-		assert(Main\Autoload::getClosureByNamespace('Test\Ok',true,true) === array('Test\Ok\What\James'));
-		assert(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,false) === array('Test\Ok\What\James'));
+		assert(Main\Autoload::getClosureByNamespace('test') === []);
+		assert(Main\Autoload::getClosureByNamespace('Test\Ok\What') === ['Test\Ok\What\James']);
+		assert(Main\Autoload::getClosureByNamespace('Test\Ok') === []);
+		assert(Main\Autoload::getClosureByNamespace('Test\Ok',true,true) === ['Test\Ok\What\James']);
+		assert(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,false) === ['Test\Ok\What\James']);
 		assert(count(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,true)) === 2);
-		assert(Main\Autoload::getClosureByNamespace('xyz') === array());
+		assert(Main\Autoload::getClosureByNamespace('xyz') === []);
 		
 		// allClosure
 		assert(Base\Arrs::is(Main\Autoload::allClosure()));
@@ -94,8 +94,8 @@ class Autoload extends Base\Test
 		assert(is_array(Main\Autoload::allOverload()));
 		
 		// findOneOrMany
-		assert(!empty(Main\Autoload::findOneOrMany(array(__NAMESPACE__),false,true,true)));
-		assert(Main\Autoload::findOneOrMany(\Datetime::class,true,true,true) === array(\Datetime::class));
+		assert(!empty(Main\Autoload::findOneOrMany([__NAMESPACE__],false,true,true)));
+		assert(Main\Autoload::findOneOrMany(\Datetime::class,true,true,true) === [\Datetime::class]);
 		
 		// findOne
 		assert(Main\Autoload::findOne(\Datetime::class,true,true) === true);

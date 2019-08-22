@@ -11,8 +11,8 @@ class Extender extends Map
 	
 	
 	// config
-	public static $config = array(
-		'option'=>array(
+	public static $config = [
+		'option'=>[
 			'type'=>'class', // l'extender emmagasine des noms de classe ou des objets
 			'methodIgnore'=>null, // nom d'une méthode statique, si elle retourne true il faut ignorer la classe
 			'onlyClass'=>true, // la méthode dans base/autoload charge seulement les classes à partir du nom de fichier
@@ -20,18 +20,18 @@ class Extender extends Map
 			'exists'=>true, // fait une vérification si la classe existe
 			'overloadKeyPrepend'=>null, // permet de spécifier une overload key, et ne pas avoir à charger la classe
 			'mustExtend'=>true, // les classes du même nom doivent étendre celles déjà dans l'objet
-			'args'=>null) // permet de spécifier les arguments lors de la création de l'objet, si type est obj
-	);
+			'args'=>null] // permet de spécifier les arguments lors de la création de l'objet, si type est obj
+	];
 	
 	
 	// map
-	protected static $allow = array('set','unset','remove','filter','serialize','clone'); // méthodes permises
-	protected static $after = array('extendSync'); // appelé après chaque changement à l'objet
+	protected static $allow = ['set','unset','remove','filter','serialize','clone']; // méthodes permises
+	protected static $after = ['extendSync']; // appelé après chaque changement à l'objet
 
 	
 	// dynamique
-	protected $extend = array(); // garde en mémoire les clés de classe étendus
-	protected $overload = array(); // garde en mémoire les overloads effectués
+	protected $extend = []; // garde en mémoire les clés de classe étendus
+	protected $overload = []; // garde en mémoire les overloads effectués
 	
 	
 	// construct

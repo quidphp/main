@@ -12,9 +12,9 @@ trait _email
 	
 	
 	// config
-	public static $configFileEmail = array(
-		'mailer'=>array()
-	);
+	public static $configFileEmail = [
+		'mailer'=>[]
+	];
 	
 	
 	// contentType

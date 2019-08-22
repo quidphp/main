@@ -7,11 +7,11 @@ use Quid\Base;
 class Res extends ArrObj
 {
 	// config
-	public static $config = array();
+	public static $config = [];
 	
 	
 	// base
-	protected static $base = array( // tableau des méthodes en clé et condtion (check) en valeur
+	protected static $base = [ // tableau des méthodes en clé et condtion (check) en valeur
 		'isEmpty'=>null,
 		'isNotEmpty'=>null,
 		'isReadable'=>null,
@@ -100,7 +100,7 @@ class Res extends ArrObj
 		'pathToUri'=>'isFile',
 		'pathToUriOrBase64'=>'isReadable',
 		'position'=>'isSeekableTellable',
-		'lineCount'=>array('isSeekableTellable','isReadable'),
+		'lineCount'=>['isSeekableTellable','isReadable'],
 		'passthru'=>'isReadable',
 		'base64'=>'isReadable',
 		'lock'=>'isLockable',
@@ -110,7 +110,7 @@ class Res extends ArrObj
 		'toScreen'=>'isResponsable',
 		'concatenate'=>'isWritable',
 		'setPhpContextOption'=>null
-	);
+	];
 	
 	
 	// dynamique
@@ -222,7 +222,7 @@ class Res extends ArrObj
 	// la resource est crée lors de l'appel à la méthode resource
 	public function setResource($value,?array $option=null):self 
 	{
-		$this->resource = array($value,$option);
+		$this->resource = [$value,$option];
 		
 		return $this;
 	}
@@ -1000,7 +1000,7 @@ class Res extends ArrObj
 	public function toFile($value,?array $option=null):File 
 	{
 		$return = null;
-		$option = Base\Arr::plus(array('create'=>true),$option);
+		$option = Base\Arr::plus(['create'=>true],$option);
 		$this->check('isResponsable');
 		$mimeGroup = $this->mimeGroup();
 		$class = File::class;

@@ -11,13 +11,13 @@ class Request extends Map
 	
 	
 	// config
-	public static $config = array(
-		'ipAllowed'=>array( // paramètre par défaut pour la méhode isIpAllowed
+	public static $config = [
+		'ipAllowed'=>[ // paramètre par défaut pour la méhode isIpAllowed
 			'whiteList'=>null, // tableau de ip whiteList
 			'blackList'=>null, // tableau de ip blackList
 			'range'=>true, // comparaison range
-			'level'=>null), // comparaison de niveau dans le ip
-		'option'=>array( // options pour la requête
+			'level'=>null], // comparaison de niveau dans le ip
+		'option'=>[ // options pour la requête
 			'decode'=>false, // l'uri dans setUri est décodé
 			'uri'=>null, // encode l'uri de sortie si utilise output, relative ou absolute
 			'idLength'=>null, // longueur du id de la requête
@@ -36,21 +36,21 @@ class Request extends Map
 			'port'=>null, // pour curl
 			'sslCipher'=>null, // pour curl
 			'userAgent'=>null, // pour curl
-			'postJson'=>false), // le tableau post est encodé en json, pour curl
-		'default'=>array( // ces défaut sont appliqués à chaque création d'objet
-			'scheme'=>array(Base\Request::class,'scheme'), // scheme de request par défaut
-			'host'=>array(Base\Request::class,'host'), // host de request par défaut
-			'port'=>array(Base\Request::class,'port'), // port de request par défaut
+			'postJson'=>false], // le tableau post est encodé en json, pour curl
+		'default'=>[ // ces défaut sont appliqués à chaque création d'objet
+			'scheme'=>[Base\Request::class,'scheme'], // scheme de request par défaut
+			'host'=>[Base\Request::class,'host'], // host de request par défaut
+			'port'=>[Base\Request::class,'port'], // port de request par défaut
 			'path'=>'/', // path par défaut
 			'method'=>'get', // method par défaut
-			'lang'=>array(Base\Lang::class,'current'), // lang par défaut
-			'ip'=>array(Base\Server::class,'ip'), // ip du serveur par défaut
-			'timestamp'=>array(Base\Date::class,'getTimestamp')) // timestamp de date par défaut 
-	);
+			'lang'=>[Base\Lang::class,'current'], // lang par défaut
+			'ip'=>[Base\Server::class,'ip'], // ip du serveur par défaut
+			'timestamp'=>[Base\Date::class,'getTimestamp']] // timestamp de date par défaut 
+	];
 	
 	
 	// required
-	protected static $required = array('id','scheme','host','path','method'); // propriété requise, ne peuvent pas être null
+	protected static $required = ['id','scheme','host','path','method']; // propriété requise, ne peuvent pas être null
 	
 	
 	// dynamique
@@ -65,10 +65,10 @@ class Request extends Map
 	protected $fragment = null; // fragment de la requête
 	protected $method = null; // method de la requête
 	protected $ip = null; // ip de la requête
-	protected $headers = array(); // headers de la requête
+	protected $headers = []; // headers de la requête
 	protected $timestamp = null; // timestamp de la requête
 	protected $lang = null; // lang de la requête, peut provenir de path
-	protected $files = array(); // contient les données de fichier
+	protected $files = []; // contient les données de fichier
 	protected $live = false; // défini si la requête représente la live
 	protected $log = null; // permet de conserver des datas à logger
 	
@@ -241,7 +241,7 @@ class Request extends Map
 	{
 		if($fill === true)
 		{
-			$change = array();
+			$change = [];
 			foreach (static::default() as $key => $value) 
 			{
 				if($this->$key === null)
@@ -281,7 +281,7 @@ class Request extends Map
 		if($absolute === true)
 		$parse = $this->parse();
 		else
-		$parse = array('path'=>$this->path(),'query'=>$this->query(),'fragment'=>$this->fragment());
+		$parse = ['path'=>$this->path(),'query'=>$this->query(),'fragment'=>$this->fragment()];
 		
 		$return = Base\Uri::build($parse);
 		
@@ -309,7 +309,7 @@ class Request extends Map
 	// retourne l'uri relative de la requête, base uri va vérifier qu'elle existe
 	public function relativeExists(?array $option=null) 
 	{
-		return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getOption('uri'),$option,array('exists'=>true)));
+		return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getOption('uri'),$option,['exists'=>true]));
 	}
 	
 	
@@ -434,7 +434,7 @@ class Request extends Map
 	// retourne le tableau parse de l'objet
 	public function parse():array 
 	{
-		$return = array();
+		$return = [];
 		$return['scheme'] = $this->scheme();
 		$return['user'] = $this->user();
 		$return['pass'] = $this->pass();
@@ -1406,7 +1406,7 @@ class Request extends Map
 	// retourne la query string de la requête sous forme de tableau
 	public function queryArray():array
 	{
-		return (is_string($this->query))? Base\Uri::parseQuery($this->query):array();
+		return (is_string($this->query))? Base\Uri::parseQuery($this->query):[];
 	}
 	
 	
@@ -1791,7 +1791,7 @@ class Request extends Map
 	// value doit être un tableau
 	public function setHeaders(array $values):self
 	{
-		$this->property('headers',array());
+		$this->property('headers',[]);
 		$this->addHeaders($values);
 		
 		return $this;
@@ -1916,7 +1916,7 @@ class Request extends Map
 	// gère externalPost, redirection, unsafe et request
 	public function manageRedirect(?Redirection $redirection=null):array 
 	{
-		$return = array('type'=>null,'code'=>null,'location'=>null);
+		$return = ['type'=>null,'code'=>null,'location'=>null];
 		$isAjax = $this->isAjax();
 		$isSafe = $this->isPathSafe();
 		$isExternalPost = $this->isExternalPost();
@@ -1988,8 +1988,8 @@ class Request extends Map
 	public function curl(?array $option=null):Res
 	{
 		$return = null;
-		$lowOption = array('userAgent'=>$this->userAgent());
-		$highOption = array('uri'=>array('encode'=>true),'ssl'=>$this->isSsl(),'port'=>$this->port());
+		$lowOption = ['userAgent'=>$this->userAgent()];
+		$highOption = ['uri'=>['encode'=>true],'ssl'=>$this->isSsl(),'port'=>$this->port()];
 		$option = Base\Arr::plus($lowOption,$this->option(),$option,$highOption);
 		
 		$uri = $this->absolute($option['uri']);
@@ -2033,26 +2033,26 @@ class Request extends Map
 		$code = null;
 		
 		if(empty($exec) || empty($exec['meta']['info']))
-		$throw = array('requestFailed'); 
+		$throw = ['requestFailed']; 
 		
 		$info = $exec['meta']['info'];
 		
 		if(empty($throw) && (!empty($info['errorNo']) || !empty($info['error'])))
-		$throw = array($info['errorNo'],$info['error']); 
+		$throw = [$info['errorNo'],$info['error']]; 
 		
 		if(empty($throw) && empty($exec['resource']))
-		$throw = array('responseHasNoResource');
+		$throw = ['responseHasNoResource'];
 		
 		if(empty($throw) && !Base\Res::isPhpTemp($exec['resource']))
-		$throw = array('responseHasInvalidResource');
+		$throw = ['responseHasInvalidResource'];
 		
 		if(empty($throw) && (empty($exec['header']) || !is_array($exec['header'])))
-		$throw = array('responseHasNoHeader');
+		$throw = ['responseHasNoHeader'];
 		
 		$code = Base\Header::code($exec['header']);
 		
 		if(empty($throw) && !is_int($code))
-		$throw = array('responseHasNoCode');
+		$throw = ['responseHasNoCode'];
 		
 		if(!empty($option['responseCode']))
 		{
@@ -2069,7 +2069,7 @@ class Request extends Map
 		if(!empty($throw))
 		static::throw(...$throw);
 		
-		$return = array();
+		$return = [];
 		$return['header'] = $exec['header'];
 		$return['resource'] = $exec['resource'];
 		$return['timestamp'] = Base\Date::timestamp();
@@ -2099,7 +2099,7 @@ class Request extends Map
 	// retourne le tableau des défauts pour une nouvelle requête
 	public static function default(?array $value=null):array 
 	{
-		$return = array();
+		$return = [];
 		$value = (is_array($value))? Base\Arr::plus(static::$config['default'],$value):static::$config['default'];
 		
 		foreach ($value as $key => $value) 

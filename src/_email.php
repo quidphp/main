@@ -7,9 +7,9 @@ use Quid\Base;
 trait _email
 {
 	// config
-	public static $configEmail = array(
+	public static $configEmail = [
 		'segment'=>null // custom, caractère à utiliser pour les segments
-	);
+	];
 	
 	
 	// serviceMailer
@@ -21,7 +21,7 @@ trait _email
 	// retourne un tableau avec les segments requis pour envoyer le email
 	public function messageSegment():array 
 	{
-		$return = array();
+		$return = [];
 		$delimiter = static::getSegmentChars();
 		$subject = $this->subject();
 		$body = $this->body();
@@ -37,8 +37,8 @@ trait _email
 	// une exception est envoyé si tous les segments requis ne sont pas fournis dans replace
 	public function prepareMessage($to,?array $replace=null,?array $return=null):array 
 	{
-		$return = ($return === null)? array():$return;
-		$replace = ($replace === null)? array():$replace;
+		$return = ($return === null)? []:$return;
+		$replace = ($replace === null)? []:$replace;
 		$replace = Base\Obj::cast($replace);
 		$segment = $this->messageSegment();
 		

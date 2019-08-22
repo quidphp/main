@@ -7,16 +7,16 @@ use Quid\Base;
 abstract class ServiceMailer extends Service
 {
 	// config
-	public static $config = array(
+	public static $config = [
 		'queue'=>null, // queue pour email
 		'log'=>null, // classe pour log
-		'option'=>array(
+		'option'=>[
 			'key'=>null, // clé pour le service
 			'name'=>null, // nom from par défaut
 			'email'=>null, // email form par défaut
 			'username'=>null, // username pour connexion smtp
-			'password'=>null) // password pour connection smtp
-	);
+			'password'=>null] // password pour connection smtp
+	];
 	
 
 	// dispatch
@@ -81,7 +81,7 @@ abstract class ServiceMailer extends Service
 		if(Base\Validate::isEmail($email))
 		{
 			$name = $this->getOption('name');
-			$return = array('email'=>$email);
+			$return = ['email'=>$email];
 			
 			if(is_string($name))
 			$return['name'] = $name;
@@ -192,7 +192,7 @@ abstract class ServiceMailer extends Service
 		if(!empty($error))
 		$return['error'] = $error;
 		
-		$strip = array('password');
+		$strip = ['password'];
 		$return = Base\Arr::keysStrip($strip,$return);
 
 		return $return;
@@ -255,7 +255,7 @@ abstract class ServiceMailer extends Service
 	// permet d'envoyer plusieurs messages à partir d'un tableau multidimensionnel
 	public function sendLoop(array $values,bool $onCloseDown=false):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $key => $value) 
 		{
@@ -319,7 +319,7 @@ abstract class ServiceMailer extends Service
 	// permet de queue plusieurs messages à partir d'un tableau multidimensionnel
 	public function queueLoop(array $values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $key => $value) 
 		{
@@ -348,7 +348,7 @@ abstract class ServiceMailer extends Service
 	// permet de dispatch plusieurs messages à partir d'un tableau multidimensionnel
 	public function dispatchLoop(array $values):array 
 	{
-		$return = array();
+		$return = [];
 		
 		foreach ($values as $key => $value) 
 		{
@@ -412,7 +412,7 @@ abstract class ServiceMailer extends Service
 	// change la méthode de dispatch
 	public static function setDispatch(string $value):void 
 	{
-		if(in_array($value,array('send','sendOnCloseDown','queue'),true))
+		if(in_array($value,['send','sendOnCloseDown','queue'],true))
 		static::$dispatch = $value;
 		
 		else
