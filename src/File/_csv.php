@@ -14,12 +14,12 @@ trait _csv
 				'csv'=>true,
 				'delimiter'=>';',
 				'enclosure'=>'"',
-				'escape'=>"\\"],
+				'escape'=>'\\'],
 			'write'=>[ // option pour write
 				'csv'=>true,
 				'delimiter'=>';',
 				'enclosure'=>'"',
-				'escape'=>"\\"],
+				'escape'=>'\\'],
 			'toUtf8'=>null, // lance la méthode utf8_encode
 			'whiteSpace'=>true, // lance la méthode base/str removeWhiteSpace
 			'forbiddenCodePoint'=>true, // lance méthode base/str fixUnicode

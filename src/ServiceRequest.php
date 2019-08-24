@@ -24,7 +24,7 @@ abstract class ServiceRequest extends Service
 		
 		if(is_string($return) && !empty($return) && !empty($replace))
 		{
-			$replace = Base\Arr::keysWrap("%","%",$replace);
+			$replace = Base\Arr::keysWrap('%','%',$replace);
 			$return = Base\Str::replace($replace,$return);
 		}
 		
@@ -62,7 +62,7 @@ abstract class ServiceRequest extends Service
 	// retourne le userAgent à utiliser s'il n'est pas spécifié dans option
 	public static function userAgent():string 
 	{
-		return "QUID/".Base\Server::quidVersion();
+		return 'QUID/'.Base\Server::quidVersion();
 	}
 }
 ?>

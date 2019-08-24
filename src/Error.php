@@ -168,10 +168,10 @@ class Error extends Root
 	// retourne le id unique de l'erreur, le id de la réponse
 	public function id(?int $inc=null):string 
 	{
-		$return = Base\Response::id()."-".$this->splHash();
+		$return = Base\Response::id().'-'.$this->splHash();
 		
 		if(is_int($inc))
-		$return .= "-".$inc;
+		$return .= '-'.$inc;
 		
 		return $return;
 	}
@@ -497,7 +497,7 @@ class Error extends Root
 			if(is_string($info) && !empty($info))
 			{
 				if(strlen($return))
-				$return .= ": ";
+				$return .= ': ';
 				
 				$return .= $info;
 			}
@@ -515,7 +515,7 @@ class Error extends Root
 	public function titleMessage(string $separator='->'):string 
 	{
 		$return = $this->title();
-		$return .= " -> ";
+		$return .= ' -> ';
 		$return .= $this->getMessage();
 		
 		return $return;
@@ -714,7 +714,7 @@ class Error extends Root
 		// message
 		$message = $this->getMessage();
 		if(strlen($message))
-		$return[2] = "«".$message."»";
+		$return[2] = '«'.$message.'»';
 		
 		// file, line, lastCall
 		$file = $this->getFile();
@@ -722,7 +722,7 @@ class Error extends Root
 		$traceLastCall = $this->getTraceLastCall();
 		if(strlen($file) && !empty($line))
 		{
-			$string = $file."::".$line;
+			$string = $file.'::'.$line;
 			if(is_string($traceLastCall) && strlen($traceLastCall))
 			$string .= " -> $traceLastCall()";
 			$return[3] = $string;
@@ -756,7 +756,7 @@ class Error extends Root
 		}
 		
 		// responseId
-		$return[7] = "#".$this->id();
+		$return[7] = '#'.$this->id();
 		
 		return $return;
 	}
@@ -795,7 +795,7 @@ class Error extends Root
 	// methode pour assert_callback
 	public static function assert(string $file,int $line,$code=null,?string $message=null,?array $option=null):self
 	{
-		$code = static::grabCode("assert");
+		$code = static::grabCode('assert');
 		$error = new static([$message,$file,$line],$code,$option);
 		
 		return $error->trigger();

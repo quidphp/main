@@ -234,11 +234,11 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 	public static function output(\Throwable $throwable):string
 	{
 		$return = get_class($throwable);
-		$return .= " (#".$throwable->getCode().") -> ";
+		$return .= ' (#'.$throwable->getCode().') -> ';
 		$return .= $throwable->getMessage();
-		$return .= " -> ";
+		$return .= ' -> ';
 		$return .= $throwable->getFile();
-		$return .= "::";
+		$return .= '::';
 		$return .= $throwable->getLine();
 
 		return $return;

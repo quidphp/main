@@ -74,8 +74,8 @@ class Xml extends Root
 		
 		foreach ($values as $value) 
 		{
-			$child = $xml->addChild("url");
-			$child->addChild("loc",$value);
+			$child = $xml->addChild('url');
+			$child->addChild('loc',$value);
 		}
 		
 		return $this;

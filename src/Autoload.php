@@ -198,8 +198,8 @@ class Autoload
 				if(is_string($after) && strlen($after))
 				{
 					$extension = static::phpExtension();
-					$after = str_replace("\\","/",$after);
-					$value .= "/".$after.".".$extension;
+					$after = str_replace('\\','/',$after);
+					$value .= '/'.$after.'.'.$extension;
 					
 					if(file_exists($value))
 					{

@@ -50,7 +50,7 @@ trait _storage
 	// id de réponse ainsi qu'un int qui s'auto-incrémente
 	public static function storageFilename(...$values):string 
 	{
-		return Base\Response::id()."-".static::$config['inc'];
+		return Base\Response::id().'-'.static::$config['inc'];
 	}
 	
 	
