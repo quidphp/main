@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/base/blob/master/LICENSE
+ */
+
 namespace Quid\Main\Map;
 use Quid\Main;
 use Quid\Base;
@@ -16,28 +23,28 @@ trait _prepend
 		$return = $this->onPrepareThis('set');
 		$key = $this->onPrepareKey($key);
 		$value = $this->onPrepareValueSet($value);
-		
+
 		if($key === null)
 		$return->unshift($value);
-		
+
 		elseif($return->exists($key) && $return->checkBefore(false,$value))
 		Base\Arr::setRef($key,$value,$return->arr());
-		
+
 		elseif(Base\Arr::isKey($key))
 		$return->prepend([$key=>$value]);
-		
+
 		return $return->checkAfter();
 	}
-	
-	
+
+
 	// add
 	// raccourci pour unshift
 	public function add(...$values):Main\Map
 	{
 		return $this->unshift(...$values);
 	}
-	
-	
+
+
 	// pend
 	// raccourci pour prepend
 	public function pend(...$values):Main\Map

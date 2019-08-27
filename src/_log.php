@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/base/blob/master/LICENSE
+ */
+
 namespace Quid\Main;
 use Quid\Base;
 
@@ -8,8 +15,8 @@ trait _log
 {
 	// queue
 	public static $queue = 0; // nombre de logs queues pour la classe
-	
-	
+
+
 	// logOnCloseDown
 	// queue l'insertion d'une nouvelle entrée du log au closeDown
 	// lance logTrim si c'est le dernier élément de la queue
@@ -18,15 +25,15 @@ trait _log
 		Base\Response::onCloseDown(function() use($values) {
 			static::log(...$values);
 			static::$queue--;
-			
+
 			if(static::$queue === 0)
 			static::logTrim();
-			
+
 			return;
 		});
-		
+
 		static::$queue++;
-		
+
 		return;
 	}
 }

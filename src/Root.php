@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/base/blob/master/LICENSE
+ */
+
 namespace Quid\Main;
 use Quid\Base;
 
@@ -8,8 +15,8 @@ abstract class Root extends Base\Root implements \Serializable, \JsonSerializabl
 {
 	// trait
 	use _rootClone;
-	
-	
+
+
 	// config
 	public static $config = [];
 }

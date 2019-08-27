@@ -1,5 +1,12 @@
 <?php
 declare(strict_types=1);
+
+/*
+ * This file is part of the QuidPHP package.
+ * Website: https://quidphp.com
+ * License: https://github.com/quidphp/base/blob/master/LICENSE
+ */
+
 namespace Quid\Main\Map;
 use Quid\Main;
 use Quid\Base;
@@ -14,15 +21,15 @@ trait _map
 	{
 		$this->checkAllowed('map');
 		$return = $this->onPrepareThis('map');
-		
-		foreach ($this->arr() as $key => $value) 
+
+		foreach ($this->arr() as $key => $value)
 		{
 			$new = Base\Call::withObj($return,$map,$value,$key,...$args);
-			
+
 			if($new !== $value)
 			$return->set($key,$new);
 		}
-		
+
 		return $return;
 	}
 }
