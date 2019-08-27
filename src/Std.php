@@ -13,7 +13,16 @@ namespace Quid\Main;
 class Std extends Map
 {
 	// trait
-	use Map\_arr; use Map\_basic; use Map\_count; use Map\_readOnly; use Map\_sort; use Map\_sequential; use Map\_filter; use Map\_map;
+	use Map\_arr;
+	use Map\_basic;
+	use Map\_count;
+	use Map\_readOnly;
+	use Map\_sort;
+	use Map\_sequential;
+	use Map\_filter;
+	use Map\_map;
+	
+	
 	// config
 	public static $config = [];
 }

@@ -14,7 +14,11 @@ use Quid\Base;
 class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTimestampHandlerInterface
 {
 	// trait
-	use Map\_arrs; use _inst; use _option;
+	use Map\_arrs;
+	use _inst;
+	use _option;
+	
+	
 	// config
 	public static $config = [
 		'base'=>[ // toutes les méthodes renvoyé à base

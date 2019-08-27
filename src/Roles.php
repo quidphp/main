@@ -13,7 +13,12 @@ namespace Quid\Main;
 class Roles extends Extender
 {
 	// trait
-	use _inst; use Map\_classe; use Map\_sort; use Map\_readOnly;
+	use _inst;
+	use Map\_classe;
+	use Map\_sort;
+	use Map\_readOnly;
+	
+	
 	// config
 	public static $config = [
 		'option'=>[

@@ -14,7 +14,11 @@ use Quid\Base;
 class Extender extends Map
 {
 	// trait
-	use _option; use Map\_filter; use Map\_readOnly;
+	use _option;
+	use Map\_filter;
+	use Map\_readOnly;
+	
+	
 	// config
 	public static $config = [
 		'option'=>[

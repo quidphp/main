@@ -14,7 +14,12 @@ use Quid\Base;
 class Services extends Map
 {
 	// trait
-	use _inst; use Map\_sort; use Map\_readOnly; use Map\_obj;
+	use _inst;
+	use Map\_sort;
+	use Map\_readOnly;
+	use Map\_obj;
+	
+	
 	// config
 	public static $config = [];
 

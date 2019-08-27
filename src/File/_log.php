@@ -14,7 +14,10 @@ use Quid\Main;
 trait _log
 {
 	// trait
-	use Main\_log; use _storage;
+	use Main\_log;
+	use _storage;
+	
+	
 	// config
 	public static $configFileLog = [
 		'type'=>'dump',

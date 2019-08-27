@@ -14,7 +14,11 @@ use Quid\Base;
 trait _root
 {
 	// trait
-	use _cache; use _overload; use _throw;
+	use _cache;
+	use _overload;
+	use _throw;
+	
+	
 	// invoke
 	// invoke la méthode
 	public function __invoke(...$args)

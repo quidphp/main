@@ -14,7 +14,11 @@ use Quid\Base;
 class Exception extends \Exception implements \Serializable, \JsonSerializable
 {
 	// trait
-	use _root; use _option; use Base\_root;
+	use _root;
+	use _option;
+	use Base\_root;
+	
+	
 	// config
 	public static $config = [
 		'code'=>31, // code de l'exception

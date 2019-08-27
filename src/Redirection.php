@@ -14,7 +14,10 @@ use Quid\Base;
 class Redirection extends Map
 {
 	// trait
-	use _inst; use Map\_readOnly;
+	use _inst;
+	use Map\_readOnly;
+	
+	
 	// config
 	public static $config = [];
 

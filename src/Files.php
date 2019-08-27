@@ -14,7 +14,12 @@ use Quid\Base;
 class Files extends Map
 {
 	// trait
-	use Map\_obj; use Map\_sequential; use Map\_count; use Map\_sort;
+	use Map\_obj;
+	use Map\_sequential;
+	use Map\_count;
+	use Map\_sort;
+	
+	
 	// config
 	public static $config = [];
 

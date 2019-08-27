@@ -14,7 +14,11 @@ use Quid\Base;
 class Request extends Map
 {
 	// trait
-	use _inst; use _option; use Map\_readOnly;
+	use _inst;
+	use _option;
+	use Map\_readOnly;
+	
+	
 	// config
 	public static $config = [
 		'ipAllowed'=>[ // paramètre par défaut pour la méhode isIpAllowed

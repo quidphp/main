@@ -14,7 +14,11 @@ use Quid\Base;
 class Lang extends Map
 {
 	// trait
-	use Map\_arrs; use _inst; use _option;
+	use Map\_arrs;
+	use _inst;
+	use _option;
+	
+	
 	// config
 	public static $config = [
 		'pattern'=>'%', // caractère utilisé pour option text pattern
