@@ -16,8 +16,8 @@ class Redirection extends Map
 	// trait
 	use _inst;
 	use Map\_readOnly;
-	
-	
+
+
 	// config
 	public static $config = [];
 

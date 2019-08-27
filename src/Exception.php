@@ -17,8 +17,8 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 	use _root;
 	use _option;
 	use Base\_root;
-	
-	
+
+
 	// config
 	public static $config = [
 		'code'=>31, // code de l'exception

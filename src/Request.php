@@ -17,8 +17,8 @@ class Request extends Map
 	use _inst;
 	use _option;
 	use Map\_readOnly;
-	
-	
+
+
 	// config
 	public static $config = [
 		'ipAllowed'=>[ // paramètre par défaut pour la méhode isIpAllowed

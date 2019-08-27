@@ -17,8 +17,8 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 	use Map\_arrs;
 	use _inst;
 	use _option;
-	
-	
+
+
 	// config
 	public static $config = [
 		'base'=>[ // toutes les méthodes renvoyé à base

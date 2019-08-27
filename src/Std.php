@@ -21,8 +21,8 @@ class Std extends Map
 	use Map\_sequential;
 	use Map\_filter;
 	use Map\_map;
-	
-	
+
+
 	// config
 	public static $config = [];
 }

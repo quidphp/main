@@ -18,8 +18,8 @@ class Files extends Map
 	use Map\_sequential;
 	use Map\_count;
 	use Map\_sort;
-	
-	
+
+
 	// config
 	public static $config = [];
 

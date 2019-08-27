@@ -17,8 +17,8 @@ class Extender extends Map
 	use _option;
 	use Map\_filter;
 	use Map\_readOnly;
-	
-	
+
+
 	// config
 	public static $config = [
 		'option'=>[

@@ -18,8 +18,8 @@ class Services extends Map
 	use Map\_sort;
 	use Map\_readOnly;
 	use Map\_obj;
-	
-	
+
+
 	// config
 	public static $config = [];
 

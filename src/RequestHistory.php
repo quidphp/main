@@ -16,8 +16,8 @@ class RequestHistory extends Map
 	// trait
 	use Map\_count;
 	use Map\_nav;
-	
-	
+
+
 	// config
 	public static $config = [
 		'extra'=>['redirectable'=>true] // clé extra à utiliser pour générer la string de requête

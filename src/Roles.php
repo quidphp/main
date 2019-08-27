@@ -17,8 +17,8 @@ class Roles extends Extender
 	use Map\_classe;
 	use Map\_sort;
 	use Map\_readOnly;
-	
-	
+
+
 	// config
 	public static $config = [
 		'option'=>[

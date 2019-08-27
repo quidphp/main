@@ -17,8 +17,8 @@ trait _root
 	use _cache;
 	use _overload;
 	use _throw;
-	
-	
+
+
 	// invoke
 	// invoke la méthode
 	public function __invoke(...$args)
