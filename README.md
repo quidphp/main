@@ -8,7 +8,7 @@
 </p>
 
 ## About
-**Quid\Main** is a mid-level library for PHP that provides a set of generic objects that can be extended to build something more specific. It is part of the QuidPHP framework and CMS but it can be used standalone. 
+**Quid\Main** is a mid-level library for PHP that provides a set of generic objects that can be extended to build something more specific. It is part of the QuidPHP framework and CMS and can also be used standalone. 
 
 ## License
 **Quid\Main** is available as an open-source software under the [MIT license](LICENSE).
@@ -35,7 +35,8 @@ $ composer require quidphp/main
 
 ## Convention
 **Quid\Main** is built on the following conventions:
-- *Filename*: Traits filenames start with an underscore (_), interfaces are stored within a Contract subdirectory.
+- *Traits*: Traits filenames start with an underscore (_).
+- *Interfaces*: Interfaces are stored within the Contract subdirectory.
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 - *Type*: Files, function arguments and return types are strict typed.
 - *Dynamic*: Classes are dynamic and objects need to be instantiated, very few static methods
@@ -43,89 +44,89 @@ $ composer require quidphp/main
 
 ## Overview
 **Quid\Main** contains more than 90 classes, traits and interfaces. Here is an overview:
-- [ArrMap](src/ArrMap.php) | ArrMap
-- [ArrObj](src/ArrObj.php) | ArrObj
-- [Arrs](src/Arrs.php) | Arrs
-- [Autoload](src/Autoload.php) | Autoload
-- [CatchableException](src/CatchableException.php) | CatchableException
-- [Com](src/Com.php) | Com
-- [Concatenator](src/Concatenator.php) | Concatenator
-    - [Catchable](src/Contract/Catchable.php) | Catchable
-    - [Email](src/Contract/Email.php) | Email
-    - [FileStorage](src/Contract/FileStorage.php) | FileStorage
-    - [Hierarchy](src/Contract/Hierarchy.php) | Hierarchy
-    - [Import](src/Contract/Import.php) | Import
-    - [Log](src/Contract/Log.php) | Log
-    - [Meta](src/Contract/Meta.php) | Meta
-    - [Queue](src/Contract/Queue.php) | Queue
-    - [Session](src/Contract/Session.php) | Session
-    - [User](src/Contract/User.php) | User
-- [Error](src/Error.php) | Error
-- [Exception](src/Exception.php) | Exception
-- [Extender](src/Extender.php) | Extender
-- [Extenders](src/Extenders.php) | Extenders
-- [File](src/File.php) | File
-    - [_csv](src/File/_csv.php) | _csv
-    - [_email](src/File/_email.php) | _email
-    - [_log](src/File/_log.php) | _log
-    - [_session](src/File/_session.php) | _session
-    - [_storage](src/File/_storage.php) | _storage
-- [Files](src/Files.php) | Files
-- [Flash](src/Flash.php) | Flash
-- [Importer](src/Importer.php) | Importer
-- [Insensitive](src/Insensitive.php) | Insensitive
-- [Insert](src/Insert.php) | Insert
-- [Lang](src/Lang.php) | Lang
-- [Localization](src/Localization.php) | Localization
-- [Map](src/Map.php) | Map
-    - [_arr](src/Map/_arr.php) | _arr
-    - [_arrs](src/Map/_arrs.php) | _arrs
-    - [_basic](src/Map/_basic.php) | _basic
-    - [_classe](src/Map/_classe.php) | _classe
-    - [_classeObj](src/Map/_classeObj.php) | _classeObj
-    - [_cloner](src/Map/_cloner.php) | _cloner
-    - [_count](src/Map/_count.php) | _count
-    - [_filter](src/Map/_filter.php) | _filter
-    - [_flash](src/Map/_flash.php) | _flash
-    - [_insensitive](src/Map/_insensitive.php) | _insensitive
-    - [_map](src/Map/_map.php) | _map
-    - [_nav](src/Map/_nav.php) | _nav
-    - [_obj](src/Map/_obj.php) | _obj
-    - [_prepend](src/Map/_prepend.php) | _prepend
-    - [_readOnly](src/Map/_readOnly.php) | _readOnly
-    - [_reference](src/Map/_reference.php) | _reference
-    - [_sequential](src/Map/_sequential.php) | _sequential
-    - [_sort](src/Map/_sort.php) | _sort
-- [Redirection](src/Redirection.php) | Redirection
-- [Request](src/Request.php) | Request
-- [RequestHistory](src/RequestHistory.php) | RequestHistory
-- [Res](src/Res.php) | Res
-- [Response](src/Response.php) | Response
-- [Role](src/Role.php) | Role
-- [Roles](src/Roles.php) | Roles
-- [Root](src/Root.php) | Root
-- [Service](src/Service.php) | Service
-- [ServiceMailer](src/ServiceMailer.php) | ServiceMailer
-- [ServiceRequest](src/ServiceRequest.php) | ServiceRequest
-- [ServiceVideo](src/ServiceVideo.php) | ServiceVideo
-- [Services](src/Services.php) | Services
-- [Session](src/Session.php) | Session
-- [Std](src/Std.php) | Std
-- [Timeout](src/Timeout.php) | Timeout
-- [Update](src/Update.php) | Update
-- [Video](src/Video.php) | Video
-- [Widget](src/Widget.php) | Widget
-    - [_calendar](src/Widget/_calendar.php) | _calendar
-- [Xml](src/Xml.php) | Xml
-- [_arrObj](src/_arrObj.php) | _arrObj
-- [_attr](src/_attr.php) | _attr
-- [_cache](src/_cache.php) | _cache
-- [_email](src/_email.php) | _email
-- [_inst](src/_inst.php) | _inst
-- [_log](src/_log.php) | _log
-- [_option](src/_option.php) | _option
-- [_overload](src/_overload.php) | _overload
-- [_queue](src/_queue.php) | _queue
-- [_root](src/_root.php) | _root
-- [_rootClone](src/_rootClone.php) | _rootClone
-- [_throw](src/_throw.php) | _throw
+- [ArrMap](src/ArrMap.php)
+- [ArrObj](src/ArrObj.php)
+- [Arrs](src/Arrs.php)
+- [Autoload](src/Autoload.php)
+- [CatchableException](src/CatchableException.php)
+- [Com](src/Com.php)
+- [Concatenator](src/Concatenator.php)
+    - [Catchable](src/Contract/Catchable.php)
+    - [Email](src/Contract/Email.php)
+    - [FileStorage](src/Contract/FileStorage.php)
+    - [Hierarchy](src/Contract/Hierarchy.php)
+    - [Import](src/Contract/Import.php)
+    - [Log](src/Contract/Log.php)
+    - [Meta](src/Contract/Meta.php)
+    - [Queue](src/Contract/Queue.php)
+    - [Session](src/Contract/Session.php)
+    - [User](src/Contract/User.php)
+- [Error](src/Error.php)
+- [Exception](src/Exception.php)
+- [Extender](src/Extender.php)
+- [Extenders](src/Extenders.php)
+- [File](src/File.php)
+    - [_csv](src/File/_csv.php)
+    - [_email](src/File/_email.php)
+    - [_log](src/File/_log.php)
+    - [_session](src/File/_session.php)
+    - [_storage](src/File/_storage.php)
+- [Files](src/Files.php)
+- [Flash](src/Flash.php)
+- [Importer](src/Importer.php)
+- [Insensitive](src/Insensitive.php)
+- [Insert](src/Insert.php)
+- [Lang](src/Lang.php)
+- [Localization](src/Localization.php)
+- [Map](src/Map.php)
+    - [_arr](src/Map/_arr.php)
+    - [_arrs](src/Map/_arrs.php)
+    - [_basic](src/Map/_basic.php)
+    - [_classe](src/Map/_classe.php)
+    - [_classeObj](src/Map/_classeObj.php)
+    - [_cloner](src/Map/_cloner.php)
+    - [_count](src/Map/_count.php)
+    - [_filter](src/Map/_filter.php)
+    - [_flash](src/Map/_flash.php)
+    - [_insensitive](src/Map/_insensitive.php)
+    - [_map](src/Map/_map.php)
+    - [_nav](src/Map/_nav.php)
+    - [_obj](src/Map/_obj.php)
+    - [_prepend](src/Map/_prepend.php)
+    - [_readOnly](src/Map/_readOnly.php)
+    - [_reference](src/Map/_reference.php)
+    - [_sequential](src/Map/_sequential.php)
+    - [_sort](src/Map/_sort.php)
+- [Redirection](src/Redirection.php)
+- [Request](src/Request.php)
+- [RequestHistory](src/RequestHistory.php)
+- [Res](src/Res.php)
+- [Response](src/Response.php)
+- [Role](src/Role.php)
+- [Roles](src/Roles.php)
+- [Root](src/Root.php)
+- [Service](src/Service.php)
+- [ServiceMailer](src/ServiceMailer.php)
+- [ServiceRequest](src/ServiceRequest.php)
+- [ServiceVideo](src/ServiceVideo.php)
+- [Services](src/Services.php)
+- [Session](src/Session.php)
+- [Std](src/Std.php)
+- [Timeout](src/Timeout.php)
+- [Update](src/Update.php)
+- [Video](src/Video.php)
+- [Widget](src/Widget.php)
+    - [_calendar](src/Widget/_calendar.php)
+- [Xml](src/Xml.php)
+- [_arrObj](src/_arrObj.php)
+- [_attr](src/_attr.php)
+- [_cache](src/_cache.php)
+- [_email](src/_email.php)
+- [_inst](src/_inst.php)
+- [_log](src/_log.php)
+- [_option](src/_option.php)
+- [_overload](src/_overload.php)
+- [_queue](src/_queue.php)
+- [_root](src/_root.php)
+- [_rootClone](src/_rootClone.php)
+- [_throw](src/_throw.php)
