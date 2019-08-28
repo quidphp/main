@@ -17,6 +17,15 @@
 $ composer require quidphp/main
 ```
 
+``` php
+function james(array $test):string
+{
+    return 'LALA';
+}
+
+james(array(2,3,4);
+```
+
 ## Requirement
 **Quid\Main** requires the following:
 - PHP 7.2+
