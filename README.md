@@ -18,6 +18,7 @@ $ composer require quidphp/main
 ```
 
 ``` php
+// use this function to do something
 function james(array $test):string
 {
     return 'LALA';
