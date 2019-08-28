@@ -17,16 +17,6 @@
 $ composer require quidphp/main
 ```
 
-``` php
-// use this function to do something
-function james(array $test):string
-{
-    return 'LALA';
-}
-
-james(array(2,3,4);
-```
-
 ## Requirement
 **Quid\Main** requires the following:
 - PHP 7.2+
