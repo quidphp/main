@@ -51,6 +51,7 @@ $ composer require quidphp/main
 - [CatchableException](src/CatchableException.php)
 - [Com](src/Com.php)
 - [Concatenator](src/Concatenator.php)
+- Contract
     - [Catchable](src/Contract/Catchable.php)
     - [Email](src/Contract/Email.php)
     - [FileStorage](src/Contract/FileStorage.php)
