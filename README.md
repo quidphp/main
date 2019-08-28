@@ -1,11 +1,9 @@
 # Quid\Main
-<p align='center'>
-  <a href='https://packagist.org/packages/quidphp/main'><img src='https://img.shields.io/github/v/release/quidphp/main' alt='Release' /></a>
-  <a href='https://github.com/quidphp/main/blob/master/LICENSE'><img src='https://img.shields.io/github/license/quidphp/main' alt='License' /></a>
-  <a href='https://www.php.net'><img src='https://img.shields.io/packagist/php-v/quidphp/main' alt='PHP Version' /></a>
-  <a href='https://styleci.io'><img src='https://styleci.io/repos/203668077/shield' alt='Style CI' /></a>
-  <a href='https://github.com/quidphp/main'><img src='https://img.shields.io/github/languages/code-size/quidphp/main' alt='Code Size' /></a>
-</p>
+[![Release](https://img.shields.io/github/v/release/quidphp/main)](https://packagist.org/packages/quidphp/main)
+[![License](https://img.shields.io/github/license/quidphp/main)](https://github.com/quidphp/main/blob/master/LICENSE)
+[![PHP Version](https://img.shields.io/packagist/php-v/quidphp/main)](https://www.php.net)
+[![Style CI](https://styleci.io/repos/203668077/shield)](https://styleci.io)
+[![Code Size](https://img.shields.io/github/languages/code-size/quidphp/main)](https://github.com/quidphp/main)
 
 ## About
 **Quid\Main** is a mid-level library for PHP that provides a set of generic objects that can be extended to build something more specific. It is part of the QuidPHP framework and CMS and can also be used standalone. 
