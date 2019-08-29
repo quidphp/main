@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // timeout
-// class for a collection containing timeout data (used for denying an action if it already has happened too much)
+// class for a collection containing timeout data (to deny an action if it already has happened too much)
 class Timeout extends Map
 {
 	// config

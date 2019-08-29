@@ -111,7 +111,7 @@ $ composer require quidphp/main
 - [Services](src/Services.php) | Class for a collection containing many services objects
 - [Session](src/Session.php) | Class that implements the methods necessary for the SessionHandlerInterface and SessionUpdateTimestampHandlerInterface interfaces
 - [Std](src/Std.php) | Class for a collection with a lot of used traits
-- [Timeout](src/Timeout.php) | Class for a collection containing timeout data (used for denying an action if it already has happened too much)
+- [Timeout](src/Timeout.php) | Class for a collection containing timeout data (to deny an action if it already has happened too much)
 - [Update](src/Update.php) | Class for a collection containing an update-only array (cannot insert after initialization)
 - [Video](src/Video.php) | Class for an object representing a video with some meta-data
 - [Widget](src/Widget.php) | Class that provides basic methods for a widget
