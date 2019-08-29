@@ -11,6 +11,7 @@ namespace Quid\Main\File;
 use Quid\Main;
 
 // _log
+// trait that grants methods to allow a file object to do logging
 trait _log
 {
 	// trait

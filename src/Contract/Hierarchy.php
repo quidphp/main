@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main\Contract;
 
 // hierarchy
+// interface to describe the methods required to access the hierarchy of an objet
 interface Hierarchy
 {
 	// keyParent

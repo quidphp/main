@@ -11,6 +11,7 @@ namespace Quid\Main\Map;
 use Quid\Base;
 
 // _basic
+// trait that provides simple boolean methods to analyze the type of array within the collection
 trait _basic
 {
 	// isIndexed

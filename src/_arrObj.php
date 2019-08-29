@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _arrObj
+// trait that provides methods to respect the ArrayAccess, Countable and Iterator native interfaces
 trait _arrObj
 {
 	// dynamique

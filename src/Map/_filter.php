@@ -11,6 +11,7 @@ namespace Quid\Main\Map;
 use Quid\Main;
 
 // _filter
+// trait that provides a method to filter a collection by providing a condition or callback
 trait _filter
 {
 	// filter

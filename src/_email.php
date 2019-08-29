@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _email
+// trait that provides methods to use the object as an email
 trait _email
 {
 	// config

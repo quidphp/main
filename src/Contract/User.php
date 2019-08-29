@@ -11,6 +11,7 @@ namespace Quid\Main\Contract;
 use Quid\Main;
 
 // user
+// interface to detail the methods required for an objet to represent a user
 interface User
 {
 	// uid

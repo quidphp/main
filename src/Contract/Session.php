@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main\Contract;
 
 // session
+// interface to detail the methods required for an objet to be a session storage
 interface Session
 {
 	// sessionSid

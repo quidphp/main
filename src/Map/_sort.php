@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _sort
+// trait that provides methods to change the order of entries within the collection
 trait _sort
 {
 	// sort

@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _count
+// trait that provides a method to limit the length of a collection
 trait _count
 {
 	// unsetAfterCount

@@ -11,6 +11,7 @@ namespace Quid\Main\File;
 use Quid\Main;
 
 // _email
+// trait that provides methods to permit a file object to represent an email
 trait _email
 {
 	// trait

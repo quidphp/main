@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main\Contract;
 
 // import
+// interface to precise the methods required for being able to import and export to an objet
 interface Import
 {
 	// sourceRewind

@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _queue
+// trait that provides methods required for implementing queuing functionnality to an object
 trait _queue
 {
 	// onUnqueue

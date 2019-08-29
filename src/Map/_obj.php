@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main\Map;
 
 // _obj
+// trait that grants methods to work with a collection containing instantiated objects
 trait _obj
 {
 	// trait

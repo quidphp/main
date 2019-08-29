@@ -11,6 +11,7 @@ namespace Quid\Main\Widget;
 use Quid\Base;
 
 // _calendar
+// trait that provides all methods required to make a calendar widget
 trait _calendar
 {
 	// config

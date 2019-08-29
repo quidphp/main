@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _reference
+// trait that permits the collection to work from a reference array source
 trait _reference
 {
 	// construct

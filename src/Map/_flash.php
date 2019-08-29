@@ -11,6 +11,7 @@ namespace Quid\Main\Map;
 use Quid\Base;
 
 // _flash
+// trait that grands methods for the collection to delete an entry once it has been retrieved
 trait _flash
 {
 	// onPrepareValueSet

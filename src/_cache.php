@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _cache
+// trait that provides methods to get or set a cached value from an object
 trait _cache
 {
 	// cache

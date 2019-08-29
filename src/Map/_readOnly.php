@@ -11,6 +11,7 @@ namespace Quid\Main\Map;
 use Quid\Main;
 
 // _readOnly
+// trait that provides a simple readOnly lock to a collection
 trait _readOnly
 {
 	// dynamique

@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _root
+// trait that provides basic object methods and magic methods
 trait _root
 {
 	// trait

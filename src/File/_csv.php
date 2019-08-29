@@ -11,6 +11,7 @@ namespace Quid\Main\File;
 use Quid\Base;
 
 // _csv
+// trait that provides methods to allow a file object to manage csv data
 trait _csv
 {
 	// config

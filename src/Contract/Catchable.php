@@ -11,6 +11,7 @@ namespace Quid\Main\Contract;
 use Quid\Main;
 
 // catchable
+// interface to mark an exception as catchable
 interface Catchable
 {
 	// onCatched

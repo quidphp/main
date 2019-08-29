@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _option
+// trait that grants methods to work with the dynamic property option
 trait _option
 {
 	// option

@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _arrs
+// trait that provides methods to allow advanced multidimensional array manipulation to a collection
 trait _arrs
 {
 	// onPrepareKey

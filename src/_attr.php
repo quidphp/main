@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _attr
+// trait that grants methods to work with the dynamic property attr
 trait _attr
 {
 	// dynamique

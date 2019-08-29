@@ -11,6 +11,7 @@ namespace Quid\Main\Contract;
 use Quid\Main;
 
 // email
+// interface to describe methods of an objet containing an email 
 interface Email
 {
 	// contentType

@@ -11,6 +11,7 @@ namespace Quid\Main\Map;
 use Quid\Main;
 
 // _cloner
+// trait that provides a method to make sure the collection is cloned on every update
 trait _cloner
 {
 	// onPrepareThis

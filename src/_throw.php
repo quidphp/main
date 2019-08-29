@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _throw
+// trait that provides static methods to throw exception from an object
 trait _throw
 {
 	// throw

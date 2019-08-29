@@ -11,6 +11,7 @@ namespace Quid\Main\Map;
 use Quid\Main;
 
 // _sequential
+// trait that makes sure the keys of the collection are always sequential
 trait _sequential
 {
 	// sequential

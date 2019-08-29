@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _session
+// trait that provides methods to allow a file object to become a session storage
 trait _session
 {
 	// storageDirname

@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _inst
+// trait that provide methods to store an instantiated objet within a static property
 trait _inst
 {
 	// inst

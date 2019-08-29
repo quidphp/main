@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _log
+// trait that provides a required method to allow logging with the object
 trait _log
 {
 	// queue

@@ -11,6 +11,7 @@ namespace Quid\Main\Map;
 use Quid\Base;
 
 // _nav
+// trait that provides methods to a collection in order to work with pagination 
 trait _nav
 {
 	// pageSlice

@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _storage
+// trait that provides methods to link a file object to a specific storage directory
 trait _storage
 {
 	// config

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main\Contract;
 
 // meta
+// interface to describe methods making an objet a source of meta-data
 interface Meta
 {
 	// metaTitle

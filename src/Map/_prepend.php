@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _prepend
+// trait that replaces methods to make the collection prepend per default (add at the beginning)
 trait _prepend
 {
 	// set

@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _insensitive
+// trait that transforms the collection from case sensitive to insensitive
 trait _insensitive
 {
 	// append

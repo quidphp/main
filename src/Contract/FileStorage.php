@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main\Contract;
 
 // fileStorage
+// interface to describe a file objet which has a defined storage folder
 interface FileStorage
 {
 	// storageDirname

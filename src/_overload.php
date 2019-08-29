@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _overload
+// trait that allows a class to retrieve its overloaded version - higher up in the class hierarchy
 trait _overload
 {
 	// getOverloadKey

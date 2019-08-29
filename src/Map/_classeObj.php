@@ -12,6 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _classeObj
+// trait that gives methods to work with a collection containing fqcn strings or objects
 trait _classeObj
 {
 	// trait

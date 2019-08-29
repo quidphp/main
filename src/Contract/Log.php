@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main\Contract;
 
 // log
+// interface to detail the methods required for implementing logging functionnality to an object
 interface Log
 {
 	// log
