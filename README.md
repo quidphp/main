@@ -11,8 +11,8 @@
 ## License
 **Quid\Main** is available as an open-source software under the [MIT license](LICENSE).
 
-## Composer
-**Quid\Main** can be installed through [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/main).
+## Installation
+**Quid\Main** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/main).
 ``` bash
 $ composer require quidphp/main
 ```
