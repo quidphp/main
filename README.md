@@ -1,4 +1,4 @@
-# Quid\Main
+# QuidPHP/Main
 [![Release](https://img.shields.io/github/v/release/quidphp/main)](https://packagist.org/packages/quidphp/main)
 [![License](https://img.shields.io/github/license/quidphp/main)](https://github.com/quidphp/main/blob/master/LICENSE)
 [![PHP Version](https://img.shields.io/packagist/php-v/quidphp/main)](https://www.php.net)
@@ -6,34 +6,34 @@
 [![Code Size](https://img.shields.io/github/languages/code-size/quidphp/main)](https://github.com/quidphp/main)
 
 ## About
-**Quid\Main** is a PHP library that provides a set of base objects and collections that can be extended to build something more specific. It is part of the [QuidPHP](https://github.com/quidphp/project) package and can also be used standalone. 
+**QuidPHP/Main** is a PHP library that provides a set of base objects and collections that can be extended to build something more specific. It is part of the [QuidPHP](https://github.com/quidphp/project) package and can also be used standalone. 
 
 ## License
-**Quid\Main** is available as an open-source software under the [MIT license](LICENSE).
+**QuidPHP/Main** is available as an open-source software under the [MIT license](LICENSE).
 
 ## Installation
-**Quid\Main** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/main).
+**QuidPHP/Main** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/main).
 ``` bash
 $ composer require quidphp/main
 ```
 Once installed, the **Quid\Main** namespace will be available within your PHP application.
 
 ## Requirement
-**Quid\Main** requires the following:
+**QuidPHP/Main** requires the following:
 - PHP 7.2+ with fileinfo, curl, openssl and posix
 
 ## Dependency
-**Quid\Main** has the following dependency:
+**QuidPHP/Main** has the following dependency:
 - [Quid\Base](https://github.com/quidphp/base)
 
 ## Testing
-**Quid\Main** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
+**QuidPHP/Main** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
 
 ## Comment
-**Quid\Main** code is commented and all methods are explained. However, the method and property comments are currently written in French.
+**QuidPHP/Main** code is commented and all methods are explained. However, the method and property comments are currently written in French.
 
 ## Convention
-**Quid\Main** is built on the following conventions:
+**QuidPHP/Main** is built on the following conventions:
 - *Traits*: Traits filenames start with an underscore (_).
 - *Interfaces*: Interfaces are stored within the Contract subdirectory.
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
@@ -42,7 +42,7 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
 ## Overview
-**Quid\Main** contains 86 classes, traits and interfaces. Here is an overview:
+**QuidPHP/Main** contains 86 classes, traits and interfaces. Here is an overview:
 - [ArrMap](src/ArrMap.php) | Class that provides base methods to make a collection
 - [ArrObj](src/ArrObj.php) | Class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 - [Arrs](src/Arrs.php) | Class for a collection containing a multidimensional array
