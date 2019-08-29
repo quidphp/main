@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // com
-// class that provides the logic to store positive, negative or neutral communication messages 
+// class that provides the logic to store positive, negative or neutral communication messages
 class Com extends Map
 {
 	// trait

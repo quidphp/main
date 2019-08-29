@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // request
-// class with methods to manage an HTTP request 
+// class with methods to manage an HTTP request
 class Request extends Map
 {
 	// trait

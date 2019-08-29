@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // concatenator
-// class used to concatenate the content of many files or directories 
+// class used to concatenate the content of many files or directories
 class Concatenator extends Map
 {
 	// trait

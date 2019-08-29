@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // response
-// class with methods to manage an HTTP response 
+// class with methods to manage an HTTP response
 class Response extends Res
 {
 	// config
