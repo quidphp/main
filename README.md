@@ -41,7 +41,7 @@ $ composer require quidphp/main
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
 ## Overview
-**Quid\Main** contains more than 90 classes, traits and interfaces. Here is an overview:
+**Quid\Main** contains 87 classes, traits and interfaces. Here is an overview:
 - [ArrMap](src/ArrMap.php) | Class that provides base methods to make a collection
 - [ArrObj](src/ArrObj.php) | Class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 - [Arrs](src/Arrs.php) | Class for a collection containing a multidimensional array
