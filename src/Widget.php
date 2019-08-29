@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // widget
+// class that provides basic methods for a widget
 abstract class Widget extends Root
 {
 	// trait

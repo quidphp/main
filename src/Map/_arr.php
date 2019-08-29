@@ -12,7 +12,7 @@ use Quid\Main;
 use Quid\Base;
 
 // _arr
-// trait that provides methods to allow advanced unidemensionnal array manipulation to a collection
+// trait that provides methods to allow advanced unidimensional array manipulation to a collection
 trait _arr
 {
 	// are

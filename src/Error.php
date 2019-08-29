@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // error
+// class used as a basic error handler
 class Error extends Root
 {
 	// trait

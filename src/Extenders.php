@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // extenders
+// class for a collection containing many extender objects
 class Extenders extends Map
 {
 	// trait

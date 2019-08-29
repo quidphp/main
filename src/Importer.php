@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // importer
+// class providing the logic to export data from an objet and importing into another one
 class Importer extends Map
 {
 	// trait

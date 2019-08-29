@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // extender
+// class for a collection containing a listing of classes extending other ones
 class Extender extends Map
 {
 	// trait

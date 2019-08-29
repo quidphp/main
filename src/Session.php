@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // session
+// class that implements the methods necessary for the SessionHandlerInterface and SessionUpdateTimestampHandlerInterface interfaces
 class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTimestampHandlerInterface
 {
 	// trait

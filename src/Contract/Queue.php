@@ -11,7 +11,7 @@ namespace Quid\Main\Contract;
 use Quid\Main;
 
 // queue
-// interface to detail the methods required for implementing queuing functionnality to an object
+// interface to detail the methods required for implementing queuing functionality to an object
 interface Queue
 {
 	// queue

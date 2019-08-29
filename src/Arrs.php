@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // arrs
+// class for a collection containing a multidimensional array
 class Arrs extends Map
 {
 	// trait

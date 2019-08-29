@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // exception
+// class for a default exception
 class Exception extends \Exception implements \Serializable, \JsonSerializable
 {
 	// trait

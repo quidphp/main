@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // redirection
+// class managing a URI redirection array
 class Redirection extends Map
 {
 	// trait

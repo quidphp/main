@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // update
+// class for a collection containing an update-only array (cannot insert after initialization)
 class Update extends Map
 {
 	// config

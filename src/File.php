@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // file
+// class for a basic file object
 class File extends Res
 {
 	// trait

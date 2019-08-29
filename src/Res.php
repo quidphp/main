@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // res
+// class with methods to manage a resource
 class Res extends ArrObj
 {
 	// config

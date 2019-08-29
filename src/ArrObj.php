@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // arrObj
+// class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 abstract class ArrObj extends Root implements \ArrayAccess, \Countable, \Iterator
 {
 	// trait

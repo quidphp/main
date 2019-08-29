@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // serviceMailer
+// class with basic methods that needs to be extended by a mailing service
 abstract class ServiceMailer extends Service
 {
 	// config

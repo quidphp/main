@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // autoload
+// class that provides custom autoloading logic, including alias autoloading and class within closures
 class Autoload
 {
 	// config

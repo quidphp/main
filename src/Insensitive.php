@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // insensitive
+// class for a collection containing an insensitive array
 class Insensitive extends Map
 {
 	// trait

@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // root
+// class extended by all others
 abstract class Root extends Base\Root implements \Serializable, \JsonSerializable
 {
 	// trait

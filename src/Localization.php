@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // localization
+// class for storing localization data, like latitude and longitude
 class Localization extends Map
 {
 	// config

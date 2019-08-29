@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // lang
+// class for a collection object containing language texts and translations
 class Lang extends Map
 {
 	// trait

@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // video
+// class for an object representing a video with some meta-data
 class Video extends Map
 {
 	// trait

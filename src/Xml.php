@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // xml
+// class that provides basic methods to make an XML sitemap
 class Xml extends Root
 {
 	// config

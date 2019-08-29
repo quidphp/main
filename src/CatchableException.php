@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // catchableException
+// class for a catchable exception
 class CatchableException extends Exception implements Contract\Catchable
 {
 	// config

@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // files
+// class for a collection containing many file objects
 class Files extends Map
 {
 	// trait

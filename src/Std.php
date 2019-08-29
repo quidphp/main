@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // std
+// class for a collection with a lot of used traits
 class Std extends Map
 {
 	// trait

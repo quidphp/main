@@ -11,6 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // serviceRequest
+// class with basic methods for a service that works with HTTP request
 abstract class ServiceRequest extends Service
 {
 	// config

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // roles
+// class for a collection containing many roles
 class Roles extends Extender
 {
 	// trait
