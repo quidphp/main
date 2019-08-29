@@ -11,7 +11,7 @@ namespace Quid\Main\Map;
 use Quid\Main;
 use Quid\Base;
 
-// _map 
+// _map
 // trait that provides a method to recursively change the entries (map) by providing a callback
 trait _map
 {
