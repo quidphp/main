@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // requestHistory
-// class for a collection containing an history of requests
+// class for a collection containing a history of requests
 class RequestHistory extends Map
 {
 	// trait

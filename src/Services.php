@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // services
-// class for a collection containing many services objects
+// class for a collection containing many service objects
 class Services extends Map
 {
 	// trait

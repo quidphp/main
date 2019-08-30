@@ -24,13 +24,13 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 
 ## Dependency
 **QuidPHP/Main** has the following dependency:
-- [Quid\Base](https://github.com/quidphp/base)
-
-## Testing
-**QuidPHP/Main** testsuite can be run by creating a new [Quid\Project](https://github.com/quidphp/project). All tests and assertions are part of the [Quid\Test](https://github.com/quidphp/test) repository.
+- [quidphp/base](https://github.com/quidphp/base) | Quid\Base - PHP library that provides a large set of low-level static methods
 
 ## Comment
 **QuidPHP/Main** code is commented and all methods are explained. However, the method and property comments are currently written in French.
+
+## Testing
+**QuidPHP/Main** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project). All tests and assertions are part of the [quidphp/test](https://github.com/quidphp/test) repository.
 
 ## Convention
 **QuidPHP/Main** is built on the following conventions:
@@ -99,7 +99,7 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
     - [_sort](src/Map/_sort.php) | Trait that provides methods to change the order of entries within the collection
 - [Redirection](src/Redirection.php) | Class managing a URI redirection array
 - [Request](src/Request.php) | Class with methods to manage an HTTP request
-- [RequestHistory](src/RequestHistory.php) | Class for a collection containing an history of requests
+- [RequestHistory](src/RequestHistory.php) | Class for a collection containing a history of requests
 - [Res](src/Res.php) | Class with methods to manage a resource
 - [Response](src/Response.php) | Class with methods to manage an HTTP response
 - [Role](src/Role.php) | Class that provides basic logic for a role
@@ -109,7 +109,7 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 - [ServiceMailer](src/ServiceMailer.php) | Abstract class with basic methods that needs to be extended by a mailing service
 - [ServiceRequest](src/ServiceRequest.php) | Abstract class with basic methods for a service that works with HTTP request
 - [ServiceVideo](src/ServiceVideo.php) | Abstract class with basic methods for a service that provides a video object after an HTTP request
-- [Services](src/Services.php) | Class for a collection containing many services objects
+- [Services](src/Services.php) | Class for a collection containing many service objects
 - [Session](src/Session.php) | Class that implements the methods necessary for the SessionHandlerInterface interface
 - [Std](src/Std.php) | Class for a collection with a lot of used traits
 - [Timeout](src/Timeout.php) | Class for a collection containing timeout data (to deny an action if it already has happened too much)
