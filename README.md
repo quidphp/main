@@ -26,6 +26,8 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 **QuidPHP/Main** has the following dependency:
 - [quidphp/base](https://github.com/quidphp/base) | Quid\Base - PHP library that provides a large set of low-level static methods
 
+The dependency will be resolved by using the [Composer](https://getcomposer.org) installation process.
+
 ## Comment
 **QuidPHP/Main** code is commented and all methods are explained. However, most of the comments are currently written in French.
 
