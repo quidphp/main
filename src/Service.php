@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Quid\Main;
 
 // service
-// class that provides basic methods to manage a third-party service
+// abstract class that provides basic methods to manage a third-party service
 abstract class Service extends Root
 {
 	// trait

@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // arrMap
-// class that provides base methods to make a collection
+// abstract class that provides base methods to make a collection
 abstract class ArrMap extends ArrObj
 {
 	// config

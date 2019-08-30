@@ -43,8 +43,8 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 
 ## Overview
 **QuidPHP/Main** contains 86 classes, traits and interfaces. Here is an overview:
-- [ArrMap](src/ArrMap.php) | Class that provides base methods to make a collection
-- [ArrObj](src/ArrObj.php) | Class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
+- [ArrMap](src/ArrMap.php) | Abstract class that provides base methods to make a collection
+- [ArrObj](src/ArrObj.php) | Abstract class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 - [Arrs](src/Arrs.php) | Class for a collection containing a multidimensional array
 - [Autoload](src/Autoload.php) | Class that provides custom autoloading logic, including alias autoloading and class within closures
 - [CatchableException](src/CatchableException.php) | Class for a catchable exception
@@ -104,18 +104,18 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 - [Response](src/Response.php) | Class with methods to manage an HTTP response
 - [Role](src/Role.php) | Class that provides basic logic for a role
 - [Roles](src/Roles.php) | Class for a collection containing many roles
-- [Root](src/Root.php) | Class extended by all others
-- [Service](src/Service.php) | Class that provides basic methods to manage a third-party service
-- [ServiceMailer](src/ServiceMailer.php) | Class with basic methods that needs to be extended by a mailing service
-- [ServiceRequest](src/ServiceRequest.php) | Class with basic methods for a service that works with HTTP request
-- [ServiceVideo](src/ServiceVideo.php) | Class with basic methods for a service that provides a video object after an HTTP request
+- [Root](src/Root.php) | Abstract class extended by all others
+- [Service](src/Service.php) | Abstract class that provides basic methods to manage a third-party service
+- [ServiceMailer](src/ServiceMailer.php) | Abstract class with basic methods that needs to be extended by a mailing service
+- [ServiceRequest](src/ServiceRequest.php) | Abstract class with basic methods for a service that works with HTTP request
+- [ServiceVideo](src/ServiceVideo.php) | Abstract class with basic methods for a service that provides a video object after an HTTP request
 - [Services](src/Services.php) | Class for a collection containing many services objects
 - [Session](src/Session.php) | Class that implements the methods necessary for the SessionHandlerInterface interface
 - [Std](src/Std.php) | Class for a collection with a lot of used traits
 - [Timeout](src/Timeout.php) | Class for a collection containing timeout data (to deny an action if it already has happened too much)
 - [Update](src/Update.php) | Class for a collection containing an update-only array (cannot insert after initialization)
 - [Video](src/Video.php) | Class for an object representing a video with some meta-data
-- [Widget](src/Widget.php) | Class that provides basic methods for a widget
+- [Widget](src/Widget.php) | Abstract class that provides basic methods for a widget
     - [_calendar](src/Widget/_calendar.php) | Trait that provides all methods required to make a calendar widget
 - [Xml](src/Xml.php) | Class that provides basic methods to make an XML sitemap
 - [_arrObj](src/_arrObj.php) | Trait that provides methods to respect the ArrayAccess, Countable and Iterator native interfaces

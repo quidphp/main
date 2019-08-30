@@ -11,7 +11,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // serviceVideo
-// class with basic methods for a service that provides a video object after an HTTP request
+// abstract class with basic methods for a service that provides a video object after an HTTP request
 abstract class ServiceVideo extends ServiceRequest
 {
 	// config
