@@ -18,7 +18,7 @@ $ composer require quidphp/main
 ```
 Once installed, the **Quid\Main** namespace will be available within your PHP application.
 
-## Requirement 
+## Requirement
 **QuidPHP/Main** requires the following:
 - PHP 7.2+ with fileinfo, curl, openssl and posix
 
