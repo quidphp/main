@@ -31,9 +31,6 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 ## Comment
 **QuidPHP/Main** code is commented and all methods are explained. However, most of the comments are currently written in French.
 
-## Testing
-**QuidPHP/Main** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project). All tests and assertions are part of the [quidphp/test](https://github.com/quidphp/test) repository.
-
 ## Convention
 **QuidPHP/Main** is built on the following conventions:
 - *Traits*: Traits filenames start with an underscore (_).
@@ -132,3 +129,48 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [_root](src/_root.php) | Trait that provides basic object methods and magic methods
 - [_rootClone](src/_rootClone.php) | Trait that provides a default __clone magic function
 - [_throw](src/_throw.php) | Trait that provides static methods to throw exception from an object
+
+## Testing
+**QuidPHP/Main** contains 40 test classes:
+- [ArrMap](test/ArrMap.php) | Class for testing Quid\Main\ArrMap
+- [ArrObj](test/ArrObj.php) | Class for testing Quid\Main\ArrObj
+- [Arrs](test/Arrs.php) | Class for testing Quid\Main\Arrs
+- [Autoload](test/Autoload.php) | Class for testing Quid\Main\Autoload
+- [CatchableException](test/CatchableException.php) | Class for testing Quid\Main\CatchableException
+- [Com](test/Com.php) | Class for testing Quid\Main\Com
+- [Concatenator](test/Concatenator.php) | Class for testing Quid\Main\Concatenator
+- [Error](test/Error.php) | Class for testing Quid\Main\Error
+- [Exception](test/Exception.php) | Class for testing Quid\Main\Exception
+- [Extender](test/Extender.php) | Class for testing Quid\Main\Extender
+- [Extenders](test/Extenders.php) | Class for testing Quid\Main\Extenders
+- [File](test/File.php) | Class for testing Quid\Main\File
+- [Files](test/Files.php) | Class for testing Quid\Main\Files
+- [Flash](test/Flash.php) | Class for testing Quid\Main\Flash
+- [Importer](test/Importer.php) | Class for testing Quid\Main\Importer
+- [Insensitive](test/Insensitive.php) | Class for testing Quid\Main\Insensitive
+- [Insert](test/Insert.php) | Class for testing Quid\Main\Insert
+- [Lang](test/Lang.php) | Class for testing Quid\Main\Lang
+- [Localization](test/Localization.php) | Class for testing Quid\Main\Localization
+- [Map](test/Map.php) | Class for testing Quid\Main\Map
+- [Redirection](test/Redirection.php) | Class for testing Quid\Main\Redirection
+- [Request](test/Request.php) | Class for testing Quid\Main\Request
+- [RequestHistory](test/RequestHistory.php) | Class for testing Quid\Main\RequestHistory
+- [Res](test/Res.php) | Class for testing Quid\Main\Res
+- [Response](test/Response.php) | Class for testing Quid\Main\Response
+- [Role](test/Role.php) | Class for testing Quid\Main\Role
+- [Roles](test/Roles.php) | Class for testing Quid\Main\Roles
+- [Root](test/Root.php) | Class for testing Quid\Main\Root
+- [Service](test/Service.php) | Class for testing Quid\Main\Service
+- [ServiceMailer](test/ServiceMailer.php) | Class for testing Quid\Main\ServiceMailer
+- [ServiceRequest](test/ServiceRequest.php) | Class for testing Quid\Main\ServiceRequest
+- [ServiceVideo](test/ServiceVideo.php) | Class for testing Quid\Main\ServiceVideo
+- [Services](test/Services.php) | Class for testing Quid\Main\Services
+- [Session](test/Session.php) | Class for testing Quid\Main\Session
+- [Std](test/Std.php) | Class for testing Quid\Main\Std
+- [Timeout](test/Timeout.php) | Class for testing Quid\Main\Timeout
+- [Update](test/Update.php) | Class for testing Quid\Main\Update
+- [Video](test/Video.php) | Class for testing Quid\Main\Video
+- [Widget](test/Widget.php) | Class for testing Quid\Main\Widget
+- [Xml](test/Xml.php) | Class for testing Quid\Main\Xml
+
+**QuidPHP/Main** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
