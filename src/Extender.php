@@ -155,11 +155,11 @@ class Extender extends Map
 
 		if(!empty($subClass) && !is_subclass_of($value,$subClass,true))
 		static::throw($value,'notSubClassOf',$subClass);
-		
+
 		$isIgnored = null;
 		if(!empty($methodIgnore) && $value::$methodIgnore() === true)
 		$isIgnored = true;
-		
+
 		$key = static::getKey($value);
 
 		if($this->exists($key))
@@ -180,7 +180,7 @@ class Extender extends Map
 				else
 				$extend = $class;
 			}
-			
+
 			if($isIgnored === true)
 			{
 				$this->unset($key);
@@ -188,7 +188,7 @@ class Extender extends Map
 				unset($this->extend[$key]);
 			}
 		}
-		
+
 		if($isIgnored !== true)
 		{
 			if($type === 'obj')
