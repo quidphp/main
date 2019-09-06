@@ -2,8 +2,8 @@
 [![Release](https://img.shields.io/github/v/release/quidphp/main)](https://packagist.org/packages/quidphp/main)
 [![License](https://img.shields.io/github/license/quidphp/main)](https://github.com/quidphp/main/blob/master/LICENSE)
 [![PHP Version](https://img.shields.io/packagist/php-v/quidphp/main)](https://www.php.net)
-[![Style CI](https://styleci.io/repos/203668077/shield)](https://styleci.io)
 [![Code Size](https://img.shields.io/github/languages/code-size/quidphp/main)](https://github.com/quidphp/main)
+[![Style CI](https://styleci.io/repos/203668077/shield)](https://styleci.io)
 
 ## About
 **QuidPHP/Main** is a PHP library that provides a set of base objects and collections that can be extended to build something more specific. It is part of the [QuidPHP](https://github.com/quidphp/project) package and can also be used standalone. 
