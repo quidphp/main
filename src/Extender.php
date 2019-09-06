@@ -155,31 +155,42 @@ class Extender extends Map
 
 		if(!empty($subClass) && !is_subclass_of($value,$subClass,true))
 		static::throw($value,'notSubClassOf',$subClass);
+		
+		$isIgnored = null;
+		if(!empty($methodIgnore) && $value::$methodIgnore() === true)
+		$isIgnored = true;
+		
+		$key = static::getKey($value);
 
-		if(empty($methodIgnore) || !$value::$methodIgnore())
+		if($this->exists($key))
 		{
-			$key = static::getKey($value);
+			$class = $this->get($key);
 
-			if($this->exists($key))
+			if($type === 'obj')
+			$class = get_class($class);
+
+			if($value === $class)
+			static::throw('alreadyIn',$value);
+
+			if($mustExtend === true)
 			{
-				$class = $this->get($key);
+				if(!is_subclass_of($value,$class,true))
+				static::throw($value,'toReplaceMustExtend',$class);
 
-				if($type === 'obj')
-				$class = get_class($class);
-
-				if($value === $class)
-				static::throw('alreadyIn',$value);
-
-				if($mustExtend === true)
-				{
-					if(!is_subclass_of($value,$class,true))
-					static::throw($value,'toReplaceMustExtend',$class);
-
-					else
-					$extend = $class;
-				}
+				else
+				$extend = $class;
 			}
-
+			
+			if($isIgnored === true)
+			{
+				$this->unset($key);
+				if(!empty($extend) && array_key_exists($key,$this->extend))
+				unset($this->extend[$key]);
+			}
+		}
+		
+		if($isIgnored !== true)
+		{
 			if($type === 'obj')
 			{
 				$args = array_values((array) $args);

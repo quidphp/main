@@ -60,7 +60,7 @@ class Roles extends Extender
 		return $return;
 	}
 
-
+	
 	// nobody
 	// retorne le premier role nobody, en objet
 	public function nobody():?Role

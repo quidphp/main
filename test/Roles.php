@@ -20,7 +20,7 @@ class Roles extends Base\Test
 		// onPrepareKey
 
 		// getObject
-
+		
 		// nobody
 
 		// getKey

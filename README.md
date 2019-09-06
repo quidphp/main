@@ -41,7 +41,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 
 ## Overview
-**QuidPHP/Main** contains 86 classes, traits and interfaces. Here is an overview:
+**QuidPHP/Main** contains 84 classes, traits and interfaces. Here is an overview:
 - [ArrMap](src/ArrMap.php) | Abstract class that provides base methods to make a collection
 - [ArrObj](src/ArrObj.php) | Abstract class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 - [Arrs](src/Arrs.php) | Class for a collection containing a multidimensional array
@@ -96,7 +96,6 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
     - [_reference](src/Map/_reference.php) | Trait that permits the collection to work from a reference array source
     - [_sequential](src/Map/_sequential.php) | Trait that makes sure the keys of the collection are always sequential
     - [_sort](src/Map/_sort.php) | Trait that provides methods to change the order of entries within the collection
-- [Redirection](src/Redirection.php) | Class managing a URI redirection array
 - [Request](src/Request.php) | Class with methods to manage an HTTP request
 - [RequestHistory](src/RequestHistory.php) | Class for a collection containing a history of requests
 - [Res](src/Res.php) | Class with methods to manage a resource
@@ -115,7 +114,6 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [Update](src/Update.php) | Class for a collection containing an update-only array (cannot insert after initialization)
 - [Video](src/Video.php) | Class for an object representing a video with some meta-data
 - [Widget](src/Widget.php) | Abstract class that provides basic methods for a widget
-    - [_calendar](src/Widget/_calendar.php) | Trait that provides all methods required to make a calendar widget
 - [Xml](src/Xml.php) | Class that provides basic methods to make an XML sitemap
 - [_arrObj](src/_arrObj.php) | Trait that provides methods to respect the ArrayAccess, Countable and Iterator native interfaces
 - [_attr](src/_attr.php) | Trait that grants methods to work with the dynamic property attr
@@ -131,7 +129,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [_throw](src/_throw.php) | Trait that provides static methods to throw exception from an object
 
 ## Testing
-**QuidPHP/Main** contains 40 test classes:
+**QuidPHP/Main** contains 39 test classes:
 - [ArrMap](test/ArrMap.php) | Class for testing Quid\Main\ArrMap
 - [ArrObj](test/ArrObj.php) | Class for testing Quid\Main\ArrObj
 - [Arrs](test/Arrs.php) | Class for testing Quid\Main\Arrs
@@ -152,7 +150,6 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [Lang](test/Lang.php) | Class for testing Quid\Main\Lang
 - [Localization](test/Localization.php) | Class for testing Quid\Main\Localization
 - [Map](test/Map.php) | Class for testing Quid\Main\Map
-- [Redirection](test/Redirection.php) | Class for testing Quid\Main\Redirection
 - [Request](test/Request.php) | Class for testing Quid\Main\Request
 - [RequestHistory](test/RequestHistory.php) | Class for testing Quid\Main\RequestHistory
 - [Res](test/Res.php) | Class for testing Quid\Main\Res

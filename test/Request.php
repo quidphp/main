@@ -48,12 +48,6 @@ class Request extends Base\Test
 		$nl = new Main\Request('browserconfig.xml');
 		$clone = $nl->clone();
 		$null = new Main\Request();
-		$badExtension = new Main\Request('/james/ok.jpg');
-		$redi = new Main\Request('/en/james/ok');
-		$doubleSlash = new Main\Request('/sada//ok');
-		$endSlash = new Main\Request('/asdok/ok/');
-		$externalPost = new Main\Request(['uri'=>'/external','method'=>'post','headers'=>['referer'=>'https://google.com']]);
-		$redirection = new Main\Redirection(['/en/james/ok'=>'/lol/ok']);
 		assert($current->id() === Base\Request::id());
 
 		// invoke
@@ -706,15 +700,6 @@ class Request extends Base\Test
 		// redirect
 		assert($r->redirect() === '/en/lavieestlaide');
 		assert($current->redirect() === null);
-
-		// manageRedirect
-		assert($badExtension->manageRedirect() === ['type'=>null,'code'=>null,'location'=>null]);
-		assert($externalPost->manageRedirect() === ['type'=>'externalPost','code'=>400,'location'=>null]);
-		assert($doubleSlash->manageRedirect($redirection) === ['type'=>'unsafe','code'=>302,'location'=>Base\Request::schemeHost()]);
-		assert($nl->manageRedirect() === ['type'=>null,'code'=>null,'location'=>null]);
-		assert($redi->manageRedirect($redirection)['type'] === 'redirection');
-		assert($redi->manageRedirect() === ['type'=>null,'code'=>null,'location'=>null]);
-		assert($endSlash->manageRedirect($redirection) === ['type'=>'request','code'=>302,'location'=>'/en/asdok/ok']);
 
 		// curl
 		$curl = $r->curl();
