@@ -269,7 +269,7 @@ class Com extends Map
 
 						if(!empty($val))
 						{
-							$k = array_search($val,$return[4]);
+							$k = array_search($val,$return[4],true);
 
 							if(is_int($k))
 							{

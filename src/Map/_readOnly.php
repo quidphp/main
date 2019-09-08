@@ -64,7 +64,7 @@ trait _readOnly
 	{
 		foreach ($values as $value)
 		{
-			if(!in_array($value,static::allowedReadOnlyMethods()))
+			if(!in_array($value,static::allowedReadOnlyMethods(),true))
 			$this->checkReadOnly();
 
 			if(!$this->isAllowed($value))
