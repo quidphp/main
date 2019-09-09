@@ -14,66 +14,66 @@ use Quid\Base;
 // class for testing Quid\Main\ServiceMailer
 class ServiceMailer extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// construct
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // construct
 
-		// prepare
+        // prepare
 
-		// error
+        // error
 
-		// isActive
+        // isActive
 
-		// username
+        // username
 
-		// from
+        // from
 
-		// reset
+        // reset
 
-		// mailer
+        // mailer
 
-		// isReady
+        // isReady
 
-		// checkReady
+        // checkReady
 
-		// prepareMessage
+        // prepareMessage
 
-		// messageCastObj
+        // messageCastObj
 
-		// messageWithOption
+        // messageWithOption
 
-		// send
+        // send
 
-		// sendOnCloseDown
+        // sendOnCloseDown
 
-		// sendNowOrOnCloseDown
+        // sendNowOrOnCloseDown
 
-		// sendTest
+        // sendTest
 
-		// sendLoop
+        // sendLoop
 
-		// queue
+        // queue
 
-		// queueTest
+        // queueTest
 
-		// queueLoop
+        // queueLoop
 
-		// dispatch
+        // dispatch
 
-		// dispatchLoop
+        // dispatchLoop
 
-		// log
+        // log
 
-		// queueClass
+        // queueClass
 
-		// logClass
+        // logClass
 
-		// getDispatch
+        // getDispatch
 
-		// setDispatch
+        // setDispatch
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

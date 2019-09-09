@@ -15,111 +15,111 @@ use Quid\Base;
 // class for testing Quid\Main\Autoload
 class Autoload extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// construct
-		$a = new Main\Autoload('alias');
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // construct
+        $a = new Main\Autoload('alias');
 
-		// setAttr
+        // setAttr
 
-		// attr
-		assert(count($a->attr()) === 4);
+        // attr
+        assert(count($a->attr()) === 4);
 
-		// initClass
+        // initClass
 
-		// storeHit
+        // storeHit
 
-		// storeMiss
+        // storeMiss
 
-		// getCallable
-		assert(is_callable($a->getCallable()));
+        // getCallable
+        assert(is_callable($a->getCallable()));
 
-		// register
-		assert($a->register() === true);
+        // register
+        assert($a->register() === true);
 
-		// unregister
-		assert($a->unregister() === true);
-		assert($a->unregister() === false);
+        // unregister
+        assert($a->unregister() === true);
+        assert($a->unregister() === false);
 
-		// findPsr4
+        // findPsr4
 
-		// getPsr4File
+        // getPsr4File
 
-		// findAlias
+        // findAlias
 
-		// findClosure
+        // findClosure
 
-		// registerPsr4
+        // registerPsr4
 
-		// getAlias
+        // getAlias
 
-		// setAlias
+        // setAlias
 
-		// setsAlias
+        // setsAlias
 
-		// unsetAlias
+        // unsetAlias
 
-		// allAlias
-		assert(is_array(Main\Autoload::allAlias()));
+        // allAlias
+        assert(is_array(Main\Autoload::allAlias()));
 
-		// aliasEnding
-		assert(Main\Autoload::aliasEnding() === 'Alias');
+        // aliasEnding
+        assert(Main\Autoload::aliasEnding() === 'Alias');
 
-		// registerAlias
+        // registerAlias
 
-		// getClosure
+        // getClosure
 
-		// setClosure
-		assert(Main\Autoload::setClosure('Test\Ok\What','James',function() {}) === null);
-		assert(Main\Autoload::setClosure('Test\Ok\What\Lol','_noway',function() {}) === null);
+        // setClosure
+        assert(Main\Autoload::setClosure('Test\Ok\What','James',function() {}) === null);
+        assert(Main\Autoload::setClosure('Test\Ok\What\Lol','_noway',function() {}) === null);
 
-		// getClosureByNamespace
-		assert(Main\Autoload::getClosureByNamespace('test') === []);
-		assert(Main\Autoload::getClosureByNamespace('Test\Ok\What') === ['Test\Ok\What\James']);
-		assert(Main\Autoload::getClosureByNamespace('Test\Ok') === []);
-		assert(Main\Autoload::getClosureByNamespace('Test\Ok',true,true) === ['Test\Ok\What\James']);
-		assert(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,false) === ['Test\Ok\What\James']);
-		assert(count(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,true)) === 2);
-		assert(Main\Autoload::getClosureByNamespace('xyz') === []);
+        // getClosureByNamespace
+        assert(Main\Autoload::getClosureByNamespace('test') === []);
+        assert(Main\Autoload::getClosureByNamespace('Test\Ok\What') === ['Test\Ok\What\James']);
+        assert(Main\Autoload::getClosureByNamespace('Test\Ok') === []);
+        assert(Main\Autoload::getClosureByNamespace('Test\Ok',true,true) === ['Test\Ok\What\James']);
+        assert(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,false) === ['Test\Ok\What\James']);
+        assert(count(Main\Autoload::getClosureByNamespace('Test\Ok\What',false,true)) === 2);
+        assert(Main\Autoload::getClosureByNamespace('xyz') === []);
 
-		// allClosure
-		assert(Base\Arrs::is(Main\Autoload::allClosure()));
+        // allClosure
+        assert(Base\Arrs::is(Main\Autoload::allClosure()));
 
-		// registerClosure
+        // registerClosure
 
-		// getOverload
-		assert(Main\Autoload::getOverload('james',Classe::class) === Classe::class);
-		assert(Main\Autoload::getOverload('james') === null);
+        // getOverload
+        assert(Main\Autoload::getOverload('james',Classe::class) === Classe::class);
+        assert(Main\Autoload::getOverload('james') === null);
 
-		// setOverload
+        // setOverload
 
-		// setsOverload
+        // setsOverload
 
-		// unsetOverload
+        // unsetOverload
 
-		// allOverload
-		assert(is_array(Main\Autoload::allOverload()));
+        // allOverload
+        assert(is_array(Main\Autoload::allOverload()));
 
-		// findOneOrMany
-		assert(!empty(Main\Autoload::findOneOrMany([__NAMESPACE__],false,true,true)));
-		assert(Main\Autoload::findOneOrMany(\Datetime::class,true,true,true) === [\Datetime::class]);
+        // findOneOrMany
+        assert(!empty(Main\Autoload::findOneOrMany([__NAMESPACE__],false,true,true)));
+        assert(Main\Autoload::findOneOrMany(\Datetime::class,true,true,true) === [\Datetime::class]);
 
-		// findOne
-		assert(Main\Autoload::findOne(\Datetime::class,true,true) === true);
-		assert(Main\Autoload::findOne(\Datetime::class,true,false) === null);
+        // findOne
+        assert(Main\Autoload::findOne(\Datetime::class,true,true) === true);
+        assert(Main\Autoload::findOne(\Datetime::class,true,false) === null);
 
-		// findMany
-		assert(!empty(Main\Autoload::findMany(__NAMESPACE__,false,true,true)));
+        // findMany
+        assert(!empty(Main\Autoload::findMany(__NAMESPACE__,false,true,true)));
 
-		// requireFile
+        // requireFile
 
-		// exists
+        // exists
 
-		// phpExtension
-		assert(Main\Autoload::phpExtension() === 'php');
+        // phpExtension
+        assert(Main\Autoload::phpExtension() === 'php');
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

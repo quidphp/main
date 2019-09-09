@@ -13,11 +13,11 @@ namespace Quid\Main;
 // class for a collection containing an insensitive array
 class Insensitive extends Map
 {
-	// trait
-	use Map\_insensitive;
+    // trait
+    use Map\_insensitive;
 
 
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 }
 ?>

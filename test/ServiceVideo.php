@@ -14,18 +14,18 @@ use Quid\Base;
 // class for testing Quid\Main\ServiceVideo
 class ServiceVideo extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// query
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // query
 
-		// request
+        // request
 
-		// makeVideo
+        // makeVideo
 
-		// videoOption
+        // videoOption
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

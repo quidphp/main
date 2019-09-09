@@ -13,15 +13,15 @@ namespace Quid\Main\Map;
 // trait that grants methods to work with a collection containing instantiated objects
 trait _obj
 {
-	// trait
-	use _classeObj;
+    // trait
+    use _classeObj;
 
 
-	// classeOrObj
-	// retourne que le trait doit utilisé l'appelation d'objet
-	public static function classeOrObj():string
-	{
-		return 'obj';
-	}
+    // classeOrObj
+    // retourne que le trait doit utilisé l'appelation d'objet
+    public static function classeOrObj():string
+    {
+        return 'obj';
+    }
 }
 ?>

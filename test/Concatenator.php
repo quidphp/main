@@ -15,47 +15,47 @@ use Quid\Base;
 // class for testing Quid\Main\Concatenator
 class Concatenator extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// prepare
-		$target = '[assertCurrent]/concatenate.php';
-		$_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
-		$_dir_ = dirname($_file_);
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // prepare
+        $target = '[assertCurrent]/concatenate.php';
+        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_dir_ = dirname($_file_);
 
-		// construct
-		$c = new Main\Concatenator();
+        // construct
+        $c = new Main\Concatenator();
 
-		// add
-		$option = ['extension'=>'php','priority'=>['class.php']];
-		assert($c->add($_dir_,$option) === $c);
+        // add
+        $option = ['extension'=>'php','priority'=>['class.php']];
+        assert($c->add($_dir_,$option) === $c);
 
-		// addStr
-		assert($c->addStr('TESTA') === $c);
+        // addStr
+        assert($c->addStr('TESTA') === $c);
 
-		// parse
-		assert(count($c->parse()) === 2);
-		assert(count($c->parse()[0]) === 2);
-		assert(strpos($c->parse()[0][0][0],'class.php') !== false);
+        // parse
+        assert(count($c->parse()) === 2);
+        assert(count($c->parse()[0]) === 2);
+        assert(strpos($c->parse()[0][0][0],'class.php') !== false);
 
-		// prepareEntry
+        // prepareEntry
 
-		// getEntryFiles
+        // getEntryFiles
 
-		// trigger
-		assert(is_string($c->trigger()));
+        // trigger
+        assert(is_string($c->trigger()));
 
-		// triggerWrite
-		assert($c->triggerWrite($target) instanceof Main\File);
+        // triggerWrite
+        assert($c->triggerWrite($target) instanceof Main\File);
 
-		// makeEntry
+        // makeEntry
 
-		// prepareEntryFile
+        // prepareEntryFile
 
-		// cleanup
-		assert(Base\Dir::empty('[assertCurrent]'));
+        // cleanup
+        assert(Base\Dir::empty('[assertCurrent]'));
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

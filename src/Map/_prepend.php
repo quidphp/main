@@ -15,42 +15,42 @@ use Quid\Base;
 // trait that replaces methods to make the collection prepend per default (add at the beginning)
 trait _prepend
 {
-	// set
-	// ajoute ou change une clé valeur dans la map, accepte une clé null
-	// si la clé n'existe pas elle est prepend
-	public function set($key,$value):Main\Map
-	{
-		$this->checkAllowed('set');
-		$return = $this->onPrepareThis('set');
-		$key = $this->onPrepareKey($key);
-		$value = $this->onPrepareValueSet($value);
+    // set
+    // ajoute ou change une clé valeur dans la map, accepte une clé null
+    // si la clé n'existe pas elle est prepend
+    public function set($key,$value):Main\Map
+    {
+        $this->checkAllowed('set');
+        $return = $this->onPrepareThis('set');
+        $key = $this->onPrepareKey($key);
+        $value = $this->onPrepareValueSet($value);
 
-		if($key === null)
-		$return->unshift($value);
+        if($key === null)
+        $return->unshift($value);
 
-		elseif($return->exists($key) && $return->checkBefore(false,$value))
-		Base\Arr::setRef($key,$value,$return->arr());
+        elseif($return->exists($key) && $return->checkBefore(false,$value))
+        Base\Arr::setRef($key,$value,$return->arr());
 
-		elseif(Base\Arr::isKey($key))
-		$return->prepend([$key=>$value]);
+        elseif(Base\Arr::isKey($key))
+        $return->prepend([$key=>$value]);
 
-		return $return->checkAfter();
-	}
-
-
-	// add
-	// raccourci pour unshift
-	public function add(...$values):Main\Map
-	{
-		return $this->unshift(...$values);
-	}
+        return $return->checkAfter();
+    }
 
 
-	// pend
-	// raccourci pour prepend
-	public function pend(...$values):Main\Map
-	{
-		return $this->prepend(...$values);
-	}
+    // add
+    // raccourci pour unshift
+    public function add(...$values):Main\Map
+    {
+        return $this->unshift(...$values);
+    }
+
+
+    // pend
+    // raccourci pour prepend
+    public function pend(...$values):Main\Map
+    {
+        return $this->prepend(...$values);
+    }
 }
 ?>

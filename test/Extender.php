@@ -15,44 +15,44 @@ use Quid\Base;
 // class for testing Quid\Main\Extender
 class Extender extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// prepare
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // prepare
 
-		// construct
-		$ex = new Main\Extender(__NAMESPACE__);
+        // construct
+        $ex = new Main\Extender(__NAMESPACE__);
 
-		// onAddNamespace
+        // onAddNamespace
 
-		// add
+        // add
 
-		// addNamespace
+        // addNamespace
 
-		// isExtended
-		assert(!$ex->isExtended('test'));
+        // isExtended
+        assert(!$ex->isExtended('test'));
 
-		// set
+        // set
 
-		// extended
-		assert($ex->extended()->isEmpty());
-		assert($ex->isNotEmpty());
+        // extended
+        assert($ex->extended()->isEmpty());
+        assert($ex->isNotEmpty());
 
-		// extendSync
+        // extendSync
 
-		// overload
+        // overload
 
-		// overloadSync
+        // overloadSync
 
-		// alias
+        // alias
 
-		// getKey
-		assert(Main\Extender::getKey('TestClass') === 'TestClass');
+        // getKey
+        assert(Main\Extender::getKey('TestClass') === 'TestClass');
 
-		// map
-		assert($ex->get('Extender') === __CLASS__);
+        // map
+        assert($ex->get('Extender') === __CLASS__);
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

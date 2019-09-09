@@ -14,8 +14,8 @@ use Quid\Main;
 // interface to mark an exception as catchable
 interface Catchable
 {
-	// onCatched
-	// permet à l'exception de se déclencher en partir lors d'un catch
-	public function onCatched(?array $option=null):Main\Error;
+    // onCatched
+    // permet à l'exception de se déclencher en partir lors d'un catch
+    public function onCatched(?array $option=null):Main\Error;
 }
 ?>

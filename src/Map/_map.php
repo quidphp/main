@@ -15,23 +15,23 @@ use Quid\Base;
 // trait that provides a method to recursively change the entries (map) by providing a callback
 trait _map
 {
-	// map
-	// permet d'utiliser une callable pour changer les valeurs de l'objet
-	// la nouvelle valeur est passé dans la méthode set
-	public function map(callable $map,...$args):Main\Map
-	{
-		$this->checkAllowed('map');
-		$return = $this->onPrepareThis('map');
+    // map
+    // permet d'utiliser une callable pour changer les valeurs de l'objet
+    // la nouvelle valeur est passé dans la méthode set
+    public function map(callable $map,...$args):Main\Map
+    {
+        $this->checkAllowed('map');
+        $return = $this->onPrepareThis('map');
 
-		foreach ($this->arr() as $key => $value)
-		{
-			$new = Base\Call::withObj($return,$map,$value,$key,...$args);
+        foreach ($this->arr() as $key => $value)
+        {
+            $new = Base\Call::withObj($return,$map,$value,$key,...$args);
 
-			if($new !== $value)
-			$return->set($key,$new);
-		}
+            if($new !== $value)
+            $return->set($key,$new);
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 }
 ?>

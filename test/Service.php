@@ -14,28 +14,28 @@ use Quid\Base;
 // class for testing Quid\Main\Service
 class Service extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// construct
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // construct
 
-		// cast
+        // cast
 
-		// setKey
+        // setKey
 
-		// getKey
+        // getKey
 
-		// docOpenJs
+        // docOpenJs
 
-		// docOpenScript
+        // docOpenScript
 
-		// docCloseScript
+        // docCloseScript
 
-		// checkPing
+        // checkPing
 
-		// getLangCode
+        // getLangCode
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

@@ -14,18 +14,18 @@ use Quid\Base;
 // class for testing Quid\Main\Root
 class Root extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// clone
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // clone
 
-		// throw
+        // throw
 
-		// catchable
+        // catchable
 
-		// throwCommon
+        // throwCommon
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

@@ -15,19 +15,19 @@ use Quid\Base;
 // trait that provides a method to limit the length of a collection
 trait _count
 {
-	// unsetAfterCount
-	// enlève les entrées après un certain nombre
-	public function unsetAfterCount(int $count):Main\Map
-	{
-		$this->checkAllowed('unsetAfterCount');
-		$return = $this->onPrepareThis('unsetAfterCount');
-		$data =& $return->arr();
-		$data = Base\Arr::unsetAfterCount($count,$data);
+    // unsetAfterCount
+    // enlève les entrées après un certain nombre
+    public function unsetAfterCount(int $count):Main\Map
+    {
+        $this->checkAllowed('unsetAfterCount');
+        $return = $this->onPrepareThis('unsetAfterCount');
+        $data =& $return->arr();
+        $data = Base\Arr::unsetAfterCount($count,$data);
 
-		if(empty(static::$after['unsetAfterCount']))
-		$return->checkAfter();
+        if(empty(static::$after['unsetAfterCount']))
+        $return->checkAfter();
 
-		return $return;
-	}
+        return $return;
+    }
 }
 ?>

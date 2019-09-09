@@ -14,24 +14,24 @@ use Quid\Base;
 // class for testing Quid\Main\Widget
 class Widget extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// toString
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // toString
 
-		// clone
+        // clone
 
-		// toArray
+        // toArray
 
-		// output
+        // output
 
-		// structure
+        // structure
 
-		// setCallback
+        // setCallback
 
-		// callback
+        // callback
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

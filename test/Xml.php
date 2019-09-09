@@ -15,32 +15,32 @@ use Quid\Base;
 // class for testing Quid\Main\Xml
 class Xml extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// construct
-		$xml = new Main\Xml('sitemap');
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // construct
+        $xml = new Main\Xml('sitemap');
 
-		// toString
+        // toString
 
-		// clone
-		$xml2 = clone $xml;
-		assert($xml2 !== $xml);
+        // clone
+        $xml2 = clone $xml;
+        assert($xml2 !== $xml);
 
-		// cast
-		assert(strlen($xml2->_cast()) === 84);
+        // cast
+        assert(strlen($xml2->_cast()) === 84);
 
-		// xml
-		assert($xml->xml() instanceof \SimpleXMLElement);
+        // xml
+        assert($xml->xml() instanceof \SimpleXMLElement);
 
-		// output
-		assert(strlen($xml2->output()) === 84);
+        // output
+        assert(strlen($xml2->output()) === 84);
 
-		// sitemap
-		assert($xml->sitemap('https://google.com','test.ok') === $xml);
-		assert(strlen($xml->output()) === 161);
+        // sitemap
+        assert($xml->sitemap('https://google.com','test.ok') === $xml);
+        assert(strlen($xml->output()) === 161);
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

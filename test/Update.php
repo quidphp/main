@@ -15,17 +15,17 @@ use Quid\Base;
 // class for testing Quid\Main\Update
 class Update extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// construct
-		$array = [1=>'test','bla'=>'OK'];
-		$u = new Main\Update($array);
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // construct
+        $array = [1=>'test','bla'=>'OK'];
+        $u = new Main\Update($array);
 
-		// map
-		assert($u->set(1,'bla')->get(1) === 'bla');
+        // map
+        assert($u->set(1,'bla')->get(1) === 'bla');
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

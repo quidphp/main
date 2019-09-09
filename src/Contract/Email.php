@@ -14,48 +14,48 @@ use Quid\Main;
 // interface to describe methods of an objet containing an email
 interface Email
 {
-	// contentType
-	// retourne le type de contenu du email
-	public function contentType();
+    // contentType
+    // retourne le type de contenu du email
+    public function contentType();
 
 
-	// subject
-	// retourne le sujet du email
-	public function subject():string;
+    // subject
+    // retourne le sujet du email
+    public function subject():string;
 
 
-	// body
-	// retourne le body du email
-	public function body():string;
+    // body
+    // retourne le body du email
+    public function body():string;
 
 
-	// send
-	// envoie le courriel maintenant
-	public function send($key,$to,?array $replace=null,?array $message=null):bool;
+    // send
+    // envoie le courriel maintenant
+    public function send($key,$to,?array $replace=null,?array $message=null):bool;
 
 
-	// sendOnCloseDown
-	// envoie le courriel à la fermeture du script
-	public function sendOnCloseDown($key,$to,?array $replace=null,?array $message=null):void;
+    // sendOnCloseDown
+    // envoie le courriel à la fermeture du script
+    public function sendOnCloseDown($key,$to,?array $replace=null,?array $message=null):void;
 
 
-	// queue
-	// queue le courriel pour envoie plus tard
-	public function queue($key,$to,?array $replace=null,?array $message=null):bool;
+    // queue
+    // queue le courriel pour envoie plus tard
+    public function queue($key,$to,?array $replace=null,?array $message=null):bool;
 
 
-	// dispatch
-	// dispatch le courriel selon la méthode par défaut défini dans la classe de courriel
-	public function dispatch($key,$to,?array $replace=null,?array $message=null):bool;
+    // dispatch
+    // dispatch le courriel selon la méthode par défaut défini dans la classe de courriel
+    public function dispatch($key,$to,?array $replace=null,?array $message=null):bool;
 
 
-	// getSegmentChars
-	// retourne les caractères de segments à utiliser
-	public static function getSegmentChars();
+    // getSegmentChars
+    // retourne les caractères de segments à utiliser
+    public static function getSegmentChars();
 
 
-	// serviceMailer
-	// retourne l'objet à utiliser pour envoyer le courriel
-	public static function serviceMailer($key=null):Main\ServiceMailer;
+    // serviceMailer
+    // retourne l'objet à utiliser pour envoyer le courriel
+    public static function serviceMailer($key=null):Main\ServiceMailer;
 }
 ?>

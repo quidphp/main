@@ -13,11 +13,11 @@ namespace Quid\Main;
 // abstract class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 abstract class ArrObj extends Root implements \ArrayAccess, \Countable, \Iterator
 {
-	// trait
-	use _arrObj;
+    // trait
+    use _arrObj;
 
 
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 }
 ?>

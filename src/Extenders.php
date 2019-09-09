@@ -13,55 +13,55 @@ namespace Quid\Main;
 // class for a collection containing many extender objects
 class Extenders extends Map
 {
-	// trait
-	use Map\_filter;
+    // trait
+    use Map\_filter;
 
 
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 
 
-	// map
-	protected static $allow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
-	protected static $is = true; // renvoie à la méthode is
+    // map
+    protected static $allow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
+    protected static $is = true; // renvoie à la méthode is
 
 
-	// construct
-	// construit l'objet extenders, doit fournir null ou un array avec clé string
-	public function __construct(?array $value=null)
-	{
-		if(!empty($value))
-		$this->sets($value);
+    // construct
+    // construit l'objet extenders, doit fournir null ou un array avec clé string
+    public function __construct(?array $value=null)
+    {
+        if(!empty($value))
+        $this->sets($value);
 
-		return;
-	}
-
-
-	// onPrepareThis
-	// retourne l'objet cloner pour la méthode filter
-	public function onPrepareThis(string $method):Map
-	{
-		return ($method === 'filter')? $this->clone():$this;
-	}
+        return;
+    }
 
 
-	// is
-	// vérifie que la valeur est une instance de extender
-	public function is($value):bool
-	{
-		return ($value instanceof Extender)? true:false;
-	}
+    // onPrepareThis
+    // retourne l'objet cloner pour la méthode filter
+    public function onPrepareThis(string $method):Map
+    {
+        return ($method === 'filter')? $this->clone():$this;
+    }
 
 
-	// set
-	// envoie une exception si key n'est pas string
-	// renvoie au set de map
-	public function set($key,$value):parent
-	{
-		if(!is_string($key))
-		static::throw('onlyAcceptsStringKeys');
+    // is
+    // vérifie que la valeur est une instance de extender
+    public function is($value):bool
+    {
+        return ($value instanceof Extender)? true:false;
+    }
 
-		return parent::set($key,$value);
-	}
+
+    // set
+    // envoie une exception si key n'est pas string
+    // renvoie au set de map
+    public function set($key,$value):parent
+    {
+        if(!is_string($key))
+        static::throw('onlyAcceptsStringKeys');
+
+        return parent::set($key,$value);
+    }
 }
 ?>

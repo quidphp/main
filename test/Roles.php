@@ -14,18 +14,18 @@ use Quid\Base;
 // class for testing Quid\Main\Roles
 class Roles extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// onPrepareKey
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // onPrepareKey
 
-		// getObject
+        // getObject
 
-		// nobody
+        // nobody
 
-		// getKey
+        // getKey
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

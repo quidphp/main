@@ -14,12 +14,12 @@ use Quid\Base;
 // class for testing Quid\Main\ArrObj
 class ArrObj extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// arrObj
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // arrObj
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

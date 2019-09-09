@@ -14,20 +14,20 @@ use Quid\Base;
 // class for testing Quid\Main\ServiceRequest
 class ServiceRequest extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// target
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // target
 
-		// userAgent
+        // userAgent
 
-		// makeRequest
+        // makeRequest
 
-		// requestClass
+        // requestClass
 
-		// requestOption
+        // requestOption
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

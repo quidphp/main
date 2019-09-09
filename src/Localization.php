@@ -14,111 +14,111 @@ use Quid\Base;
 // class for storing localization data, like latitude and longitude
 class Localization extends Map
 {
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 
 
-	// map
-	protected static $allow = ['overwrite','jsonSerialize','serialize','clone']; // méthodes permises
+    // map
+    protected static $allow = ['overwrite','jsonSerialize','serialize','clone']; // méthodes permises
 
 
-	// construct
-	// construit l'objet de localization
-	// une string json ou un array doit être fourni
-	public function __construct($value)
-	{
-		if(is_string($value))
-		$value = Base\Json::decode($value);
+    // construct
+    // construit l'objet de localization
+    // une string json ou un array doit être fourni
+    public function __construct($value)
+    {
+        if(is_string($value))
+        $value = Base\Json::decode($value);
 
-		if(is_array($value))
-		$this->overwrite($value);
+        if(is_array($value))
+        $this->overwrite($value);
 
-		else
-		static::throw('requires','jsonStringOrArray');
+        else
+        static::throw('requires','jsonStringOrArray');
 
-		return;
-	}
-
-
-	// toString
-	// affiche l'objet comme string, retourne la string input
-	public function __toString():string
-	{
-		return $this->input();
-	}
+        return;
+    }
 
 
-	// onPrepareReplace
-	// prépare le tableau de remplacement en vue d'un overwrite
-	// une exception sera envoyé si le tableau n'est pas dans le bon format
-	public function onPrepareReplace($value)
-	{
-		$return = null;
-
-		if(is_array($value) && Base\Arr::keysExists(['lat','lng','countryCode','input'],$value))
-		{
-			if(!(is_numeric($value['lat']) && is_numeric($value['lng'])))
-			static::throw('invalidLatLng');
-
-			if(!(is_string($value['countryCode']) && strlen($value['countryCode']) === 2))
-			static::throw('invalidCountryCode');
-
-			if(is_string($value['input']))
-			$return = $value;
-		}
-
-		if(!is_array($return))
-		static::throw('invalidFormat');
-
-		return $return;
-	}
+    // toString
+    // affiche l'objet comme string, retourne la string input
+    public function __toString():string
+    {
+        return $this->input();
+    }
 
 
-	// inUsa
-	// retourne vrai si le pays de la localization est USA
-	public function inUsa()
-	{
-		return (strtoupper($this->countryCode()) === 'US')? true:false;
-	}
+    // onPrepareReplace
+    // prépare le tableau de remplacement en vue d'un overwrite
+    // une exception sera envoyé si le tableau n'est pas dans le bon format
+    public function onPrepareReplace($value)
+    {
+        $return = null;
+
+        if(is_array($value) && Base\Arr::keysExists(['lat','lng','countryCode','input'],$value))
+        {
+            if(!(is_numeric($value['lat']) && is_numeric($value['lng'])))
+            static::throw('invalidLatLng');
+
+            if(!(is_string($value['countryCode']) && strlen($value['countryCode']) === 2))
+            static::throw('invalidCountryCode');
+
+            if(is_string($value['input']))
+            $return = $value;
+        }
+
+        if(!is_array($return))
+        static::throw('invalidFormat');
+
+        return $return;
+    }
 
 
-	// lat
-	// retourne la valeur lat sous forme de float
-	public function lat():float
-	{
-		return Base\Number::cast($this->get('lat'));
-	}
+    // inUsa
+    // retourne vrai si le pays de la localization est USA
+    public function inUsa()
+    {
+        return (strtoupper($this->countryCode()) === 'US')? true:false;
+    }
 
 
-	// lng
-	// retourne la valeur lng sous forme de float
-	public function lng():float
-	{
-		return Base\Number::cast($this->get('lng'));
-	}
+    // lat
+    // retourne la valeur lat sous forme de float
+    public function lat():float
+    {
+        return Base\Number::cast($this->get('lat'));
+    }
 
 
-	// latLng
-	// retourne le tableau latlng
-	public function latLng():array
-	{
-		return ['lat'=>$this->lat(),'lng'=>$this->lng()];
-	}
+    // lng
+    // retourne la valeur lng sous forme de float
+    public function lng():float
+    {
+        return Base\Number::cast($this->get('lng'));
+    }
 
 
-	// input
-	// retourne la string input si existante
-	public function input():?string
-	{
-		return $this->get('input');
-	}
+    // latLng
+    // retourne le tableau latlng
+    public function latLng():array
+    {
+        return ['lat'=>$this->lat(),'lng'=>$this->lng()];
+    }
 
 
-	// countryCode
-	// retourne le code de pays
-	public function countryCode():string
-	{
-		return $this->get('countryCode');
-	}
+    // input
+    // retourne la string input si existante
+    public function input():?string
+    {
+        return $this->get('input');
+    }
+
+
+    // countryCode
+    // retourne le code de pays
+    public function countryCode():string
+    {
+        return $this->get('countryCode');
+    }
 }
 ?>

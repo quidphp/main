@@ -15,39 +15,39 @@ use Quid\Base;
 // class for testing Quid\Main\Video
 class Video extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// construct
-		$data = ['abs'=>'http://google.com','namez'=>'LOL','description'=>'OK','html'=>'<div></div>'];
-		$video = new Main\Video($data,['absolute'=>'abs','name'=>'namez']);
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // construct
+        $data = ['abs'=>'http://google.com','namez'=>'LOL','description'=>'OK','html'=>'<div></div>'];
+        $video = new Main\Video($data,['absolute'=>'abs','name'=>'namez']);
 
-		// toString
+        // toString
 
-		// grab
+        // grab
 
-		// name
-		assert($video->name() === 'LOL');
+        // name
+        assert($video->name() === 'LOL');
 
-		// date
-		assert($video->date() === null);
+        // date
+        assert($video->date() === null);
 
-		// description
-		assert($video->description() === 'OK');
+        // description
+        assert($video->description() === 'OK');
 
-		// absolute
-		assert($video->absolute() === 'http://google.com');
+        // absolute
+        assert($video->absolute() === 'http://google.com');
 
-		// thumbnail
-		assert($video->thumbnail() === null);
+        // thumbnail
+        assert($video->thumbnail() === null);
 
-		// html
-		assert($video->html() === '<div></div>');
+        // html
+        assert($video->html() === '<div></div>');
 
-		// input
-		assert($video->input() === null);
+        // input
+        assert($video->input() === null);
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

@@ -14,11 +14,11 @@ use Quid\Main;
 // trait that provides a method to make sure the collection is cloned on every update
 trait _cloner
 {
-	// onPrepareThis
-	// l'objet est cloner avant chaque modification
-	protected function onPrepareThis(string $method):Main\Map
-	{
-		return clone $this;
-	}
+    // onPrepareThis
+    // l'objet est cloner avant chaque modification
+    protected function onPrepareThis(string $method):Main\Map
+    {
+        return clone $this;
+    }
 }
 ?>

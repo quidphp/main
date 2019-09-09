@@ -13,8 +13,8 @@ namespace Quid\Main\Contract;
 // interface to describe a file objet which has a defined storage folder
 interface FileStorage
 {
-	// storageDirname
-	// retourne le dirname pour le storage
-	public static function storageDirname():string;
+    // storageDirname
+    // retourne le dirname pour le storage
+    public static function storageDirname():string;
 }
 ?>

@@ -14,13 +14,13 @@ use Quid\Main;
 // interface to detail the methods required for an objet to represent a user
 interface User
 {
-	// uid
-	// retourne le uid du user
-	public function uid():int;
+    // uid
+    // retourne le uid du user
+    public function uid():int;
 
 
-	// role
-	// retourne le role de la row user
-	public function role():Main\Role;
+    // role
+    // retourne le role de la row user
+    public function role():Main\Role;
 }
 ?>

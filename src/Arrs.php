@@ -13,11 +13,11 @@ namespace Quid\Main;
 // class for a collection containing a multidimensional array
 class Arrs extends Map
 {
-	// trait
-	use Map\_arrs;
+    // trait
+    use Map\_arrs;
 
 
-	// config
-	public static $config = [];
+    // config
+    public static $config = [];
 }
 ?>

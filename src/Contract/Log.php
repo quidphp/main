@@ -13,18 +13,18 @@ namespace Quid\Main\Contract;
 // interface to detail the methods required for implementing logging functionality to an object
 interface Log
 {
-	// log
-	// crée une nouvelle entrée du log maintenant
-	public static function log(...$values):?self;
+    // log
+    // crée une nouvelle entrée du log maintenant
+    public static function log(...$values):?self;
 
 
-	// logOnCloseDown
-	// queue la création d'une nouvelle entrée du log au closeDown
-	public static function logOnCloseDown(...$values):void;
+    // logOnCloseDown
+    // queue la création d'une nouvelle entrée du log au closeDown
+    public static function logOnCloseDown(...$values):void;
 
 
-	// logTrim
-	// trim le nombre de log par une valeur paramétré
-	public static function logTrim():?int;
+    // logTrim
+    // trim le nombre de log par une valeur paramétré
+    public static function logTrim():?int;
 }
 ?>

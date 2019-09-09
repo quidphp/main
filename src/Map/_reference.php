@@ -15,24 +15,24 @@ use Quid\Base;
 // trait that permits the collection to work from a reference array source
 trait _reference
 {
-	// construct
-	// construit l'objet et attribue la référence
-	public function __construct(array &$value)
-	{
-		$this->data =& $value;
+    // construct
+    // construit l'objet et attribue la référence
+    public function __construct(array &$value)
+    {
+        $this->data =& $value;
 
-		return;
-	}
+        return;
+    }
 
 
-	// onCheckArr
-	// s'il y a is, fait une validation sur l'ensemble car l'original peut avoir changé
-	protected function onCheckArr():Main\Map
-	{
-		if(!empty(static::$is) && !Base\Arr::validate(static::$is,$this->data))
-		static::throw('onlyAccepts',static::$is);
+    // onCheckArr
+    // s'il y a is, fait une validation sur l'ensemble car l'original peut avoir changé
+    protected function onCheckArr():Main\Map
+    {
+        if(!empty(static::$is) && !Base\Arr::validate(static::$is,$this->data))
+        static::throw('onlyAccepts',static::$is);
 
-		return $this;
-	}
+        return $this;
+    }
 }
 ?>

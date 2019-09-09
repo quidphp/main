@@ -14,50 +14,50 @@ use Quid\Base;
 // class for testing Quid\Main\ArrMap
 class ArrMap extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// toString
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // toString
 
-		// clone
+        // clone
 
-		// offsetExists
+        // offsetExists
 
-		// offsetGet
+        // offsetGet
 
-		// offsetSet
+        // offsetSet
 
-		// offsetUnset
+        // offsetUnset
 
-		// serialize
+        // serialize
 
-		// unserialize
+        // unserialize
 
-		// jsonSerialize
+        // jsonSerialize
 
-		// clone
+        // clone
 
-		// toArray
+        // toArray
 
-		// cast
+        // cast
 
-		// arr
+        // arr
 
-		// isEmpty
+        // isEmpty
 
-		// isNotEmpty
+        // isNotEmpty
 
-		// isCount
+        // isCount
 
-		// isMinCount
+        // isMinCount
 
-		// isMaxCount
+        // isMaxCount
 
-		// each
+        // each
 
-		// empty
+        // empty
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

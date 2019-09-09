@@ -13,15 +13,15 @@ namespace Quid\Main;
 // trait that provides a default __clone magic function
 trait _rootClone
 {
-	// trait
-	use _root;
+    // trait
+    use _root;
 
 
-	// clone
-	// ce qui se passe en cas de clone
-	public function __clone()
-	{
-		return static::throw('notAllowed');
-	}
+    // clone
+    // ce qui se passe en cas de clone
+    public function __clone()
+    {
+        return static::throw('notAllowed');
+    }
 }
 ?>

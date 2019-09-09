@@ -14,44 +14,44 @@ use Quid\Base;
 // trait that allows a class to retrieve its overloaded version - higher up in the class hierarchy
 trait _overload
 {
-	// getOverloadKey
-	// retourne la clé utilisé pour le tableau overload
-	public static function getOverloadKey():string
-	{
-		$return = static::className();
-		$prepend = static::getOverloadKeyPrepend();
+    // getOverloadKey
+    // retourne la clé utilisé pour le tableau overload
+    public static function getOverloadKey():string
+    {
+        $return = static::className();
+        $prepend = static::getOverloadKeyPrepend();
 
-		if(!empty($prepend))
-		$return = Base\Fqcn::append($prepend,$return);
+        if(!empty($prepend))
+        $return = Base\Fqcn::append($prepend,$return);
 
-		return $return;
-	}
-
-
-	// getOverloadKeyPrepend
-	// retourne le prepend de la clé à utiliser pour le tableau overload
-	public static function getOverloadKeyPrepend():?string
-	{
-		return null;
-	}
+        return $return;
+    }
 
 
-	// getOverloadClass
-	// retourne la classe à utiliser pour un overload
-	public static function getOverloadClass():string
-	{
-		return Autoload::getOverload(static::getOverloadKey(),static::class);
-	}
+    // getOverloadKeyPrepend
+    // retourne le prepend de la clé à utiliser pour le tableau overload
+    public static function getOverloadKeyPrepend():?string
+    {
+        return null;
+    }
 
 
-	// newOverload
-	// retourne une nouvelle instance de la classe mais en utilisant le nom de classe overloader si existant
-	public static function newOverload(...$values):self
-	{
-		$class = static::getOverloadClass();
-		$return = new $class(...$values);
+    // getOverloadClass
+    // retourne la classe à utiliser pour un overload
+    public static function getOverloadClass():string
+    {
+        return Autoload::getOverload(static::getOverloadKey(),static::class);
+    }
 
-		return $return;
-	}
+
+    // newOverload
+    // retourne une nouvelle instance de la classe mais en utilisant le nom de classe overloader si existant
+    public static function newOverload(...$values):self
+    {
+        $class = static::getOverloadClass();
+        $return = new $class(...$values);
+
+        return $return;
+    }
 }
 ?>

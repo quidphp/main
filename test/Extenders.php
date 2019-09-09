@@ -15,26 +15,26 @@ use Quid\Base;
 // class for testing Quid\Main\Extenders
 class Extenders extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// prepare
-		$ex = new Main\Extender(__NAMESPACE__);
-		$ex2 = new Main\Extender("Quid\Base");
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // prepare
+        $ex = new Main\Extender(__NAMESPACE__);
+        $ex2 = new Main\Extender("Quid\Base");
 
-		// construct
-		$s = new Main\Extenders(['ex'=>$ex]);
-		assert($s->isNotEmpty());
+        // construct
+        $s = new Main\Extenders(['ex'=>$ex]);
+        assert($s->isNotEmpty());
 
-		// onPrepareThis
+        // onPrepareThis
 
-		// is
+        // is
 
-		// set
-		$s->set('ex2',$ex2);
-		assert($s->count() === 2);
+        // set
+        $s->set('ex2',$ex2);
+        assert($s->count() === 2);
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

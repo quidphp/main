@@ -14,40 +14,40 @@ use Quid\Base;
 // class for testing Quid\Main\Role
 class Role extends Base\Test
 {
-	// trigger
-	public static function trigger(array $data):bool
-	{
-		// construct
+    // trigger
+    public static function trigger(array $data):bool
+    {
+        // construct
 
-		// clone
+        // clone
 
-		// toArray
+        // toArray
 
-		// cast
+        // cast
 
-		// serialize
+        // serialize
 
-		// unserialize
+        // unserialize
 
-		// isIgnored
+        // isIgnored
 
-		// isNobody
+        // isNobody
 
-		// isSomebody
+        // isSomebody
 
-		// permission
+        // permission
 
-		// name
+        // name
 
-		// can
+        // can
 
-		// get
+        // get
 
-		// validate
+        // validate
 
-		// validateReplace
+        // validateReplace
 
-		return true;
-	}
+        return true;
+    }
 }
 ?>

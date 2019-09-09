@@ -14,67 +14,67 @@ use Quid\Main;
 // trait that provides methods to permit a file object to represent an email
 trait _email
 {
-	// trait
-	use Main\_email;
+    // trait
+    use Main\_email;
 
 
-	// config
-	public static $configFileEmail = [
-		'mailer'=>[]
-	];
+    // config
+    public static $configFileEmail = [
+        'mailer'=>[]
+    ];
 
 
-	// contentType
-	// retourne le type de contenu du email, retourne string
-	public function contentType():string
-	{
-		return $this->readGet('contentType');
-	}
+    // contentType
+    // retourne le type de contenu du email, retourne string
+    public function contentType():string
+    {
+        return $this->readGet('contentType');
+    }
 
 
-	// subject
-	// retourne le sujet du email
-	public function subject():string
-	{
-		return $this->readGet('subject');
-	}
+    // subject
+    // retourne le sujet du email
+    public function subject():string
+    {
+        return $this->readGet('subject');
+    }
 
 
-	// body
-	// retourne le body du email
-	public function body():string
-	{
-		return $this->readGet('body');
-	}
+    // body
+    // retourne le body du email
+    public function body():string
+    {
+        return $this->readGet('body');
+    }
 
 
-	// serviceMailer
-	// retourne l'objet mailer à utiliser pour envoyer le courriel
-	// peut envoyer une exception
-	public static function serviceMailer($key=null):Main\ServiceMailer
-	{
-		$return = null;
+    // serviceMailer
+    // retourne l'objet mailer à utiliser pour envoyer le courriel
+    // peut envoyer une exception
+    public static function serviceMailer($key=null):Main\ServiceMailer
+    {
+        $return = null;
 
-		if(is_string($key) && array_key_exists($key,static::$config['mailer']))
-		$return = static::$config['mailer'][$key];
-		else
-		$return = current(static::$config['mailer']);
+        if(is_string($key) && array_key_exists($key,static::$config['mailer']))
+        $return = static::$config['mailer'][$key];
+        else
+        $return = current(static::$config['mailer']);
 
-		if(empty($return))
-		static::throw('noMailerAtKey',$key);
+        if(empty($return))
+        static::throw('noMailerAtKey',$key);
 
-		return $return;
-	}
+        return $return;
+    }
 
 
-	// setMailer
-	// permet de lier un objet mailer à la classe
-	// key doit être une string
-	public static function setMailer(string $key,Main\ServiceMailer $value):void
-	{
-		static::$config['mailer'][$key] = $value;
+    // setMailer
+    // permet de lier un objet mailer à la classe
+    // key doit être une string
+    public static function setMailer(string $key,Main\ServiceMailer $value):void
+    {
+        static::$config['mailer'][$key] = $value;
 
-		return;
-	}
+        return;
+    }
 }
 ?>
