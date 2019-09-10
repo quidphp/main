@@ -119,7 +119,6 @@ class Res extends Base\Test
         assert(is_int($res->inode()));
         assert(is_int($res->permission()));
         assert(is_int($res->owner()));
-        assert(is_array($res->group(true)));
         assert(is_int($res->dateAccess()));
         assert(is_string($res->dateModify(true)));
         assert(is_int($res->dateInodeModify()));

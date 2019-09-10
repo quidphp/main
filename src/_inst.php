@@ -17,7 +17,7 @@ trait _inst
     // inst
     protected static $inst = []; // tableau avec les instances
 
-
+    
     // onPrepareSetInst
     // prépare l'objet qui sera ajouté au inst
     protected function onPrepareSetInst():self

@@ -11,6 +11,9 @@
 ## License
 **QuidPHP/Main** is available as an open-source software under the [MIT license](LICENSE).
 
+## Documentation
+**QuidPHP/Main** documentation is being written. Once ready, it will be available at https://quidphp.github.io/project.
+
 ## Installation
 **QuidPHP/Main** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/main).
 ``` bash
@@ -20,7 +23,7 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 
 ## Requirement
 **QuidPHP/Main** requires the following:
-- PHP 7.2+ with fileinfo, curl, openssl and posix
+- PHP 7.2+ with fileinfo, curl and openssl
 
 ## Dependency
 **QuidPHP/Main** has the following dependency:
