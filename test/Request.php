@@ -677,7 +677,7 @@ class Request extends Base\Test
 
         // browserCap
         assert(count($r2->browserCap()) === 10);
-        
+
         // browserName
         assert($r2->browserName() === 'Default Browser');
 
