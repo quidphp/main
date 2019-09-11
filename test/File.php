@@ -21,7 +21,7 @@ class File extends Base\Test
         // construct
         $storage = '[assertCurrent]';
         $file = new Main\File($storage.'/test.php',['create'=>true]);
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
         assert($file->write("test\ntest2\n3") === $file);
         assert(strlen($file->jsonSerialize()) === 12);

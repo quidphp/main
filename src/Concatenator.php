@@ -134,7 +134,7 @@ class Concatenator extends Map
 
         if(is_string($value))
         {
-            $value = Base\Finder::shortcut($value);
+            $value = Base\Finder::normalize($value);
 
             if(Base\File::is($value))
             {

@@ -37,7 +37,7 @@ trait _storage
         $return = static::$config['dirname'] ?? null;
 
         if(!empty($return))
-        $return = Base\Finder::shortcut($return);
+        $return = Base\Finder::normalize($return);
 
         return $return;
     }

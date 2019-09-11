@@ -20,7 +20,7 @@ class Concatenator extends Base\Test
     {
         // prepare
         $target = '[assertCurrent]/concatenate.php';
-        $_file_ = Base\Finder::shortcut('[assertCommon]/class.php');
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
 
         // construct
