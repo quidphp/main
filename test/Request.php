@@ -98,7 +98,7 @@ class Request extends Base\Test
         assert($r->uri() === $uri);
         assert($r->uri(false) === '/lavieestlaide?get=laol#lastchance');
         assert($r5->uri() === 'http://google.com/test/éol/la vie/i.php?james=lala&ka=éo&space=la uy#hashé');
-        assert($current->uri() === '/');
+        assert($current->uri() === Base\Request::uri());
 
         // output
         assert($r->output() === $uri);
