@@ -443,7 +443,7 @@ class Res extends ArrObj
         return $this;
     }
 
-    
+
     // setContextEol
     // permet changer la valeur eol au sein du contexte de la ressource
     // peut être null ou false
@@ -456,7 +456,7 @@ class Res extends ArrObj
 
         return $this;
     }
-    
+
 
     // getPhpContextOption
     // retourne une option de contexte ou null

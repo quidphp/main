@@ -166,7 +166,7 @@ class Res extends Base\Test
         assert($res->getContextMime() === null);
         assert($res->getContextBasename() === null);
         assert($res->getContextEol() === "\n");
-        
+
         // check
         assert($res->check('isNotEmpty') === $res);
 
@@ -205,14 +205,14 @@ class Res extends Base\Test
         // setContextBasename
         assert($tempConcat->setContextBasename('james.log') === $tempConcat);
         assert($tempConcat->basename() === 'james.log');
-        
+
         // setContextEol
         assert($res->count() === 3);
         assert($res->setContextEol("\r\r") === $res);
         assert($res->count() === 1);
         assert($res->setContextEol("\n") === $res);
         assert($res->count() === 3);
-        
+
         // getPhpContextOption
         assert(is_array($res->getPhpContextOption()));
         assert($res->getPhpContextOption('bla') === 2);
