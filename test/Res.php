@@ -91,8 +91,8 @@ class Res extends Base\Test
         assert($res->mimeFamilies() === ['text']);
         assert($res->mimeFamily() === 'text');
         assert(is_string($res->getLineSeparator()));
-        assert(in_array($res->getLineSeparatorLength(),array(1,2)));
-        
+        assert(in_array($res->getLineSeparatorLength(),[1,2], true));
+
         // jsonSerialize
         assert($res->toJson() === '"lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3"');
 
@@ -164,7 +164,7 @@ class Res extends Base\Test
         assert(strlen($res->base64(false)) === 100);
         assert($res->getContextMime() === null);
         assert($res->getContextBasename() === null);
-        
+
         // check
         assert($res->check('isNotEmpty') === $res);
 
@@ -191,10 +191,10 @@ class Res extends Base\Test
 
         // isGroup
         assert($res->isGroup($res->group()));
-        
+
         // setPhpContextOption
         assert($res->setPhpContextOption('bla',2) === $res);
-        
+
         // setContextMime
         assert($tempConcat->setContextMime('text/plain'));
         assert($tempConcat->mime() === 'text/plain');
@@ -206,7 +206,7 @@ class Res extends Base\Test
 
         // getPhpContextOption
         assert($res->getPhpContextOption('bla') === 2);
-        
+
         // permissionChange
         assert($res->permissionChange(777));
 

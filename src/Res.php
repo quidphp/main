@@ -401,30 +401,30 @@ class Res extends ArrObj
         return Base\Res::isGroup($this->resource(),$group);
     }
 
-    
+
     // setPhpContextOption
     // permet de lier une clé -> valeur à l'intérieur du contexte de la ressource
     // n'a pas besoin d'être phpWritable
     public function setPhpContextOption(string $key,$value):self
     {
         $set = Base\Res::setPhpContextOption($key,$value,$this->resource());
-        
+
         if($set !== true)
         static::throw();
 
         return $this;
     }
-    
-    
+
+
     // setContextMime
     // permet de lier un mime au sein du contexte de la ressource
     public function setContextMime(string $mime):self
     {
         $set = Base\Res::setContextMime($mime,$this->resource());
-        
+
         if($set !== true)
         static::throw();
-        
+
         return $this;
     }
 
@@ -437,11 +437,11 @@ class Res extends ArrObj
 
         if($set !== true)
         static::throw();
-        
+
         return $this;
     }
-    
-    
+
+
     // getPhpContextOption
     // retourne une option de contexte ou null
     // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
@@ -449,8 +449,8 @@ class Res extends ArrObj
     {
         return Base\Res::getPhpContextOption($key,$this->resource());
     }
-    
-    
+
+
     // permissionChange
     // change la permission de la resource fichier
     // envoie une exception en cas d'échec
