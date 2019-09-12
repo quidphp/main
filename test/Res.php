@@ -57,7 +57,7 @@ class Res extends Base\Test
         assert($res->isFileParentExists());
         assert($res->isFileParentReadable());
         assert($res->isFileParentWritable());
-        assert($res->isFileParentExecutable());
+        assert(is_bool($res->isFileParentExecutable()));
         assert(!$res->isDir());
         assert(!$res->isHttp());
         assert(!$res->isPhp());
@@ -82,7 +82,7 @@ class Res extends Base\Test
         assert($res->canContext());
         assert(!$res->hasScheme());
         assert($res->hasExtension());
-        assert($tempConcat->concatenate(null,PHP_EOL,$res,$resNew,$res));
+        assert($tempConcat->concatenate(null,"\n",$res,$resNew,$res));
         assert(strlen($tempConcat->read()) === 152);
         assert($tempConcat->basename() === null);
         assert($tempConcat->mime() === null);
@@ -90,8 +90,9 @@ class Res extends Base\Test
         assert($res->mimeGroup() === 'php');
         assert($res->mimeFamilies() === ['text']);
         assert($res->mimeFamily() === 'text');
-        assert(is_string($res->getLineSeparator()));
-        assert(in_array($res->getLineSeparatorLength(),[1,2], true));
+        assert($res->parseEol() === "\n");
+        assert($res->findEol() === "\n");
+        assert($res->findEolLength() === 1);
 
         // jsonSerialize
         assert($res->toJson() === '"lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3"');
@@ -155,7 +156,7 @@ class Res extends Base\Test
         assert($res->mimeGroup() === 'php');
         assert($res->mimeExtension() === 'php');
         assert(is_array($res->param()));
-        assert(is_array($res->option()));
+        assert(is_array($res->contextOption()));
         assert($res->curlInfo() === null);
         assert(is_int($res->position()));
         assert($res->lineCount() === 3);
@@ -164,7 +165,8 @@ class Res extends Base\Test
         assert(strlen($res->base64(false)) === 100);
         assert($res->getContextMime() === null);
         assert($res->getContextBasename() === null);
-
+        assert($res->getContextEol() === "\n");
+        
         // check
         assert($res->check('isNotEmpty') === $res);
 
@@ -196,15 +198,23 @@ class Res extends Base\Test
         assert($res->setPhpContextOption('bla',2) === $res);
 
         // setContextMime
-        assert($tempConcat->setContextMime('text/plain'));
+        assert($tempConcat->setContextMime('text/plain') === $tempConcat);
         assert($tempConcat->mime() === 'text/plain');
         assert($tempConcat->mimeGroup() === 'txt');
 
         // setContextBasename
-        assert($tempConcat->setContextBasename('james.log'));
+        assert($tempConcat->setContextBasename('james.log') === $tempConcat);
         assert($tempConcat->basename() === 'james.log');
-
+        
+        // setContextEol
+        assert($res->count() === 3);
+        assert($res->setContextEol("\r\r") === $res);
+        assert($res->count() === 1);
+        assert($res->setContextEol("\n") === $res);
+        assert($res->count() === 3);
+        
         // getPhpContextOption
+        assert(is_array($res->getPhpContextOption()));
         assert($res->getPhpContextOption('bla') === 2);
 
         // permissionChange

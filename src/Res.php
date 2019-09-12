@@ -102,7 +102,7 @@ class Res extends ArrObj
         'mimeFamily'=>null,
         'mimeExtension'=>null,
         'param'=>null,
-        'option'=>null,
+        'contextOption'=>null,
         'curlExec'=>'isCurl',
         'curlInfo'=>null,
         'pathToUri'=>'isFile',
@@ -117,10 +117,12 @@ class Res extends ArrObj
         'download'=>'isResponsable',
         'toScreen'=>'isResponsable',
         'concatenate'=>'isWritable',
-        'getLineSeparator'=>'isSeekableTellable',
-        'getLineSeparatorLength'=>'isSeekableTellable',
+        'parseEol'=>'isSeekableTellable',
+        'findEol'=>'isSeekableTellable',
+        'findEolLength'=>'isSeekableTellable',
         'getContextMime'=>null,
-        'getContextBasename'=>null
+        'getContextBasename'=>null,
+        'getContextEol'=>null
     ];
 
 
@@ -441,11 +443,25 @@ class Res extends ArrObj
         return $this;
     }
 
+    
+    // setContextEol
+    // permet changer la valeur eol au sein du contexte de la ressource
+    // peut être null ou false
+    public function setContextEol($separator):self
+    {
+        $set = Base\Res::setContextEol($separator,$this->resource());
+
+        if($set !== true)
+        static::throw();
+
+        return $this;
+    }
+    
 
     // getPhpContextOption
     // retourne une option de contexte ou null
     // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
-    public function getPhpContextOption($key)
+    public function getPhpContextOption($key=null)
     {
         return Base\Res::getPhpContextOption($key,$this->resource());
     }
