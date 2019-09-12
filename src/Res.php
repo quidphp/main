@@ -119,7 +119,7 @@ class Res extends ArrObj
         'concatenate'=>'isWritable',
         'parseEol'=>'isSeekableTellable',
         'findEol'=>'isSeekableTellable',
-        'findEolLength'=>'isSeekableTellable',
+        'getEolLength'=>'isSeekableTellable',
         'getContextMime'=>null,
         'getContextBasename'=>null,
         'getContextEol'=>null

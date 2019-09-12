@@ -92,7 +92,7 @@ class Res extends Base\Test
         assert($res->mimeFamily() === 'text');
         assert($res->parseEol() === "\n");
         assert($res->findEol() === "\n");
-        assert($res->findEolLength() === 1);
+        assert($res->getEolLength() === 1);
 
         // jsonSerialize
         assert($res->toJson() === '"lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3"');
@@ -288,35 +288,36 @@ class Res extends Base\Test
         // writeRaw
 
         // overwrite
+        $ll = $temp->getEolLength();
         assert($temp->overwrite('loremIpsum2')->read() === 'loremIpsum2');
 
         // prepend
-        assert(strlen($temp->prepend('ok',['newline'=>true])->read()) === 14);
+        assert(strlen($temp->prepend('ok',['newline'=>true])->read()) === (12 + ($ll * 2)));
 
         // append
-        assert(strlen($temp->append('ok',['newline'=>true])->read()) === 17);
+        assert(strlen($temp->append('ok',['newline'=>true])->read()) === (14 + ($ll * 3)));
 
         // lineSplice
-        assert(strlen($temp->lineSplice(0,1,['ookkk','line2'])->read()) === 26);
+        assert(strlen($temp->lineSplice(0,1,['ookkk','line2'])->read()) === (21 + ($ll * 5)));
 
         // lineSpliceFirst
-        assert(strlen($temp->lineSpliceFirst("first\nok")->read()) === 29);
+        assert(strlen($temp->lineSpliceFirst("first".PHP_EOL."ok")->read()) === (23 + ($ll * 6)));
 
         // lineSpliceLast
-        assert(strlen($temp->lineSpliceLast('last')->read()) === 31);
+        assert(strlen($temp->lineSpliceLast('last')->read()) === (25 + ($ll * 6)));
 
         // lineInsert
-        assert(strlen($temp->lineInsert(1,'insert')->read()) === 38);
+        assert(strlen($temp->lineInsert(1,'insert')->read()) === (31 + ($ll * 7)));
 
         // lineFilter
         assert(strlen($temp->lineFilter(function($line) {
             return (strlen($line) > 2)? true:false;
-        })->read()) === 35);
+        })->read()) === (29 + ($ll * 6)));
 
         // lineMap
         assert(strlen($temp->lineMap(function($line) {
             return $line.'A';
-        })->read()) === 40);
+        })->read()) === (34 + ($ll * 6)));
 
         // empty
         assert($temp->empty()->read() === '');
