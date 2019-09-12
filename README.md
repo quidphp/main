@@ -23,7 +23,7 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 
 ## Requirement
 **QuidPHP/Main** requires the following:
-- PHP 7.3+ with curl, fileinfo, json, mbstring and openssl
+- PHP 7.3+
 
 ## Dependency
 **QuidPHP/Main** has the following dependency:
