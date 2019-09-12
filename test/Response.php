@@ -50,7 +50,7 @@ class Response extends Base\Test
         // setHeaders
 
         // headers
-        assert(in_array(count($response->headers()),[8,10],true));
+        assert($response->headers() >= 8);
 
         // setResource
 
