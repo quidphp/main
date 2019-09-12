@@ -32,7 +32,7 @@ class Res extends Base\Test
         $tempConcat = new Main\Res('php://temp');
         $res->write("lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3");
         $res->seekRewind();
-        $res3->overwrite("lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3");
+        $res3->overwrite("lorem ipsum lorem ipsum".PHP_EOL."lorem ipsum lorem ipsum 2".PHP_EOL."lorem ipsum lorem ipsum 3");
         $res3->seekRewind();
 
         // toString
@@ -377,7 +377,7 @@ class Res extends Base\Test
         assert(isset($res3[3]));
         unset($res3[3]);
         assert(!isset($res3[3]));
-        $ll = $res->getEolLength();
+        $ll = $res3->getEolLength();
         assert(strlen($res3->read()) === (73 + ($ll * 2)));
         $res3[1] = 'OK';
         assert(strlen($res3->read()) === (50 + ($ll * 2)));
