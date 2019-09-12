@@ -46,7 +46,7 @@ class Files extends Base\Test
         assert($files3->dirMethod('getPhp',$_dir_)->count() > 3);
 
         // dir
-        assert($files->dir(dirname($_dir_),true,['in'=>['visible'=>true]])->count() > 5);
+        assert($files->dir("[assertCommon]",true,['in'=>['visible'=>true]])->count() > 5);
 
         // dirVisible
 
