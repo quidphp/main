@@ -609,7 +609,7 @@ class Autoload
             $opt = ['fqcnClass'=>true,'fqcnTrait'=>false,'fqcnInterface'=>false];
             else
             $opt = ['fqcnClass'=>true,'fqcnTrait'=>true,'fqcnInterface'=>true];
-
+            
             $return = Base\Dir::getFqcn($path,$value,$dig,null,$opt);
         }
 

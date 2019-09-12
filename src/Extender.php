@@ -118,7 +118,7 @@ class Extender extends Map
             if(!empty($value))
             {
                 $classes = Autoload::findMany($value,false,$onlyClass,true);
-
+                
                 if(!empty($classes))
                 $this->add(...array_values($classes));
             }
