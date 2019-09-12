@@ -301,7 +301,7 @@ class Res extends Base\Test
         assert(strlen($temp->lineSplice(0,1,['ookkk','line2'])->read()) === (21 + ($ll * 5)));
 
         // lineSpliceFirst
-        assert(strlen($temp->lineSpliceFirst("first".PHP_EOL."ok")->read()) === (23 + ($ll * 6)));
+        assert(strlen($temp->lineSpliceFirst('first'.PHP_EOL.'ok')->read()) === (23 + ($ll * 6)));
 
         // lineSpliceLast
         assert(strlen($temp->lineSpliceLast('last')->read()) === (25 + ($ll * 6)));
