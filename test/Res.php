@@ -90,7 +90,9 @@ class Res extends Base\Test
         assert($res->mimeGroup() === 'php');
         assert($res->mimeFamilies() === ['text']);
         assert($res->mimeFamily() === 'text');
-
+        assert(is_string($res->getLineSeparator()));
+        assert(in_array($res->getLineSeparatorLength(),array(1,2)));
+        
         // jsonSerialize
         assert($res->toJson() === '"lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3"');
 
@@ -160,7 +162,9 @@ class Res extends Base\Test
         assert(strlen($res->pathToUriOrBase64()) === 123);
         assert(strlen($res->base64()) === 123);
         assert(strlen($res->base64(false)) === 100);
-
+        assert($res->getContextMime() === null);
+        assert($res->getContextBasename() === null);
+        
         // check
         assert($res->check('isNotEmpty') === $res);
 
@@ -187,7 +191,22 @@ class Res extends Base\Test
 
         // isGroup
         assert($res->isGroup($res->group()));
+        
+        // setPhpContextOption
+        assert($res->setPhpContextOption('bla',2) === $res);
+        
+        // setContextMime
+        assert($tempConcat->setContextMime('text/plain'));
+        assert($tempConcat->mime() === 'text/plain');
+        assert($tempConcat->mimeGroup() === 'txt');
 
+        // setContextBasename
+        assert($tempConcat->setContextBasename('james.log'));
+        assert($tempConcat->basename() === 'james.log');
+
+        // getPhpContextOption
+        assert($res->getPhpContextOption('bla') === 2);
+        
         // permissionChange
         assert($res->permissionChange(777));
 
@@ -288,15 +307,6 @@ class Res extends Base\Test
         assert(strlen($temp->lineMap(function($line) {
             return $line.'A';
         })->read()) === 40);
-
-        // setContextMime
-        assert($tempConcat->setContextMime('text/plain'));
-        assert($tempConcat->mime() === 'text/plain');
-        assert($tempConcat->mimeGroup() === 'txt');
-
-        // setContextBasename
-        assert($tempConcat->setContextBasename('james.log'));
-        assert($tempConcat->basename() === 'james.log');
 
         // empty
         assert($temp->empty()->read() === '');

@@ -108,7 +108,7 @@ class Res extends ArrObj
         'pathToUri'=>'isFile',
         'pathToUriOrBase64'=>'isReadable',
         'position'=>'isSeekableTellable',
-        'lineCount'=>['isSeekableTellable','isReadable'],
+        'lineCount'=>'isSeekableTellable',
         'passthru'=>'isReadable',
         'base64'=>'isReadable',
         'lock'=>'isLockable',
@@ -117,7 +117,10 @@ class Res extends ArrObj
         'download'=>'isResponsable',
         'toScreen'=>'isResponsable',
         'concatenate'=>'isWritable',
-        'setPhpContextOption'=>null
+        'getLineSeparator'=>'isSeekableTellable',
+        'getLineSeparatorLength'=>'isSeekableTellable',
+        'getContextMime'=>null,
+        'getContextBasename'=>null
     ];
 
 
@@ -398,7 +401,56 @@ class Res extends ArrObj
         return Base\Res::isGroup($this->resource(),$group);
     }
 
+    
+    // setPhpContextOption
+    // permet de lier une clé -> valeur à l'intérieur du contexte de la ressource
+    // n'a pas besoin d'être phpWritable
+    public function setPhpContextOption(string $key,$value):self
+    {
+        $set = Base\Res::setPhpContextOption($key,$value,$this->resource());
+        
+        if($set !== true)
+        static::throw();
 
+        return $this;
+    }
+    
+    
+    // setContextMime
+    // permet de lier un mime au sein du contexte de la ressource
+    public function setContextMime(string $mime):self
+    {
+        $set = Base\Res::setContextMime($mime,$this->resource());
+        
+        if($set !== true)
+        static::throw();
+        
+        return $this;
+    }
+
+
+    // setContextBasename
+    // permet de lier un basename au sein du contexte de la ressource
+    public function setContextBasename(string $basename):self
+    {
+        $set = Base\Res::setContextBasename($basename,$this->resource());
+
+        if($set !== true)
+        static::throw();
+        
+        return $this;
+    }
+    
+    
+    // getPhpContextOption
+    // retourne une option de contexte ou null
+    // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
+    public function getPhpContextOption($key)
+    {
+        return Base\Res::getPhpContextOption($key,$this->resource());
+    }
+    
+    
     // permissionChange
     // change la permission de la resource fichier
     // envoie une exception en cas d'échec
@@ -789,26 +841,6 @@ class Res extends ArrObj
     public function lineMap(callable $callback,?array $option=null):self
     {
         Base\Res::lineMap($callback,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
-
-        return $this;
-    }
-
-
-    // setContextMime
-    // permet de lier un mime au sein du contexte de la ressource
-    public function setContextMime(string $mime):self
-    {
-        Base\Res::setContextMime($mime,$this->resource());
-
-        return $this;
-    }
-
-
-    // setContextBasename
-    // permet de lier un basename au sein du contexte de la ressource
-    public function setContextBasename(string $basename):self
-    {
-        Base\Res::setContextBasename($basename,$this->resource());
 
         return $this;
     }
