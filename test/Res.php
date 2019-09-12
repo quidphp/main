@@ -298,26 +298,26 @@ class Res extends Base\Test
         assert(strlen($temp->append('ok',['newline'=>true])->read()) === (15 + ($ll * 2)));
 
         // lineSplice
-        assert(strlen($temp->lineSplice(0,1,['ookkk','line2'])->read()) === (22 + ($ll * 4)));
+        assert(strlen($temp->lineSplice(0,1,['ookkk','line2'])->read()) === (23 + ($ll * 3)));
 
         // lineSpliceFirst
-        assert(strlen($temp->lineSpliceFirst('first'.PHP_EOL.'ok')->read()) === (24 + ($ll * 5)));
+        assert(strlen($temp->lineSpliceFirst('first'.PHP_EOL.'ok')->read()) === (25 + ($ll * 4)));
 
         // lineSpliceLast
-        assert(strlen($temp->lineSpliceLast('last')->read()) === (26 + ($ll * 5)));
+        assert(strlen($temp->lineSpliceLast('last')->read()) === (27 + ($ll * 4)));
 
         // lineInsert
-        assert(strlen($temp->lineInsert(1,'insert')->read()) === (32 + ($ll * 6)));
+        assert(strlen($temp->lineInsert(1,'insert')->read()) === (33 + ($ll * 5)));
 
         // lineFilter
         assert(strlen($temp->lineFilter(function($line) {
             return (strlen($line) > 2)? true:false;
-        })->read()) === (30 + ($ll * 5)));
+        })->read()) === (31 + ($ll * 4)));
 
         // lineMap
         assert(strlen($temp->lineMap(function($line) {
             return $line.'A';
-        })->read()) === (35 + ($ll * 5)));
+        })->read()) === (36 + ($ll * 4)));
 
         // empty
         assert($temp->empty()->read() === '');
@@ -377,9 +377,10 @@ class Res extends Base\Test
         assert(isset($res3[3]));
         unset($res3[3]);
         assert(!isset($res3[3]));
-        assert(strlen($res3->read()) === 75);
+        $ll = $res->getEolLength();
+        assert(strlen($res3->read()) === (73 + ($ll * 2)));
         $res3[1] = 'OK';
-        assert(strlen($res3->read()) === 52);
+        assert(strlen($res3->read()) === (50 + ($ll * 2)));
 
         // cleanup
         assert(Base\Dir::empty('[assertCurrent]'));
