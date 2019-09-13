@@ -24,6 +24,7 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 ## Requirement
 **QuidPHP/Main** requires the following:
 - PHP 7.3+
+- All PHP extensions required by [quidphp/base](https://github.com/quidphp/base)
 
 ## Dependency
 **QuidPHP/Main** has the following dependency:
