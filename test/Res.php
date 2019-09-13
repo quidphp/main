@@ -154,7 +154,6 @@ class Res extends Base\Test
         assert($res->mime() === 'text/x-php');
         assert($res->mime(true) === 'text/x-php');
         assert($res->mimeGroup() === 'php');
-        assert($res->mimeExtension() === 'php');
         assert(is_array($res->param()));
         assert(is_array($res->contextOption()));
         assert($res->curlInfo() === null);

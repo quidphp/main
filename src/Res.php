@@ -100,7 +100,6 @@ class Res extends ArrObj
         'mimeGroup'=>null,
         'mimeFamilies'=>null,
         'mimeFamily'=>null,
-        'mimeExtension'=>null,
         'param'=>null,
         'contextOption'=>null,
         'curlExec'=>'isCurl',
