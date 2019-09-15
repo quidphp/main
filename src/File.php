@@ -23,17 +23,22 @@ class File extends Res
         'group'=>null, // groupe par défaut, par défaut rien, si tu mets false la classe getClass ne cherchera pas de classe
         'mime'=>null, // définit le mime par défaut à utiliser (par exemple lors de la création d'une ressource temporaire)
         'type'=>null, // permet de set un type au fichier
-        'types'=>[], // défini les options à mettre selon le type
         'option'=>[
             'create'=>false, // crée le fichier si non existant
             'read'=>null, // option pour read
             'write'=>null], // option pour write
+    ];
+
+    
+    // param
+    public static $param = array(
+        'types'=>[], // défini les options à mettre selon le type
         'storageClass'=>[], // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
         'utilClass'=>[], // défini les classes utilités
         'groupClass'=>[] // défini la classe à utiliser selon le mimeGroup du fichier
-    ];
-
-
+    );
+    
+    
     // construct
     // construit l'objet fichier
     public function __construct($value,?array $option=null)
@@ -84,8 +89,8 @@ class File extends Res
         $return = (array) $option;
         $type = static::$config['type'] ?? null;
 
-        if(is_string($type) && array_key_exists($type,static::$config['types']))
-        $return = Base\Arrs::replace($return,static::$config['types'][$type]);
+        if(is_string($type) && array_key_exists($type,static::$param['types']))
+        $return = Base\Arrs::replace($return,static::$param['types'][$type]);
 
         if(empty($option['mime']))
         {
@@ -176,7 +181,7 @@ class File extends Res
     {
         $return = static::class;
 
-        if(!in_array($return,static::$config['storageClass'],true) && !in_array($return,static::$config['groupClass'],true) && !in_array($return,static::$config['utilClass'],true))
+        if(!in_array($return,static::$param['storageClass'],true) && !in_array($return,static::$param['groupClass'],true) && !in_array($return,static::$param['utilClass'],true))
         {
             $dirname = static::getDirnameFromValue($value);
             $storage = null;
@@ -189,10 +194,13 @@ class File extends Res
             else
             {
                 $group = Base\Mime::getGroup($value);
-
+                
                 if(empty($group) && !empty($option['mime']))
-                $group = Base\Mime::groupFromExtension($option['mime']);
-
+                $group = Base\Mime::group($option['mime']);
+                
+                if(empty($group) && !empty($option['basename']) && is_string($option['basename']))
+                $group = Base\Mime::groupFromBasename($option['basename']);
+                
                 if(empty($group))
                 $group = static::defaultMimeGroup();
 
@@ -212,7 +220,7 @@ class File extends Res
     // retourne la classe à utiliser à partir du groupe
     public static function getClassFromGroup(string $group):?string
     {
-        return (array_key_exists($group,static::$config['groupClass']))? static::$config['groupClass'][$group]:null;
+        return (array_key_exists($group,static::$param['groupClass']))? static::$param['groupClass'][$group]:null;
     }
 
 
@@ -241,7 +249,7 @@ class File extends Res
     {
         $return = null;
 
-        foreach (static::$config['storageClass'] as $class)
+        foreach (static::$param['storageClass'] as $class)
         {
             if(is_a($class,Contract\FileStorage::class,true))
             {
@@ -305,6 +313,79 @@ class File extends Res
     public static function newFiles(...$args):Files
     {
         return Files::newOverload(...$args);
+    }
+    
+    
+    // registerMime
+    // permet d'enregister un mime/extension/group dans base/mime
+    public static function registerMime(string $mime,$extension,string $group,$families=null):bool 
+    {
+        return Base\Mime::register($mime,$extension,$group,$families);
+    }
+    
+    
+    // registerClass
+    // permet d'enregister une classe fichier
+    // méthode à étendre
+    public static function registerClass():bool 
+    {
+        return false;
+    }
+    
+    
+    // registerGroup
+    // permet d'enregister un group class
+    // une exception peut être envoyé
+    public static function registerGroup(string $name,string $class):void 
+    {
+        if(is_subclass_of($class,self::class,true))
+        static::$param['groupClass'][$name] = $class;
+        
+        else
+        static::throw($name,$class);
+        
+        return;
+    }
+    
+    
+    // registerStorage
+    // permet d'enregister une classe de storage
+    // une exception peut être envoyé
+    public static function registerStorage(string $name,string $class):void
+    {
+        if(is_subclass_of($class,self::class,true))
+        static::$param['storageClass'][$name] = $class;
+        
+        else
+        static::throw($name,$class);
+        
+        return;
+    }
+    
+    
+    // registerUtil
+    // permet d'enregister une classe util
+    // une exception peut être envoyé
+    public static function registerUtil(string $name,string $class):void
+    {
+        if(is_subclass_of($class,self::class,true))
+        static::$param['utilClass'][$name] = $class;
+        
+        else
+        static::throw($name,$class);
+        
+        return;
+    }
+    
+    
+    // registerType
+    // permet d'enregister des paramètres pour types
+    // une exception peut être envoyé
+    public static function registerType(string $name,?array $option=null):void
+    {
+        static::$param['types'][$name] = $option;
+        
+        return;
     }
 }
 ?>

@@ -69,7 +69,19 @@ class File extends Base\Test
 
         // newFiles
         assert($file::newFiles() instanceof Main\Files);
-
+        
+        // registerMime
+        
+        // registerClass
+        
+        // registerGroup
+        
+        // registerStorage
+        
+        // registerUtil
+        
+        // registerType
+        
         // res
         assert(is_resource($file->resource()));
         assert(!empty($file->_cast()));
