@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Test\Main;
-use Quid\Main;
 use Quid\Base;
+use Quid\Main;
 
 // autoload
 // class for testing Quid\Main\Autoload

@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\Map;
-use Quid\Main;
 use Quid\Base;
+use Quid\Main;
 
 // _arr
 // trait that provides methods to allow advanced unidimensional array manipulation to a collection

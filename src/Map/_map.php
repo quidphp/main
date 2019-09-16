@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\Map;
-use Quid\Main;
 use Quid\Base;
+use Quid\Main;
 
 // _map
 // trait that provides a method to recursively change the entries (map) by providing a callback

@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\Map;
-use Quid\Main;
 use Quid\Base;
+use Quid\Main;
 
 // _prepend
 // trait that replaces methods to make the collection prepend per default (add at the beginning)

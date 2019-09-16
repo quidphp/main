@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\Map;
-use Quid\Main;
 use Quid\Base;
+use Quid\Main;
 
 // _classeObj
 // trait that gives methods to work with a collection containing fqcn strings or objects

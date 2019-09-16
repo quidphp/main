@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\File;
-use Quid\Main;
 use Quid\Base;
+use Quid\Main;
 
 // _session
 // trait that provides methods to allow a file object to become a session storage
