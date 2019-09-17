@@ -444,10 +444,11 @@ class Com extends Map
 
     // posNegLogStrict
     // méthode utilisé par différentes classes pour faire de la com pos, neg
+    // pos ou neg doit avoir une valeur non null, sinon skip
     // loggé et/ou envoyé une exception s'il y a des messages négatifs
     public function posNegLogStrict(string $type,bool $bool,$pos,$neg,?string $log=null,?array $option=null):self
     {
-        if(strlen($type))
+        if(strlen($type) && ($pos !== null || $neg !== null))
         {
             $option = Base\Arr::plus(['com'=>false,'log'=>true,'strict'=>false],$option);
 
