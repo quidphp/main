@@ -5,20 +5,18 @@
     "keywords": ["quidphp","quid","framework"],
     "homepage": "https://quidphp.com",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Pierre-Philippe Emond",
-            "email": "emondpph@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Pierre-Philippe Emond",
+        "email": "emondpph@gmail.com"
+    }],
     "require": {
         "php": ">=7.3.0",
-		"quidphp/base": "*"
+        "quidphp/base": "*"
     },
     "autoload": {
         "psr-4": {
-        	"Quid\\Main\\": "src/",
-			"Quid\\Test\\Main\\": "test/"
+            "Quid\\Main\\": "src/",
+            "Quid\\Test\\Main\\": "test/"
         }
     }
 }
