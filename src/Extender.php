@@ -86,14 +86,14 @@ class Extender extends Map
         return (is_string($value) && array_key_exists($value,$this->extend))? true:false;
     }
 
-    
+
     // areSubClassOf
     // retourne vrai si toutes les classes sont des sous classes de
     public function areSubClassOf(string $class):bool
     {
         $return = true;
-        
-        foreach ($this->toArray() as $value) 
+
+        foreach ($this->toArray() as $value)
         {
             if(!is_subclass_of($value,$class,true))
             {
@@ -101,11 +101,11 @@ class Extender extends Map
                 break;
             }
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // add
     // ajoute une ou plusieurs classes à l'objet
     // si des objets sont fournis, prend la classe
@@ -139,12 +139,12 @@ class Extender extends Map
             if(!empty($value))
             {
                 $classes = Autoload::findMany($value,false,$onlyClass,true);
-                
+
                 if(!empty($classes))
                 {
                     if($noSubDir === true)
                     $this->checkNoSubDir($classes);
-                    
+
                     $this->add(...array_values($classes));
                 }
             }
@@ -155,34 +155,34 @@ class Extender extends Map
         return $this;
     }
 
-    
+
     // checkNoSubDir
     // envoie une exception si un des chemins contient un sous-directoire
-    protected function checkNoSubDir(array $values):void 
+    protected function checkNoSubDir(array $values):void
     {
-        foreach ($values as $key => $value) 
+        foreach ($values as $key => $value)
         {
             if(is_string($key))
             {
                 $dirname = dirname($key);
                 if(Base\Dir::isDeep($dirname))
                 static::throw('subdirectoryNotAllowed',$dirname);
-                
+
                 break;
             }
         }
-        
+
         return;
     }
-    
-    
+
+
     // notSubClassOf
     // retourne la première classe qui n'est pas une sous-classe de
     public function notSubClassOf(string $class):?string
     {
         $return = null;
-        
-        foreach ($this->toArray() as $value) 
+
+        foreach ($this->toArray() as $value)
         {
             if(!is_subclass_of($value,$class,true))
             {
@@ -190,11 +190,11 @@ class Extender extends Map
                 break;
             }
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // set
     // ajoute une classe à l'objet extender
     // exception envoyé si une classe existe déjà et que la nouvelle ne l'étend pas

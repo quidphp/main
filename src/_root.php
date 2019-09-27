@@ -129,10 +129,10 @@ trait _root
     // par défaut private est false
     public function help(bool $private=false,bool $deep=false):array
     {
-        $return = array();
+        $return = [];
         $vars = ($private === true)? get_object_vars($this):null;
         $methods = ($private === true)? get_class_methods($this):null;
-        
+
         return Base\Obj::info($this,$vars,$methods,$deep);
     }
 }

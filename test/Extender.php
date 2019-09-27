@@ -22,27 +22,27 @@ class Extender extends Base\Test
 
         // construct
         $ex = new Main\Extender(__NAMESPACE__);
-        
+
         // onPrepareThis
-        
+
         // onAddNamespace
-        
+
         // isExtended
         assert(!$ex->isExtended('test'));
-        
+
         // areSubClassOf
         assert($ex->areSubClassOf(Base\Test::class));
-        
+
         // add
 
         // addNamespace
-        
+
         // checkNoSubDir
-        
+
         // notSubClassOf
         assert($ex->notSubClassOf(Base\Test::class) === null);
         assert(is_string($ex->notSubClassOf(Base\Arr::class)));
-    
+
         // set
 
         // extended
