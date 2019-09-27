@@ -126,9 +126,14 @@ trait _root
 
     // help
     // retourne un tableau d'aide sur l'objet de la classe
-    public function help(bool $deep=true):array
+    // par défaut private est false
+    public function help(bool $private=false,bool $deep=false):array
     {
-        return Base\Obj::info($this,get_object_vars($this),get_class_methods($this),$deep);
+        $return = array();
+        $vars = ($private === true)? get_object_vars($this):null;
+        $methods = ($private === true)? get_class_methods($this):null;
+        
+        return Base\Obj::info($this,$vars,$methods,$deep);
     }
 }
 ?>

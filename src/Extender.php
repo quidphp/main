@@ -26,6 +26,7 @@ class Extender extends Map
             'type'=>'class', // l'extender emmagasine des noms de classe ou des objets
             'methodIgnore'=>null, // nom d'une méthode statique, si elle retourne true il faut ignorer la classe
             'onlyClass'=>true, // la méthode dans base/autoload charge seulement les classes à partir du nom de fichier
+            'noSubDir'=>false, // envoie une exception dans onAddNamespace si un dossier contient un sous-directoire
             'subClass'=>null, // si les classes doivent étendre une subClass
             'exists'=>true, // fait une vérification si la classe existe
             'overloadKeyPrepend'=>null, // permet de spécifier une overload key, et ne pas avoir à charger la classe
@@ -85,7 +86,26 @@ class Extender extends Map
         return (is_string($value) && array_key_exists($value,$this->extend))? true:false;
     }
 
-
+    
+    // areSubClassOf
+    // retourne vrai si toutes les classes sont des sous classes de
+    public function areSubClassOf(string $class):bool
+    {
+        $return = true;
+        
+        foreach ($this->toArray() as $value) 
+        {
+            if(!is_subclass_of($value,$class,true))
+            {
+                $return = false;
+                break;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // add
     // ajoute une ou plusieurs classes à l'objet
     // si des objets sont fournis, prend la classe
@@ -112,15 +132,21 @@ class Extender extends Map
     public function addNamespace(string ...$values):self
     {
         $onlyClass = $this->getOption('onlyClass');
+        $noSubDir = $this->getOption('noSubDir');
 
         foreach ($values as $value)
         {
             if(!empty($value))
             {
                 $classes = Autoload::findMany($value,false,$onlyClass,true);
-
+                
                 if(!empty($classes))
-                $this->add(...array_values($classes));
+                {
+                    if($noSubDir === true)
+                    $this->checkNoSubDir($classes);
+                    
+                    $this->add(...array_values($classes));
+                }
             }
         }
 
@@ -129,7 +155,46 @@ class Extender extends Map
         return $this;
     }
 
-
+    
+    // checkNoSubDir
+    // envoie une exception si un des chemins contient un sous-directoire
+    protected function checkNoSubDir(array $values):void 
+    {
+        foreach ($values as $key => $value) 
+        {
+            if(is_string($key))
+            {
+                $dirname = dirname($key);
+                if(Base\Dir::isDeep($dirname))
+                static::throw('subdirectoryNotAllowed',$dirname);
+                
+                break;
+            }
+        }
+        
+        return;
+    }
+    
+    
+    // notSubClassOf
+    // retourne la première classe qui n'est pas une sous-classe de
+    public function notSubClassOf(string $class):?string
+    {
+        $return = null;
+        
+        foreach ($this->toArray() as $value) 
+        {
+            if(!is_subclass_of($value,$class,true))
+            {
+                $return = $value;
+                break;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // set
     // ajoute une classe à l'objet extender
     // exception envoyé si une classe existe déjà et que la nouvelle ne l'étend pas

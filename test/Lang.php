@@ -30,7 +30,7 @@ class Lang extends Base\Test
         $lang['test'] = ['ok'=>['test'=>'what']];
 
         // invoke
-        assert(count($lang('error','label')) === 12);
+        assert(count($lang('error','label')) === 13);
 
         // onPrepareSetInst
 
@@ -308,7 +308,7 @@ class Lang extends Base\Test
         assert($lang->errorCode(E_RECOVERABLE_ERROR) === 'E_RECOVERABLE_ERROR');
 
         // errorLabel
-        assert(count($lang->errorLabel()) === 12);
+        assert(count($lang->errorLabel()) === 13);
         assert($lang->errorLabel(1) === 'Erreur');
         assert($lang->errorLabel(1,'en') === 'Error');
 
