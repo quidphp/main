@@ -77,10 +77,10 @@ class Response extends Base\Test
 
         // isCodePositive
         assert($response->isCodePositive());
-        
+
         // isCodeLoggable
         assert(!$response->isCodeLoggable());
-        
+
         // isCodeError
         assert(!$response->isCodeError());
 

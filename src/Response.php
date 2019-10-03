@@ -247,8 +247,8 @@ class Response extends Res
     {
         return Base\Header::isCodeLoggable($this->headers());
     }
-    
-    
+
+
     // isCodeError
     // retourne vrai si le code de la réponse est 400 ou 404
     public function isCodeError():bool
