@@ -21,8 +21,10 @@ trait _log
 
     // config
     public static $configFileLog = [
-        'type'=>'dump',
-        'deleteTrim'=>null
+        'deleteTrim'=>null,
+        'option'=>array(
+            'write'=>[
+                'callback'=>[Base\Debug::class,'varGet']])
     ];
 
 

@@ -83,6 +83,6 @@ class Roles extends Extender
     }
 }
 
-// config
-Roles::__config();
+// init
+Roles::__init();
 ?>

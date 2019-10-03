@@ -19,6 +19,7 @@ trait _csv
         'group'=>'csv',
         'option'=>[
             'read'=>[ // option pour read
+                'callback'=>[self::class,'readCallback'],
                 'csv'=>true,
                 'delimiter'=>';',
                 'enclosure'=>'"',
@@ -145,6 +146,14 @@ trait _csv
         }
 
         return $return;
+    }
+    
+    
+    // readCallback
+    // utilisé lors du read pour un csv
+    public static function readCallback($value):?array
+    {
+        return Base\Csv::str($value,Base\Arr::gets(array('delimiter','enclosure','escape'),static::$config['option']['read']));
     }
 }
 ?>

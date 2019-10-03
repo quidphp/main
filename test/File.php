@@ -80,8 +80,6 @@ class File extends Base\Test
 
         // registerUtil
 
-        // registerType
-
         // res
         assert(is_resource($file->resource()));
         assert(!empty($file->_cast()));

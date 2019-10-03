@@ -87,6 +87,6 @@ abstract class ServiceVideo extends ServiceRequest
     }
 }
 
-// config
-ServiceVideo::__config();
+// init
+ServiceVideo::__init();
 ?>

@@ -24,7 +24,7 @@ class Importer extends Base\Test
             public static $config = [];
             public function __construct(...$args)
             {
-                static::__config();
+                static::__init();
                 parent::__construct(...$args);
             }
         };

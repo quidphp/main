@@ -234,13 +234,21 @@ class Response extends Res
 
 
     // isCodePositive
-    // retourne vrai si le code de la réponse est 200, 301 ou 302
+    // retourne vrai si le code de la réponse est positive (200 à 399)
     public function isCodePositive():bool
     {
         return Base\Header::isCodePositive($this->headers());
     }
 
 
+    // isCodeLoggable
+    // retourne vrai si le code de la réponse positive mais pas 301
+    public function isCodeLoggable():bool
+    {
+        return Base\Header::isCodeLoggable($this->headers());
+    }
+    
+    
     // isCodeError
     // retourne vrai si le code de la réponse est 400 ou 404
     public function isCodeError():bool

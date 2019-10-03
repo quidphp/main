@@ -22,7 +22,6 @@ class File extends Res
     public static $config = [
         'group'=>null, // groupe par défaut, par défaut rien, si tu mets false la classe getClass ne cherchera pas de classe
         'mime'=>null, // définit le mime par défaut à utiliser (par exemple lors de la création d'une ressource temporaire)
-        'type'=>null, // permet de set un type au fichier
         'option'=>[
             'create'=>false, // crée le fichier si non existant
             'read'=>null, // option pour read
@@ -32,7 +31,6 @@ class File extends Res
 
     // param
     public static $param = [
-        'types'=>[], // défini les options à mettre selon le type
         'storageClass'=>[], // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
         'utilClass'=>[], // défini les classes utilités
         'groupClass'=>[] // défini la classe à utiliser selon le mimeGroup du fichier
@@ -81,16 +79,11 @@ class File extends Res
 
 
     // prepareOption
-    // merge les données du type
     // essaie d'attribuer un mime à utiliser si non défini
     // retourne le tableau option
     protected function prepareOption($value,?array $option=null):array
     {
         $return = (array) $option;
-        $type = static::$config['type'] ?? null;
-
-        if(is_string($type) && array_key_exists($type,static::$param['types']))
-        $return = Base\Arrs::replace($return,static::$param['types'][$type]);
 
         if(empty($option['mime']))
         {
@@ -373,17 +366,6 @@ class File extends Res
 
         else
         static::throw($name,$class);
-
-        return;
-    }
-
-
-    // registerType
-    // permet d'enregister des paramètres pour types
-    // une exception peut être envoyé
-    public static function registerType(string $name,?array $option=null):void
-    {
-        static::$param['types'][$name] = $option;
 
         return;
     }

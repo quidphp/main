@@ -56,8 +56,8 @@ class Session extends Base\Test
         assert(is_int($s->getLifetime()));
         assert($s->getExpire() > Base\Date::getTimestamp());
         assert(count($s->getGarbageCollect()) === 3);
-        assert(in_array(count($s->getCookieParams()),[5,6],true));
-        assert(count($s->ini()) === 31);
+        assert(count($s->getCookieParams()) === 6);
+        assert(count($s->ini()) === 30);
         assert(is_int($s->expire()));
         assert(is_int($s->timestampCurrent()));
         assert($s->timestampPrevious() === null);
