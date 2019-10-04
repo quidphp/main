@@ -25,10 +25,10 @@ class Autoload extends Base\Test
 
         // attr
         assert(count($a->attr()) === 4);
-        
+
         // type
         assert($a->type() === 'alias');
-                
+
         // initClass
 
         // storeHit
@@ -103,13 +103,13 @@ class Autoload extends Base\Test
 
         // allOverload
         assert(is_array(Main\Autoload::allOverload()));
-        
+
         // isRegistered
         assert(Main\Autoload::isRegistered('closure') === true);
 
         // findNamespace
         assert(!empty(Main\Autoload::findNamespace()));
-        
+
         // findOneOrMany
         assert(!empty(Main\Autoload::findOneOrMany([__NAMESPACE__],false,true,true)));
         assert(Main\Autoload::findOneOrMany(\Datetime::class,true,true,true) === [\Datetime::class]);
