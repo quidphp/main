@@ -58,7 +58,15 @@ class Autoload
         return $this->attr;
     }
 
-
+    
+    // type
+    // retourne le type de l'objet autoload
+    public function type():string 
+    {
+        return $this->attr()['type'];
+    }
+    
+    
     // initClass
     // initialise une classe lors du chargement
     // la méthode est spécifié dans les attr
@@ -67,8 +75,8 @@ class Autoload
     {
         $return = false;
         $init = $this->attr()['init'];
-
-        if(is_string($init) && stripos($class,'quid') !== 0 && method_exists($class,$init))
+        
+        if(is_string($init) && method_exists($class,$init))
         {
             $class::$init();
             $return = true;
@@ -117,7 +125,7 @@ class Autoload
     public function getCallable():callable
     {
         $return = null;
-        $type = $this->attr()['type'];
+        $type = $this->type();
 
         if($type === 'psr4')
         $return = [$this,'findPsr4'];
@@ -264,7 +272,7 @@ class Autoload
         if(!empty($closure))
         {
             $closure();
-
+            
             if(static::exists($class))
             {
                 $this->initClass($class);
@@ -463,7 +471,7 @@ class Autoload
         return static::$config['closure'];
     }
 
-
+    
     // registerClosure
     // créer et register un autoload pour closure
     public static function registerClosure(bool $miss=false,?string $init=null,bool $prepend=true):self
@@ -527,7 +535,68 @@ class Autoload
         return static::$config['overload'];
     }
 
-
+    
+    // isRegistered
+    // retourne vrai s'il y a un autoload du type fourni en argument présentement enregistré
+    public static function isRegistered(string $type):bool 
+    {
+        $return = false;
+        
+        foreach (Base\Autoload::all() as $key => $value)
+        {
+            if(is_array($value) && $value[0] instanceof self && $value[0]->type() === $type)
+            {
+                $return = true;
+                break;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
+    // findNamespace
+    // permet de retourner les namespaces à partir d'une callable
+    // gère psr4, closure et declared
+    // possible de sort le tableau de sortie
+    public static function findNamespace(?callable $callable=null,bool $closure=false,bool $declared=false,bool $sort=false):array
+    {
+        $return = array_keys(Base\Autoload::allPsr4($callable));
+        
+        if($closure === true)
+        {
+            foreach (static::$config['closure'] as $namespace => $classes)
+            {
+                if(!in_array($namespace,$return,true))
+                {
+                    if($callable === null || $callable($namespace) === true)
+                    $return[] = $namespace;
+                }
+            }
+        }
+        
+        if($declared === true)
+        {
+            $declared = Base\Classe::declared();
+            $namespaces = Base\Classe::namespaces($declared);
+            
+            foreach ($namespaces as $namespace) 
+            {
+                if(!in_array($namespace,$return,true))
+                {
+                    if($callable === null || $callable($namespace) === true)
+                    $return[] = $namespace;
+                }
+            }
+        }
+        
+        if($sort === true)
+        asort($return);
+        
+        return $return;
+    }
+    
+    
     // findOneOrMany
     // permet de fournir une ou plusieurs fqcns pouvant utilisés le caractère séparateur +
     // retourne un tableau unidimmensionnel avec tous les fichiers existants (en clé) et le fqcn (en valeur)
@@ -540,7 +609,7 @@ class Autoload
         foreach ($value as $target)
         {
             $target = Base\Fqcn::many($target);
-
+            
             if(!empty($target))
             {
                 foreach ($target as $v)
