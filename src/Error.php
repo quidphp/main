@@ -176,29 +176,29 @@ class Error extends Root
     // retourne le id unique de l'erreur, avec le id de la réponse
     public function id(?int $inc=null):string
     {
-        return implode('-',array(Base\Response::id(),$this->splHash()));
+        return implode('-',[Base\Response::id(),$this->splHash()]);
     }
 
-    
+
     // basename
     // retourne le basename à utiliser avec l'erreur
     public function basename(?int $inc=null):string
     {
         $return = '';
-        $arr = array();
+        $arr = [];
         $arr[] = Base\Date::format('Y_m_d_H_i_s');
         $arr[] = Base\Path::filename($this->getFile());
         $arr[] = $this->getLine();
-        
+
         if(is_int($inc))
         $arr[] .= $inc;
-        
+
         $return = implode('-',$arr);
-        
+
         return $return;
     }
-    
-    
+
+
     // getMessage
     // retourne le message de l'erreur
     public function getMessage():string

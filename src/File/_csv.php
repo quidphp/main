@@ -36,33 +36,33 @@ trait _csv
             'cast'=>true] // cast les valeurs numérique
     ];
 
-    
+
     // same
     // retourne vrai si toutes les colonnes du tableau csv ont le même count et les mêmes clés
-    public function same():bool 
+    public function same():bool
     {
         return Base\Csv::same($this->read());
     }
-    
-    
+
+
     // clean
     // efface toutes les colonnes qui n'ont pas la même longueur et les mêmes clés que la première
     // si removeEmpty est true, une colonne dont toutes les valeurs sont vides est éliminé
-    public function clean(bool $removeEmpty=true):array 
+    public function clean(bool $removeEmpty=true):array
     {
         return Base\Csv::clean($this->read(),$removeEmpty);
     }
-    
-    
+
+
     // assoc
     // la première colonne contient les headers
     // le nom des headers est appliqué comme clé à chaque colonne
-    public function assoc(bool $clean=false,bool $removeEmpty=true):array 
+    public function assoc(bool $clean=false,bool $removeEmpty=true):array
     {
         return Base\Csv::assoc($this->read(),$clean,$removeEmpty);
     }
-    
-    
+
+
     // lineReturn
     // gère la valeur de retour pour line
     // peut encoder le retour, trim chaque valeur ainsi que caster les valeurs numériques string

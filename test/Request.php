@@ -68,7 +68,7 @@ class Request extends Base\Test
 
         // jsonSerialize
         assert(strlen($r->toJson()) >= 353);
-        
+
         // isLive
         assert(!$r->isLive());
         assert($r10->isLive());
@@ -77,9 +77,9 @@ class Request extends Base\Test
 
         // isCli
         assert(!$r->isCli());
-        
+
         // setCli
-        
+
         // getLogData
         assert($r->getLogData() === null);
 

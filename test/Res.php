@@ -35,7 +35,7 @@ class Res extends Base\Test
         $res->seekRewind();
         $res3->overwrite('lorem ipsum lorem ipsum'.PHP_EOL.'lorem ipsum lorem ipsum 2'.PHP_EOL.'lorem ipsum lorem ipsum 3');
         $res3->seekRewind();
-        
+
         // toString
 
         // call
@@ -99,7 +99,7 @@ class Res extends Base\Test
         assert($tempBom->size() === 3);
         assert($tempBom->writeBom() === true);
         assert($tempBom->size() === 3);
-        
+
         // jsonSerialize
         assert($res->toJson() === '"lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3"');
 

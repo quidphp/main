@@ -109,7 +109,7 @@ class Request extends Map
         $this->setId();
 
         $this->setDefault(true);
-        
+
         $this->setLive($live);
 
         return;
@@ -188,7 +188,7 @@ class Request extends Map
         return $this->safeInfo(true);
     }
 
-    
+
     // isLive
     // retourne vrai si la requête est live
     public function isLive():bool
@@ -214,8 +214,8 @@ class Request extends Map
     {
         return $this->cli;
     }
-    
-    
+
+
     // setCli
     // détermine si la requête provient du cli
     // value doit être bool
@@ -225,8 +225,8 @@ class Request extends Map
 
         return $this;
     }
-    
-    
+
+
     // getLogData
     // retourne les data pour le log
     public function getLogData():?array
@@ -405,7 +405,7 @@ class Request extends Map
         $return['cachable'] = $this->isCachable();
         $return['redirectable'] = $this->isRedirectable();
         $return['cli'] = $this->isCli();
-        
+
         if($id === true)
         $return['id'] = $this->id();
 
@@ -434,7 +434,7 @@ class Request extends Map
         $return['userAgent'] = $this->userAgent();
         $return['referer'] = $this->referer();
         $return['cli'] = $this->isCli();
-        
+
         if($id === true)
         $return['id'] = $this->id();
 
@@ -456,7 +456,7 @@ class Request extends Map
         $return['headers'] = $this->headers();
         $return['lang'] = $this->lang();
         $return['cli'] = $this->isCli();
-        
+
         if($id === true)
         $return['id'] = $this->id();
 

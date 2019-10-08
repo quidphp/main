@@ -8,8 +8,8 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\File;
-use Quid\Main;
 use Quid\Base;
+use Quid\Main;
 
 // _log
 // trait that grants methods to allow a file object to do logging
@@ -36,7 +36,7 @@ trait _log
     {
         $return = static::storage(...$values);
         static::logTrim();
-        
+
         return $return;
     }
 
@@ -47,10 +47,10 @@ trait _log
     {
         $return = null;
         $trim = static::$config['deleteTrim'];
-        
+
         if(is_int($trim))
         $return = static::storageTrim($trim);
-        
+
         return $return;
     }
 }
