@@ -79,6 +79,7 @@ class Request extends Map
     protected $timestamp = null; // timestamp de la requête
     protected $lang = null; // lang de la requête, peut provenir de path
     protected $files = []; // contient les données de fichier
+    protected $cli = false; // défini si c'est une requête du cli
     protected $live = false; // défini si la requête représente la live
     protected $log = null; // permet de conserver des datas à logger
 
@@ -108,6 +109,7 @@ class Request extends Map
         $this->setId();
 
         $this->setDefault(true);
+        
         $this->setLive($live);
 
         return;
@@ -186,7 +188,7 @@ class Request extends Map
         return $this->safeInfo(true);
     }
 
-
+    
     // isLive
     // retourne vrai si la requête est live
     public function isLive():bool
@@ -206,6 +208,25 @@ class Request extends Map
     }
 
 
+    // isCli
+    // retourne vrai si la requête est du cli
+    public function isCli():bool
+    {
+        return $this->cli;
+    }
+    
+    
+    // setCli
+    // détermine si la requête provient du cli
+    // value doit être bool
+    public function setCli(bool $value):self
+    {
+        $this->cli = $value;
+
+        return $this;
+    }
+    
+    
     // getLogData
     // retourne les data pour le log
     public function getLogData():?array
@@ -383,7 +404,8 @@ class Request extends Map
         $return['safe'] = $this->isPathSafe();
         $return['cachable'] = $this->isCachable();
         $return['redirectable'] = $this->isRedirectable();
-
+        $return['cli'] = $this->isCli();
+        
         if($id === true)
         $return['id'] = $this->id();
 
@@ -411,7 +433,8 @@ class Request extends Map
         $return['lang'] = $this->lang();
         $return['userAgent'] = $this->userAgent();
         $return['referer'] = $this->referer();
-
+        $return['cli'] = $this->isCli();
+        
         if($id === true)
         $return['id'] = $this->id();
 
@@ -432,7 +455,8 @@ class Request extends Map
         $return['files'] = $this->files();
         $return['headers'] = $this->headers();
         $return['lang'] = $this->lang();
-
+        $return['cli'] = $this->isCli();
+        
         if($id === true)
         $return['id'] = $this->id();
 

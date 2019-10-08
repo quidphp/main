@@ -30,11 +30,12 @@ class Res extends Base\Test
         $res3 = new Main\Res($path3,['create'=>true]);
         $temp = new Main\Res('php://temp');
         $tempConcat = new Main\Res('php://temp');
+        $tempBom = new Main\Res('php://temp');
         $res->write("lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3");
         $res->seekRewind();
         $res3->overwrite('lorem ipsum lorem ipsum'.PHP_EOL.'lorem ipsum lorem ipsum 2'.PHP_EOL.'lorem ipsum lorem ipsum 3');
         $res3->seekRewind();
-
+        
         // toString
 
         // call
@@ -93,7 +94,12 @@ class Res extends Base\Test
         assert($res->parseEol() === "\n");
         assert($res->findEol() === "\n");
         assert($res->getEolLength() === 1);
-
+        assert($tempBom->size() === 0);
+        assert($tempBom->writeBom() === true);
+        assert($tempBom->size() === 3);
+        assert($tempBom->writeBom() === true);
+        assert($tempBom->size() === 3);
+        
         // jsonSerialize
         assert($res->toJson() === '"lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum 2\nlorem ipsum lorem ipsum 3"');
 

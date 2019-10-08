@@ -55,7 +55,10 @@ class Error extends Base\Test
 
         // id
         assert(strlen($e->id()) === 43);
-
+        
+        // basename
+        assert(strlen($e->basename()) > 25);
+        
         // makeSilent
 
         // getMessage

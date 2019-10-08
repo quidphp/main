@@ -157,7 +157,7 @@ trait _storage
             $path = static::storagePath(...$values);
             $data = static::storageData(...$values);
             $file = new static($path,['create'=>true]);
-
+            
             if(!empty($file))
             {
                 $return = $file->write($data);

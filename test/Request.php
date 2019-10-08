@@ -64,17 +64,22 @@ class Request extends Base\Test
         assert($r->_cast() === $uri);
 
         // toArray
-        assert(count($r->toArray()) === 22);
+        assert(count($r->toArray()) === 23);
 
         // jsonSerialize
         assert(strlen($r->toJson()) >= 353);
-
+        
         // isLive
         assert(!$r->isLive());
         assert($r10->isLive());
 
         // setLive
 
+        // isCli
+        assert(!$r->isCli());
+        
+        // setCli
+        
         // getLogData
         assert($r->getLogData() === null);
 
@@ -127,18 +132,18 @@ class Request extends Base\Test
 
         // info
         assert(count($current->info()) === (count(Base\Request::info()) + 2));
-        assert(count($r->info()) === 26);
-        assert(count($r->info(true)) === 27);
+        assert(count($r->info()) === 27);
+        assert(count($r->info(true)) === 28);
 
         // safeInfo
-        assert(count($current->safeInfo()) === 20);
-        assert(count($current->safeInfo(true)) === 21);
+        assert(count($current->safeInfo()) === 21);
+        assert(count($current->safeInfo(true)) === 22);
         $x = new Main\Request($current->info());
         assert($x->absolute() === $current->absolute());
 
         // export
         assert($current->export() === Base\Request::export());
-        assert(count($r->export()) === 15);
+        assert(count($r->export()) === 16);
         $r4['ok'] = '<b>a</b>';
         $r4['password'] = '<b>a</b>';
 
