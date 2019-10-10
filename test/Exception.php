@@ -59,8 +59,9 @@ class Exception extends Base\Test
 
         // trigger
 
-        // html
-
+        // getOutput
+        assert(is_string($e->getOutput()));
+        
         // log
         assert($e->log() === $e);
 

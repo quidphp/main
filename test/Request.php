@@ -24,7 +24,10 @@ class Request extends Base\Test
         $encodedUri = 'http://google.com/test/%C3%A9ol/la%20vie/i.php?james=lala&ka=%C3%A9o&space=la%20uy#hash%C3%A9';
         $mediaJpg = '[assertMedia]/jpg.jpg';
         $mediaJpgUri = Base\Uri::output($mediaJpg);
-
+        $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
+        $fileObj = Main\File::new($_file_);
+        $filesObj = new Main\Files($_file_);
+        
         // construct
         $r = new Main\Request($uri);
         $r2 = new Main\Request($uri);
@@ -41,6 +44,8 @@ class Request extends Base\Test
         $filesArray = ['ok'=>['name'=>['test.jpg','ok.lala'],'tmp_name'=>['ok','ok'],'type'=>['ok','ok'],'size'=>[200,0],'error'=>[0,0]]];
         $files = new Main\Request(['uri'=>'/','post'=>['well'=>'no','ok'=>['bla.php']],'files'=>$filesArray]);
         $file = new Main\Request(['uri'=>'/','post'=>['well'=>'no','ok'=>'bla.php'],'files'=>['ok'=>['name'=>'test.jpg','error'=>'ok']]]);
+        $setFile = new Main\Request(['uri'=>'/']);
+        $setFiles = new Main\Request(['uri'=>'/']);
         $current = Main\Request::live();
         $current2 = Main\Request::live();
         $currentReset = Main\Request::live();
@@ -693,15 +698,31 @@ class Request extends Base\Test
         assert($r2->browserDevice() === 'unknown');
 
         // setFiles
-
+        assert($setFiles->file('test') === null);
+        assert($setFiles->setFiles(array('test'=>$filesObj)) === $setFiles);
+        assert($setFile->setFiles(array('test'=>array(4=>$fileObj))) === $setFile);
+        
+        // filesArray
+        assert($files->filesArray()['ok'][0]['name'] === 'test.jpg');
+        assert(count($files->filesArray()['ok']) === 2);
+        assert(count($file->filesArray()['ok']) === 2);
+        assert($file->filesArray()['ok']['name'] === 'test.jpg');
+        assert(count($setFile->filesArray()['test']) === 5);
+        assert(count($setFiles->filesArray()['test']) === 1);
+        assert(count($setFile->post(true,true,true)['test']) === 5);
+        assert(count($setFiles->post(true,true,true)['test']) === 1);
+        assert($setFile->post() === array());
+        
         // files
-        assert($files->files(false)['ok']['name'][0] === 'test.jpg');
-        assert($file->files(false)['ok']['name'] === 'test.jpg');
-        assert($files->files(true)['ok'][0]['name'] === 'test.jpg');
-        assert(count($files->files(true)['ok']) === 2);
-        assert(count($file->files(true)['ok']) === 2);
-        assert($file->files(true)['ok']['name'] === 'test.jpg');
-
+        assert($setFiles->files('test') instanceof Main\Files);
+        assert($setFile->files('test')->isCount(1));
+        
+        // file
+        assert($setFiles->file('test') instanceof Main\File);
+        assert($setFiles->file('test',1) === null);
+        assert($setFile->file('test') === null);
+        assert($setFile->file('test',4) instanceof Main\File);
+        
         // redirect
         assert($r->redirect() === '/en/lavieestlaide');
         assert($current->redirect() === null);

@@ -95,10 +95,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     }
 
 
-    // onUnsetInst
-    // méthode appeler après unsetInst
+    // onPrepareUnsetInst
+    // méthode appeler avant unsetInst
     // méthode protégé
-    protected function onUnsetInst():self
+    protected function onPrepareUnsetInst():self
     {
         if($this->isReady())
         $this->commit();

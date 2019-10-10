@@ -40,7 +40,10 @@ class File extends Base\Test
         // writeOption
 
         // unlinkOnShutdown
-
+        
+        // makeUploadArray
+        assert(count($file->makeUploadArray()) === 5);
+        
         // files
         assert($file->files()->count() === 1);
 

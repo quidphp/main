@@ -35,10 +35,6 @@ class Error extends Base\Test
 
         // toString
 
-        // onHtmlStart
-
-        // onHtmlEnd
-
         // toArray
         assert(count($e->toArray()) === 5);
         assert(count($e->toArray()['trace']) > 1);
@@ -142,21 +138,36 @@ class Error extends Base\Test
         // log
 
         // com
-
+        
+        // output
+        
+        // getOutput
+        assert(is_string($error->getOutput()));
+        
+        // outputCli
+        
+        // cli
+        assert(strlen($error->cli()) > 155);
+        
+        // outputHtml
+        
         // html
         assert(Base\Html::is($error->html()));
         assert(is_string($error->html()));
         assert(!empty($silent->html()));
-        $x = new Main\Error($e->toArray(),null,['htmlDepth'=>7]);
-        $y = new Main\Error($x->toArray(),null,['htmlDepth'=>7]);
+        $x = new Main\Error($e->toArray(),null,['outputDepth'=>7]);
+        $y = new Main\Error($x->toArray(),null,['outputDepth'=>7]);
         assert($x->html() !== $y->html()); // id est différent
-
-        // getOutput
-        assert(count($warning->getOutput()) === 5);
-        assert($warning->getOutput()[1] === 'Warning (#22)');
-        assert($fatal->getOutput()[2] === '«fatalz»');
-        assert(count($warning->getOutput(false)) === 4);
-
+        
+        // makeOutputArray
+        assert(count($warning->makeOutputArray()) === 5);
+        assert($warning->makeOutputArray()[1] === 'Warning (#22)');
+        assert($fatal->makeOutputArray()[2] === '«fatalz»');
+        assert(count($warning->makeOutputArray(false)) === 4);
+        
+        // getOutputArray
+        assert(count($error->getOutputArray()) === 3);
+        
         // option
         assert(count($error->option()) === 15);
 
@@ -198,7 +209,7 @@ class Error extends Base\Test
 
         // setCom
 
-        // setDefaultHtmlDepth
+        // setDefaultOutputDepth
 
         // init
 

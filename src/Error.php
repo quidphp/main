@@ -24,8 +24,8 @@ class Error extends Root
             'lang'=>null, // langue de l'erreur
             'cast'=>'titleMessage', // méthode à utiliser pour cast
             'errorLog'=>true, // l'erreur est loggé dans php.log
-            'html'=>true, // output à l'écran
-            'htmlDepth'=>3, // niveau de précision du output
+            'output'=>true, // output à l'écran
+            'outputDepth'=>3, // niveau de précision du output
             'traceArgs'=>false, // affiche des arguments dans trace
             'traceLength'=>20, // longueur du trace
             'traceLengthArray'=>5, // longueur du trace pour toArray
@@ -41,7 +41,7 @@ class Error extends Root
             2=>['key'=>'notice','name'=>'Notice'],
             3=>['key'=>'deprecated','name'=>'Deprecated'],
             11=>['key'=>'assert','name'=>'Assertion'],
-            21=>['key'=>'silent','name'=>'Silent','html'=>false,'kill'=>false,'cleanBuffer'=>false],
+            21=>['key'=>'silent','name'=>'Silent','output'=>false,'kill'=>false,'cleanBuffer'=>false],
             22=>['key'=>'warning','name'=>'Warning','kill'=>false,'cleanBuffer'=>false],
             23=>['key'=>'fatal','name'=>'Fatal'],
             31=>['key'=>'exception','name'=>'Exception'],
@@ -96,24 +96,6 @@ class Error extends Root
     }
 
 
-    // onHtmlStart
-    // callback au début de la génération du html
-    // méthode protégé
-    protected function onHtmlStart():string
-    {
-        return '';
-    }
-
-
-    // onHtmlEnd
-    // callback à la fin de la génération du html
-    // méthode protégé
-    protected function onHtmlEnd():string
-    {
-        return '';
-    }
-
-
     // toArray
     // retourne l'erreur sous une forme tableau
     // utilisé par logError
@@ -165,7 +147,7 @@ class Error extends Root
     public function makeSilent():self
     {
         $this->setOption('cleanBuffer',false);
-        $this->setOption('html',false);
+        $this->setOption('output',false);
         $this->setOption('kill',false);
 
         return $this;
@@ -606,20 +588,9 @@ class Error extends Root
         if($this->getOption('cleanBuffer') === true)
         Base\Buffer::cleanAll();
 
-        // html
-        if($this->getOption('html') === true)
-        {
-            Base\Response::serverError();
-
-            $buffer = Base\Buffer::get();
-            $html = $this->html();
-
-            if(empty($buffer))
-            echo Base\Html::docTitleBody($this->title(),$html);
-
-            else
-            echo $html;
-        }
+        // output
+        if($this->getOption('output') === true)
+        $this->output();
 
         // kill
         if($this->getOption('kill') === true)
@@ -633,7 +604,7 @@ class Error extends Root
     // écrit le message d'erreur log
     protected function errorLog():self
     {
-        Base\Error::log($this->getOutput(false));
+        Base\Error::log($this->getOutputArray(false));
 
         return $this;
     }
@@ -679,52 +650,118 @@ class Error extends Root
         return $this;
     }
 
+    
+    // output
+    // fait un output de l'erreur
+    // output différent si c'est cli ou non
+    public function output():void
+    {
+        if(Base\Server::isCli())
+        $this->outputCli();
+        
+        else
+        $this->outputHtml();
+        
+        return;
+    }
+    
+    
+    // getOutput
+    // retourne le output de l'erreur
+    public function getOutput():string 
+    {
+        $return = '';
+        
+        if(Base\Server::isCli())
+        $return .= $this->cli();
+        
+        else
+        $return .= $this->html();
+        
+        return $return;
+    }
+    
+    
+    // outputCli
+    // envoie le output pour le cli
+    public function outputCli():void
+    {
+        echo $this->cli();
+        
+        return;
+    }
+    
+    
+    // cli
+    // génère le output pour le cli
+    public function cli():string
+    {
+        $return = '';
+        
+        foreach ($this->getOutputArray() as $k => $v)
+        {
+            $preset = ($k <= 2)? 'neg':'neutral';
+            $return .= Base\Cli::makePreset($preset,$v,2);
+        }
+        
+        return $return;
+    }
+    
+    
+    // outputHtml
+    // envoie le output pour le html
+    public function outputHtml():void
+    {
+        Base\Response::serverError();
 
+        $buffer = Base\Buffer::get();
+        $html = $this->html();
+
+        if(empty($buffer))
+        echo Base\Html::docTitleBody($this->title(),$html);
+
+        else
+        echo $html;
+        
+        return;
+    }
+    
+    
     // html
     // génère le html de l'erreur
     public function html():string
     {
         $return = '';
-        $htmlDepth = $this->getOption('htmlDepth');
-        $return .= $this->onHtmlStart();
 
-        if(!empty($htmlDepth))
+        foreach ($this->getOutputArray() as $k => $v)
         {
-            foreach ($this->getOutput() as $k => $v)
+            // stack
+            if($k === 5)
+            $return .= "<pre>$v</pre>";
+
+            // trace
+            elseif($k === 6)
+            $return .= $v;
+
+            // id
+            elseif($k === 7)
+            $return .= "<h6>$v</h6>";
+
+            // autre
+            else
             {
-                if(is_string($v) && ($htmlDepth === true || $k <= $htmlDepth))
-                {
-                    // stack
-                    if($k === 5)
-                    $return .= "<pre>$v</pre>";
-
-                    // trace
-                    elseif($k === 6)
-                    $return .= $v;
-
-                    // id
-                    elseif($k === 7)
-                    $return .= "<h6>$v</h6>";
-
-                    // autre
-                    else
-                    {
-                        $v = Base\Html::specialChars($v);
-                        $return .= "<h$k>$v</h$k>";
-                    }
-                }
+                $v = Base\Html::specialChars($v);
+                $return .= "<h$k>$v</h$k>";
             }
         }
-
-        $return .= $this->onHtmlEnd();
 
         return $return;
     }
 
 
-    // getOutput
-    // retourne les valeurs pour le output de l'erreur
-    public function getOutput(bool $showTrace=true):array
+    // makeOutputArray
+    // retourne le tableau des valeurs pour le output de l'erreur
+    public function makeOutputArray(bool $showTrace=true):array
     {
         $return = [];
 
@@ -784,6 +821,26 @@ class Error extends Root
     }
 
 
+    // getOutputArray
+    // retourne les entrées du tableau de output qu'il faut afficher selon l'option outputDepth
+    public function getOutputArray(bool $showTrace=true):array
+    {
+        $return = array();
+        $outputDepth = $this->getOption('outputDepth');
+
+        if(!empty($outputDepth))
+        {
+            foreach ($this->makeOutputArray($showTrace) as $k => $v)
+            {
+                if(is_string($v) && ($outputDepth === true || $k <= $outputDepth))
+                $return[$k] = $v;
+            }
+        }
+
+        return $return;
+    }
+    
+    
     // handler
     // methode pour set_error_handler
     public static function handler(int $errorCode,string $message,string $file,int $line,$arg=null,?array $option=null):?self
@@ -955,9 +1012,9 @@ class Error extends Root
     }
 
 
-    // setDefaultHtmlDepth
-    // change la valeur par défaut d'html depth dans option avant la création de l'objet erreur
-    public static function setDefaultHtmlDepth($value):void
+    // setDefaultOutputDepth
+    // change la valeur par défaut du output depth dans option avant la création de l'objet erreur
+    public static function setDefaultOutputDepth($value):void
     {
         if($value === true)
         $value = 7;
@@ -966,7 +1023,7 @@ class Error extends Root
         $value = 2;
 
         if(is_int($value))
-        static::$config['option']['htmlDepth'] = $value;
+        static::$config['option']['outputDepth'] = $value;
 
         return;
     }

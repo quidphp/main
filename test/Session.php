@@ -98,7 +98,7 @@ class Session extends Base\Test
 
         // onEnd
 
-        // onUnsetInst
+        // onPrepareUnsetInst
 
         // call
 

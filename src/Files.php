@@ -186,5 +186,54 @@ class Files extends Map
 
         return $return;
     }
+    
+    
+    // makeUploadArray
+    // retourne un tableau multidimensionnel de upload array à partir de l'objet fichiers
+    // possible de remplir les trous
+    public function makeUploadArray(bool $fill=false):array 
+    {
+        $return = array();
+        
+        foreach ($this->arr() as $key => $file)
+        {
+            $return[$key] = $file->makeUploadArray();
+        }
+        
+        if($fill === true)
+        $return = Base\Arr::keysMissing($return,Base\File::makeUploadArrayEmpty(),0);
+        
+        return $return;
+    }
+    
+    
+    // uploadArrayReformat
+    // méthode statique qui permet de reformatter un tableau de files
+    // pouvant contenir des objets files ou file
+    // possible de remplir les trous
+    public static function uploadArrayReformat(array $return,bool $fill=false):array 
+    {
+        $uploadEmpty = Base\File::makeUploadArrayEmpty();
+        
+        foreach ($return as $key => $value) 
+        {
+            if($value instanceof Files)
+            $return[$key] = $value->makeUploadArray();
+            
+            elseif(is_array($value))
+            {
+                foreach ($value as $k => $v) 
+                {
+                    if($v instanceof File)
+                    $return[$key][$k] = $v->makeUploadArray();
+                }
+            }
+            
+            if($fill === true && Base\Arr::isIndexed($return[$key]))
+            $return[$key] = Base\Arr::keysMissing($return[$key],$uploadEmpty,0);
+        }
+        
+        return $return;
+    }
 }
 ?>

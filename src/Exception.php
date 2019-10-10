@@ -25,7 +25,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
         'code'=>31, // code de l'exception
         'option'=>[ // option pour error lors de onCatched
             'cleanBuffer'=>false,
-            'html'=>false,
+            'output'=>false,
             'kill'=>false]
     ];
 
@@ -171,12 +171,12 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     }
 
 
-    // html
-    // envoie à la classe error, génère l'html et retourne la string
+    // getOutput
+    // envoie à la classe error, génère le output et retourne la string
     // ne crée pas d'entrée dans le log
-    public function html():string
+    public function getOutput():string
     {
-        return $this->error()->html();
+        return $this->error()->getOutput();
     }
 
 

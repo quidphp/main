@@ -131,7 +131,21 @@ class File extends Res
         return;
     }
 
-
+    
+    // makeUploadArray
+    // retourne un upload array à partir d'un fichier
+    // envoie une exception si le retour est null
+    public function makeUploadArray(int $error=0,bool $is=true):array
+    {
+        $return = Base\File::makeUploadArray($this,$error,$is);
+        
+        if(!is_array($return))
+        static::throw();
+        
+        return $return;
+    }
+    
+    
     // files
     // créer un nouvel objet files et met le fichier courant dedans
     public function files(...$args):Files

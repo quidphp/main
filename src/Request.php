@@ -396,7 +396,7 @@ class Request extends Map
         $return['ip'] = $this->ip();
         $return['get'] = $this->queryArray();
         $return['post'] = $this->post();
-        $return['files'] = $this->files();
+        $return['files'] = $this->filesArray();
         $return['headers'] = $this->headers();
         $return['userAgent'] = $this->userAgent();
         $return['referer'] = $this->referer();
@@ -428,7 +428,7 @@ class Request extends Map
         $return['timestamp'] = $this->timestamp();
         $return['ip'] = $this->ip();
         $return['post'] = Base\Arr::combine(array_keys($this->post()),true);
-        $return['files'] = Base\Arr::combine(array_keys($this->files()),true);
+        $return['files'] = Base\Arr::combine(array_keys($this->filesArray()),true);
         $return['headers'] = Base\Arr::combine(array_keys($this->headers()),true);
         $return['lang'] = $this->lang();
         $return['userAgent'] = $this->userAgent();
@@ -452,7 +452,7 @@ class Request extends Map
         $return['timestamp'] = $this->timestamp();
         $return['ip'] = $this->ip();
         $return['post'] = $this->post();
-        $return['files'] = $this->files();
+        $return['files'] = $this->filesArray();
         $return['headers'] = $this->headers();
         $return['lang'] = $this->lang();
         $return['cli'] = $this->isCli();
@@ -1642,15 +1642,19 @@ class Request extends Map
     // les données de files sont reformat par défaut, mais post a toujours précédente sur files
     public function post(bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false):array
     {
-        return Base\Superglobal::postReformat($this->arr(),$safeKey,$stripTags,$includeFiles,$this->files());
+        $return = array();
+        $files = ($includeFiles === true)? $this->filesArray():null;
+        $return = Base\Superglobal::postReformat($this->arr(),$safeKey,$stripTags,$includeFiles,$files);
+        
+        return $return;
     }
 
 
     // postJson
     // retourne le tableau post de la requête sous forme de json
-    public function postJson(bool $onlyCol=false,bool $stripTags=false):string
+    public function postJson(bool $onlyCol=false,bool $stripTags=false,bool $includeFiles=false):string
     {
-        return Base\Json::encode($this->post($onlyCol,$stripTags));
+        return Base\Json::encode($this->post($onlyCol,$stripTags,$includeFiles));
     }
 
 
@@ -1903,30 +1907,68 @@ class Request extends Map
 
 
     // setFiles
-    // change le tableau de fichier si existant
-    protected function setFiles(?array $value=null):self
+    // change les fichiers liés à la requête si existant
+    public function setFiles(?array $array=null):self
     {
-        if(is_array($value) && !empty($value))
+        $value = array();
+        if(is_array($array))
+        {
+            $array = Files::uploadArrayReformat($array,true);
+            $value = Base\Superglobal::filesReformat($array);
+        }
+        
         $this->files = $value;
-
+        
         return $this;
     }
 
-
-    // files
+    
+    // filesArray
     // retourne le tableau fichier
-    // par défaut le tableau de retour est parse, pour reformatter si le input est multi-dimensionnel
-    public function files(bool $reformat=false):array
+    public function filesArray():array
     {
-        $return = $this->files;
-
-        if($reformat === true && !empty($return))
-        $return = Base\Superglobal::filesReformat($return);
-
-        return $return;
+        return $this->files;
     }
 
+    
+    // files
+    // retourne un objet files pour le contenu d'un champ
+    // retourne null si le champ n'existe pas
+    public function files($key):?Files 
+    {
+        $return = null;
+        $array = $this->filesArray();
 
+        if(Base\Arr::isKey($key) && array_key_exists($key,$array) && !empty($array[$key]))
+        {
+            $return = Files::newOverload();
+            
+            foreach ($array[$key] as $k => $v) 
+            {
+                if(Base\File::isUploadNotEmpty($v))
+                $return->set($k,$v);
+            }
+        }
+        
+        return $return;
+    }
+    
+    
+    // file
+    // retourne un fichier d'un champ
+    // peut retourner null
+    public function file($key,int $index=0):?File 
+    {
+        $return = null;
+        $files = $this->files($key);
+        
+        if(!empty($files))
+        $return = $files->get($index);
+        
+        return $return;
+    }
+    
+    
     // redirect
     // retourne l'uri de redirection si l'uri de la requête présente des défauts
     // par exemple path unsafe, double slash, slash à la fin ou manque pathLang
