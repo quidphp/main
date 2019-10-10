@@ -1642,10 +1642,10 @@ class Request extends Map
     // les données de files sont reformat par défaut, mais post a toujours précédente sur files
     public function post(bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false):array
     {
-        $return = array();
+        $return = [];
         $files = ($includeFiles === true)? $this->filesArray():null;
         $return = Base\Superglobal::postReformat($this->arr(),$safeKey,$stripTags,$includeFiles,$files);
-        
+
         return $return;
     }
 
@@ -1910,19 +1910,19 @@ class Request extends Map
     // change les fichiers liés à la requête si existant
     public function setFiles(?array $array=null):self
     {
-        $value = array();
+        $value = [];
         if(is_array($array))
         {
             $array = Files::uploadArrayReformat($array,true);
             $value = Base\Superglobal::filesReformat($array);
         }
-        
+
         $this->files = $value;
-        
+
         return $this;
     }
 
-    
+
     // filesArray
     // retourne le tableau fichier
     public function filesArray():array
@@ -1930,11 +1930,11 @@ class Request extends Map
         return $this->files;
     }
 
-    
+
     // files
     // retourne un objet files pour le contenu d'un champ
     // retourne null si le champ n'existe pas
-    public function files($key):?Files 
+    public function files($key):?Files
     {
         $return = null;
         $array = $this->filesArray();
@@ -1942,33 +1942,33 @@ class Request extends Map
         if(Base\Arr::isKey($key) && array_key_exists($key,$array) && !empty($array[$key]))
         {
             $return = Files::newOverload();
-            
-            foreach ($array[$key] as $k => $v) 
+
+            foreach ($array[$key] as $k => $v)
             {
                 if(Base\File::isUploadNotEmpty($v))
                 $return->set($k,$v);
             }
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // file
     // retourne un fichier d'un champ
     // peut retourner null
-    public function file($key,int $index=0):?File 
+    public function file($key,int $index=0):?File
     {
         $return = null;
         $files = $this->files($key);
-        
+
         if(!empty($files))
         $return = $files->get($index);
-        
+
         return $return;
     }
-    
-    
+
+
     // redirect
     // retourne l'uri de redirection si l'uri de la requête présente des défauts
     // par exemple path unsafe, double slash, slash à la fin ou manque pathLang

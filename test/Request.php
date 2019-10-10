@@ -27,7 +27,7 @@ class Request extends Base\Test
         $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $fileObj = Main\File::new($_file_);
         $filesObj = new Main\Files($_file_);
-        
+
         // construct
         $r = new Main\Request($uri);
         $r2 = new Main\Request($uri);
@@ -699,9 +699,9 @@ class Request extends Base\Test
 
         // setFiles
         assert($setFiles->file('test') === null);
-        assert($setFiles->setFiles(array('test'=>$filesObj)) === $setFiles);
-        assert($setFile->setFiles(array('test'=>array(4=>$fileObj))) === $setFile);
-        
+        assert($setFiles->setFiles(['test'=>$filesObj]) === $setFiles);
+        assert($setFile->setFiles(['test'=>[4=>$fileObj]]) === $setFile);
+
         // filesArray
         assert($files->filesArray()['ok'][0]['name'] === 'test.jpg');
         assert(count($files->filesArray()['ok']) === 2);
@@ -711,18 +711,18 @@ class Request extends Base\Test
         assert(count($setFiles->filesArray()['test']) === 1);
         assert(count($setFile->post(true,true,true)['test']) === 5);
         assert(count($setFiles->post(true,true,true)['test']) === 1);
-        assert($setFile->post() === array());
-        
+        assert($setFile->post() === []);
+
         // files
         assert($setFiles->files('test') instanceof Main\Files);
         assert($setFile->files('test')->isCount(1));
-        
+
         // file
         assert($setFiles->file('test') instanceof Main\File);
         assert($setFiles->file('test',1) === null);
         assert($setFile->file('test') === null);
         assert($setFile->file('test',4) instanceof Main\File);
-        
+
         // redirect
         assert($r->redirect() === '/en/lavieestlaide');
         assert($current->redirect() === null);

@@ -61,7 +61,7 @@ class Exception extends Base\Test
 
         // getOutput
         assert(is_string($e->getOutput()));
-        
+
         // log
         assert($e->log() === $e);
 

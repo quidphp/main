@@ -650,7 +650,7 @@ class Error extends Root
         return $this;
     }
 
-    
+
     // output
     // fait un output de l'erreur
     // output différent si c'est cli ou non
@@ -658,56 +658,56 @@ class Error extends Root
     {
         if(Base\Server::isCli())
         $this->outputCli();
-        
+
         else
         $this->outputHtml();
-        
+
         return;
     }
-    
-    
+
+
     // getOutput
     // retourne le output de l'erreur
-    public function getOutput():string 
+    public function getOutput():string
     {
         $return = '';
-        
+
         if(Base\Server::isCli())
         $return .= $this->cli();
-        
+
         else
         $return .= $this->html();
-        
+
         return $return;
     }
-    
-    
+
+
     // outputCli
     // envoie le output pour le cli
     public function outputCli():void
     {
         echo $this->cli();
-        
+
         return;
     }
-    
-    
+
+
     // cli
     // génère le output pour le cli
     public function cli():string
     {
         $return = '';
-        
+
         foreach ($this->getOutputArray() as $k => $v)
         {
             $preset = ($k <= 2)? 'neg':'neutral';
             $return .= Base\Cli::makePreset($preset,$v,2);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // outputHtml
     // envoie le output pour le html
     public function outputHtml():void
@@ -722,11 +722,11 @@ class Error extends Root
 
         else
         echo $html;
-        
+
         return;
     }
-    
-    
+
+
     // html
     // génère le html de l'erreur
     public function html():string
@@ -825,7 +825,7 @@ class Error extends Root
     // retourne les entrées du tableau de output qu'il faut afficher selon l'option outputDepth
     public function getOutputArray(bool $showTrace=true):array
     {
-        $return = array();
+        $return = [];
         $outputDepth = $this->getOption('outputDepth');
 
         if(!empty($outputDepth))
@@ -839,8 +839,8 @@ class Error extends Root
 
         return $return;
     }
-    
-    
+
+
     // handler
     // methode pour set_error_handler
     public static function handler(int $errorCode,string $message,string $file,int $line,$arg=null,?array $option=null):?self

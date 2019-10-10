@@ -59,9 +59,9 @@ class Files extends Base\Test
 
         // concatenateString
         assert(strlen($files3->concatenateString()) > 300);
-        
+
         // unlink
-        
+
         // makeUploadArray
         $files4->unset(0,3,4);
         assert(count($files4->makeUploadArray()) === 3);
@@ -69,9 +69,9 @@ class Files extends Base\Test
         $files4->unset(5);
         assert(count($files4->makeUploadArray(true)) === 3);
         assert($files4->makeUploadArray(true)[0]['error'] === 4);
-        
+
         // uploadArrayReformat
-        
+
         // obj
         assert($files->filter(['extension'=>'pdf'])->keys() === [2,11]);
         assert(count($files->pair('basename')) > 5);

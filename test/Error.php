@@ -138,19 +138,19 @@ class Error extends Base\Test
         // log
 
         // com
-        
+
         // output
-        
+
         // getOutput
         assert(is_string($error->getOutput()));
-        
+
         // outputCli
-        
+
         // cli
         assert(strlen($error->cli()) > 155);
-        
+
         // outputHtml
-        
+
         // html
         assert(Base\Html::is($error->html()));
         assert(is_string($error->html()));
@@ -158,16 +158,16 @@ class Error extends Base\Test
         $x = new Main\Error($e->toArray(),null,['outputDepth'=>7]);
         $y = new Main\Error($x->toArray(),null,['outputDepth'=>7]);
         assert($x->html() !== $y->html()); // id est différent
-        
+
         // makeOutputArray
         assert(count($warning->makeOutputArray()) === 5);
         assert($warning->makeOutputArray()[1] === 'Warning (#22)');
         assert($fatal->makeOutputArray()[2] === '«fatalz»');
         assert(count($warning->makeOutputArray(false)) === 4);
-        
+
         // getOutputArray
         assert(count($error->getOutputArray()) === 3);
-        
+
         // option
         assert(count($error->option()) === 15);
 
