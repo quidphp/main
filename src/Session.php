@@ -68,7 +68,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         return $this->checkReady();
     }
 
-    
+
     // onStart
     // callback une fois que la session a été démarré
     protected function onStart():self
@@ -511,32 +511,32 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         return $this;
     }
 
-    
+
     // setDefault
     // permet de set les defaults dans base session
     // méthode spécifique pour le sid par défaut, utilisé par cli
-    protected function setDefault():void 
+    protected function setDefault():void
     {
         Base\Session::setDefault($this->option);
-        
+
         $sid = $this->getSidDefault();
         if(is_string($sid))
         Base\Session::setSid($sid);
-        
+
         Base\Session::setSaveHandler($this,$this->getOption('registerShutdown'));
-        
+
         return;
     }
-    
-    
+
+
     // getSidDefault
     // retourne le sid à utiliser par défaut
     public function getSidDefault():?string
     {
         return null;
     }
-    
-    
+
+
     // history
     // retourne l'objet request history
     public function history():RequestHistory

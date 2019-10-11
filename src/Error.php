@@ -27,7 +27,7 @@ class Error extends Root
             'output'=>true, // output à l'écran
             'outputDepth'=>3, // niveau de précision du output
             'traceArgs'=>false, // affiche des arguments dans trace
-            'traceLength'=>array(self::class,'getTraceLength'), // longueur du trace
+            'traceLength'=>[self::class,'getTraceLength'], // longueur du trace
             'traceLengthArray'=>5, // longueur du trace pour toArray
             'callback'=>null, // fonction de callback envoyé au début du trigger
             'cleanBuffer'=>null, // vide le buffer
@@ -1034,8 +1034,8 @@ class Error extends Root
     {
         return (Base\Server::isCli())? 3:20;
     }
-    
-    
+
+
     // init
     // initialise la prise en charge des erreurs, exception et assertion
     public static function init():void

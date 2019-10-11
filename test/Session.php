@@ -93,7 +93,7 @@ class Session extends Base\Test
 
         // onCheckArr
         foreach ($s as $key => $value) { }
-        
+
         // onStart
 
         // onEnd
@@ -202,11 +202,11 @@ class Session extends Base\Test
         assert(is_int($s->garbageCollect()));
 
         // start
-        
+
         // setDefault
-        
+
         // getSidDefault
-        
+
         // history
         assert($s->history() instanceof Main\RequestHistory);
 

@@ -210,10 +210,10 @@ class Error extends Base\Test
         // setCom
 
         // setDefaultOutputDepth
-        
+
         // getTraceLength
         assert(is_int(Main\Error::getTraceLength()));
-        
+
         // init
 
         return true;
