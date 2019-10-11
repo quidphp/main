@@ -147,7 +147,7 @@ class Request extends Base\Test
         assert($x->absolute() === $current->absolute());
 
         // export
-        assert($current->export() === Base\Request::export());
+        assert(Base\Arr::keyStrip('headers',$current->export()) === Base\Arr::keyStrip('headers',Base\Request::export()));
         assert(count($r->export()) === 16);
         $r4['ok'] = '<b>a</b>';
         $r4['password'] = '<b>a</b>';
@@ -265,7 +265,7 @@ class Request extends Base\Test
         // isHeader
         assert($current->isHeader('host'));
         assert(!$current->isHeader('host','Acceptz'));
-        assert($current->isHeader('host','Accept'));
+        assert($current->isHeader('host','Accept-language'));
 
         // isDesktop
         assert(!$r->isDesktop());
@@ -664,7 +664,7 @@ class Request extends Base\Test
         assert($current->headers());
 
         // header
-        assert(!empty($current->header('accept')));
+        assert(!empty($current->header('accept-language')));
 
         // setHeaders
         assert(!empty($r->setHeaders(Base\Request::headers())->headers()));
@@ -673,12 +673,12 @@ class Request extends Base\Test
         assert($current->addHeaders(['ok'=>'bla']) === $current);
 
         // setHeader
-        assert($current->setHeader('accept','*') === $current);
+        assert($current->setHeader('accept-language','*') === $current);
         assert($current->setHeader('bla','*') === $current);
         assert($current->header('BLA') === '*');
 
         // unsetHeader
-        assert($current->unsetHeader('accept','host') === $current);
+        assert($current->unsetHeader('accept-language','host') === $current);
         assert(count($current->headers()) === $count);
 
         // fingerprint

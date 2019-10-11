@@ -27,7 +27,7 @@ class Error extends Root
             'output'=>true, // output à l'écran
             'outputDepth'=>3, // niveau de précision du output
             'traceArgs'=>false, // affiche des arguments dans trace
-            'traceLength'=>20, // longueur du trace
+            'traceLength'=>array(self::class,'getTraceLength'), // longueur du trace
             'traceLengthArray'=>5, // longueur du trace pour toArray
             'callback'=>null, // fonction de callback envoyé au début du trigger
             'cleanBuffer'=>null, // vide le buffer
@@ -263,7 +263,7 @@ class Error extends Root
     // les options traceLength et traceArgs sont utilisés ici si les arguments length et args ne sont pas spécifiés
     public function getTrace(?int $length=null,?bool $args=null):array
     {
-        $length = $length ?? $this->getOption('traceLength') ?? 1;
+        $length = $length ?? $this->getOptionCall('traceLength') ?? 1;
         $args = $args ?? $this->getOption('traceArgs') ?? false;
         $return = Base\Debug::traceSlice(0,$length,$this->getFile(),$this->getLine(),$args,$this->trace);
 
@@ -686,7 +686,7 @@ class Error extends Root
     // envoie le output pour le cli
     public function outputCli():void
     {
-        echo $this->cli();
+        Base\Buffer::flushEcho($this->cli());
 
         return;
     }
@@ -701,7 +701,7 @@ class Error extends Root
         foreach ($this->getOutputArray() as $k => $v)
         {
             $preset = ($k <= 2)? 'neg':'neutral';
-            $return .= Base\Cli::makePreset($preset,$v,2);
+            $return .= Base\Cli::preset($preset,$v);
         }
 
         return $return;
@@ -718,10 +718,9 @@ class Error extends Root
         $html = $this->html();
 
         if(empty($buffer))
-        echo Base\Html::docTitleBody($this->title(),$html);
+        $html = Base\Html::docTitleBody($this->title(),$html);
 
-        else
-        echo $html;
+        Base\Buffer::flushEcho($html);
 
         return;
     }
@@ -1029,6 +1028,14 @@ class Error extends Root
     }
 
 
+    // getTraceLength
+    // callback pour retourner la longueur du trace, différent si c'est cli
+    public static function getTraceLength():int
+    {
+        return (Base\Server::isCli())? 3:20;
+    }
+    
+    
     // init
     // initialise la prise en charge des erreurs, exception et assertion
     public static function init():void
