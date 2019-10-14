@@ -53,6 +53,7 @@ class Request extends Base\Test
         $nl = new Main\Request('browserconfig.xml');
         $clone = $nl->clone();
         $null = new Main\Request();
+        $arg = new Main\Request('-v');
         assert($current->id() === Base\Request::id());
 
         // invoke
@@ -330,7 +331,11 @@ class Request extends Base\Test
         // isPathSafe
         assert($r->isPathSafe());
         assert(!$r5->isPathSafe());
-
+        
+        // isPathArgument
+        assert(!$r->isPathArgument());
+        assert($arg->isPathArgument());
+        
         // hasFiles
         assert(!$r->hasFiles());
 

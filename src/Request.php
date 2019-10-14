@@ -916,6 +916,14 @@ class Request extends Map
     }
 
 
+    // isPathArgument
+    // retourne vrai si le chemin est un argument (commence par - )
+    public function isPathArgument():bool
+    {
+        return Base\Path::isArgument($this->path());
+    }
+    
+    
     // hasFiles
     // retourne vrai si la requête contient des fichiers
     public function hasFiles():bool

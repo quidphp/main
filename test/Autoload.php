@@ -120,7 +120,9 @@ class Autoload extends Base\Test
 
         // findMany
         assert(!empty(Main\Autoload::findMany(__NAMESPACE__,false,true,true)));
-
+        
+        // callNamespace
+        
         // requireFile
 
         // exists
