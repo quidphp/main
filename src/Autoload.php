@@ -693,17 +693,17 @@ class Autoload
         return $return;
     }
 
-    
+
     // callNamespace
     // permet d'appeler une méthode sur chaque classe d'un namespace
     public static function callNamespace(array $target,string $method,$exclude=null,?array $data=null):array
     {
-        $return = array();
+        $return = [];
         $classes = static::findOneOrMany($target,true,true,true);
-        
+
         if(!empty($exclude))
         $classes = Base\Arr::valuesStrip($exclude,$classes);
-        
+
         foreach ($classes as $key => $class)
         {
             if(!method_exists($class,$method))
@@ -711,11 +711,11 @@ class Autoload
         }
 
         $return = Base\Call::staticClasses($classes,$method,$data);
-        
+
         return $return;
     }
-    
-    
+
+
     // requireFile
     // fait un require sur la file
     // méthode protégé

@@ -331,11 +331,11 @@ class Request extends Base\Test
         // isPathSafe
         assert($r->isPathSafe());
         assert(!$r5->isPathSafe());
-        
+
         // isPathArgument
         assert(!$r->isPathArgument());
         assert($arg->isPathArgument());
-        
+
         // hasFiles
         assert(!$r->hasFiles());
 

@@ -922,8 +922,8 @@ class Request extends Map
     {
         return Base\Path::isArgument($this->path());
     }
-    
-    
+
+
     // hasFiles
     // retourne vrai si la requête contient des fichiers
     public function hasFiles():bool
