@@ -43,7 +43,7 @@ class Request extends Base\Test
         $post->change(['post'=>['-captcha-'=>'abc','-csrf-'=>Base\Str::random(40),'test'=>'123','Ok'=>'LOL','james'=>'true']]);
         $filesArray = ['ok'=>['name'=>['test.jpg','ok.lala'],'tmp_name'=>['ok','ok'],'type'=>['ok','ok'],'size'=>[200,0],'error'=>[0,0]]];
         $files = new Main\Request(['uri'=>'/','post'=>['well'=>'no','ok'=>['bla.php']],'files'=>$filesArray]);
-        $file = new Main\Request(['uri'=>'/','post'=>['well'=>'no','ok'=>'bla.php'],'files'=>['ok'=>['name'=>'test.jpg','error'=>'ok']]]);
+        $file = new Main\Request(['/ok','post'=>['well'=>'no','ok'=>'bla.php'],'files'=>['ok'=>['name'=>'test.jpg','error'=>'ok']]]);
         $setFile = new Main\Request(['uri'=>'/']);
         $setFiles = new Main\Request(['uri'=>'/']);
         $current = Main\Request::live();
@@ -335,7 +335,10 @@ class Request extends Base\Test
         // isPathArgument
         assert(!$r->isPathArgument());
         assert($arg->isPathArgument());
-
+        
+        // isPathArgumentNotCli
+        assert(is_bool($arg->isPathArgumentNotCli()));
+        
         // hasFiles
         assert(!$r->hasFiles());
 
@@ -406,7 +409,8 @@ class Request extends Base\Test
         assert($r->path() === '/lavieestlaide');
         assert($r5->path() === '/test/éol/la vie/i.php');
         assert($r5->path(true) === 'test/éol/la vie/i.php');
-
+        assert($file->path() === '/ok');
+        
         // setPath
         assert($r2->setPath('/rienNeVa/plus.txt') === $r2);
         assert($r2->path() === '/rienNeVa/plus.txt');
@@ -548,7 +552,12 @@ class Request extends Base\Test
 
         // unsetQuery
         assert($r3->unsetQuery('james','ok2')->query() === 'ok=yes&bla=3');
-
+        
+        // setArgv
+        assert($r7->setArgv(array("james","--username=2",'--tets=lol','--test=3','--test','-james','ok.php')) === $r7);
+        assert($r7->query() === "username=2&tets=lol&test=");
+        assert($r7->queryArray() === array('username'=>2,'tets'=>'lol','test'=>''));
+        
         // fragment
         assert($r->fragment() === 'lastchance');
 

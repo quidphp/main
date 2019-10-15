@@ -96,7 +96,7 @@ class Request extends Map
             $live = true;
             $value = Base\Request::export(true,true);
         }
-
+        
         $this->option($option);
 
         if(is_string($value))
@@ -487,7 +487,7 @@ class Request extends Map
     // ces valeurs sont appliqués tel quel et ne sont pas décodés
     public function change(array $value):self
     {
-        foreach ($value as $key => $value)
+        foreach (Base\Request::prepareChangeArray($value) as $key => $value)
         {
             if(is_string($key))
             {
@@ -501,7 +501,7 @@ class Request extends Map
         return $this;
     }
 
-
+    
     // property
     // fait un changement sur une propriété
     // si requête est live et liveBase est true, renvoie à base/request pour faire le changement la aussi
@@ -923,7 +923,15 @@ class Request extends Map
         return Base\Path::isArgument($this->path());
     }
 
-
+    
+    // isPathArgumentNotCli
+    // retourne vrai si le chemin est un argument (commence par - ) mais que la requête n'est pas cli
+    public function isPathArgumentNotCli():bool
+    {
+        return ($this->isPathArgument() && !$this->isCli())? true:false;
+    }
+    
+    
     // hasFiles
     // retourne vrai si la requête contient des fichiers
     public function hasFiles():bool
@@ -1427,7 +1435,7 @@ class Request extends Map
 
     // setQuery
     // change la query string de la requête
-    // accepte un tableau en argument
+    // accepte un tableau ou string en argument
     // value peut être null
     public function setQuery($value):self
     {
@@ -1491,7 +1499,19 @@ class Request extends Map
         return $this->setQuery(Base\Uri::buildQuery(Base\Arr::unsets($keys,$this->queryArray())));
     }
 
-
+    
+    // setArgv
+    // permet de lier des query à la requête à partir d'un tableau d'options de cli
+    public function setArgv(array $values):self
+    {
+        $query = Base\Cli::parseLongOptions(...$values);
+        if(!empty($query))
+        $this->setQuery($query);
+        
+        return $this;
+    }
+    
+    
     // fragment
     // retourne le fragment de la requête
     public function fragment():?string
