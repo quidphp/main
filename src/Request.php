@@ -96,7 +96,7 @@ class Request extends Map
             $live = true;
             $value = Base\Request::export(true,true);
         }
-        
+
         $this->option($option);
 
         if(is_string($value))
@@ -501,7 +501,7 @@ class Request extends Map
         return $this;
     }
 
-    
+
     // property
     // fait un changement sur une propriété
     // si requête est live et liveBase est true, renvoie à base/request pour faire le changement la aussi
@@ -923,15 +923,15 @@ class Request extends Map
         return Base\Path::isArgument($this->path());
     }
 
-    
+
     // isPathArgumentNotCli
     // retourne vrai si le chemin est un argument (commence par - ) mais que la requête n'est pas cli
     public function isPathArgumentNotCli():bool
     {
         return ($this->isPathArgument() && !$this->isCli())? true:false;
     }
-    
-    
+
+
     // hasFiles
     // retourne vrai si la requête contient des fichiers
     public function hasFiles():bool
@@ -1499,7 +1499,7 @@ class Request extends Map
         return $this->setQuery(Base\Uri::buildQuery(Base\Arr::unsets($keys,$this->queryArray())));
     }
 
-    
+
     // setArgv
     // permet de lier des query à la requête à partir d'un tableau d'options de cli
     public function setArgv(array $values):self
@@ -1507,11 +1507,11 @@ class Request extends Map
         $query = Base\Cli::parseLongOptions(...$values);
         if(!empty($query))
         $this->setQuery($query);
-        
+
         return $this;
     }
-    
-    
+
+
     // fragment
     // retourne le fragment de la requête
     public function fragment():?string
