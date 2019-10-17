@@ -54,7 +54,7 @@ class Request extends Map
             'path'=>'/', // path par défaut
             'method'=>'get', // method par défaut
             'lang'=>[Base\Lang::class,'current'], // lang par défaut
-            'ip'=>[Base\Server::class,'ip'], // ip du serveur par défaut
+            'ip'=>[Base\Server::class,'addr'], // ip du serveur par défaut
             'timestamp'=>[Base\Date::class,'getTimestamp']] // timestamp de date par défaut
     ];
 

@@ -319,7 +319,7 @@ class Request extends Base\Test
         assert($r8->isLang('fr'));
 
         // isIp
-        assert($r->isIp(Base\Server::ip()));
+        assert($r->isIp(Base\Server::addr()));
         assert(!$r->isIp('127.0.0.2'));
 
         // isIpLocal

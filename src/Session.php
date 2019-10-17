@@ -22,7 +22,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // config
     public static $config = [
-        'base'=>[ // toutes les méthodes renvoyé à base
+        'base'=>[ // toutes les méthodes renvoyé à base, la session doit être ready
             'isLang','isIp','isCsrf','isCaptcha','isDesktop','isMobile','isOldIe','isMac','isLinux','isWindows','isBot',
             'getPrefix','expire','timestampCurrent','timestampPrevious','timestampDifference','requestCount','resetRequestCount',
             'userAgent','browserCap','browserName','browserPlatform','browserDevice','env','type','ip','fingerprint',

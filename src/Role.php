@@ -12,7 +12,7 @@ use Quid\Base;
 
 // role
 // class that provides basic logic for a role
-class Role extends Root
+abstract class Role extends Root
 {
     // config
     public static $config = [
