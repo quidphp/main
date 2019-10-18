@@ -14,15 +14,18 @@ use Quid\Base;
 // trait that grants methods to work with the dynamic property attr
 trait _attr
 {
-    // dynamique
-    protected $attr = []; // propriété pour conserver le tableau des attributs de l'objet
-
-
+    // attrAll
+    // retourne le tableau des attributs
+    // doit retourner une référence
+    abstract protected function &attrAll():array;
+    
+    
     // makeAttr
     // conserve une copie des attributs
     protected function makeAttr(array $value):self
     {
-        $this->attr = $value;
+        $attr =& $this->attrAll();
+        $attr = $value;
 
         return $this;
     }
@@ -33,12 +36,13 @@ trait _attr
     public function attr($key=null)
     {
         $return = null;
-
+        $attr =& $this->attrAll();
+        
         if($key !== null)
-        $return = Base\Arrs::get($key,$this->attr);
+        $return = Base\Arrs::get($key,$attr);
 
         else
-        $return = $this->attr;
+        $return = $attr;
 
         return $return;
     }
@@ -70,7 +74,8 @@ trait _attr
     // permet de changer la valeur d'un attribut
     public function setAttr($key,$value):self
     {
-        Base\Arrs::setRef($key,$value,$this->attr);
+        $attr =& $this->attrAll();
+        Base\Arrs::setRef($key,$value,$attr);
 
         return $this;
     }

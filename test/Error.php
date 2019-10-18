@@ -50,7 +50,7 @@ class Error extends Base\Test
         assert($ex->isException());
 
         // id
-        assert(strlen($e->id()) === 43);
+        assert(strlen($e->id()) > 11);
 
         // basename
         assert(strlen($e->basename()) > 25);

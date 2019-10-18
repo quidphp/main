@@ -158,7 +158,7 @@ class Error extends Root
     // retourne le id unique de l'erreur, avec le id de la réponse
     public function id(?int $inc=null):string
     {
-        return implode('-',[Base\Response::id(),$this->splHash()]);
+        return implode('-',[Base\Response::id(),$this->splId()]);
     }
 
 
@@ -1040,6 +1040,7 @@ class Error extends Root
     // initialise la prise en charge des erreurs, exception et assertion
     public static function init():void
     {
+        Base\Error::clearLast();
         Base\Error::setHandler([static::class,'handler']);
         Base\Exception::setHandler([static::class,'exception']);
         Base\Assert::setHandler([static::class,'assert']);

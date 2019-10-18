@@ -38,11 +38,9 @@ class Role extends Base\Test
         // permission
 
         // name
-
-        // can
-
-        // get
-
+        
+        // useAlso
+        
         // validate
 
         // validateReplace

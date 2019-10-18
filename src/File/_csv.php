@@ -32,7 +32,7 @@ trait _csv
                 'escape'=>'\\'],
             'toUtf8'=>null, // lance la méthode utf8_encode
             'whiteSpace'=>true, // lance la méthode base/str removeWhiteSpace
-            'forbiddenCodePoint'=>true, // lance méthode base/str fixUnicode
+            'fixUnicode'=>true, // lance méthode base/str fixUnicode
             'cast'=>true] // cast les valeurs numérique
     ];
 
@@ -72,12 +72,12 @@ trait _csv
         $closure = function(string $return,array $option) {
             if(!empty($option['toUtf8']))
             $return = Base\Encoding::toUtf8($return);
-
+            
+            if(!empty($option['fixUnicode']))
+            $return = Base\Str::fixUnicode($return);
+            
             if(!empty($option['whiteSpace']))
             $return = Base\Str::removeWhiteSpace($return);
-
-            if(!empty($option['forbiddenCodePoint']))
-            $return = Base\Str::fixUnicode($return);
 
             return $return;
         };

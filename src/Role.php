@@ -17,7 +17,6 @@ abstract class Role extends Root
     // config
     public static $config = [
         'permission'=>0, // code de permission du rôle
-        'can'=>[], // permission générale
         'ignore'=>false, // si le role est ignoré pour roles
     ];
 
@@ -126,29 +125,16 @@ abstract class Role extends Root
         return static::className(true);
     }
 
-
-    // can
-    // retourne vrai si le role permet de faire l'action
-    // envoie une exception si le retour n'est pas booléean
-    public static function can($path):bool
+    
+    // useAlso
+    // retourne un tableau de classe de role compatible avec le role courant
+    // est utilisé dans le trait _permission
+    public static function useAlso() 
     {
-        $return = static::get($path);
-
-        if(!is_bool($return))
-        static::throw('invalidReturn',$path);
-
-        return $return;
+        return;
     }
-
-
-    // get
-    // retourne les données en lien une clé du tableau can de rôle
-    public static function get($path)
-    {
-        return Base\Arrs::get($path,static::$config['can']);
-    }
-
-
+    
+    
     // validate
     // permet de faire une validation sur la classe role
     public static function validate($value):bool

@@ -17,12 +17,12 @@ trait _permission
     // permissionAll
     // retourne le tableau de la source des paramètres de permission
     // doit retourner une référence
-    abstract public function &permissionAll():array;
+    abstract protected function &permissionAll():array;
 
 
     // permissionDefaultRole
     // retourne le role par défaut à utiliser
-    abstract public function permissionDefaultRole():Role;
+    abstract protected function permissionDefaultRole():Role;
 
 
     // onPermissionCan
@@ -35,27 +35,33 @@ trait _permission
 
     // permissionRole
     // retourne le tableau de la source des paramètres d'un rôle
+    // les permissions se construisent avec *, ensuite tous les roles retournées par useAlso et ensuite le nom du rôle
     public function permissionRole($role):array
     {
         $return = [];
         $all = $this->permissionAll();
-        $key = $role;
-
+        
         if((is_string($role) && is_a($role,Role::class,true)) || $role instanceof Role)
-        $key = $role::name();
-
-        if(is_string($key))
         {
-            if(array_key_exists('*',$all) && is_array($all['*']))
-            $return = $all['*'];
-
-            if(array_key_exists($key,$all) && is_array($all[$key]))
-            $return = Base\Arrs::replace($return,$all[$key]);
+            $loop = array('*');
+            
+            foreach ((array) $role::useAlso() as $also) 
+            {
+                $loop[] = $also::name();
+            }
+            
+            $loop[] = $role::name();
         }
 
         else
         static::throw('invalidRole',$role);
-
+        
+        foreach ($loop as $v) 
+        {
+            if(array_key_exists($v,$all) && is_array($all[$v]))
+            $return = Base\Arrs::replace($return,$all[$v]);
+        }
+        
         return $return;
     }
 
