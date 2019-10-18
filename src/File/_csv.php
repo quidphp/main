@@ -72,10 +72,10 @@ trait _csv
         $closure = function(string $return,array $option) {
             if(!empty($option['toUtf8']))
             $return = Base\Encoding::toUtf8($return);
-            
+
             if(!empty($option['fixUnicode']))
             $return = Base\Str::fixUnicode($return);
-            
+
             if(!empty($option['whiteSpace']))
             $return = Base\Str::removeWhiteSpace($return);
 

@@ -74,7 +74,7 @@ class Roles extends Extender
         return $return;
     }
 
-    
+
     // init
     // init l'objet roles
     // simplement un sort default
@@ -84,8 +84,8 @@ class Roles extends Extender
 
         return $this;
     }
-    
-    
+
+
     // getKey
     // retourne la clé à utiliser pour la map
     public static function getKey($value)

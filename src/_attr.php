@@ -18,8 +18,8 @@ trait _attr
     // retourne le tableau des attributs
     // doit retourner une référence
     abstract protected function &attrAll():array;
-    
-    
+
+
     // makeAttr
     // conserve une copie des attributs
     protected function makeAttr(array $value):self
@@ -37,7 +37,7 @@ trait _attr
     {
         $return = null;
         $attr =& $this->attrAll();
-        
+
         if($key !== null)
         $return = Base\Arrs::get($key,$attr);
 

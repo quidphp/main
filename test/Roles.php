@@ -24,9 +24,9 @@ class Roles extends Base\Test
         // nobody
 
         // getKey
-        
-        // init 
-        
+
+        // init
+
         return true;
     }
 }

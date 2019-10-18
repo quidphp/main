@@ -125,16 +125,16 @@ abstract class Role extends Root
         return static::className(true);
     }
 
-    
+
     // useAlso
     // retourne un tableau de classe de role compatible avec le role courant
     // est utilisé dans le trait _permission
-    public static function useAlso() 
+    public static function useAlso()
     {
         return;
     }
-    
-    
+
+
     // validate
     // permet de faire une validation sur la classe role
     public static function validate($value):bool

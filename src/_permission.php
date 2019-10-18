@@ -40,28 +40,28 @@ trait _permission
     {
         $return = [];
         $all = $this->permissionAll();
-        
+
         if((is_string($role) && is_a($role,Role::class,true)) || $role instanceof Role)
         {
-            $loop = array('*');
-            
-            foreach ((array) $role::useAlso() as $also) 
+            $loop = ['*'];
+
+            foreach ((array) $role::useAlso() as $also)
             {
                 $loop[] = $also::name();
             }
-            
+
             $loop[] = $role::name();
         }
 
         else
         static::throw('invalidRole',$role);
-        
-        foreach ($loop as $v) 
+
+        foreach ($loop as $v)
         {
             if(array_key_exists($v,$all) && is_array($all[$v]))
             $return = Base\Arrs::replace($return,$all[$v]);
         }
-        
+
         return $return;
     }
 

@@ -115,15 +115,15 @@ trait _root
         return static::throw('notAllowed');
     }
 
-    
+
     // splId
     // retourne le id unique de l'objet
     public function splId():int
     {
         return Base\Obj::id($this);
     }
-    
-    
+
+
     // splHash
     // retourne le hash de l'objet
     public function splHash():string
