@@ -164,44 +164,44 @@ class Extender extends Map
         return $return;
     }
 
-    
+
     // checkSubClassOf
     // envoie une exception si une des classes de l'étendeur n'est pas une sous-classe de la classe donnée en argument
-    public function checkSubClassOf(string $class):self 
+    public function checkSubClassOf(string $class):self
     {
         $not = $this->firstNotSubClassOf($class);
         if(!empty($not))
         static::throw($not,'firstNotSubClassOf',$class);
-        
+
         return $this;
     }
-    
-    
+
+
     // checkExtend
     // vérifie que les classes de date existent et étendent bien la valuer extend, si spécifié
-    public function checkExtend():self 
+    public function checkExtend():self
     {
-        foreach ($this as $key => $value) 
+        foreach ($this as $key => $value)
         {
             if(!class_exists($value,true))
             static::throw('classNotExists',$value);
-            
+
             if(array_key_exists($key,$this->extend))
             {
                 $subClass = $this->extend[$key];
-                
+
                 if(!is_subclass_of($value,$subClass,true))
                 static::throw($value,'notSubClassOf',$subClass);
             }
         }
-        
+
         return $this;
     }
-    
-    
+
+
     // checkParentSameName
     // permet de vérifie que toutes les classes ont un parent avec le même nom
-    public function checkParentSameName():self 
+    public function checkParentSameName():self
     {
         foreach ($this as $key => $value)
         {
@@ -214,8 +214,8 @@ class Extender extends Map
 
         return $this;
     }
-    
-    
+
+
     // set
     // ajoute une classe à l'objet extender
     // exception envoyé si une classe existe déjà et que la nouvelle ne l'étend pas
@@ -250,7 +250,7 @@ class Extender extends Map
         {
             $class = $this->get($key);
             $extend = $class;
-            
+
             if($value === $class)
             static::throw('alreadyIn',$value);
 
@@ -380,8 +380,8 @@ class Extender extends Map
     {
         return Base\Fqcn::name($value);
     }
-    
-    
+
+
     // checkNoSubDir
     // envoie une exception si un des chemins contient un sous-directoire
     // test juste le premier directoire si all est false

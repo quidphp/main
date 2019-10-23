@@ -428,8 +428,8 @@ abstract class ServiceMailer extends Service
 
         return;
     }
-    
-    
+
+
     // getOverloadKeyPrepend
     // retourne le prepend de la clé à utiliser pour le tableau overload
     public static function getOverloadKeyPrepend():?string

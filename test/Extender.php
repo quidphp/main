@@ -38,15 +38,15 @@ class Extender extends Base\Test
         // firstNotSubClassOf
         assert($ex->firstNotSubClassOf(Base\Test::class) === null);
         assert(is_string($ex->firstNotSubClassOf(Base\Arr::class)));
-        
+
         // checkSubClassOf
         assert($ex->checkSubClassOf(Base\Test::class) === $ex);
-        
+
         // checkExtend
         assert($ex->checkExtend() === $ex);
-        
+
         // checkParentSameName
-        
+
         // set
 
         // extended
@@ -63,9 +63,9 @@ class Extender extends Base\Test
 
         // getKey
         assert(Main\Extender::getKey('TestClass') === 'TestClass');
-        
+
         // checkNoSubDir
-        
+
         // map
         assert($ex->get('Extender') === __CLASS__);
 

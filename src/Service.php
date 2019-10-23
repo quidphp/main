@@ -95,8 +95,8 @@ abstract class Service extends Root
     {
         return Request::checkPing($host,$port,$timeout);
     }
-    
-    
+
+
     // getOverloadKeyPrepend
     // retourne le prepend de la clé à utiliser pour le tableau overload
     public static function getOverloadKeyPrepend():?string

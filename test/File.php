@@ -71,7 +71,7 @@ class File extends Base\Test
         $newXml = Main\File::new($storage."/xml2éèàsad l'article.xml",['create'=>true]);
         $imgMime = new Main\File($storage.'/test.jpg',['mime'=>'jpg','create'=>true]);
         $temp = new Main\File(true);
-        
+
         // isResourceValid
         assert($file->isResourceValid());
 
@@ -100,16 +100,16 @@ class File extends Base\Test
 
         // getClass
         assert(is_a($file::getClass($storage.'/test.php'),Main\File\Php::class,true));
-        
+
         // getClassFromGroup
         assert($file::getClassFromGroup('pdf') === Main\File\Pdf::class);
-        
+
         // getDirnameFromValue
         assert(Main\File::getDirnameFromValue($file) === $file->dirname());
         assert(Main\File::getDirnameFromValue($_file_) === $_dir_);
         assert($file::getClassFromDirname($sessionDirname) === Main\File\Session::class);
         assert($file::getClassFromDirname($sessionDirname.'/new') === Main\File\Session::class);
-        
+
         // getClassFromDirname
         assert($file::getClassFromDirname($_dir_) === null);
 
@@ -123,22 +123,22 @@ class File extends Base\Test
         assert($file::newFiles() instanceof Main\Files);
 
         // registerClass
-        
+
         // registerGroup
-        
+
         // registerStorage
 
         // registerUtil
-        
+
         // getOverloadKeyPrepend
-        
+
         // res
         assert($file->write("test\ntest2\n3") === $file);
         assert(is_resource($file->resource()));
         assert(!empty($file->_cast()));
         assert(strlen($file->jsonSerialize()) === 12);
         assert(count($file->toArray()) === 3);
-        
+
         // temp
         assert($tempCsv instanceof Main\File\Csv);
         assert($tempCsv->isPhp());
@@ -180,7 +180,7 @@ class File extends Base\Test
 
         // css
         assert($css) instanceof Main\File\Css;
-        
+
         // csv
         assert($csv instanceof Main\File\Csv);
         assert($csv2 instanceof Main\File\Csv);
@@ -303,7 +303,7 @@ class File extends Base\Test
 
         // js
         assert($js instanceof Main\File\Js);
-        
+
         // json
         assert($json instanceof Main\File\Json);
         $write = ['test'=>'ok',2,3];
@@ -431,10 +431,10 @@ class File extends Base\Test
             assert($newZip->commit());
             assert($newZip->extract($storage.'/extract2'));
         }
-        
+
         // cleanup
         Base\Dir::empty('[assertCurrent]');
-        
+
         return true;
     }
 }

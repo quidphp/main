@@ -231,7 +231,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         return $return;
     }
 
-    
+
     // structureHistory
     // gère le champ structure history de la session
     // mode insert, update ou is
@@ -239,7 +239,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     {
         $return = $value;
         $class = $this->getOption('historyClass') ?? RequestHistory::class;
-        
+
         if($mode === 'insert')
         $return = $class::newOverload();
 

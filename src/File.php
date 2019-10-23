@@ -226,7 +226,7 @@ class File extends Res
             else
             {
                 $group = Base\Mime::getGroup($value);
-                
+
                 if(empty($group) && !empty($option['mime']))
                 $group = Base\Mime::group($option['mime']);
 
@@ -356,7 +356,7 @@ class File extends Res
         return;
     }
 
-    
+
     // registerGroup
     // permet d'enregister un nouveau mime et mettre la classe dans group
     public static function registerGroup(string $name,string $mime,$extension,$families=null):void
@@ -366,8 +366,8 @@ class File extends Res
 
         return;
     }
-    
-    
+
+
     // registerStorage
     // permet d'enregister une classe de storage
     public static function registerStorage(string $name):void
@@ -386,8 +386,8 @@ class File extends Res
 
         return;
     }
-    
-    
+
+
     // getOverloadKeyPrepend
     // retourne le prepend de la clé à utiliser pour le tableau overload
     public static function getOverloadKeyPrepend():?string

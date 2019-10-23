@@ -44,9 +44,9 @@ class Role extends Base\Test
         // validate
 
         // validateReplace
-        
+
         // getOverloadKeyPrepend
-        
+
         return true;
     }
 }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/core/blob/master/LICENSE
+ * License: https://github.com/quidphp/main/blob/master/LICENSE
  */
 
 namespace Quid\Main\File;
-use Quid\Main;
 use Quid\Base;
+use Quid\Main;
 
 // session
 // class for a session storage file, which is serialized
@@ -17,8 +17,8 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 {
     // config
     public static $config = [];
-    
-    
+
+
     // storageDirname
     // retounre le dirname du storage, le dossier ou les fichiers sessions sont gargés
     public static function storageDirname():string

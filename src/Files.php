@@ -206,7 +206,7 @@ class Files extends Map
         return $return;
     }
 
-    
+
     // zip
     // permet d'archiver tous les fichiers dans un zip
     // peut envoyer des exceptions
@@ -225,8 +225,8 @@ class Files extends Map
 
         return $return;
     }
-    
-    
+
+
     // uploadArrayReformat
     // méthode statique qui permet de reformatter un tableau de files
     // pouvant contenir des objets files ou file
