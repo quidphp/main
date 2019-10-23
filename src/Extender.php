@@ -16,22 +16,20 @@ class Extender extends Map
 {
     // trait
     use _option;
-    use Map\_filter;
+    use Map\_classe;
     use Map\_readOnly;
 
 
     // config
     public static $config = [
         'option'=>[
-            'type'=>'class', // l'extender emmagasine des noms de classe ou des objets
             'methodIgnore'=>null, // nom d'une méthode statique, si elle retourne true il faut ignorer la classe
             'onlyClass'=>true, // la méthode dans base/autoload charge seulement les classes à partir du nom de fichier
             'noSubDir'=>false, // envoie une exception dans onAddNamespace si un dossier contient un sous-directoire
             'subClass'=>null, // si les classes doivent étendre une subClass
-            'exists'=>true, // fait une vérification si la classe existe
+            'exists'=>false, // fait une vérification si la classe existe
             'overloadKeyPrepend'=>null, // permet de spécifier une overload key, et ne pas avoir à charger la classe
-            'mustExtend'=>true, // les classes du même nom doivent étendre celles déjà dans l'objet
-            'args'=>null] // permet de spécifier les arguments lors de la création de l'objet, si type est obj
+            'mustExtend'=>false] // les classes du même nom doivent étendre celles déjà dans l'objet
     ];
 
 
@@ -58,14 +56,6 @@ class Extender extends Map
         }
 
         return;
-    }
-
-
-    // onPrepareThis
-    // retourne l'objet cloner pour la méthode filter
-    public function onPrepareThis(string $method):Map
-    {
-        return ($method === 'filter')? $this->clone():$this;
     }
 
 
@@ -143,7 +133,7 @@ class Extender extends Map
                 if(!empty($classes))
                 {
                     if($noSubDir === true)
-                    $this->checkNoSubDir($classes);
+                    static::checkNoSubDir($classes,false);
 
                     $this->add(...array_values($classes));
                 }
@@ -156,33 +146,13 @@ class Extender extends Map
     }
 
 
-    // checkNoSubDir
-    // envoie une exception si un des chemins contient un sous-directoire
-    protected function checkNoSubDir(array $values):void
-    {
-        foreach ($values as $key => $value)
-        {
-            if(is_string($key))
-            {
-                $dirname = dirname($key);
-                if(Base\Dir::isDeep($dirname))
-                static::throw('subdirectoryNotAllowed',$dirname);
-
-                break;
-            }
-        }
-
-        return;
-    }
-
-
-    // notSubClassOf
+    // firstNotSubClassOf
     // retourne la première classe qui n'est pas une sous-classe de
-    public function notSubClassOf(string $class):?string
+    public function firstNotSubClassOf(string $class):?string
     {
         $return = null;
 
-        foreach ($this->toArray() as $value)
+        foreach ($this as $value)
         {
             if(!is_subclass_of($value,$class,true))
             {
@@ -194,19 +164,68 @@ class Extender extends Map
         return $return;
     }
 
+    
+    // checkSubClassOf
+    // envoie une exception si une des classes de l'étendeur n'est pas une sous-classe de la classe donnée en argument
+    public function checkSubClassOf(string $class):self 
+    {
+        $not = $this->firstNotSubClassOf($class);
+        if(!empty($not))
+        static::throw($not,'firstNotSubClassOf',$class);
+        
+        return $this;
+    }
+    
+    
+    // checkExtend
+    // vérifie que les classes de date existent et étendent bien la valuer extend, si spécifié
+    public function checkExtend():self 
+    {
+        foreach ($this as $key => $value) 
+        {
+            if(!class_exists($value,true))
+            static::throw('classNotExists',$value);
+            
+            if(array_key_exists($key,$this->extend))
+            {
+                $subClass = $this->extend[$key];
+                
+                if(!is_subclass_of($value,$subClass,true))
+                static::throw($value,'notSubClassOf',$subClass);
+            }
+        }
+        
+        return $this;
+    }
+    
+    
+    // checkParentSameName
+    // permet de vérifie que toutes les classes ont un parent avec le même nom
+    public function checkParentSameName():self 
+    {
+        foreach ($this as $key => $value)
+        {
+            $parent = get_parent_class($value);
+            $name = Base\Fqcn::name($value);
 
+            if(empty($parent) || ($name !== Base\Fqcn::name($parent)))
+            static::throw($value,'withParent',$parent,'shouldNotBeThere');
+        }
+
+        return $this;
+    }
+    
+    
     // set
     // ajoute une classe à l'objet extender
     // exception envoyé si une classe existe déjà et que la nouvelle ne l'étend pas
     // les traits et interfaces sont ignorés
     public function set($key,$value):parent
     {
-        $type = $this->getOption('type');
         $methodIgnore = $this->getOption('methodIgnore');
         $subClass = $this->getOption('subClass');
         $exists = $this->getOption('exists');
         $mustExtend = $this->getOption('mustExtend');
-        $args = $this->getOption('args');
         $extend = false;
 
         if($key !== null)
@@ -230,21 +249,13 @@ class Extender extends Map
         if($this->exists($key))
         {
             $class = $this->get($key);
-
-            if($type === 'obj')
-            $class = get_class($class);
-
+            $extend = $class;
+            
             if($value === $class)
             static::throw('alreadyIn',$value);
 
-            if($mustExtend === true)
-            {
-                if(!is_subclass_of($value,$class,true))
-                static::throw($value,'toReplaceMustExtend',$class);
-
-                else
-                $extend = $class;
-            }
+            if($mustExtend === true && !is_subclass_of($value,$class,true))
+            static::throw($value,'toReplaceMustExtend',$class);
 
             if($isIgnored === true)
             {
@@ -256,12 +267,6 @@ class Extender extends Map
 
         if($isIgnored !== true)
         {
-            if($type === 'obj')
-            {
-                $args = array_values((array) $args);
-                $value = new $value(...$args);
-            }
-
             parent::set($key,$value);
 
             if(!empty($extend) && !array_key_exists($key,$this->extend))
@@ -346,7 +351,7 @@ class Extender extends Map
     // créer un alias pour chaque classe
     // le pattern vient de la classe main/autoload
     // si extend est true, prend le nom de classe originale avant qu'il soit étendu
-    public function alias(?string $pattern=null,bool $extend=false):self
+    public function alias(?string $pattern=null,bool $extend=true):self
     {
         if($pattern === null)
         $ending = Autoload::aliasEnding();
@@ -374,6 +379,28 @@ class Extender extends Map
     public static function getKey($value)
     {
         return Base\Fqcn::name($value);
+    }
+    
+    
+    // checkNoSubDir
+    // envoie une exception si un des chemins contient un sous-directoire
+    // test juste le premier directoire si all est false
+    protected static function checkNoSubDir(array $values,bool $all=false):void
+    {
+        foreach ($values as $key => $value)
+        {
+            if(is_string($key))
+            {
+                $dirname = dirname($key);
+                if(Base\Dir::isDeep($dirname))
+                static::throw('subdirectoryNotAllowed',$dirname);
+
+                if($all === false)
+                break;
+            }
+        }
+
+        return;
     }
 }
 ?>

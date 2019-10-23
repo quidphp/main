@@ -206,7 +206,27 @@ class Files extends Map
         return $return;
     }
 
+    
+    // zip
+    // permet d'archiver tous les fichiers dans un zip
+    // peut envoyer des exceptions
+    // retourne la resource zip
+    public function zip($value,?string $local=null,?array $option=null):File\Zip
+    {
+        $return = File\Zip::new($value,['create'=>true]);
 
+        if(empty($return))
+        static::throw('cannotCreateZipArchive');
+
+        if(!$return->addFiles($this,$option))
+        static::throw('couldNotAddFilesToZipArchive');
+
+        $return->commit();
+
+        return $return;
+    }
+    
+    
     // uploadArrayReformat
     // méthode statique qui permet de reformatter un tableau de files
     // pouvant contenir des objets files ou file

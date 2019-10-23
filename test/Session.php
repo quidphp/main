@@ -206,7 +206,7 @@ class Session extends Base\Test
         // setDefault
 
         // getSidDefault
-
+        
         // history
         assert($s->history() instanceof Main\RequestHistory);
 

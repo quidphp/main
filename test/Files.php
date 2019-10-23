@@ -26,7 +26,9 @@ class Files extends Base\Test
         $binary = Main\File::new($mediaPdf);
         $_file_ = Base\Finder::normalize('[assertCommon]/class.php');
         $_dir_ = dirname($_file_);
-
+        $zip2 = Main\File::new('[assertCurrent]/archive2.zip',['create'=>true]);
+        $files2 = new Main\Files($_file_,$image);
+        
         // construct
         $files = new Main\Files($_file_,$image);
         $files3 = new Main\Files();
@@ -69,7 +71,19 @@ class Files extends Base\Test
         $files4->unset(5);
         assert(count($files4->makeUploadArray(true)) === 3);
         assert($files4->makeUploadArray(true)[0]['error'] === 4);
-
+        
+        // zip 
+        // problème avec commit du zip sous Windows
+        if(!Base\Server::isWindows())
+        {
+            $zip = $files2->zip('[assertCurrent]/zip.zip');
+            assert($zip instanceof Main\File\Zip);
+            assert(count($zip->all()) === 2);
+            $zip3 = $files2->zip($zip2);
+            assert($zip3 === $zip2);
+            assert(count($zip3->all()) === 2);
+        }
+        
         // uploadArrayReformat
 
         // obj

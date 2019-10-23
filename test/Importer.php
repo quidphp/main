@@ -19,15 +19,7 @@ class Importer extends Base\Test
     public static function trigger(array $data):bool
     {
         // prepare
-        $source = new class('[assertCommon]/csv.csv', ['toUtf8'=>true]) extends Main\File implements Main\Contract\Import {
-            use Main\File\_csv;
-            public static $config = [];
-            public function __construct(...$args)
-            {
-                static::__init();
-                parent::__construct(...$args);
-            }
-        };
+        $source = Main\File::new('[assertCommon]/csv.csv',['toUtf8'=>true]);
         $target = new $source(true);
         $callback = function(array $return) {
             return $return;

@@ -31,9 +31,34 @@ class File extends Res
 
     // param
     public static $param = [
-        'storageClass'=>[], // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
-        'utilClass'=>[], // défini les classes utilités
-        'groupClass'=>[] // défini la classe à utiliser selon le mimeGroup du fichier
+        'storageClass'=>[ // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
+            'cache'=>File\Cache::class,
+            'error'=>File\Error::class,
+            'log'=>File\Log::class,
+            'queue'=>File\Queue::class,
+            'session'=>File\Session::class],
+        'utilClass'=>[ // défini les classes utilités
+            'dump'=>File\Dump::class,
+            'serialize'=>File\Serialize::class,
+            'email'=>File\Email::class],
+        'groupClass'=>[ // défini la classe à utiliser selon le mimeGroup du fichier
+            'audio'=>File\Audio::class,
+            'calendar'=>File\Calendar::class,
+            'css'=>File\Css::class,
+            'csv'=>File\Csv::class,
+            'doc'=>File\Doc::class,
+            'font'=>File\Font::class,
+            'html'=>File\Html::class,
+            'imageRaster'=>File\ImageRaster::class,
+            'imageVector'=>File\ImageVector::class,
+            'js'=>File\Js::class,
+            'json'=>File\Json::class,
+            'pdf'=>File\Pdf::class,
+            'php'=>File\Php::class,
+            'txt'=>File\Txt::class,
+            'video'=>File\Video::class,
+            'xml'=>File\Xml::class,
+            'zip'=>File\Zip::class]
     ];
 
 
@@ -201,7 +226,7 @@ class File extends Res
             else
             {
                 $group = Base\Mime::getGroup($value);
-
+                
                 if(empty($group) && !empty($option['mime']))
                 $group = Base\Mime::group($option['mime']);
 
@@ -323,48 +348,31 @@ class File extends Res
     }
 
 
-    // registerMime
-    // permet d'enregister un mime/extension/group dans base/mime
-    public static function registerMime(string $mime,$extension,string $group,$families=null):bool
-    {
-        return Base\Mime::register($mime,$extension,$group,$families);
-    }
-
-
     // registerClass
     // permet d'enregister une classe fichier
     // méthode à étendre
-    public static function registerClass():bool
+    public static function registerClass():void
     {
-        return false;
-    }
-
-
-    // registerGroup
-    // permet d'enregister un group class
-    // une exception peut être envoyé
-    public static function registerGroup(string $name,string $class):void
-    {
-        if(is_subclass_of($class,self::class,true))
-        static::$param['groupClass'][$name] = $class;
-
-        else
-        static::throw($name,$class);
-
         return;
     }
 
+    
+    // registerGroup
+    // permet d'enregister un nouveau mime et mettre la classe dans group
+    public static function registerGroup(string $name,string $mime,$extension,$families=null):void
+    {
+        Base\Mime::register($mime,$extension,$name,$families);
+        static::$param['groupClass'][$name] = static::class;
 
+        return;
+    }
+    
+    
     // registerStorage
     // permet d'enregister une classe de storage
-    // une exception peut être envoyé
-    public static function registerStorage(string $name,string $class):void
+    public static function registerStorage(string $name):void
     {
-        if(is_subclass_of($class,self::class,true))
-        static::$param['storageClass'][$name] = $class;
-
-        else
-        static::throw($name,$class);
+        static::$param['storageClass'][$name] = static::class;
 
         return;
     }
@@ -372,16 +380,19 @@ class File extends Res
 
     // registerUtil
     // permet d'enregister une classe util
-    // une exception peut être envoyé
-    public static function registerUtil(string $name,string $class):void
+    public static function registerUtil(string $name):void
     {
-        if(is_subclass_of($class,self::class,true))
-        static::$param['utilClass'][$name] = $class;
-
-        else
-        static::throw($name,$class);
+        static::$param['utilClass'][$name] = static::class;
 
         return;
+    }
+    
+    
+    // getOverloadKeyPrepend
+    // retourne le prepend de la clé à utiliser pour le tableau overload
+    public static function getOverloadKeyPrepend():?string
+    {
+        return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'File':null;
     }
 }
 ?>

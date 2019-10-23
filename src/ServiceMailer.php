@@ -428,5 +428,13 @@ abstract class ServiceMailer extends Service
 
         return;
     }
+    
+    
+    // getOverloadKeyPrepend
+    // retourne le prepend de la clé à utiliser pour le tableau overload
+    public static function getOverloadKeyPrepend():?string
+    {
+        return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'Service':null;
+    }
 }
 ?>

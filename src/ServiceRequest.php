@@ -72,5 +72,13 @@ abstract class ServiceRequest extends Service
     {
         return 'QUID/'.Base\Server::quidVersion();
     }
+    
+    
+    // getOverloadKeyPrepend
+    // retourne le prepend de la clé à utiliser pour le tableau overload
+    public static function getOverloadKeyPrepend():?string
+    {
+        return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'Service':null;
+    }
 }
 ?>

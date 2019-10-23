@@ -26,8 +26,6 @@ class Extenders extends Base\Test
         $s = new Main\Extenders(['ex'=>$ex]);
         assert($s->isNotEmpty());
 
-        // onPrepareThis
-
         // is
 
         // set

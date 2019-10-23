@@ -33,8 +33,8 @@ class Service extends Base\Test
 
         // checkPing
 
-        // getLangCode
-
+        // getOverloadKeyPrepend
+        
         return true;
     }
 }

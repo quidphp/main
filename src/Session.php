@@ -29,6 +29,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
             'lang','csrf','refreshCsrf','captcha','refreshCaptcha','emptyCaptcha','version',
             'remember','setRemember','setsRemember','unsetRemember','emptyRemember'],
         'option'=>[
+            'historyClass'=>RequestHistory::class, // classe pour historique de requête
             'structure'=>[ // callables de structure additionnelles dans data, se merge à celle dans base/session
                 'flash'=>'structureFlash',
                 'history'=>'structureHistory',
@@ -230,16 +231,17 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         return $return;
     }
 
-
+    
     // structureHistory
     // gère le champ structure history de la session
     // mode insert, update ou is
     public function structureHistory(string $mode,$value=null)
     {
         $return = $value;
-
+        $class = $this->getOption('historyClass') ?? RequestHistory::class;
+        
         if($mode === 'insert')
-        $return = RequestHistory::newOverload();
+        $return = $class::newOverload();
 
         elseif($mode === 'is')
         $return = ($value instanceof RequestHistory)? true:false;

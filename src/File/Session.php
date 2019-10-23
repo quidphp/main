@@ -4,17 +4,21 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/main/blob/master/LICENSE
+ * License: https://github.com/quidphp/core/blob/master/LICENSE
  */
 
 namespace Quid\Main\File;
-use Quid\Base;
 use Quid\Main;
+use Quid\Base;
 
-// _session
-// trait that provides methods to allow a file object to become a session storage
-trait _session
+// session
+// class for a session storage file, which is serialized
+class Session extends Serialize implements Main\Contract\Session, Main\Contract\FileStorage
 {
+    // config
+    public static $config = [];
+    
+    
     // storageDirname
     // retounre le dirname du storage, le dossier ou les fichiers sessions sont gargés
     public static function storageDirname():string
@@ -177,4 +181,7 @@ trait _session
         return $return;
     }
 }
+
+// init
+Session::__init();
 ?>

@@ -4,18 +4,19 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/main/blob/master/LICENSE
+ * License: https://github.com/quidphp/core/blob/master/LICENSE
  */
 
 namespace Quid\Main\File;
+use Quid\Main;
 use Quid\Base;
 
-// _csv
-// trait that provides methods to allow a file object to manage csv data
-trait _csv
+// csv
+// class for a csv file
+class Csv extends Text implements Main\Contract\Import
 {
     // config
-    public static $configFileCsv = [
+    public static $config = [
         'group'=>'csv',
         'option'=>[
             'read'=>[ // option pour read
@@ -183,4 +184,7 @@ trait _csv
         return Base\Csv::strToArr($value,Base\Arr::gets(['delimiter','enclosure','escape'],static::$config['option']['read']));
     }
 }
+
+// init
+Csv::__init();
 ?>

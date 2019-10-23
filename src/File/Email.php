@@ -4,22 +4,22 @@ declare(strict_types=1);
 /*
  * This file is part of the QuidPHP package.
  * Website: https://quidphp.com
- * License: https://github.com/quidphp/main/blob/master/LICENSE
+ * License: https://github.com/quidphp/core/blob/master/LICENSE
  */
 
 namespace Quid\Main\File;
 use Quid\Main;
 
-// _email
-// trait that provides methods to permit a file object to represent an email
-trait _email
+// email
+// class for a file which is an email (in json format)
+class Email extends Json implements Main\Contract\Email
 {
     // trait
     use Main\_email;
 
 
     // config
-    public static $configFileEmail = [
+    public static $config = [
         'mailer'=>[]
     ];
 
@@ -77,4 +77,7 @@ trait _email
         return;
     }
 }
+
+// init
+Email::__init();
 ?>

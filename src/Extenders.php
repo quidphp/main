@@ -14,7 +14,7 @@ namespace Quid\Main;
 class Extenders extends Map
 {
     // trait
-    use Map\_filter;
+    use Map\_obj;
 
 
     // config
@@ -34,14 +34,6 @@ class Extenders extends Map
         $this->sets($value);
 
         return;
-    }
-
-
-    // onPrepareThis
-    // retourne l'objet cloner pour la méthode filter
-    public function onPrepareThis(string $method):Map
-    {
-        return ($method === 'filter')? $this->clone():$this;
     }
 
 

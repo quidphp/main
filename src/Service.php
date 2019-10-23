@@ -8,6 +8,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main;
+use Quid\Base;
 
 // service
 // abstract class that provides basic methods to manage a third-party service
@@ -94,13 +95,13 @@ abstract class Service extends Root
     {
         return Request::checkPing($host,$port,$timeout);
     }
-
-
-    // getLangCode
-    // retourne le code courant de la langue
-    public static function getLangCode():?string
+    
+    
+    // getOverloadKeyPrepend
+    // retourne le prepend de la clé à utiliser pour le tableau overload
+    public static function getOverloadKeyPrepend():?string
     {
-        return null;
+        return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'Service':null;
     }
 }
 ?>

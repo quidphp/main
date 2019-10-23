@@ -26,7 +26,7 @@ trait _classeObj
 
     // onPrepareThis
     // retourne l'objet cloner pour certaines méthodes
-    public function onPrepareThis(string $method):Main\Map
+    protected function onPrepareThis(string $method):Main\Map
     {
         return (in_array($method,['filter','sortBy'],true))? $this->clone():$this;
     }
