@@ -135,14 +135,6 @@ abstract class ArrMap extends ArrObj
     }
 
 
-    // clone
-    // retourne un close de l'objet
-    public function clone()
-    {
-        return clone $this;
-    }
-
-
     // toArray
     // retourne le tableau
     // n'est pas une référence

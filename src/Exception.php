@@ -170,7 +170,17 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
         return $return;
     }
 
-
+    
+    // echoOutput
+    // affiche le output de l'erreur de l'exception
+    public function echoOutput():void
+    {
+        $this->error()->output();
+        
+        return;
+    }
+    
+    
     // getOutput
     // envoie à la classe error, génère le output et retourne la string
     // ne crée pas d'entrée dans le log

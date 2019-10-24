@@ -35,8 +35,6 @@ class ArrMap extends Base\Test
 
         // jsonSerialize
 
-        // clone
-
         // toArray
 
         // cast
