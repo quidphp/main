@@ -23,8 +23,8 @@ trait _rootClone
     {
         return static::throw('notAllowed');
     }
-    
-    
+
+
     // clone
     // retourne un close de l'objet
     public function clone()

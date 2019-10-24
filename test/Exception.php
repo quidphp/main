@@ -58,9 +58,9 @@ class Exception extends Base\Test
         assert($e->error() instanceof Main\Error);
 
         // trigger
-        
+
         // echoOutput
-        
+
         // getOutput
         assert(is_string($e->getOutput()));
 
