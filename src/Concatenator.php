@@ -24,7 +24,7 @@ class Concatenator extends Map
             'empty'=>true, // si le fichier est effacé au lancement du trigger
             'start'=>null, // contenu à mettre en début de rendu, peut être une callable
             'end'=>null, // contenu à mettre en fin de rendu, peut être une callable
-            'separator'=>null, // séparateur entre entrée
+            'separator'=>PHP_EOL, // séparateur entre entrée
             'callable'=>null, // permet de spécifier un callable en fin de trigger
             'entry'=>[
                 'start'=>null, // contenu à mettre en début d'entrée, peut être une callable
@@ -128,7 +128,7 @@ class Concatenator extends Map
     protected function getEntryFiles($value,array $option):array
     {
         $return = [];
-
+        
         if($value instanceof File)
         $value = $value->path();
 
@@ -160,10 +160,7 @@ class Concatenator extends Map
                 }
             }
         }
-
-        if(empty($return))
-        static::throw('nothing',$value);
-
+        
         return $return;
     }
 
@@ -182,7 +179,7 @@ class Concatenator extends Map
 
         if(is_string($start))
         $return .= $start;
-
+        
         $int = 0;
         foreach ($this->parse() as $entry)
         {
@@ -203,7 +200,7 @@ class Concatenator extends Map
 
         if(static::classIsCallable($callable))
         $return = $callable($return);
-
+        
         return $return;
     }
 
