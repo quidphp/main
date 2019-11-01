@@ -21,7 +21,7 @@ class Session extends Base\Test
         // prepare
         Base\Session::destroy(true,true);
         $boot = $data['boot'];
-        $class = $boot->attr('assert/fileSession');
+        $class = $boot->getAttr('assert/fileSession');
         $type = $boot->type();
         $default = ['type'=>$type,'env'=>$boot->env(),'version'=>$boot->version()];
 
@@ -86,7 +86,7 @@ class Session extends Base\Test
         assert($s->remember('username') === 'test');
         $s->unsetRemember('username');
         assert($s->remember() === []);
-        $s->emptyRemember();
+        $s->rememberEmpty();
         assert($s->remember() === null);
         assert(is_string($s->env()));
         assert(is_string($s->type()));

@@ -43,11 +43,11 @@ class Autoload
     // setAttr
     // conserve les attributs de l'objet autoload
     // méthode protégé
-    protected function setAttr(array $value):self
+    protected function setAttr(array $value):void
     {
         $this->attr = $value;
 
-        return $this;
+        return;
     }
 
 
@@ -90,7 +90,7 @@ class Autoload
     // conserve une classe qui été trouvé
     // une clé peut être donné, sinon c'est null
     // méthode protégé
-    protected function storeHit(?string $key,string $value):self
+    protected function storeHit(?string $key,string $value):void
     {
         if(is_string($key))
         $this->hit[$key] = $value;
@@ -98,14 +98,14 @@ class Autoload
         else
         $this->hit[] = $value;
 
-        return $this;
+        return;
     }
 
 
     // storeMiss
     // conserve une classe qui n'a pas été trouvé si attribut miss est true
     // méthode protégé
-    protected function storeMiss(string $value):self
+    protected function storeMiss(string $value):void
     {
         if($this->attr()['miss'] === true)
         {
@@ -116,7 +116,7 @@ class Autoload
             $this->miss[] = $value;
         }
 
-        return $this;
+        return;
     }
 
 
@@ -696,14 +696,17 @@ class Autoload
 
     // callNamespace
     // permet d'appeler une méthode sur chaque classe d'un namespace
-    public static function callNamespace(array $target,string $method,$exclude=null,?array $data=null):array
+    public static function callNamespace(array $target,string $method,$exclude=null,?array $data=null,bool $sort=true):array
     {
         $return = [];
         $classes = static::findOneOrMany($target,true,true,true);
 
         if(!empty($exclude))
         $classes = Base\Arr::valuesStrip($exclude,$classes);
-
+        
+        if($sort === true)
+        asort($classes);
+        
         foreach ($classes as $key => $class)
         {
             if(!method_exists($class,$method))

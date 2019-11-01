@@ -14,29 +14,24 @@ use Quid\Base;
 // class used to concatenate the content of many files or directories
 class Concatenator extends Map
 {
-    // trait
-    use _option;
-
-
     // config
     public static $config = [
-        'option'=>[
-            'empty'=>true, // si le fichier est effacé au lancement du trigger
-            'start'=>null, // contenu à mettre en début de rendu, peut être une callable
-            'end'=>null, // contenu à mettre en fin de rendu, peut être une callable
-            'separator'=>PHP_EOL, // séparateur entre entrée
-            'callable'=>null, // permet de spécifier un callable en fin de trigger
-            'entry'=>[
-                'start'=>null, // contenu à mettre en début d'entrée, peut être une callable
-                'end'=>null, // contenu à mettre en fin d'entrée, peut être une callable
-                'lineStart'=>null, // ligne de départ pour les fichiers dans l'entrée
-                'lineEnd'=>null, // ligne de fin pour les fichiers dans l'entrée
-                'content'=>null, // callable pour le contenu d'un fichier avant écriture
-                'separator'=>PHP_EOL, // séparateur entre chaque fichier de l'entrée
-                'extension'=>null, // extension pour les fichiers
-                'dig'=>true, // s'il faut creuser dans le dossier
-                'remove'=>null, // si c'est un dossier, permet d'exclure des classes
-                'priority'=>null]] // priority si c'est un dossier, permet de mettre des fichiers en avant
+        'empty'=>true, // si le fichier est effacé au lancement du trigger
+        'start'=>null, // contenu à mettre en début de rendu, peut être une callable
+        'end'=>null, // contenu à mettre en fin de rendu, peut être une callable
+        'separator'=>PHP_EOL, // séparateur entre entrée
+        'callable'=>null, // permet de spécifier un callable en fin de trigger
+        'entry'=>[
+            'start'=>null, // contenu à mettre en début d'entrée, peut être une callable
+            'end'=>null, // contenu à mettre en fin d'entrée, peut être une callable
+            'lineStart'=>null, // ligne de départ pour les fichiers dans l'entrée
+            'lineEnd'=>null, // ligne de fin pour les fichiers dans l'entrée
+            'content'=>null, // callable pour le contenu d'un fichier avant écriture
+            'separator'=>PHP_EOL, // séparateur entre chaque fichier de l'entrée
+            'extension'=>null, // extension pour les fichiers
+            'dig'=>true, // s'il faut creuser dans le dossier
+            'remove'=>null, // si c'est un dossier, permet d'exclure des classes
+            'priority'=>null] // priority si c'est un dossier, permet de mettre des fichiers en avant
     ];
 
 
@@ -46,9 +41,9 @@ class Concatenator extends Map
 
     // construct
     // construit l'objet de phpConcatenator
-    public function __construct(?array $option=null)
+    public function __construct(?array $attr=null)
     {
-        $this->option($option);
+        $this->makeAttr($attr);
 
         return;
     }
@@ -57,12 +52,12 @@ class Concatenator extends Map
     // add
     // ajoute une entrée au concatenateur
     // chaque entrée peut avoir ses propres options
-    public function add($value,?array $option=null):self
+    public function add($value,?array $attr=null):self
     {
         if(!empty($value))
         {
             $data =& $this->arr();
-            $array = [$value,$option];
+            $array = [$value,$attr];
             $data[] = $array;
         }
 
@@ -76,9 +71,9 @@ class Concatenator extends Map
     // addStr
     // ajoute une entrée string au concatenateur, ceci sera wrapper dans une closure
     // chaque entrée peut avoir ses propres options
-    public function addStr(string $value,?array $option=null):self
+    public function addStr(string $value,?array $attr=null):self
     {
-        return $this->add(function() use($value) { return $value; },$option);
+        return $this->add(function() use($value) { return $value; },$attr);
     }
 
 
@@ -105,18 +100,18 @@ class Concatenator extends Map
     // permet de préparer une entrée de l'objet concatenateur
     // retourne un tableau avec deux éléments
     // méthode protégé
-    protected function prepareEntry($value,?array $option=null):?array
+    protected function prepareEntry($value,?array $attr=null):?array
     {
         $return = null;
-        $option = Base\Arr::plus($this->getOption('entry'),$option);
+        $attr = Base\Arr::plus($this->getAttr('entry'),$attr);
 
         if($value instanceof \Closure)
         $values = [$value];
         else
-        $values = $this->getEntryFiles($value,$option);
+        $values = $this->getEntryFiles($value,$attr);
 
         if(!empty($values))
-        $return = [$values,$option];
+        $return = [$values,$attr];
 
         return $return;
     }
@@ -125,7 +120,7 @@ class Concatenator extends Map
     // getEntryFiles
     // retourne un tableau avec tous les fichiers d'une entrée du concatenateur
     // méthode protégé
-    protected function getEntryFiles($value,array $option):array
+    protected function getEntryFiles($value,array $attr):array
     {
         $return = [];
 
@@ -138,25 +133,25 @@ class Concatenator extends Map
 
             if(Base\File::is($value))
             {
-                if(empty($option['extension']) || Base\Path::isExtension($option['extension'],$value))
+                if(empty($attr['extension']) || Base\Path::isExtension($attr['extension'],$value))
                 $return[] = $value;
             }
 
             elseif(Base\Dir::is($value))
             {
                 $in = ['type'=>'file'];
-                if(!empty($option['extension']))
-                $in['extension'] = $option['extension'];
+                if(!empty($attr['extension']))
+                $in['extension'] = $attr['extension'];
 
-                $return = Base\Dir::getVisible($value,$option['dig'],['in'=>$in]);
+                $return = Base\Dir::getVisible($value,$attr['dig'],['in'=>$in]);
 
                 if(!empty($return))
                 {
-                    if(!empty($option['remove']))
-                    $return = Base\Dir::remove($return,$option['remove'],$value);
+                    if(!empty($attr['remove']))
+                    $return = Base\Dir::remove($return,$attr['remove'],$value);
 
-                    if(!empty($option['priority']))
-                    $return = Base\Dir::sortPriority($return,$option['priority'],$value);
+                    if(!empty($attr['priority']))
+                    $return = Base\Dir::sortPriority($return,$attr['priority'],$value);
                 }
             }
         }
@@ -171,10 +166,10 @@ class Concatenator extends Map
     public function trigger():string
     {
         $return = '';
-        $start = $this->getOptionCall('start');
-        $end = $this->getOptionCall('end');
-        $separator = $this->getOption('separator');
-        $callable = $this->getOption('callable');
+        $start = $this->getAttr('start',true);
+        $end = $this->getAttr('end',true);
+        $separator = $this->getAttr('separator');
+        $callable = $this->getAttr('callable');
         $return = '';
 
         if(is_string($start))
@@ -211,7 +206,7 @@ class Concatenator extends Map
     {
         $return = File::newCreate($value);
 
-        if($this->getOption('empty') === true)
+        if($this->getAttr('empty') === true)
         $return->empty();
 
         $write = $this->trigger();
@@ -224,12 +219,12 @@ class Concatenator extends Map
     // makeEntry
     // génère le contenu d'une entrée sous forme de string
     // méthode protégé
-    protected function makeEntry(array $values,array $option):?string
+    protected function makeEntry(array $values,array $attr):?string
     {
         $return = '';
-        $separator = $option['separator'];
-        $start = (static::classIsCallable($option['start']))? $option['start']($option):$option['start'];
-        $end = (static::classIsCallable($option['end']))? $option['end']($option):$option['end'];
+        $separator = $attr['separator'];
+        $start = (static::classIsCallable($attr['start']))? $attr['start']($attr):$attr['start'];
+        $end = (static::classIsCallable($attr['end']))? $attr['end']($attr):$attr['end'];
 
         if(is_string($start))
         $return .= $start;
@@ -245,7 +240,7 @@ class Concatenator extends Map
 
             if(is_string($content))
             {
-                $content = $this->prepareEntryFile($content,$option);
+                $content = $this->prepareEntryFile($content,$attr);
 
                 if(strlen($str) && is_string($separator))
                 $str .= $separator;
@@ -268,11 +263,11 @@ class Concatenator extends Map
     // prepareEntryFile
     // génère le contenu d'un fichier d'une entrée sous forme de string
     // méthode protégé
-    protected function prepareEntryFile(string $return,array $option):string
+    protected function prepareEntryFile(string $return,array $attr):string
     {
-        $lineStart = $option['lineStart'];
-        $lineEnd = $option['lineEnd'];
-        $content = $option['content'];
+        $lineStart = $attr['lineStart'];
+        $lineEnd = $attr['lineEnd'];
+        $content = $attr['content'];
 
         if(is_int($lineStart))
         $return = Base\Str::lineSplice(0,$lineStart,null,$return);

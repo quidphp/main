@@ -31,7 +31,19 @@ trait _classeObj
         return (in_array($method,['filter','sortBy'],true))? $this->clone():$this;
     }
 
-
+    
+    // only
+    // garde seulement les valeurs données en argument
+    // utilise filter
+    public function only(...$values)
+    {
+        $values = $this->prepareKeys(...$values);
+        return $this->filter(function($value,$key) use($values) {
+            return (in_array($key,$values,true));
+        });
+    }
+    
+    
     // not
     // clone l'objet et enlève les valeurs données via unset
     public function not(...$values)

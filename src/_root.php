@@ -18,6 +18,7 @@ trait _root
     use _cache;
     use _overload;
     use _throw;
+    use _attr;
 
 
     // invoke

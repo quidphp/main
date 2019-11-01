@@ -30,7 +30,9 @@ class Error extends Base\Test
         $e = new Main\Error('ok');
         $ex = new Main\Error($exception);
         $ex2 = new Main\Error($exception2);
-
+        assert(!empty($e->toJson()));
+        assert(!empty(serialize($e)));
+        
         // invoke
 
         // toString
@@ -41,9 +43,6 @@ class Error extends Base\Test
 
         // cast
         assert($e->_cast() === 'Warning (#22) -> ok');
-
-        // jsonSerialize
-        assert(!empty($e->toJson()));
 
         // isException
         assert(!$e->isException());
@@ -128,7 +127,7 @@ class Error extends Base\Test
         assert($error->name() === 'Error');
 
         // trigger
-        $fatal->setOption('callback',function($error) { $error->makeSilent(); });
+        $fatal->setAttr('callback',function($error) { $error->makeSilent(); });
         $fatal->trigger();
 
         // dispatch
@@ -168,8 +167,8 @@ class Error extends Base\Test
         // getOutputArray
         assert(count($error->getOutputArray()) === 3);
 
-        // option
-        assert(count($error->option()) === 15);
+        // attr
+        assert(count($error->attr()) === 18);
 
         // handler
 

@@ -14,70 +14,91 @@ use Quid\Base;
 // trait that grants methods to work with the dynamic property attr
 trait _attr
 {
-    // attrAll
-    // retourne le tableau des attributs
-    // doit retourner une référence
-    abstract protected function &attrAll():array;
+    // dynamique
+    protected $attr = array(); // conserve les attributs
+    
+    
+    // attrRef
+    // retourne la référence du tableau des attributs
+    protected function &attrRef():array
+    {
+        return $this->attr;
+    }
 
 
     // makeAttr
-    // conserve une copie des attributs
-    protected function makeAttr(array $value):self
+    // méthode appelé pour attributer les attributs
+    // si value est true, copie static config
+    protected function makeAttr($value,bool $config=true):void
     {
-        $attr =& $this->attrAll();
-        $attr = $value;
-
-        return $this;
-    }
-
-
-    // attr
-    // retourne le tableau d'attribut ou une valeur du tableau attr
-    public function attr($key=null)
-    {
-        $return = null;
-        $attr =& $this->attrAll();
-
-        if($key !== null)
-        $return = Base\Arrs::get($key,$attr);
-
+        $attr =& $this->attrRef();
+        $merge = array();
+        
+        if($config === true)
+        $merge[] = static::$config;
+        
+        if(is_array($value))
+        $merge[] = $value;
+        
+        $count = count($merge);
+        
+        if($count === 2)
+        $attr = Base\Arrs::replace(...$merge);
+        
+        elseif($count === 1)
+        $attr = $merge[0];
+        
         else
-        $return = $attr;
-
-        return $return;
+        static::throw();
+        
+        return;
     }
 
 
-    // attrCall
-    // retourne un attribut
-    // si la valeur est callable, utilise base\call withObj (donc this est lié à la closure)
-    public function attrCall($key,...$args)
+    // isAttrNotEmpty
+    // retourne vrai si l'attribut n'est pas vide
+    public function isAttrNotEmpty($key):bool
     {
-        $return = $this->attr($key);
-
-        if(static::classIsCallable($return))
+        return (Base\Validate::isReallyEmpty($this->getAttr($key)))? false:true;
+    }
+    
+    
+    // getAttr
+    // retourne un attribut
+    // possible d'appeler si call est true
+    public function getAttr($key,bool $call=false,...$args)
+    {
+        $return = Base\Arrs::get($key,$this->attrRef());
+        
+        if($call === true && static::classIsCallable($return))
         $return = Base\Call::withObj($this,$return,...$args);
 
         return $return;
     }
-
-
-    // attrNotEmpty
-    // retourne vrai si l'attribut n'est pas vide
-    public function attrNotEmpty($key):bool
-    {
-        return (Base\Validate::isReallyEmpty($this->attr($key)))? false:true;
-    }
-
-
+    
+    
     // setAttr
     // permet de changer la valeur d'un attribut
     public function setAttr($key,$value):self
     {
-        $attr =& $this->attrAll();
+        $attr =& $this->attrRef();
         Base\Arrs::setRef($key,$value,$attr);
 
         return $this;
+    }
+    
+    
+    // attr
+    // possible de merger un tableau par dessus les attr
+    // retourne les attr
+    public function attr(?array $value=null):array
+    {
+        $return =& $this->attrRef();
+        
+        if($value !== null)
+        $return = Base\Arrs::replace($return,$value);
+
+        return $return;
     }
 }
 ?>

@@ -40,7 +40,7 @@ class Map extends Base\Test
         unset($map['meh']);
         unset($map[0]);
         $serialize = serialize($map);
-        assert(strlen($serialize) === 141);
+        assert(strlen($serialize) === 158);
         $map2 = unserialize($serialize);
         assert($map2 !== $map);
         assert(strlen(json_encode($map)) === 36);

@@ -77,14 +77,14 @@ class Response extends Res
     // setRequest
     // change l'objet requête de l'objet
     // méthode protégé
-    protected function setRequest($request=null):self
+    protected function setRequest($request=null):void
     {
         if(!$request instanceof Request)
         $request = Request::newOverload($request);
 
         $this->request = $request;
 
-        return $this;
+        return;
     }
 
 
@@ -98,19 +98,19 @@ class Response extends Res
 
     // trigger
     // trigge la requête et envoie le tableau curlExec dans la méthode setExec
-    protected function trigger(?array $option=null):self
+    protected function trigger(?array $option=null):void
     {
         $request = $this->request();
         $exec = $request->curlExec($option);
         $this->setExec($exec);
 
-        return $this;
+        return;
     }
 
 
     // setExec
     // traite un tableau exec, en provenance de request curlExec
-    protected function setExec(array $exec):self
+    protected function setExec(array $exec):void
     {
         if(Base\Arr::keysExists(['header','resource','timestamp'],$exec))
         {
@@ -122,17 +122,17 @@ class Response extends Res
         else
         static::throw('invalidExecArray');
 
-        return $this;
+        return;
     }
 
 
     // setHeaders
     // attribue les headers de la réponse
-    protected function setHeaders(array $headers):self
+    protected function setHeaders(array $headers):void
     {
         $this->header = $headers;
 
-        return $this;
+        return;
     }
 
 
@@ -146,7 +146,7 @@ class Response extends Res
 
     // setResource
     // change la resource phpTemp de l'objet réponse
-    public function setResource($value,?array $option=null):parent
+    public function setResource($value,?array $option=null):void
     {
         if(!empty($this->resource))
         static::throw('resourceAlreadySet');
@@ -157,18 +157,18 @@ class Response extends Res
         else
         static::throw('invalidResource');
 
-        return $this;
+        return;
     }
 
 
     // setTimestamp
     // change le timestamp de réception de la réponse
     // méthode protégé
-    protected function setTimestamp(int $value):self
+    protected function setTimestamp(int $value):void
     {
         $this->timestamp = $value;
 
-        return $this;
+        return;
     }
 
 
@@ -184,11 +184,11 @@ class Response extends Res
     // change le id unique de la réponse
     // génère un id unique en utilisant la config id length
     // méthode protégé
-    protected function setId():self
+    protected function setId():void
     {
         $this->id = Base\Str::random(Base\Response::$config['idLength']);
 
-        return $this;
+        return;
     }
 
 

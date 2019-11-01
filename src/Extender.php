@@ -15,21 +15,19 @@ use Quid\Base;
 class Extender extends Map
 {
     // trait
-    use _option;
     use Map\_classe;
     use Map\_readOnly;
 
 
     // config
     public static $config = [
-        'option'=>[
-            'methodIgnore'=>null, // nom d'une méthode statique, si elle retourne true il faut ignorer la classe
-            'onlyClass'=>true, // la méthode dans base/autoload charge seulement les classes à partir du nom de fichier
-            'noSubDir'=>false, // envoie une exception dans onAddNamespace si un dossier contient un sous-directoire
-            'subClass'=>null, // si les classes doivent étendre une subClass
-            'exists'=>false, // fait une vérification si la classe existe
-            'overloadKeyPrepend'=>null, // permet de spécifier une overload key, et ne pas avoir à charger la classe
-            'mustExtend'=>false] // les classes du même nom doivent étendre celles déjà dans l'objet
+        'methodIgnore'=>null, // nom d'une méthode statique, si elle retourne true il faut ignorer la classe
+        'onlyClass'=>true, // la méthode dans base/autoload charge seulement les classes à partir du nom de fichier
+        'noSubDir'=>false, // envoie une exception dans onAddNamespace si un dossier contient un sous-directoire
+        'subClass'=>null, // si les classes doivent étendre une subClass
+        'exists'=>false, // fait une vérification si la classe existe
+        'overloadKeyPrepend'=>null, // permet de spécifier une overload key, et ne pas avoir à charger la classe
+        'mustExtend'=>false // les classes du même nom doivent étendre celles déjà dans l'objet
     ];
 
 
@@ -45,9 +43,9 @@ class Extender extends Map
 
     // construct
     // construit l'objet
-    public function __construct($namespaces=null,?array $option=null)
+    public function __construct($namespaces=null,?array $attr=null)
     {
-        $this->option($option);
+        $this->makeAttr($attr);
 
         if(!empty($namespaces))
         {
@@ -62,9 +60,9 @@ class Extender extends Map
     // onAddNamespace
     // callback après la méthode addNamespace
     // méthode protégé
-    protected function onAddNamespace():self
+    protected function onAddNamespace():void
     {
-        return $this;
+        return;
     }
 
 
@@ -121,8 +119,8 @@ class Extender extends Map
     // ne creuse pas dans les sous-dossiers
     public function addNamespace(string ...$values):self
     {
-        $onlyClass = $this->getOption('onlyClass');
-        $noSubDir = $this->getOption('noSubDir');
+        $onlyClass = $this->getAttr('onlyClass');
+        $noSubDir = $this->getAttr('noSubDir');
 
         foreach ($values as $value)
         {
@@ -222,10 +220,10 @@ class Extender extends Map
     // les traits et interfaces sont ignorés
     public function set($key,$value):parent
     {
-        $methodIgnore = $this->getOption('methodIgnore');
-        $subClass = $this->getOption('subClass');
-        $exists = $this->getOption('exists');
-        $mustExtend = $this->getOption('mustExtend');
+        $methodIgnore = $this->getAttr('methodIgnore');
+        $subClass = $this->getAttr('subClass');
+        $exists = $this->getAttr('exists');
+        $mustExtend = $this->getAttr('mustExtend');
         $extend = false;
 
         if($key !== null)
@@ -307,7 +305,7 @@ class Extender extends Map
     // garde en mémoire le overload dans la propriété overload
     public function overload():self
     {
-        $prepend = $this->getOption('overloadKeyPrepend');
+        $prepend = $this->getAttr('overloadKeyPrepend');
 
         foreach ($this->arr() as $value)
         {

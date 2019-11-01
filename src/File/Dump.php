@@ -16,9 +16,8 @@ class Dump extends Html
 {
     // config
     public static $config = [
-        'option'=>[
-            'write'=>[
-                'callback'=>[Base\Debug::class,'varGet']]]
+        'write'=>[
+            'callback'=>[Base\Debug::class,'varGet']]
     ];
 }
 

@@ -13,10 +13,6 @@ namespace Quid\Main;
 // abstract class that provides basic methods for a widget
 abstract class Widget extends Root
 {
-    // trait
-    use _option;
-
-
     // config
     public static $config = [];
 

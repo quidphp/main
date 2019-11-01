@@ -14,6 +14,10 @@ use Quid\Base;
 // abstract class that provides base methods to make a collection
 abstract class ArrMap extends ArrObj
 {
+    // trait
+    use _serialize;
+    
+    
     // config
     public static $config = [];
 
@@ -85,44 +89,6 @@ abstract class ArrMap extends ArrObj
         static::throw('arrayAccess','doesNotExist');
 
         return;
-    }
-
-
-    // serialize
-    // serialize un objet arrMap
-    // toutes les propriétés sont serialize
-    public function serialize():string
-    {
-        $return = '';
-        $data = get_object_vars($this);
-
-        if(is_array($data))
-        $return = serialize($data);
-
-        return $return;
-    }
-
-
-    // unserialize
-    // unserialize un objet Arrmap
-    // si une des propritétés n'existe pas, envoie une exception
-    public function unserialize($data)
-    {
-        $data = unserialize($data);
-
-        if(is_array($data))
-        {
-            foreach ($data as $key => $value)
-            {
-                if(is_string($key) && property_exists($this,$key))
-                $this->$key = $value;
-
-                else
-                static::throw('propertyDoesNotExist',$key);
-            }
-        }
-
-        return $this;
     }
 
 

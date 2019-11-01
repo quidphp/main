@@ -16,8 +16,7 @@ class CatchableException extends Exception implements Contract\Catchable
     // config
     public static $config = [
         'code'=>32, // code de l'exception
-        'option'=>[
-            'com'=>true]
+        'com'=>true
     ];
 }
 

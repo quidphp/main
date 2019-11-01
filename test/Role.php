@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Test\Main;
 use Quid\Base;
+use Quid\Main;
 
 // role
 // class for testing Quid\Main\Role
@@ -18,35 +19,44 @@ class Role extends Base\Test
     public static function trigger(array $data):bool
     {
         // construct
-
+        $admin = new Main\Role('admin',80,array('admin'=>true));
+        $nobody = new Main\Role('nobody',1,array('nobody'=>true));
+        
         // clone
-
-        // toArray
-
+        $adminClone = $admin->clone();
+        assert($adminClone !== $admin);
+        assert(count($admin->toArray()) === 4);
+        assert(!empty($admin->toJson()));
+        $serialize = serialize($admin);
+        assert(unserialize($serialize)->permission() === 80);
+        
         // cast
-
-        // serialize
-
-        // unserialize
-
-        // isIgnored
-
-        // isNobody
-
-        // isSomebody
-
+        assert($nobody->_cast() === 1);
+        
+        // setPermission
+        
         // permission
-
+        assert($admin->permission() === 80);
+        
+        // setName
+        
         // name
-
+        assert($admin->name() === 'admin');
+        
+        // isNobody
+        assert($nobody->isNobody());
+        assert(!$admin->isNobody());
+        
+        // isSomebody
+        assert(!$nobody->isSomebody());
+        assert($admin->isSomebody());
+        
         // useAlso
-
-        // validate
-
-        // validateReplace
-
-        // getOverloadKeyPrepend
-
+        assert($admin->useAlso() === null);
+        
+        // roles
+        assert($admin->roles()->isCount(1));
+        
         return true;
     }
 }

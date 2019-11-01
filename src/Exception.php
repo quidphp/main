@@ -16,17 +16,15 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 {
     // trait
     use _root;
-    use _option;
     use Base\_root;
 
 
     // config
     public static $config = [
         'code'=>31, // code de l'exception
-        'option'=>[ // option pour error lors de onCatched
-            'cleanBuffer'=>false,
-            'output'=>false,
-            'kill'=>false]
+        'cleanBuffer'=>false,
+        'output'=>false,
+        'kill'=>false
     ];
 
 
@@ -38,11 +36,11 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // créer un nouvel objet exception sans le lancer
     // le code est déterminé dans la classe exception
     // message est passé dans base\exception message
-    public function __construct($message='',?\Throwable $previous=null,?array $option=null,...$args)
+    public function __construct($message='',?\Throwable $previous=null,?array $attr=null,...$args)
     {
-        $this->option($option);
+        $this->makeAttr($attr);
         $this->setArgs(...$args);
-        parent::__construct(Base\Exception::message($message),static::$config['code'],$previous);
+        parent::__construct(Base\Exception::message($message),$this->getAttr('code'),$previous);
 
         return;
     }
@@ -75,11 +73,11 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // setArgs
     // conserve l'argument message dans le constructeur de l'exception
     // méthode protégé
-    protected function setArgs(...$values):self
+    protected function setArgs(...$values):void
     {
         $this->args = $values;
 
-        return $this;
+        return;
     }
 
 
@@ -154,18 +152,18 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // error
     // envoie à la classe error
-    public function error(?array $option=null):Error
+    public function error(?array $attr=null):Error
     {
-        return Error::newOverload($this,null,$option);
+        return Error::newOverload($this,null,$attr);
     }
 
 
     // trigger
     // envoie à la classse error et trigge l'erreur
-    public function trigger(?array $option=null):Error
+    public function trigger(?array $attr=null):Error
     {
         $class = Error::getOverloadClass();
-        $return = $class::exception($this,$option);
+        $return = $class::exception($this,$attr);
 
         return $return;
     }
@@ -192,9 +190,9 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // log
     // envoie à la classe error et log l'exception selon les classes paramétrés dans error
-    public function log(?array $option=null):self
+    public function log(?array $attr=null):self
     {
-        $this->error($option)->log();
+        $this->error($attr)->log();
 
         return $this;
     }
@@ -202,9 +200,9 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // com
     // envoie à la classe error et met l'error dans com
-    public function com(?array $option=null):self
+    public function com(?array $attr=null):self
     {
-        $this->error($option)->com();
+        $this->error($attr)->com();
 
         return $this;
     }
@@ -213,9 +211,9 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // onCatched
     // envoie à la classse error et trigge l'erreur
     // utilise les config catched (donc devrait générer une erreur silencieuse)
-    public function onCatched(?array $option=null):Error
+    public function onCatched(?array $attr=null):Error
     {
-        return static::staticCatched($this,$option);
+        return static::staticCatched($this,$attr);
     }
 
 
@@ -267,12 +265,12 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // staticCatched
     // permet d'attraper une exception non quid et de lui faire le traitement onCatched
-    public static function staticCatched(\Exception $exception,?array $option=null):Error
+    public static function staticCatched(\Exception $exception,?array $attr=null):Error
     {
-        $exceptionOption = ($exception instanceof self)? $exception->option():null;
-        $option = Base\Arr::replace(static::$config['option'],$exceptionOption,$option);
+        $exceptionOption = ($exception instanceof self)? $exception->attr():null;
+        $attr = Base\Arr::replace(static::$config,$exceptionOption,$attr);
         $class = Error::getOverloadClass();
-        $return = $class::exception($exception,$option);
+        $return = $class::exception($exception,$attr);
 
         return $return;
     }

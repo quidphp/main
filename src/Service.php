@@ -15,7 +15,7 @@ use Quid\Base;
 abstract class Service extends Root
 {
     // trait
-    use _option;
+    use _attrOption;
 
 
     // config
@@ -30,6 +30,7 @@ abstract class Service extends Root
     // construit l'objet service
     public function __construct(string $key,?array $option=null)
     {
+        $this->makeAttr(null);
         $this->setKey($key);
         $this->option($option);
 

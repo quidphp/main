@@ -20,33 +20,33 @@ trait _inst
 
     // onPrepareSetInst
     // prépare l'objet qui sera ajouté au inst
-    protected function onPrepareSetInst():self
+    protected function onPrepareSetInst():void
     {
-        return $this;
+        return;
     }
 
 
     // onSetInst
     // callback après l'ajout d'un objet dans inst
-    protected function onSetInst():self
+    protected function onSetInst():void
     {
-        return $this;
+        return;
     }
 
 
     // onPrepareUnsetInst
     // prépare l'objet qui sera sorti du inst
-    protected function onPrepareUnsetInst():self
+    protected function onPrepareUnsetInst():void
     {
-        return $this;
+        return;
     }
 
 
     // onUnsetInst
     // callback après le retrait d'un objet de inst
-    protected function onUnsetInst():self
+    protected function onUnsetInst():void
     {
-        return $this;
+        return;
     }
 
 

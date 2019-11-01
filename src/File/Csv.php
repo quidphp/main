@@ -18,23 +18,22 @@ class Csv extends Text implements Main\Contract\Import
     // config
     public static $config = [
         'group'=>'csv',
-        'option'=>[
-            'read'=>[ // option pour read
-                'callback'=>[self::class,'readCallback'],
-                'removeBom'=>true,
-                'csv'=>true,
-                'delimiter'=>';',
-                'enclosure'=>'"',
-                'escape'=>'\\'],
-            'write'=>[ // option pour write
-                'csv'=>true,
-                'delimiter'=>';',
-                'enclosure'=>'"',
-                'escape'=>'\\'],
-            'toUtf8'=>null, // lance la méthode utf8_encode
-            'whiteSpace'=>true, // lance la méthode base/str removeWhiteSpace
-            'fixUnicode'=>true, // lance méthode base/str fixUnicode
-            'cast'=>true] // cast les valeurs numérique
+        'read'=>[ // option pour read
+            'callback'=>[self::class,'readCallback'],
+            'removeBom'=>true,
+            'csv'=>true,
+            'delimiter'=>';',
+            'enclosure'=>'"',
+            'escape'=>'\\'],
+        'write'=>[ // option pour write
+            'csv'=>true,
+            'delimiter'=>';',
+            'enclosure'=>'"',
+            'escape'=>'\\'],
+        'toUtf8'=>null, // lance la méthode utf8_encode
+        'whiteSpace'=>true, // lance la méthode base/str removeWhiteSpace
+        'fixUnicode'=>true, // lance méthode base/str fixUnicode
+        'cast'=>true // cast les valeurs numérique
     ];
 
 
@@ -83,9 +82,9 @@ class Csv extends Text implements Main\Contract\Import
             return $return;
         };
 
-        $return = Base\Call::map('string',$closure,$return,$this->option());
+        $return = Base\Call::map('string',$closure,$return,$this->attr());
 
-        $cast = $this->getOption('cast');
+        $cast = $this->getAttr('cast');
         if($cast === true && is_array($return))
         $return = Base\Arrs::cast($return);
 
@@ -181,7 +180,7 @@ class Csv extends Text implements Main\Contract\Import
     // utilisé lors du read pour un csv
     public static function readCallback($value):?array
     {
-        return Base\Csv::strToArr($value,Base\Arr::gets(['delimiter','enclosure','escape'],static::$config['option']['read']));
+        return Base\Csv::strToArr($value,Base\Arr::gets(['delimiter','enclosure','escape'],static::$config['read']));
     }
 }
 

@@ -14,23 +14,18 @@ use Quid\Base;
 // class providing the logic to export data from an objet and importing into another one
 class Importer extends Map
 {
-    // trait
-    use _option;
-
-
     // config
     public static $config = [
-        'option'=>[
-            'action'=>'insert', // action par défaut
-            'empty'=>false, // empty lors du trigger, booléean
-            'slim'=>true, // réduit la taille du tableau de retour dans prepareReturn
-            'onlyError'=>false, // le tableau de retour inclut seulement les erreurs
-            'onTrigger'=>null, // callback au début du trigger
-            'insert'=>null, // option pour insert
-            'update'=>null, // option pour update
-            'delete'=>null, // option pour delete
-            'truncate'=>null, // option pour truncate
-            'lineCallback'=>null] // callable pour chaque ligne
+        'action'=>'insert', // action par défaut
+        'empty'=>false, // empty lors du trigger, booléean
+        'slim'=>true, // réduit la taille du tableau de retour dans prepareReturn
+        'onlyError'=>false, // le tableau de retour inclut seulement les erreurs
+        'onTrigger'=>null, // callback au début du trigger
+        'insert'=>null, // option pour insert
+        'update'=>null, // option pour update
+        'delete'=>null, // option pour delete
+        'truncate'=>null, // option pour truncate
+        'lineCallback'=>null // callable pour chaque ligne
     ];
 
 
@@ -48,9 +43,9 @@ class Importer extends Map
 
     // construct
     // construit l'objet importer
-    public function __construct(Contract\Import $source,Contract\Import $target,?array $option=null)
+    public function __construct(Contract\Import $source,Contract\Import $target,?array $attr=null)
     {
-        $this->option($option);
+        $this->makeAttr($attr);
         $this->setSource($source);
         $this->setTarget($target);
 
@@ -144,7 +139,7 @@ class Importer extends Map
 
     // clean
     // enlève les callables et required pour toutes les clés de colonnes inexistants
-    protected function clean():self
+    protected function clean():void
     {
         foreach ($this->callable as $key => $value)
         {
@@ -158,7 +153,7 @@ class Importer extends Map
             unset($this->required[$key]);
         }
 
-        return $this;
+        return;
     }
 
 
@@ -226,10 +221,10 @@ class Importer extends Map
 
     // emulate
     // émule l'insertion des lignes
-    public function emulate($offset=true,$length=true,?array $option=null):array
+    public function emulate($offset=true,$length=true,?array $attr=null):array
     {
         $return = ['total'=>[],'data'=>[]];
-        $option = Base\Arr::plus($this->option(),$option);
+        $attr = Base\Arr::plus($this->attr(),$attr);
         $source = $this->source(true);
         $i = 0;
 
@@ -240,7 +235,7 @@ class Importer extends Map
         }
 
         $return['total'] = $this->makeTotal($return['data']);
-        $return = $this->prepareReturn($return,$option);
+        $return = $this->prepareReturn($return,$attr);
 
         return $return;
     }
@@ -281,16 +276,16 @@ class Importer extends Map
     // prepareReturn
     // prépare le tableau de retour
     // si slim est true, alors enlève object et source de chaque tableau data
-    protected function prepareReturn(array $return,array $option):array
+    protected function prepareReturn(array $return,array $attr):array
     {
-        $option = Base\Arr::plus($this->option(),$option);
+        $attr = Base\Arr::plus($this->attr(),$attr);
 
         foreach ($return['data'] as $key => $value)
         {
-            if($option['slim'] === true)
+            if($attr['slim'] === true)
             unset($return['data'][$key]['source']);
 
-            if($option['onlyError'] === true && $value['valid'] === true)
+            if($attr['onlyError'] === true && $value['valid'] === true)
             unset($return['data'][$key]);
         }
 
@@ -361,14 +356,14 @@ class Importer extends Map
             $return['valid'] = true;
         }
 
-        $lineCallback = $this->getOption('lineCallback');
+        $lineCallback = $this->getAttr('lineCallback');
         if(static::classIsCallable($lineCallback))
         $return = $lineCallback($return);
 
         if($return['valid'] === true)
         {
             if(empty($return['action']))
-            $return['action'] = $this->getOption('action');
+            $return['action'] = $this->getAttr('action');
 
             if($return['action'] === 'delete')
             $return['data'] = null;
@@ -380,18 +375,18 @@ class Importer extends Map
 
     // trigger
     // prépare et insère les lignes dans la table de données
-    public function trigger($offset=true,$length=true,?array $option=null):array
+    public function trigger($offset=true,$length=true,?array $attr=null):array
     {
         $return = ['total'=>[],'data'=>[]];
-        $option = Base\Arr::plus($this->option(),$option);
+        $attr = Base\Arr::plus($this->attr(),$attr);
         $target = $this->target();
-        $onBefore = $option['onBefore'] ?? null;
-        $empty = $option['empty'] ?? null;
+        $onBefore = $attr['onBefore'] ?? null;
+        $empty = $attr['empty'] ?? null;
         $source = $this->source(true);
         $i = 0;
 
         if($empty === true)
-        $target->targetTruncate($option['truncate'] ?? null);
+        $target->targetTruncate($attr['truncate'] ?? null);
 
         if(static::classIsCallable($onBefore))
         $onBefore($this);
@@ -407,13 +402,13 @@ class Importer extends Map
                 $data = $one['data'];
 
                 if($action === 'insert')
-                $save = $target->targetInsert($data,$option['insert'] ?? null);
+                $save = $target->targetInsert($data,$attr['insert'] ?? null);
 
                 elseif($action === 'update' && is_int($int))
-                $save = $target->targetUpdate($data,$int,$option['update'] ?? null);
+                $save = $target->targetUpdate($data,$int,$attr['update'] ?? null);
 
                 elseif($action === 'delete' && is_int($int))
-                $save = $target->targetDelete($int,$option['delete'] ?? null);
+                $save = $target->targetDelete($int,$attr['delete'] ?? null);
 
                 else
                 static::throw('invalidAction',$one['action']);
@@ -426,7 +421,7 @@ class Importer extends Map
         }
 
         $return['total'] = $this->makeTotal($return['data']);
-        $return = $this->prepareReturn($return,$option);
+        $return = $this->prepareReturn($return,$attr);
 
         return $return;
     }

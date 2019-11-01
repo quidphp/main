@@ -91,9 +91,9 @@ class Request extends Base\Test
 
         // setLogData
 
-        // getOptionBase
-        assert(is_array($r->getOptionBase('lang')));
-        assert($r->getOption('lang') === null);
+        // getAttrBase
+        assert(is_array($r->getAttrBase('lang')));
+        assert($r->getAttr('lang') === null);
 
         // setDefault
         assert($r4->uri() === 'http://bla.com/lavieestlaide?get=laol');
@@ -749,7 +749,17 @@ class Request extends Base\Test
         // curlExec
 
         // trigger
+        
+        // default
+        $currentReset->setHeaders($currentReset->headers());
+        assert(count($currentReset->default(Main\Request::$config['default'])) === 8);
+        assert($r->default(['method'=>'post'])['method'] === 'post');
+        
+        // live
+        assert(Main\Request::live() instanceof Main\Request);
 
+        // checkPing
+        
         // inst
 
         // map
@@ -759,16 +769,6 @@ class Request extends Base\Test
         assert($r3->exists('james','james2'));
         assert(!empty($serialize = serialize($r3)));
         assert(unserialize($serialize)->absolute() === $r3->absolute());
-
-        // live
-        assert(Main\Request::live() instanceof Main\Request);
-
-        // checkPing
-
-        // default
-        $currentReset->setHeaders($currentReset->headers());
-        assert(count(Main\Request::default(Main\Request::$config['default'])) === 8);
-        assert(Main\Request::default(['method'=>'post'])['method'] === 'post');
 
         return true;
     }

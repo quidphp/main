@@ -20,9 +20,9 @@ class Lang extends Base\Test
     {
         // prepare
         $boot = $data['boot'];
-        $fr = $boot->attr('assert/lang/fr');
-        $en = $boot->attr('assert/lang/en');
-        $frFile = $boot->attr('assert/langFile/fr');
+        $fr = $boot->getAttr('assert/lang/fr');
+        $en = $boot->getAttr('assert/lang/en');
+        $frFile = $boot->getAttr('assert/langFile/fr');
 
         // construct
         $lang = new Main\Lang(['fr','en','de'],['onLoad'=>function(string $value) { }]);
@@ -178,7 +178,7 @@ class Lang extends Base\Test
         assert($lang->textAfter('ok') === 'ok');
 
         // textOption
-        assert(count($lang->option()) === 4);
+        assert(count($lang->attr()) === 7);
         assert(count($lang->textOption(['error'=>false])) === 9);
         assert($lang->textOption(['error'=>false])['error'] === false);
 
@@ -326,7 +326,7 @@ class Lang extends Base\Test
         assert($lang->neg('login/cantFindUserz') === '[com/neg/login/cantFindUserz]');
 
         // getPath
-        assert(Main\Lang::getPath('numberFormat') === 'number/format');
+        assert($lang->getPath('numberFormat') === 'number/format');
 
         // inst
 

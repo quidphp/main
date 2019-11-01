@@ -8,27 +8,25 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main;
+use Quid\Base;
 
 // roles
 // class for a collection containing many roles
-class Roles extends Extender
+class Roles extends Map
 {
     // trait
     use _inst;
     use Map\_sort;
     use Map\_readOnly;
-
+    use Map\_obj;
+    
 
     // config
-    public static $config = [
-        'option'=>[
-            'methodIgnore'=>'isIgnored',
-            'subClass'=>Role::class]
-    ];
+    public static $config = [];
 
 
     // map
-    protected static $allow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
+    protected static $allow = ['add','unset','remove','filter','sort','serialize','clone']; // méthodes permises
     protected static $sortDefault = 'permission'; // défini la méthode pour sort par défaut
 
 
@@ -36,60 +34,112 @@ class Roles extends Extender
     // prepare une clé pour les méthodes qui soumette une clé
     protected function onPrepareKey($return)
     {
-        if((is_string($return) && class_exists($return,false)) || is_object($return))
+        if($return instanceof Role)
+        $return = $return->permission();
+        
+        elseif(is_string($return))
         {
-            if(is_a($return,Role::class,true))
-            $return = static::getKey($return);
+            $names = $this->pair('name');
+            $return = Base\Arr::search($return,$names);
+        }
+        
+        return $return;
+    }
+
+    
+    // onPrepareValue
+    // si la valeur est un tableau crée un objet
+    protected function onPrepareValue($return)
+    {
+        if(is_array($return))
+        {
+            $class = Role::getOverloadClass();
+            $return = new $class(...array_values($return));
+        }
+        
+        return $return;
+    }
+    
+    
+    // add
+    // ajoute un ou plusieurs objets roles dans l'objet
+    // deux objets ne peuvent pas avoir le même nom ou la même permission
+    public function add(...$values):self
+    {
+        $this->checkAllowed('add');
+        $values = $this->prepareValues(...$values);
+        $data =& $this->arr();
+        $names = $this->pair('name');
+        
+        foreach ($values as $value)
+        {
+            if(!$value instanceof Role)
+            static::throw('requires Role');
+            
+            $permission = $value->permission();
+            $name = $value->name();
+
+            if(array_key_exists($permission,$data))
+            static::throw('permissionAlreadyIn',$permission);
+            
+            if(in_array($name,$names,true))
+            static::throw('nameAlreadyIn',$name);
+            
+            $data[$permission] = $value;
         }
 
-        return $return;
+        return $this->checkAfter();
     }
-
-
-    // getObject
-    // retourne null ou l'objet du role
-    public function getObject($value):?Role
-    {
-        $return = null;
-        $value = $this->get($value);
-
-        if(is_string($value))
-        $return = new $value();
-
-        return $return;
-    }
-
-
+    
+    
     // nobody
-    // retorne le premier role nobody, en objet
+    // retorne le premier role nobody
     public function nobody():?Role
     {
+        return $this->first(['isNobody'=>true]);
+    }
+
+    
+    // main
+    // retourne le rôle avec la plus grande permission
+    // ceci est considéré comme le rôle principale
+    public function main():?Role 
+    {
         $return = null;
-        $value = $this->first(['isNobody'=>true]);
-
-        if(is_string($value))
-        $return = new $value();
-
+        $data = $this->arr();
+        
+        if(!empty($data))
+        {
+            krsort($data);
+            $return = current($data);
+        }
+        
         return $return;
     }
-
-
-    // init
-    // init l'objet roles
-    // simplement un sort default
-    public function init(string $type):self
+    
+    
+    // makeFromArray
+    // construit un objet roles à partir d'un tableau
+    public static function makeFromArray(array $array):self 
     {
-        $this->sortDefault();
-
-        return $this;
-    }
-
-
-    // getKey
-    // retourne la clé à utiliser pour la map
-    public static function getKey($value)
-    {
-        return $value::permission();
+        $return = static::newOverload();
+        
+        foreach ($array as $name => $args) 
+        {
+            if(is_int($args))
+            $args = array($args);
+            
+            if(is_string($name) && is_array($args))
+            {
+                $args = Base\Arr::append($name,$args);
+                $return->add($args);
+            }
+            
+            else
+            static::throw();
+        }
+        
+        return $return;
     }
 }
 

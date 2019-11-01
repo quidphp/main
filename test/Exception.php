@@ -20,7 +20,7 @@ class Exception extends Base\Test
     {
         // prepare
         $boot = $data['boot'];
-        $enFile = $boot->attr('assert/langFile/en');
+        $enFile = $boot->getAttr('assert/langFile/en');
         $lang = new Main\Lang(['en','fr']);
         $lang->changeLang('en')->overwrite($enFile);
         $i = new \Exception('base');

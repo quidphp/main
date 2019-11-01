@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Test\Main;
 use Quid\Base;
+use Quid\Main;
 
 // roles
 // class for testing Quid\Main\Roles
@@ -17,16 +18,56 @@ class Roles extends Base\Test
     // trigger
     public static function trigger(array $data):bool
     {
+        // prepare
+        $roles = new Main\Roles();
+        $admin = new Main\Role('admin',80,array('admin'=>true));
+        $nobody = new Main\Role('nobody',1,array('nobody'=>true));
+        $test = new Main\Role('test',20);
+        
         // onPrepareKey
-
-        // getObject
-
+        
+        // onPrepareValue
+        
+        // add
+        $roles->add($admin,$nobody,$test);
+        assert($roles->isCount(3));
+        
         // nobody
-
-        // getKey
-
-        // init
-
+        assert($roles->nobody() === $nobody);
+        
+        // main
+        assert($roles->main() === $admin);
+        
+        // makeFromArray
+        $roles2 = Main\Roles::makeFromArray(array('ok'=>25,'james'=>array(21,array('shared'=>true))));
+        assert(current($roles2->keys()) === 25);
+        $ok = $roles2->get(25);
+        assert($ok->name() === 'ok');
+        assert($roles2->first()->permission() === 25);
+        assert($roles2->sortDefault()->first()->permission() === 21);
+        
+        // map
+        assert($roles->get('admin') === $admin);
+        assert($roles->get('admiz') === null);
+        assert($roles->get(80) === $admin);
+        assert($roles->get($admin) === $admin);
+        assert(!$roles->in($ok));
+        assert($roles->in($admin));
+        assert(!$roles->in(2));
+        assert(!$roles->exists($ok));
+        assert($roles->exists($admin));
+        assert($roles->exists(80));
+        assert($roles->pair('name')[1] === 'nobody');
+        assert(count($roles->group('name')) === 3);
+        assert($roles->sortBy('permission',false) !== $roles);
+        assert($roles->sortBy('permission',false)->first()->permission() === 80);
+        assert($roles->not(1) !== $roles);
+        assert($roles->not(1)->isCount(2));
+        assert($roles->not($roles)->isEmpty());
+        assert($roles->filter(['permission'=>80]) !== $roles);
+        assert($roles->filter(['permission'=>80])->isCount(1));
+        assert($roles->add($roles2)->isCount(5));
+        
         return true;
     }
 }

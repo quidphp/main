@@ -17,7 +17,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // trait
     use Map\_arrs;
     use _inst;
-    use _option;
+    use _attrOption;
 
 
     // config
@@ -27,7 +27,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
             'getPrefix','expire','timestampCurrent','timestampPrevious','timestampDifference','requestCount','resetRequestCount',
             'userAgent','browserCap','browserName','browserPlatform','browserDevice','env','type','ip','fingerprint',
             'lang','csrf','refreshCsrf','captcha','refreshCaptcha','emptyCaptcha','version',
-            'remember','setRemember','setsRemember','unsetRemember','emptyRemember'],
+            'remember','setRemember','setsRemember','unsetRemember','rememberEmpty'],
         'option'=>[
             'historyClass'=>RequestHistory::class, // classe pour historique de requête
             'structure'=>[ // callables de structure additionnelles dans data, se merge à celle dans base/session
@@ -54,6 +54,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // démarre la session
     public function __construct(string $class,?array $option=null)
     {
+        $this->makeAttr(null);
         $this->setStorageClass($class);
         $this->option($option);
         $this->start();
@@ -64,15 +65,17 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // onCheckArr
     // callback avant accès à arr
-    protected function onCheckArr():parent
+    protected function onCheckArr():void
     {
-        return $this->checkReady();
+        $this->checkReady();
+        
+        return;
     }
 
 
     // onStart
     // callback une fois que la session a été démarré
-    protected function onStart():self
+    protected function onStart():void
     {
         $this->data =& $_SESSION;
 
@@ -80,31 +83,31 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $class = Error::getOverloadClass();
         $class::setCom($com);
 
-        return $this;
+        return;
     }
 
 
     // onEnd
     // callback une fois que la session a terminé
-    protected function onEnd():self
+    protected function onEnd():void
     {
         $this->storage = null;
         $class = Error::getOverloadClass();
         $class::setCom(null);
 
-        return $this;
+        return;
     }
 
 
     // onPrepareUnsetInst
     // méthode appeler avant unsetInst
     // méthode protégé
-    protected function onPrepareUnsetInst():self
+    protected function onPrepareUnsetInst():void
     {
         if($this->isReady())
         $this->commit();
 
-        return $this;
+        return;
     }
 
 
@@ -114,8 +117,9 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     public function __call(string $key,array $args)
     {
         $return = null;
-
-        if(in_array($key,static::$config['base'],true))
+        $base = $this->getAttr('base');
+        
+        if(is_array($base) && in_array($key,$base,true))
         {
             $this->checkReady();
             $return = Base\Session::$key(...$args);
@@ -133,7 +137,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // setStorageClass
     // applique la classe de storage
-    protected function setStorageClass(string $value):self
+    protected function setStorageClass(string $value):void
     {
         if(class_exists($value,true) && Base\Classe::hasInterface(Contract\Session::class,$value))
         $this->class = $value;
@@ -141,7 +145,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         else
         static::throw();
 
-        return $this;
+        return;
     }
 
 
@@ -519,7 +523,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // méthode spécifique pour le sid par défaut, utilisé par cli
     protected function setDefault():void
     {
-        Base\Session::setDefault($this->option);
+        Base\Session::setDefault($this->option());
 
         $sid = $this->getSidDefault();
         if(is_string($sid))

@@ -30,6 +30,8 @@ class Map extends ArrMap
     // par défaut utilise makeOverwrite, celui-ci fait un overwrite même si la permission n'est pas dans allow
     public function __construct($data=null)
     {
+        $this->makeAttr(null);
+        
         if(!empty($data))
         $this->makeOverwrite($data);
 
@@ -161,9 +163,9 @@ class Map extends ArrMap
     // onCheckArr
     // callback pour les classes qui étendent pour vérifier arr
     // méthode protégé
-    protected function onCheckArr()
+    protected function onCheckArr():void
     {
-        return $this;
+        return;
     }
 
 
@@ -264,7 +266,7 @@ class Map extends ArrMap
     // vérifie que les valeurs passent le test is avant l'écriture à l'objet, sinon envoie une exception
     // bool initial permet de spécifier si chaque valeur doit être valider individuellement
     // si static is est true, fait appel à la méthode dynamique is
-    protected function checkBefore(bool $array=false,...$values):self
+    protected function checkBefore(bool $array=false,...$values):void
     {
         if(!empty(static::$is))
         {
@@ -288,7 +290,7 @@ class Map extends ArrMap
             }
         }
 
-        return $this;
+        return;
     }
 
 
@@ -699,27 +701,33 @@ class Map extends ArrMap
     public function overwrite($value):self
     {
         $this->checkAllowed('overwrite');
-
-        return $this->makeOverwrite($value);
+        $this->makeOverwrite($value);
+        
+        return $this;
     }
 
 
     // makeOverwrite
     // permet de faire un overwrite sur un objet sans avoir la permission dans allow
     // méthode protégé
-    protected function makeOverwrite($value):self
+    protected function makeOverwrite($value):void
     {
         $return = $this->onPrepareThis('overwrite');
         $data =& $return->arr();
         $value = $return->onPrepareReplace($value);
 
-        if(is_array($value) && $this->checkBefore(false,...array_values($value)))
-        $data = $value;
+        if(is_array($value))
+        {
+            $this->checkBefore(false,...array_values($value));
+            $data = $value;
+        }
 
         else
         static::throw('requireArray');
 
-        return $return->checkAfter();
+        $return->checkAfter();
+         
+        return;
     }
 
 

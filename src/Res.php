@@ -233,21 +233,21 @@ class Res extends ArrObj
     // setResource
     // sauve les paramètre de création de la resource dans l'objet
     // la resource est crée lors de l'appel à la méthode resource
-    public function setResource($value,?array $option=null):self
+    public function setResource($value,?array $option=null):void
     {
         $this->resource = [$value,$option];
 
-        return $this;
+        return;
     }
 
 
     // unsetResource
     // délie la resource de l'objet
-    public function unsetResource():self
+    public function unsetResource():void
     {
         $this->resource = null;
 
-        return $this;
+        return;
     }
 
 

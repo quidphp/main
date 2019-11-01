@@ -20,8 +20,8 @@ class Com extends Base\Test
     {
         // prepare
         $boot = $data['boot'];
-        $fr = $boot->attr('assert/lang/fr');
-        $en = $boot->attr('assert/lang/en');
+        $fr = $boot->getAttr('assert/lang/fr');
+        $en = $boot->getAttr('assert/lang/en');
         $lang = new Main\Lang(['en','fr']);
         $lang->changeLang('fr')->overwrite($fr::$config);
         $lang->changeLang('en')->overwrite($en::$config);

@@ -17,26 +17,24 @@ class Lang extends Map
     // trait
     use Map\_arrs;
     use _inst;
-    use _option;
 
 
     // config
     public static $config = [
         'pattern'=>'%', // caractère utilisé pour option text pattern
-        'option'=>[
-            'onLoad'=>null, // callback utilisé lors de l'appel à la méthode load, cette méthode est appelé lorsque le tableau d'une langue est vide
-            'wrapKeys'=>'[]', // wrap les clés lors du replace
-            'wrapPluralKeys'=>'%', // wrap les clés pour le replace pluriel
-            'text'=>[ // option pour text
-                'case'=>null, // méthode qui permet de changer le case du text si trouvé
-                'pattern'=>null, // permet de spécifier un pattern de retour, mettre le texte dans une autre string via %, si pattern est int c'est lié à excerpt (longueur)
-                'notFound'=>true, // la méthode text utilise textNotFound, doit être true
-                'error'=>true, // envoie une exception si le text n'est pas trouvé
-                'alt'=>null, // cherche une deuxième valeur text si introuvable
-                'def'=>null, // retourne la clé passé dans dans keyPrepare si introuvable entouré de bracket
-                'same'=>null, // retourne la clé passé dans dans keyPrepare
-                'other'=>null, // cherche la valeur dans une autre langue si pas trouvé, peut être int ou string
-                'html'=>null]], // enrobbe le text dans une tag html
+        'onLoad'=>null, // callback utilisé lors de l'appel à la méthode load, cette méthode est appelé lorsque le tableau d'une langue est vide
+        'wrapKeys'=>'[]', // wrap les clés lors du replace
+        'wrapPluralKeys'=>'%', // wrap les clés pour le replace pluriel
+        'text'=>[ // option pour text
+            'case'=>null, // méthode qui permet de changer le case du text si trouvé
+            'pattern'=>null, // permet de spécifier un pattern de retour, mettre le texte dans une autre string via %, si pattern est int c'est lié à excerpt (longueur)
+            'notFound'=>true, // la méthode text utilise textNotFound, doit être true
+            'error'=>true, // envoie une exception si le text n'est pas trouvé
+            'alt'=>null, // cherche une deuxième valeur text si introuvable
+            'def'=>null, // retourne la clé passé dans dans keyPrepare si introuvable entouré de bracket
+            'same'=>null, // retourne la clé passé dans dans keyPrepare
+            'other'=>null, // cherche la valeur dans une autre langue si pas trouvé, peut être int ou string
+            'html'=>null], // enrobbe le text dans une tag html
         'case'=>[
             'char'=>'|', // caractère utilisé pour case
             'callable'=>[ // lien entre raccourcis et callable pour le changement de case
@@ -76,10 +74,10 @@ class Lang extends Map
 
     // construct
     // construit l'objet lang, fournir toutes les langs sans contenu en premier argument
-    public function __construct($all,?array $option=null)
+    public function __construct($all,?array $attr=null)
     {
+        $this->makeAttr($attr);
         $this->setLang(null,$all);
-        $this->option($option);
 
         return;
     }
@@ -96,19 +94,19 @@ class Lang extends Map
     // onPrepareSetInst
     // méthode appeler lors de setInst
     // méthode protégé
-    protected function onPrepareSetInst():self
+    protected function onPrepareSetInst():void
     {
         if(Base\Lang::hasCallable())
         static::throw('baseLangAlreadyHasAnInst');
 
-        return $this;
+        return;
     }
 
 
     // onSetInst
     // callback après l'ajout de lang dans inst
     // méthode protégé
-    protected function onSetInst():self
+    protected function onSetInst():void
     {
         Base\Lang::setCallable($this->getCallable());
         $this->onChange();
@@ -116,14 +114,14 @@ class Lang extends Map
         $class = Error::getOverloadClass();
         $class::setLang($this);
 
-        return $this;
+        return;
     }
 
 
     // onPrepareUnsetInst
     // méthode appeler lors de unsetInst
     // méthode protégé
-    protected function onPrepareUnsetInst():self
+    protected function onPrepareUnsetInst():void
     {
         if(!Base\Lang::hasCallable())
         static::throw('baseLangDoesNotHaveAPrimary');
@@ -131,21 +129,21 @@ class Lang extends Map
         elseif(!Base\Lang::isCallable($this->getCallable()))
         static::throw('baseLangHasAnotherPrimary');
 
-        return $this;
+        return;
     }
 
 
     // onUnsetInst
     // callback après le retrait de lang de inst
     // méthode protégé
-    protected function onUnsetInst():self
+    protected function onUnsetInst():void
     {
         Base\Lang::unsetCallable();
 
         $class = Error::getOverloadClass();
         $class::setLang(null);
 
-        return $this;
+        return;
     }
 
 
@@ -216,7 +214,7 @@ class Lang extends Map
         $this->checkLang($value);
         $value = Base\Lang::prepareCode($value);
         $content = [];
-        $onLoad = $this->getOption('onLoad');
+        $onLoad = $this->getAttr('onLoad');
 
         if(static::classIsCallable($onLoad))
         {
@@ -625,8 +623,8 @@ class Lang extends Map
     {
         $return = null;
         $option = $this->textOption($option);
-        $case = static::$config['case']['char'];
-
+        $case = $this->getAttr(array('case','char'));
+        
         if(is_string($key) && is_string($case) && strpos($key,$case) !== false)
         {
             $explode = explode($case,$key);
@@ -662,9 +660,9 @@ class Lang extends Map
     // gère aussi les options case
     public function textAfter(string $return,?array $option=null):string
     {
-        if(!empty($option['case']) && is_string($option['case']) && array_key_exists($option['case'],static::$config['case']['callable']))
+        if(!empty($option['case']) && is_string($option['case']))
         {
-            $callable = static::$config['case']['callable'][$option['case']];
+            $callable = $this->getAttr(array('case','callable',$option['case']));
             if(!empty($callable))
             $return = $callable($return);
         }
@@ -675,7 +673,10 @@ class Lang extends Map
         if(isset($option['pattern']))
         {
             if(is_string($option['pattern']))
-            $return = Base\Str::replace([static::$config['pattern']=>$return],$option['pattern']);
+            {
+                $attrPattern = $this->getAttr('pattern');
+                $return = Base\Str::replace([$attrPattern=>$return],$option['pattern']);
+            }
 
             elseif(is_int($option['pattern']))
             $return = Base\Str::excerpt($option['pattern'],$return);
@@ -689,7 +690,7 @@ class Lang extends Map
     // retourne le tableau d'option pour la méthode text
     public function textOption(?array $option=null):array
     {
-        return Base\Arr::plus(static::$config['option']['text'],$this->option['text'] ?? null,$option);
+        return Base\Arr::plus($this->getAttr('text'),$option);
     }
 
 
@@ -701,7 +702,7 @@ class Lang extends Map
         if(!empty($replace))
         {
             $replace = Base\Obj::cast($replace);
-            $wrapKeys = $this->getOption('wrapKeys');
+            $wrapKeys = $this->getAttr('wrapKeys');
 
             if(!empty($wrapKeys))
             {
@@ -843,7 +844,7 @@ class Lang extends Map
     // l'argument plural est le remplacement pour pluriel
     public function plural($value,$key,?array $replace=null,?array $plural=null,?string $lang=null,?array $option=null):?string
     {
-        return Base\Str::plural($value,$this->text($key,$replace,$lang,$option),$plural,null,$this->getOption('wrapPluralKeys'));
+        return Base\Str::plural($value,$this->text($key,$replace,$lang,$option),$plural,null,$this->getAttr('wrapPluralKeys'));
     }
 
 
@@ -945,7 +946,7 @@ class Lang extends Map
     // ne lance pas d'erreur si introuvable
     public function numberFormat(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('numberFormat',$key),$lang);
+        return $this->take($this->getPath('numberFormat',$key),$lang);
     }
 
 
@@ -955,7 +956,7 @@ class Lang extends Map
     // ne lance pas d'erreur si introuvable
     public function numberPercentFormat(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('numberPercentFormat',$key),$lang);
+        return $this->take($this->getPath('numberPercentFormat',$key),$lang);
     }
 
 
@@ -965,7 +966,7 @@ class Lang extends Map
     // ne lance pas d'erreur si introuvable
     public function numberMoneyFormat(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('numberMoneyFormat',$key),$lang);
+        return $this->take($this->getPath('numberMoneyFormat',$key),$lang);
     }
 
 
@@ -975,7 +976,7 @@ class Lang extends Map
     // ne lance pas d'erreur si introuvable
     public function numberPhoneFormat(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('numberPhoneFormat',$key),$lang);
+        return $this->take($this->getPath('numberPhoneFormat',$key),$lang);
     }
 
 
@@ -985,7 +986,7 @@ class Lang extends Map
     // ne lance pas d'erreur si introuvable
     public function numberSizeFormat(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('numberSizeFormat',$key),$lang);
+        return $this->take($this->getPath('numberSizeFormat',$key),$lang);
     }
 
 
@@ -994,7 +995,7 @@ class Lang extends Map
     // si key est vide, retourne tout le tableau dateMonth
     public function dateMonth(?int $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('dateMonth',$key),$lang);
+        return $this->take($this->getPath('dateMonth',$key),$lang);
     }
 
 
@@ -1004,7 +1005,7 @@ class Lang extends Map
     // ne lance pas d'erreur si introuvable
     public function dateFormat(?int $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('dateFormat',$key),$lang);
+        return $this->take($this->getPath('dateFormat',$key),$lang);
     }
 
 
@@ -1013,7 +1014,7 @@ class Lang extends Map
     // si key est vide, retourne tout le tableau dateStr
     public function dateStr(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('dateStr',$key),$lang);
+        return $this->take($this->getPath('dateStr',$key),$lang);
     }
 
 
@@ -1022,7 +1023,7 @@ class Lang extends Map
     // si key est vide, retourne tout le tableau datePlaceholder
     public function datePlaceholder(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('datePlaceholder',$key),$lang);
+        return $this->take($this->getPath('datePlaceholder',$key),$lang);
     }
 
 
@@ -1031,7 +1032,7 @@ class Lang extends Map
     // si key est vide, retourne tout le tableau dateDay
     public function dateDay(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('dateDay',$key),$lang);
+        return $this->take($this->getPath('dateDay',$key),$lang);
     }
 
 
@@ -1040,7 +1041,7 @@ class Lang extends Map
     // si key est vide, retourne tout le tableau dateDayShort
     public function dateDayShort(?string $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('dateDayShort',$key),$lang);
+        return $this->take($this->getPath('dateDayShort',$key),$lang);
     }
 
 
@@ -1049,7 +1050,7 @@ class Lang extends Map
     // si key est vide, retourne tout le tableau headerResponseStatus
     public function headerResponseStatus(?int $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('headerResponseStatus',$key),$lang);
+        return $this->take($this->getPath('headerResponseStatus',$key),$lang);
     }
 
 
@@ -1059,7 +1060,7 @@ class Lang extends Map
     // ne lance pas d'erreur si introuvable
     public function errorCode(?int $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('errorCode',$key),$lang);
+        return $this->take($this->getPath('errorCode',$key),$lang);
     }
 
 
@@ -1069,7 +1070,7 @@ class Lang extends Map
     // ne lance pas d'erreur si introuvable
     public function errorLabel(?int $key=null,?string $lang=null)
     {
-        return $this->take(static::getPath('errorLabel',$key),$lang);
+        return $this->take($this->getPath('errorLabel',$key),$lang);
     }
 
 
@@ -1079,7 +1080,7 @@ class Lang extends Map
     // utilise def, donc aucune erreur envoyé si inexistant
     public function com(string $type,$path,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
-        return $this->safe(static::getPath('com',[$type,$path]),$replace,$lang,$option);
+        return $this->safe($this->getPath('com',[$type,$path]),$replace,$lang,$option);
     }
 
 
@@ -1089,7 +1090,7 @@ class Lang extends Map
     // utilise def, donc aucune erreur envoyé si inexistant
     public function pos($path,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
-        return $this->def(static::getPath('pos',$path),$replace,$lang,$option);
+        return $this->def($this->getPath('pos',$path),$replace,$lang,$option);
     }
 
 
@@ -1099,36 +1100,31 @@ class Lang extends Map
     // utilise def, donc aucune erreur envoyé si inexistant
     public function neg($path,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
-        return $this->def(static::getPath('neg',$path),$replace,$lang,$option);
+        return $this->def($this->getPath('neg',$path),$replace,$lang,$option);
     }
 
 
     // getPath
     // retourne un chemin pour pour aller chercher un type de text dans un objet lang
     // retourne une string
-    public static function getPath(string $type,$append=null):string
+    public function getPath(string $type,$append=null):string
     {
-        $return = '';
-
-        if(array_key_exists($type,static::$config['path']))
-        {
-            $return = static::$config['path'][$type];
-
-            if(is_array($return))
-            $return = Base\Arrs::keyPrepare($return);
-
-            if($append !== null)
-            {
-                if(is_array($append))
-                $append = Base\Arrs::keyPrepare($append);
-
-                $return = Base\Arrs::keyPrepare([$return,$append]);
-            }
-        }
-
-        else
+        $return = $this->getAttr(array('path',$type));
+        
+        if($return === null)
         static::throw('invalidPath');
+        
+        if(is_array($return))
+        $return = Base\Arrs::keyPrepare($return);
 
+        if($append !== null)
+        {
+            if(is_array($append))
+            $append = Base\Arrs::keyPrepare($append);
+
+            $return = Base\Arrs::keyPrepare([$return,$append]);
+        }
+        
         return $return;
     }
 }

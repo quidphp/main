@@ -14,18 +14,13 @@ use Quid\Base;
 // class for a basic file object
 class File extends Res
 {
-    // trait
-    use _option;
-
-
     // config
     public static $config = [
         'group'=>null, // groupe par défaut, par défaut rien, si tu mets false la classe getClass ne cherchera pas de classe
         'mime'=>null, // définit le mime par défaut à utiliser (par exemple lors de la création d'une ressource temporaire)
-        'option'=>[
-            'create'=>false, // crée le fichier si non existant
-            'read'=>null, // option pour read
-            'write'=>null], // option pour write
+        'create'=>false, // crée le fichier si non existant
+        'read'=>null, // option pour read
+        'write'=>null // option pour write
     ];
 
 
@@ -64,11 +59,11 @@ class File extends Res
 
     // construct
     // construit l'objet fichier
-    public function __construct($value,?array $option=null)
+    public function __construct($value,?array $attr=null)
     {
-        $option = $this->prepareOption($value,$option);
-        $this->option($option);
-        parent::__construct($value,$option);
+        $attr = $this->prepareOption($value,$attr);
+        $this->makeAttr($attr);
+        parent::__construct($value,$attr);
 
         return;
     }
@@ -135,7 +130,7 @@ class File extends Res
     // retourne les options à utiliser lors du read
     public function readOption():?array
     {
-        return $this->getOption('read');
+        return $this->getAttr('read');
     }
 
 
@@ -143,7 +138,7 @@ class File extends Res
     // retourne les options à utiliser pour écrire dans l'objet
     public function writeOption():?array
     {
-        return $this->getOption('write');
+        return $this->getAttr('write');
     }
 
 

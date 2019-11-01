@@ -51,7 +51,7 @@ interface Email
 
     // getSegmentChars
     // retourne les caractères de segments à utiliser
-    public static function getSegmentChars();
+    public function getSegmentChars();
 
 
     // serviceMailer

@@ -16,12 +16,11 @@ class Calendar extends Widget
 {
     // config
     public static $config = [
-        'option'=>[
-            'formatCurrent'=>'calendar', // format de date pour le mois
-            'attr'=>[ // attr pour le output
-                'head'=>'head',
-                'current'=>'current',
-                'body'=>'body']]
+        'formatCurrent'=>'calendar', // format de date pour le mois
+        'attr'=>[ // attr pour le output
+            'head'=>'head',
+            'current'=>'current',
+            'body'=>'body']
     ];
 
 
@@ -33,10 +32,10 @@ class Calendar extends Widget
 
     // construct
     // construit l'objet calendar
-    public function __construct($value=null,?array $option=null)
+    public function __construct($value=null,?array $attr=null)
     {
+        $this->makeAttr($attr);
         $this->setTimestamp($value);
-        $this->option();
 
         return;
     }
@@ -208,7 +207,7 @@ class Calendar extends Widget
     // génère la partie supérieure du calendrier
     protected function head():string
     {
-        $return = Base\Html::divOp($this->getOption('attr/head'));
+        $return = Base\Html::divOp($this->getAttr('attr/head'));
         $timestamp = $this->timestamp();
 
         $callback = $this->callback('prev');
@@ -218,10 +217,10 @@ class Calendar extends Widget
             $return .= $callback($prevTimestamp,$this);
         }
 
-        $formatCurrent = $this->getOption('formatCurrent');
+        $formatCurrent = $this->getAttr('formatCurrent');
         if(!empty($formatCurrent))
         {
-            $return .= Base\Html::divOp($this->getOption('attr/current'));
+            $return .= Base\Html::divOp($this->getAttr('attr/current'));
             $return .= Base\Date::format($formatCurrent,$timestamp);
             $return .= Base\Html::divCl();
         }
@@ -243,7 +242,7 @@ class Calendar extends Widget
     // génère la table du calendrier
     protected function body():string
     {
-        $return = Base\Html::divOp($this->getOption('attr/body'));
+        $return = Base\Html::divOp($this->getAttr('attr/body'));
         $return .= Base\Html::tableOp();
         $return .= $this->tableHead();
         $return .= $this->tableBody();

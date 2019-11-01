@@ -46,7 +46,7 @@ class Calendar extends Text
             if(is_int($array['id']) && is_int($array['dateStart']) && is_int($array['dateEnd']) && is_string($array['name']) && is_string($array['uri']))
             {
                 $app = (!empty($array['app']))? str_replace('-','_',Base\Slug::str($array['app'])):null;
-                $model = Base\Str::removeTabs(static::$config['model']);
+                $model = Base\Str::removeTabs($this->getAttr('model'));
                 $timezone = Base\Timezone::get();
                 $name = Base\Str::excerpt(255,str_replace(',',"\,",$array['name']),['removeLineBreaks'=>true]);
                 $location = Base\Str::excerpt(255,str_replace(',',"\,",$array['location'] ?? ''),['removeLineBreaks'=>true]);

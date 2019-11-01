@@ -17,11 +17,10 @@ class Json extends Text
     // config
     public static $config = [
         'group'=>'json',
-        'option'=>[
-            'read'=>[
-                'callback'=>[Base\Json::class,'decode']],
-            'write'=>[
-                'callback'=>[Base\Json::class,'encodePretty']]]
+        'read'=>[
+            'callback'=>[Base\Json::class,'decode']],
+        'write'=>[
+            'callback'=>[Base\Json::class,'encodePretty']]
     ];
 
 

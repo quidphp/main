@@ -14,19 +14,14 @@ use Quid\Base;
 // class for an object representing a video with some meta-data
 class Video extends Map
 {
-    // trait
-    use _option;
-
-
     // config
     public static $config = [
-        'option'=>[
-            'name'=>'name',
-            'date'=>'date',
-            'description'=>'description',
-            'absolute'=>'absolute',
-            'thumbnail'=>'thumbnail',
-            'html'=>'html']
+        'name'=>'name',
+        'date'=>'date',
+        'description'=>'description',
+        'absolute'=>'absolute',
+        'thumbnail'=>'thumbnail',
+        'html'=>'html'
     ];
 
 
@@ -36,8 +31,10 @@ class Video extends Map
 
     // construct
     // créer l'objet video, le premier argument doit être un tableau ou une chaîne json
-    public function __construct($value,?array $option=null)
+    public function __construct($value,?array $attr=null)
     {
+        $this->makeAttr($attr);
+        
         if(is_string($value))
         $value = Base\Json::decode($value);
 
@@ -46,8 +43,6 @@ class Video extends Map
 
         else
         static::throw('requires','jsonStringOrArray');
-
-        $this->option($option);
 
         return;
     }
@@ -62,11 +57,11 @@ class Video extends Map
 
 
     // grab
-    // retourne une valeur de la map, en utilisation la clé tel que défini dans option
+    // retourne une valeur de la map, en utilisation la clé tel que défini dans attr
     public function grab(string $key)
     {
         $return = null;
-        $realKey = $this->getOption($key);
+        $realKey = $this->getAttr($key);
 
         if(is_string($realKey))
         $return = $this->get($realKey);

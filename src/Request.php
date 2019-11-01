@@ -16,37 +16,35 @@ class Request extends Map
 {
     // trait
     use _inst;
-    use _option;
     use Map\_readOnly;
 
 
     // config
     public static $config = [
+        'decode'=>false, // l'uri dans setUri est décodé
+        'uri'=>null, // encode l'uri de sortie si utilise output, relative ou absolute
+        'idLength'=>null, // longueur du id de la requête
+        'safe'=>null, // option pour déterminer un path safe ou non
+        'lang'=>null, // option pour lang
+        'ping'=>2, // fait un ping avec curlExec
+        'responseCode'=>null, // code de réponse souhaité lors de curlExec, sinon exception
+        'timeout'=>10, // pour curl
+        'dnsGlobalCache'=>false, // pour curl
+        'userPassword'=>null, // pour curl
+        'proxyHost'=>null, // hôte pour proxy, pour curl
+        'proxyPort'=>8080, // port pour proxy, pour curl
+        'proxyPassword'=>null, // pour curl
+        'followLocation'=>false, // pour curl
+        'ssl'=>null, // pour curl
+        'port'=>null, // pour curl
+        'sslCipher'=>null, // pour curl
+        'userAgent'=>null, // pour curl
+        'postJson'=>false, // le tableau post est encodé en json, pour curl
         'ipAllowed'=>[ // paramètre par défaut pour la méhode isIpAllowed
             'whiteList'=>null, // tableau de ip whiteList
             'blackList'=>null, // tableau de ip blackList
             'range'=>true, // comparaison range
             'level'=>null], // comparaison de niveau dans le ip
-        'option'=>[ // options pour la requête
-            'decode'=>false, // l'uri dans setUri est décodé
-            'uri'=>null, // encode l'uri de sortie si utilise output, relative ou absolute
-            'idLength'=>null, // longueur du id de la requête
-            'safe'=>null, // option pour déterminer un path safe ou non
-            'lang'=>null, // option pour lang
-            'ping'=>2, // fait un ping avec curlExec
-            'responseCode'=>null, // code de réponse souhaité lors de curlExec, sinon exception
-            'timeout'=>10, // pour curl
-            'dnsGlobalCache'=>false, // pour curl
-            'userPassword'=>null, // pour curl
-            'proxyHost'=>null, // hôte pour proxy, pour curl
-            'proxyPort'=>8080, // port pour proxy, pour curl
-            'proxyPassword'=>null, // pour curl
-            'followLocation'=>false, // pour curl
-            'ssl'=>null, // pour curl
-            'port'=>null, // pour curl
-            'sslCipher'=>null, // pour curl
-            'userAgent'=>null, // pour curl
-            'postJson'=>false], // le tableau post est encodé en json, pour curl
         'default'=>[ // ces défaut sont appliqués à chaque création d'objet
             'scheme'=>[Base\Request::class,'scheme'], // scheme de request par défaut
             'host'=>[Base\Request::class,'host'], // host de request par défaut
@@ -88,16 +86,16 @@ class Request extends Map
     // construit l'objet requête
     // value peut être une string (uri) ou un tableau
     // si value est null, c'est la requête courante avec les options de base/request
-    public function __construct($value=null,?array $option=null)
+    public function __construct($value=null,?array $attr=null)
     {
+        $this->makeAttr($attr);
+        
         $live = false;
         if($value === null)
         {
             $live = true;
             $value = Base\Request::export(true,true);
         }
-
-        $this->option($option);
 
         if(is_string($value))
         $this->setUri($value);
@@ -148,18 +146,22 @@ class Request extends Map
     // onSetInst
     // méthode appeler après setInst
     // méthode protégé
-    protected function onSetInst():self
+    protected function onSetInst():void
     {
-        return $this->readOnly(true);
+        $this->readOnly(true);
+        
+        return;
     }
 
 
     // onUnsetInst
     // méthode appeler après unsetInst
     // méthode protégé
-    protected function onUnsetInst():self
+    protected function onUnsetInst():void
     {
-        return $this->readOnly(false);
+        $this->readOnly(false);
+        
+        return;
     }
 
 
@@ -200,11 +202,11 @@ class Request extends Map
     // setLive
     // genre la valeur à la propriété live
     // méthode protégé
-    protected function setLive(bool $value):self
+    protected function setLive(bool $value):void
     {
         $this->live = $value;
 
-        return $this;
+        return;
     }
 
 
@@ -245,11 +247,11 @@ class Request extends Map
     }
 
 
-    // getOptionBase
+    // getAttrBase
     // permet d'obtenir une option merge avec les config dans base/request
-    public function getOptionBase(string $key)
+    public function getAttrBase(string $key)
     {
-        $return = $this->getOption($key);
+        $return = $this->getAttr($key);
         $base = Base\Request::$config[$key] ?? null;
 
         if($base !== null)
@@ -270,10 +272,12 @@ class Request extends Map
     // si fill est true, ne remplace pas les valeurs non null
     public function setDefault(bool $fill=true):self
     {
+        $default = $this->default();
+        
         if($fill === true)
         {
             $change = [];
-            foreach (static::default() as $key => $value)
+            foreach ($default as $key => $value)
             {
                 if($this->$key === null)
                 $change[$key] = $value;
@@ -281,7 +285,7 @@ class Request extends Map
         }
 
         else
-        $change = static::default();
+        $change = $default;
 
         if(!empty($change))
         $this->change($change);
@@ -324,7 +328,7 @@ class Request extends Map
     // retourne l'uri, peut être relatif ou absolut dépendamment des options uri
     public function output(?array $option=null):?string
     {
-        return Base\Uri::output($this->uri(true),Base\Arr::plus($this->getOption('uri'),$option));
+        return Base\Uri::output($this->uri(true),Base\Arr::plus($this->getAttr('uri'),$option));
     }
 
 
@@ -332,7 +336,7 @@ class Request extends Map
     // retourne l'uri relative de la requête
     public function relative(?array $option=null):?string
     {
-        return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getOption('uri'),$option));
+        return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getAttr('uri'),$option));
     }
 
 
@@ -340,7 +344,7 @@ class Request extends Map
     // retourne l'uri relative de la requête, base uri va vérifier qu'elle existe
     public function relativeExists(?array $option=null)
     {
-        return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getOption('uri'),$option,['exists'=>true]));
+        return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getAttr('uri'),$option,['exists'=>true]));
     }
 
 
@@ -348,7 +352,7 @@ class Request extends Map
     // retourne l'uri absolue de la requête
     public function absolute(?array $option=null):?string
     {
-        return Base\Uri::absolute($this->uri(true),null,Base\Arr::plus($this->getOption('uri'),$option));
+        return Base\Uri::absolute($this->uri(true),null,Base\Arr::plus($this->getAttr('uri'),$option));
     }
 
 
@@ -359,7 +363,7 @@ class Request extends Map
     // par l'option par défaut, l'uri est décodé
     public function setUri(string $value,?bool $decode=null):self
     {
-        $parse = Base\Uri::parse($value,$decode ?? $this->getOption('decode'));
+        $parse = Base\Uri::parse($value,$decode ?? $this->getAttr('decode'));
 
         if(!empty($parse))
         {
@@ -904,7 +908,7 @@ class Request extends Map
     // retourne vrai si le ip est permis en fonction du whitelist et blacklist gardé dans les config de la classe
     public function isIpAllowed():bool
     {
-        return ($this->hasIp() && Base\Ip::allowed($this->ip(),static::$config['ipAllowed']))? true:false;
+        return ($this->hasIp() && Base\Ip::allowed($this->ip(),$this->getAttr('ipAllowed')))? true:false;
     }
 
 
@@ -912,7 +916,7 @@ class Request extends Map
     // retourne vrai si le path est considéré comme safe
     public function isPathSafe():bool
     {
-        return Base\Path::isSafe($this->path(),$this->getOptionBase('safe'));
+        return Base\Path::isSafe($this->path(),$this->getAttrBase('safe'));
     }
 
 
@@ -981,7 +985,7 @@ class Request extends Map
     public function setId(?string $value=null):self
     {
         if(empty($value))
-        $value = Base\Str::random($this->getOptionBase('idLength'));
+        $value = Base\Str::random($this->getAttrBase('idLength'));
 
         $this->property('id',$value);
 
@@ -1139,7 +1143,7 @@ class Request extends Map
     {
         $this->property('path',$value);
 
-        $lang = Base\Path::lang($value,$this->getOptionBase('lang'));
+        $lang = Base\Path::lang($value,$this->getAttrBase('lang'));
         if(!empty($lang))
         $this->setLang($lang);
 
@@ -1421,7 +1425,7 @@ class Request extends Map
     // retourne le chemin sans le code de langue et sans le wrap du début
     public function pathMatch():string
     {
-        return Base\Path::match($this->path(),$this->getOptionBase('lang'));
+        return Base\Path::match($this->path(),$this->getAttrBase('lang'));
     }
 
 
@@ -2004,7 +2008,7 @@ class Request extends Map
     public function redirect(bool $absolute=false):?string
     {
         $return = null;
-        $return = Base\Path::redirect($this->path(true),$this->getOptionBase('safe'),$this->getOptionBase('lang'));
+        $return = Base\Path::redirect($this->path(true),$this->getAttrBase('safe'),$this->getAttrBase('lang'));
 
         if(is_string($return) && $absolute === true)
         $return = Base\Uri::absolute($return);
@@ -2020,7 +2024,7 @@ class Request extends Map
         $return = null;
         $lowOption = ['userAgent'=>$this->userAgent()];
         $highOption = ['uri'=>['encode'=>true],'ssl'=>$this->isSsl(),'port'=>$this->port()];
-        $option = Base\Arr::plus($lowOption,$this->option(),$option,$highOption);
+        $option = Base\Arr::plus($lowOption,$this->attr(),$option,$highOption);
 
         $uri = $this->absolute($option['uri']);
         $post = ($this->isPost())? $this->post():null;
@@ -2043,7 +2047,7 @@ class Request extends Map
     public function curlExec(?array $option=null):?array
     {
         $return = null;
-        $option = Base\Arr::plus($this->option(),$option);
+        $option = Base\Arr::plus($this->attr(),$option);
 
         if(!empty($option['ping']) && is_int($option['ping']))
         {
@@ -2116,21 +2120,12 @@ class Request extends Map
     }
 
 
-    // live
-    // créer un objet requête à partir de la requête courante dans base request
-    // la requête crée n'agit pas comme référence de la requête courante
-    public static function live():self
-    {
-        return new static(null);
-    }
-
-
     // default
     // retourne le tableau des défauts pour une nouvelle requête
-    public static function default(?array $value=null):array
+    public function default(?array $value=null):array
     {
         $return = [];
-        $value = (is_array($value))? Base\Arr::plus(static::$config['default'],$value):static::$config['default'];
+        $value = Base\Arr::plus($this->getAttr('default'),$value);
 
         foreach ($value as $key => $value)
         {
@@ -2145,6 +2140,15 @@ class Request extends Map
         }
 
         return $return;
+    }
+    
+    
+    // live
+    // créer un objet requête à partir de la requête courante dans base request
+    // la requête crée n'agit pas comme référence de la requête courante
+    public static function live():self
+    {
+        return new static(null);
     }
 
 

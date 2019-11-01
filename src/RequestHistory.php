@@ -38,7 +38,7 @@ class RequestHistory extends Map
     {
         if($return instanceof Request)
         {
-            $extra = static::extra(true);
+            $extra = $this->extra(true);
             $return = $return->str($extra);
 
             if(is_string($return) && !empty($return))
@@ -130,7 +130,7 @@ class RequestHistory extends Map
     public function previous(bool $hasExtra=true):?array
     {
         $return = null;
-        $extra = static::extra();
+        $extra = $this->extra();
 
         foreach ($this->all() as $key => $value)
         {
@@ -197,7 +197,7 @@ class RequestHistory extends Map
     public function all():array
     {
         $return = [];
-        $extra = static::extra(true);
+        $extra = $this->extra(true);
 
         foreach ($this->arr() as $key => $value)
         {
@@ -213,9 +213,9 @@ class RequestHistory extends Map
 
     // extra
     // retourne le tableau extra
-    public static function extra(bool $keys=false):array
+    public function extra(bool $keys=false):array
     {
-        $return = static::$config['extra'] ?? [];
+        $return = $this->getAttr('extra') ?? array();
 
         if($keys === true && !empty($return))
         $return = array_keys($return);

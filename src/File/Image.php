@@ -14,6 +14,10 @@ use Quid\Base;
 // abstract class for an image file (raster or vector)
 abstract class Image extends Binary
 {
+    // config
+    public static $config = [];
+    
+    
     // img
     // génère un tag img à partir du fichier image
     // note si l'image n'a pas un chemin accessible via http, la resource sera affiché sous forme de base64
@@ -21,7 +25,7 @@ abstract class Image extends Binary
     {
         $return = null;
         $src = $this->pathToUri($absolute) ?? $this->resource();
-        $alt = $alt ?? $this->getOption('defaultAlt');
+        $alt = $alt ?? $this->getAttr('defaultAlt');
         $return = Base\Html::img($src,$alt,$attr);
 
         return $return;

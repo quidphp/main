@@ -30,7 +30,7 @@ trait _email
     public function messageSegment():array
     {
         $return = [];
-        $delimiter = static::getSegmentChars();
+        $delimiter = $this->getSegmentChars();
         $subject = $this->subject();
         $body = $this->body();
         $return = Base\Arr::appendUnique($return,Base\Segment::get($delimiter,$subject),Base\Segment::get($delimiter,$body));
@@ -61,7 +61,7 @@ trait _email
 
         else
         {
-            $delimiter = static::getSegmentChars();
+            $delimiter = $this->getSegmentChars();
             $return['to'] = $to;
             $return['contentType'] = $this->contentType();
             $return['subject'] = Base\Segment::sets($delimiter,$replace,$this->subject());
@@ -133,9 +133,9 @@ trait _email
 
     // getSegmentChars
     // retourne les caractères de segments à utiliser
-    public static function getSegmentChars()
+    public function getSegmentChars()
     {
-        return static::$config['segment'];
+        return $this->getAttr('segment');
     }
 }
 ?>

@@ -48,7 +48,7 @@ abstract class ServiceMailer extends Service
 
     // prepare
     // prépare l'objet et créer l'instance de l'objet mailer
-    abstract protected function prepare():self;
+    abstract protected function prepare():void;
 
 
     // error
@@ -101,12 +101,12 @@ abstract class ServiceMailer extends Service
 
     // reset
     // délie l'objet mailer, l'objet n'est plus isReady
-    public function reset():self
+    public function reset():void
     {
         $this->checkReady();
         $this->mailer = null;
 
-        return $this;
+        return;
     }
 
 
@@ -283,7 +283,7 @@ abstract class ServiceMailer extends Service
     {
         $return = false;
         $message = $this->prepareMessage($value);
-        $queue = static::queueClass();
+        $queue = $this->queueClass();
 
         if(!empty($queue))
         {
@@ -370,23 +370,24 @@ abstract class ServiceMailer extends Service
     // log
     // permet de log un message si une classe log est lié
     // méthode protégé
-    protected function log(bool $status,array $message):self
+    protected function log(bool $status,array $message):void
     {
-        $log = static::logClass();
+        $log = $this->logClass();
+        
         if(!empty($log))
         $log::new($status,$this->messageWithOption($message,false));
 
-        return $this;
+        return;
     }
 
 
     // queueClass
     // retourne la classe pour queue
     // envoie une classe si la classe est invalide
-    public static function queueClass():?string
+    public function queueClass():?string
     {
-        $return = static::$config['queue'];
-
+        $return = $this->getAttr('queue');
+        
         if(is_string($return) && !is_a($return,Contract\Queue::class,true))
         static::throw('invalidQueueClass',$return);
 
@@ -397,9 +398,9 @@ abstract class ServiceMailer extends Service
     // logClass
     // retourne la classe pour log
     // envoie une classe si la classe est invalide
-    public static function logClass():?string
+    public function logClass():?string
     {
-        $return = static::$config['log'];
+        $return = $this->getAttr('log');
 
         if(is_string($return) && !is_a($return,Contract\Log::class,true))
         static::throw('invalidLogClass',$return);

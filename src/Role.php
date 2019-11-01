@@ -12,25 +12,34 @@ use Quid\Base;
 
 // role
 // class that provides basic logic for a role
-abstract class Role extends Root
+class Role extends Root
 {
+    // trait
+    use _serialize;
+    
+    
     // config
     public static $config = [
-        'permission'=>0, // code de permission du rôle
-        'ignore'=>false, // si le role est ignoré pour roles
+        'useAlso'=>null // configuration à partir d'un ou plusieurs autre rôles
     ];
 
 
-    // cacheStatic
-    protected static $cacheStatic = [];
+    // dynamique
+    protected $permission = null;
+    protected $name = null;
 
 
     // construct
     // toutes les méthodes de cet objet sont statiques
     // le paramétrage d'un rôle se fait uniquemment via le tableau config
     // l'objet est seulement utilisé pour faciliter le typage et le passage en argument
-    public function __construct()
+    public function __construct(string $name,int $permission,?array $attr=null)
     {
+        $attr = Base\Arrs::replace(static::$config,$attr);
+        $this->makeAttr($attr);
+        $this->setName($name);
+        $this->setPermission($permission);
+        
         return;
     }
 
@@ -43,152 +52,83 @@ abstract class Role extends Root
     }
 
 
-    // toArray
-    // retourne le tableau static config
-    public function toArray():array
-    {
-        return static::$config;
-    }
-
-
     // cast
     // retourne le numéro de la permisison
     public function _cast():int
     {
-        return static::permission();
+        return $this->permission();
     }
 
 
-    // serialize
-    // serialize une chaîne vide comme l'objet n'a pas de propriété
-    public function serialize():string
+    // setPermission
+    // conserve le code de permission
+    public function setPermission(int $value):void
     {
-        return serialize('');
+        $this->permission = $value;
+        
+        return;
     }
-
-
-    // unserialize
-    // envoie une exception si unserialize n'est pas vide
-    public function unserialize($data):self
+    
+    
+    // permission
+    // retourne le code de permission de la classe
+    public function permission():int
     {
-        $data = unserialize($data);
-
-        if(!empty($data))
-        static::throw();
-
-        return $this;
+        return $this->permission;
     }
 
 
-    // isIgnored
-    // retourne vrai si la route est ignoré
-    public static function isIgnored():bool
+    // setName
+    // conserve le nom du rôle
+    public function setName(string $value):void
     {
-        return ((static::$config['ignore'] ?? null) === true)? true:false;
+        $this->name = $value;
+        
+        return;
     }
-
-
+    
+    
+    // name
+    // retourne le nom du role
+    public function name():string
+    {
+        return $this->name;
+    }
+    
+    
     // isNobody
     // retourne vrai si la permission est nobody
-    public static function isNobody():bool
+    public function isNobody():bool
     {
-        return (static::permission() <= 1)? true:false;
+        return ($this->permission() <= 1)? true:false;
     }
 
 
     // isSomebody
     // retourne vrai si la permission est somebody
-    public static function isSomebody():bool
+    public function isSomebody():bool
     {
-        return (static::permission() > 1)? true:false;
-    }
-
-
-    // permission
-    // retourne le code de permission de la classe
-    // envoie une exception si le code est 0
-    public static function permission():int
-    {
-        $return = static::$config['permission'] ?? 0;
-
-        if(empty($return))
-        static::throw('permissionCodeCannotBeEmpty');
-
-        return $return;
-    }
-
-
-    // name
-    // retourne le nom du role, avec lcfirst
-    public static function name():string
-    {
-        return static::className(true);
+        return ($this->permission() > 1)? true:false;
     }
 
 
     // useAlso
     // retourne un tableau de classe de role compatible avec le role courant
-    // est utilisé dans le trait _permission
-    public static function useAlso()
+    // est utilisé dans le trait _attrPermission
+    public function useAlso()
     {
-        return;
+        return $this->getAttr('useAlso');
     }
-
-
-    // validate
-    // permet de faire une validation sur la classe role
-    public static function validate($value):bool
+    
+    
+    // roles
+    // retourne un objet roles avec le rôle courant dans l'objet
+    public function roles():Roles 
     {
-        $return = false;
-        $permission = static::permission();
-        $name = static::name();
-        $fqcn = static::class;
-
-        if(is_scalar($value))
-        $value = [$value];
-
-        if(is_array($value))
-        {
-            if(Base\Arr::isIndexed($value))
-            {
-                if(in_array($permission,$value,true) || in_array($fqcn,$value,true) || in_array($name,$value,true))
-                $return = true;
-            }
-
-            else
-            {
-                $replace = static::validateReplace();
-
-                if(!empty($replace))
-                {
-                    $callable = [Base\Number::class,'cast'];
-                    $value = Base\Arr::valuesReplace($replace,$value);
-                    $value = array_map($callable,$value);
-
-                    if(Base\Validate::isAnd($value,$permission))
-                    $return = true;
-                }
-            }
-        }
-
+        $return = Roles::newOverload();
+        $return->add($this);
+        
         return $return;
-    }
-
-
-    // validateReplace
-    // retourne un tableau de remplacement pour la validation
-    // méthode protégé, à étendre
-    protected static function validateReplace():?array
-    {
-        return null;
-    }
-
-
-    // getOverloadKeyPrepend
-    // retourne le prepend de la clé à utiliser pour le tableau overload
-    public static function getOverloadKeyPrepend():?string
-    {
-        return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'Role':null;
     }
 }
 ?>

@@ -14,14 +14,9 @@ use Quid\Base;
 // class that provides the logic to store positive, negative or neutral communication messages
 class Com extends Map
 {
-    // trait
-    use _option;
-
-
     // config
     public static $config = [
-        'option'=>[
-            'default'=>'neg'], // type par défaut
+        'default'=>'neg', // type par défaut
         'all'=>['neg','pos','neutral'] // tous les types
     ];
 
@@ -37,11 +32,11 @@ class Com extends Map
 
     // construct
     // construit l'objet de communication
-    public function __construct(?array $value=null,?array $option=null)
+    public function __construct(?array $value=null,?array $attr=null)
     {
+        $this->makeAttr($attr);
         $this->setType($value);
-        $this->option($option);
-
+        
         return;
     }
 
@@ -119,7 +114,7 @@ class Com extends Map
     // retourne le type ou le type par défaut si null
     public function type(?string $type=null):string
     {
-        return ($type === null)? $this->getOption('default'):$type;
+        return ($type === null)? $this->getAttr('default'):$type;
     }
 
 
@@ -135,10 +130,10 @@ class Com extends Map
     // remplace les types et vide le tableau
     // si value est null, prend les types par défaut dans config
     // méthode protégé
-    protected function setType(?array $value=null):self
+    protected function setType(?array $value=null):void
     {
         if($value === null)
-        $value = static::$config['all'];
+        $value = $this->getAttr('all');
 
         if(is_array($value) && Base\Arr::validate('string',$value))
         {
@@ -149,7 +144,7 @@ class Com extends Map
         else
         static::throw();
 
-        return $this;
+        return;
     }
 
 

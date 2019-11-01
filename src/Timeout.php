@@ -76,7 +76,7 @@ class Timeout extends Map
         $current = $this->get($key);
 
         if($current === null)
-        $current = static::$config;
+        $current = $this->attr();
 
         $value = Base\Arr::replace($current,$value);
         $value = static::checkValueValid($value);

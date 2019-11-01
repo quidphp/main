@@ -17,11 +17,10 @@ class Serialize extends Text
     // config
     public static $config = [
         'group'=>null,
-        'option'=>[
-            'read'=>[
-                'callback'=>[Base\Crypt::class,'unserialize']],
-            'write'=>[
-                'callback'=>[Base\Crypt::class,'serialize']]]
+        'read'=>[
+            'callback'=>[Base\Crypt::class,'unserialize']],
+        'write'=>[
+            'callback'=>[Base\Crypt::class,'serialize']]
     ];
 }
 
