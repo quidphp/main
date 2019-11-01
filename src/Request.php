@@ -89,7 +89,7 @@ class Request extends Map
     public function __construct($value=null,?array $attr=null)
     {
         $this->makeAttr($attr);
-        
+
         $live = false;
         if($value === null)
         {
@@ -149,7 +149,7 @@ class Request extends Map
     protected function onSetInst():void
     {
         $this->readOnly(true);
-        
+
         return;
     }
 
@@ -160,7 +160,7 @@ class Request extends Map
     protected function onUnsetInst():void
     {
         $this->readOnly(false);
-        
+
         return;
     }
 
@@ -273,7 +273,7 @@ class Request extends Map
     public function setDefault(bool $fill=true):self
     {
         $default = $this->default();
-        
+
         if($fill === true)
         {
             $change = [];
@@ -2141,8 +2141,8 @@ class Request extends Map
 
         return $return;
     }
-    
-    
+
+
     // live
     // créer un objet requête à partir de la requête courante dans base request
     // la requête crée n'agit pas comme référence de la requête courante

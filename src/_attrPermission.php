@@ -20,10 +20,10 @@ trait _attrPermission
     protected function &attrPermissionRef():array
     {
         $attr =& $this->attrRef();
-        
+
         if(!array_key_exists('permission',$attr) || !is_array($attr['permission']))
-        $attr['permission'] = array();
-        
+        $attr['permission'] = [];
+
         return $attr['permission'];
     }
 
@@ -32,15 +32,15 @@ trait _attrPermission
     // retourne les roles par défaut à utiliser
     abstract protected function attrPermissionRolesObject():Roles;
 
-    
+
     // onRolePermission
     // permet de spécifier une méthode lors de chaque appel à roleHasPermission
     protected function onRolePermission($key,array $array):bool
     {
         return true;
     }
-    
-    
+
+
     // hasPermission
     // retourne vrai si toutes les permissions sont accordés au rôle par défaut
     public function hasPermission(...$keys):bool
@@ -69,16 +69,16 @@ trait _attrPermission
 
         return $this;
     }
-    
-    
+
+
     // rolesHasPermission
     // retourne vrai si les rôles peuvent faire l'action
     // si un des roles retourne true, à ce moment c'est true
     public function rolesHasPermission($key,Roles $roles,bool $exception=true):bool
     {
         $return = false;
-        
-        foreach ($roles as $perm => $role) 
+
+        foreach ($roles as $perm => $role)
         {
             if($this->roleHasPermission($key,$role,$exception))
             {
@@ -89,8 +89,8 @@ trait _attrPermission
 
         return $return;
     }
-    
-    
+
+
     // roleHasPermission
     // retourne vrai si le rôle peut faire l'action
     public function roleHasPermission($key,Role $role,bool $exception=true):bool
@@ -115,8 +115,8 @@ trait _attrPermission
 
         return $return;
     }
-    
-    
+
+
     // getPermission
     // retourne le tableau de la source des paramètres d'un rôle
     // les permissions se construisent avec *, ensuite tous les roles retournées par useAlso et ensuite le nom du rôle
@@ -125,7 +125,7 @@ trait _attrPermission
         $return = [];
         $all = $this->attrPermissionRef();
         $loop = ['*'];
-        
+
         $also = $role->useAlso();
         if(!empty($also))
         $loop = Base\Arr::append($loop,(array) $also);

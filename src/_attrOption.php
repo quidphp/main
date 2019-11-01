@@ -19,21 +19,21 @@ trait _attrOption
     protected function &attrOptionRef():array
     {
         $attr =& $this->attrRef();
-        
+
         if(!array_key_exists('option',$attr) || !is_array($attr['option']))
-        $attr['option'] = array();
-        
+        $attr['option'] = [];
+
         return $attr['option'];
     }
-    
-    
+
+
     // getOption
     // retourne une option du tableau d'option
     // possible d'appeler si call est true
     public function getOption($key,bool $call=false,...$args)
     {
         $return = Base\Arrs::get($key,$this->attrOptionRef());
-        
+
         if($call === true && static::classIsCallable($return))
         $return = Base\Call::withObj($this,$return,...$args);
 
@@ -57,7 +57,7 @@ trait _attrOption
     public function option(?array $value=null):array
     {
         $return =& $this->attrOptionRef();
-        
+
         if($value !== null)
         $return = Base\Arrs::replace($return,$value);
 

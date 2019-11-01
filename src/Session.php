@@ -68,7 +68,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     protected function onCheckArr():void
     {
         $this->checkReady();
-        
+
         return;
     }
 
@@ -118,7 +118,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     {
         $return = null;
         $base = $this->getAttr('base');
-        
+
         if(is_array($base) && in_array($key,$base,true))
         {
             $this->checkReady();

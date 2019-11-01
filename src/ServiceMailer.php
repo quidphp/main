@@ -373,7 +373,7 @@ abstract class ServiceMailer extends Service
     protected function log(bool $status,array $message):void
     {
         $log = $this->logClass();
-        
+
         if(!empty($log))
         $log::new($status,$this->messageWithOption($message,false));
 
@@ -387,7 +387,7 @@ abstract class ServiceMailer extends Service
     public function queueClass():?string
     {
         $return = $this->getAttr('queue');
-        
+
         if(is_string($return) && !is_a($return,Contract\Queue::class,true))
         static::throw('invalidQueueClass',$return);
 

@@ -15,9 +15,9 @@ use Quid\Base;
 trait _attr
 {
     // dynamique
-    protected $attr = array(); // conserve les attributs
-    
-    
+    protected $attr = []; // conserve les attributs
+
+
     // attrRef
     // retourne la référence du tableau des attributs
     protected function &attrRef():array
@@ -32,25 +32,25 @@ trait _attr
     protected function makeAttr($value,bool $config=true):void
     {
         $attr =& $this->attrRef();
-        $merge = array();
-        
+        $merge = [];
+
         if($config === true)
         $merge[] = static::$config;
-        
+
         if(is_array($value))
         $merge[] = $value;
-        
+
         $count = count($merge);
-        
+
         if($count === 2)
         $attr = Base\Arrs::replace(...$merge);
-        
+
         elseif($count === 1)
         $attr = $merge[0];
-        
+
         else
         static::throw();
-        
+
         return;
     }
 
@@ -61,22 +61,22 @@ trait _attr
     {
         return (Base\Validate::isReallyEmpty($this->getAttr($key)))? false:true;
     }
-    
-    
+
+
     // getAttr
     // retourne un attribut
     // possible d'appeler si call est true
     public function getAttr($key,bool $call=false,...$args)
     {
         $return = Base\Arrs::get($key,$this->attrRef());
-        
+
         if($call === true && static::classIsCallable($return))
         $return = Base\Call::withObj($this,$return,...$args);
 
         return $return;
     }
-    
-    
+
+
     // setAttr
     // permet de changer la valeur d'un attribut
     public function setAttr($key,$value):self
@@ -86,15 +86,15 @@ trait _attr
 
         return $this;
     }
-    
-    
+
+
     // attr
     // possible de merger un tableau par dessus les attr
     // retourne les attr
     public function attr(?array $value=null):array
     {
         $return =& $this->attrRef();
-        
+
         if($value !== null)
         $return = Base\Arrs::replace($return,$value);
 

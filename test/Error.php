@@ -32,7 +32,7 @@ class Error extends Base\Test
         $ex2 = new Main\Error($exception2);
         assert(!empty($e->toJson()));
         assert(!empty(serialize($e)));
-        
+
         // invoke
 
         // toString

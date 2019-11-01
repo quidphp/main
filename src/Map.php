@@ -31,7 +31,7 @@ class Map extends ArrMap
     public function __construct($data=null)
     {
         $this->makeAttr(null);
-        
+
         if(!empty($data))
         $this->makeOverwrite($data);
 
@@ -702,7 +702,7 @@ class Map extends ArrMap
     {
         $this->checkAllowed('overwrite');
         $this->makeOverwrite($value);
-        
+
         return $this;
     }
 
@@ -726,7 +726,7 @@ class Map extends ArrMap
         static::throw('requireArray');
 
         $return->checkAfter();
-         
+
         return;
     }
 

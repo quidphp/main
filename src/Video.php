@@ -34,7 +34,7 @@ class Video extends Map
     public function __construct($value,?array $attr=null)
     {
         $this->makeAttr($attr);
-        
+
         if(is_string($value))
         $value = Base\Json::decode($value);
 

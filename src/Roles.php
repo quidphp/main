@@ -19,7 +19,7 @@ class Roles extends Map
     use Map\_sort;
     use Map\_readOnly;
     use Map\_obj;
-    
+
 
     // config
     public static $config = [];
@@ -36,17 +36,17 @@ class Roles extends Map
     {
         if($return instanceof Role)
         $return = $return->permission();
-        
+
         elseif(is_string($return))
         {
             $names = $this->pair('name');
             $return = Base\Arr::search($return,$names);
         }
-        
+
         return $return;
     }
 
-    
+
     // onPrepareValue
     // si la valeur est un tableau crée un objet
     protected function onPrepareValue($return)
@@ -56,11 +56,11 @@ class Roles extends Map
             $class = Role::getOverloadClass();
             $return = new $class(...array_values($return));
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // add
     // ajoute un ou plusieurs objets roles dans l'objet
     // deux objets ne peuvent pas avoir le même nom ou la même permission
@@ -70,28 +70,28 @@ class Roles extends Map
         $values = $this->prepareValues(...$values);
         $data =& $this->arr();
         $names = $this->pair('name');
-        
+
         foreach ($values as $value)
         {
             if(!$value instanceof Role)
             static::throw('requires Role');
-            
+
             $permission = $value->permission();
             $name = $value->name();
 
             if(array_key_exists($permission,$data))
             static::throw('permissionAlreadyIn',$permission);
-            
+
             if(in_array($name,$names,true))
             static::throw('nameAlreadyIn',$name);
-            
+
             $data[$permission] = $value;
         }
 
         return $this->checkAfter();
     }
-    
-    
+
+
     // nobody
     // retorne le premier role nobody
     public function nobody():?Role
@@ -99,46 +99,46 @@ class Roles extends Map
         return $this->first(['isNobody'=>true]);
     }
 
-    
+
     // main
     // retourne le rôle avec la plus grande permission
     // ceci est considéré comme le rôle principale
-    public function main():?Role 
+    public function main():?Role
     {
         $return = null;
         $data = $this->arr();
-        
+
         if(!empty($data))
         {
             krsort($data);
             $return = current($data);
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // makeFromArray
     // construit un objet roles à partir d'un tableau
-    public static function makeFromArray(array $array):self 
+    public static function makeFromArray(array $array):self
     {
         $return = static::newOverload();
-        
-        foreach ($array as $name => $args) 
+
+        foreach ($array as $name => $args)
         {
             if(is_int($args))
-            $args = array($args);
-            
+            $args = [$args];
+
             if(is_string($name) && is_array($args))
             {
                 $args = Base\Arr::append($name,$args);
                 $return->add($args);
             }
-            
+
             else
             static::throw();
         }
-        
+
         return $return;
     }
 }

@@ -36,7 +36,7 @@ class Com extends Map
     {
         $this->makeAttr($attr);
         $this->setType($value);
-        
+
         return;
     }
 

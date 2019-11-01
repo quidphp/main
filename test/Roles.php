@@ -20,32 +20,32 @@ class Roles extends Base\Test
     {
         // prepare
         $roles = new Main\Roles();
-        $admin = new Main\Role('admin',80,array('admin'=>true));
-        $nobody = new Main\Role('nobody',1,array('nobody'=>true));
+        $admin = new Main\Role('admin',80,['admin'=>true]);
+        $nobody = new Main\Role('nobody',1,['nobody'=>true]);
         $test = new Main\Role('test',20);
-        
+
         // onPrepareKey
-        
+
         // onPrepareValue
-        
+
         // add
         $roles->add($admin,$nobody,$test);
         assert($roles->isCount(3));
-        
+
         // nobody
         assert($roles->nobody() === $nobody);
-        
+
         // main
         assert($roles->main() === $admin);
-        
+
         // makeFromArray
-        $roles2 = Main\Roles::makeFromArray(array('ok'=>25,'james'=>array(21,array('shared'=>true))));
+        $roles2 = Main\Roles::makeFromArray(['ok'=>25,'james'=>[21,['shared'=>true]]]);
         assert(current($roles2->keys()) === 25);
         $ok = $roles2->get(25);
         assert($ok->name() === 'ok');
         assert($roles2->first()->permission() === 25);
         assert($roles2->sortDefault()->first()->permission() === 21);
-        
+
         // map
         assert($roles->get('admin') === $admin);
         assert($roles->get('admiz') === null);
@@ -67,7 +67,7 @@ class Roles extends Base\Test
         assert($roles->filter(['permission'=>80]) !== $roles);
         assert($roles->filter(['permission'=>80])->isCount(1));
         assert($roles->add($roles2)->isCount(5));
-        
+
         return true;
     }
 }

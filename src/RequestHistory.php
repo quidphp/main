@@ -215,7 +215,7 @@ class RequestHistory extends Map
     // retourne le tableau extra
     public function extra(bool $keys=false):array
     {
-        $return = $this->getAttr('extra') ?? array();
+        $return = $this->getAttr('extra') ?? [];
 
         if($keys === true && !empty($return))
         $return = array_keys($return);

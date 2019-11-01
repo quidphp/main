@@ -16,8 +16,8 @@ class Role extends Root
 {
     // trait
     use _serialize;
-    
-    
+
+
     // config
     public static $config = [
         'useAlso'=>null // configuration à partir d'un ou plusieurs autre rôles
@@ -39,7 +39,7 @@ class Role extends Root
         $this->makeAttr($attr);
         $this->setName($name);
         $this->setPermission($permission);
-        
+
         return;
     }
 
@@ -65,11 +65,11 @@ class Role extends Root
     public function setPermission(int $value):void
     {
         $this->permission = $value;
-        
+
         return;
     }
-    
-    
+
+
     // permission
     // retourne le code de permission de la classe
     public function permission():int
@@ -83,19 +83,19 @@ class Role extends Root
     public function setName(string $value):void
     {
         $this->name = $value;
-        
+
         return;
     }
-    
-    
+
+
     // name
     // retourne le nom du role
     public function name():string
     {
         return $this->name;
     }
-    
-    
+
+
     // isNobody
     // retourne vrai si la permission est nobody
     public function isNobody():bool
@@ -119,15 +119,15 @@ class Role extends Root
     {
         return $this->getAttr('useAlso');
     }
-    
-    
+
+
     // roles
     // retourne un objet roles avec le rôle courant dans l'objet
-    public function roles():Roles 
+    public function roles():Roles
     {
         $return = Roles::newOverload();
         $return->add($this);
-        
+
         return $return;
     }
 }

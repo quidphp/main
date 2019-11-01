@@ -703,10 +703,10 @@ class Autoload
 
         if(!empty($exclude))
         $classes = Base\Arr::valuesStrip($exclude,$classes);
-        
+
         if($sort === true)
         asort($classes);
-        
+
         foreach ($classes as $key => $class)
         {
             if(!method_exists($class,$method))

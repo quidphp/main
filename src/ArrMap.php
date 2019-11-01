@@ -16,8 +16,8 @@ abstract class ArrMap extends ArrObj
 {
     // trait
     use _serialize;
-    
-    
+
+
     // config
     public static $config = [];
 

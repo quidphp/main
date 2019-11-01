@@ -749,17 +749,17 @@ class Request extends Base\Test
         // curlExec
 
         // trigger
-        
+
         // default
         $currentReset->setHeaders($currentReset->headers());
         assert(count($currentReset->default(Main\Request::$config['default'])) === 8);
         assert($r->default(['method'=>'post'])['method'] === 'post');
-        
+
         // live
         assert(Main\Request::live() instanceof Main\Request);
 
         // checkPing
-        
+
         // inst
 
         // map

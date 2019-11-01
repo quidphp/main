@@ -623,8 +623,8 @@ class Lang extends Map
     {
         $return = null;
         $option = $this->textOption($option);
-        $case = $this->getAttr(array('case','char'));
-        
+        $case = $this->getAttr(['case','char']);
+
         if(is_string($key) && is_string($case) && strpos($key,$case) !== false)
         {
             $explode = explode($case,$key);
@@ -662,7 +662,7 @@ class Lang extends Map
     {
         if(!empty($option['case']) && is_string($option['case']))
         {
-            $callable = $this->getAttr(array('case','callable',$option['case']));
+            $callable = $this->getAttr(['case','callable',$option['case']]);
             if(!empty($callable))
             $return = $callable($return);
         }
@@ -1109,11 +1109,11 @@ class Lang extends Map
     // retourne une string
     public function getPath(string $type,$append=null):string
     {
-        $return = $this->getAttr(array('path',$type));
-        
+        $return = $this->getAttr(['path',$type]);
+
         if($return === null)
         static::throw('invalidPath');
-        
+
         if(is_array($return))
         $return = Base\Arrs::keyPrepare($return);
 
@@ -1124,7 +1124,7 @@ class Lang extends Map
 
             $return = Base\Arrs::keyPrepare([$return,$append]);
         }
-        
+
         return $return;
     }
 }

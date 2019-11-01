@@ -49,8 +49,8 @@ trait _serialize
 
         return $this;
     }
-    
-    
+
+
     // jsonSerialize
     // converti l'objet en json, utilise toArray
     public function jsonSerialize():array

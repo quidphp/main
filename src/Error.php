@@ -451,7 +451,7 @@ class Error extends Root
     // retourne le tableau de type pour l'erreur
     public function getType():array
     {
-        return $this->getAttr(array('type',$this->getCode())) ?? array();
+        return $this->getAttr(['type',$this->getCode()]) ?? [];
     }
 
 
