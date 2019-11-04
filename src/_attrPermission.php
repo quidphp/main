@@ -97,10 +97,10 @@ trait _attrPermission
     {
         $return = null;
         $one = $this->getPermission($role);
-        
+
         if(array_key_exists($key,$one))
         $return = $one[$key];
-        
+
         if(!is_bool($return))
         {
             if($exception === true)
@@ -109,10 +109,10 @@ trait _attrPermission
             else
             $return = false;
         }
-        
+
         elseif($return === true)
         $return = $this->onRolePermission($key,$one);
-        
+
         return $return;
     }
 

@@ -243,7 +243,7 @@ class Request extends Base\Test
 
         // hasValidGenuine
         assert(!$r->hasValidGenuine());
-        
+
         // hasUser
         assert(!$r->hasUser());
 
@@ -759,7 +759,7 @@ class Request extends Base\Test
         assert(Main\Request::live() instanceof Main\Request);
 
         // checkPing
-        
+
         // inst
 
         // map

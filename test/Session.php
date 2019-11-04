@@ -92,7 +92,7 @@ class Session extends Base\Test
         assert(is_string($s->type()));
         assert($s->getCaptchaName() === '-captcha-');
         assert($s->getCsrfName() === '-csrf-');
-        
+
         // onCheckArr
         foreach ($s as $key => $value) { }
 

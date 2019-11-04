@@ -21,12 +21,12 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // config
     public static $config = [
-        'base'=>array( // toutes les méthodes renvoyé à base, la session doit être ready
+        'base'=>[ // toutes les méthodes renvoyé à base, la session doit être ready
             'isLang','isIp','isCsrf','isCaptcha','isDesktop','isMobile','isOldIe','isMac','isLinux','isWindows','isBot',
             'getPrefix','expire','timestampCurrent','timestampPrevious','timestampDifference','requestCount','resetRequestCount',
             'userAgent','browserCap','browserName','browserPlatform','browserDevice','env','type','ip','fingerprint',
             'lang','csrf','refreshCsrf','getCsrfName','captcha','refreshCaptcha','emptyCaptcha','getCaptchaName','version',
-            'remember','setRemember','setsRemember','unsetRemember','rememberEmpty'),
+            'remember','setRemember','setsRemember','unsetRemember','rememberEmpty'],
         'historyClass'=>RequestHistory::class, // classe pour historique de requête
         'env'=>null, // défini l'environnement de la session
         'type'=>null, // défini le type de la session
@@ -40,7 +40,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         'registerShutdown'=>true // le setSaveHandler créer la shutdown function pour session_write_close
     ];
 
-    
+
     // dynamique
     protected $storage = null; // objet de storage de la session
     protected $class = null; // set la classe du storage

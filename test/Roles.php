@@ -24,26 +24,26 @@ class Roles extends Base\Test
         $nobody = new Main\Role('nobody',1,['nobody'=>true]);
         $test = new Main\Role('test',20);
         $rolesIs = new Main\Roles();
-        
+
         // onPrepareKey
 
         // onPrepareValue
-        
+
         // isOne
         $rolesIs->add($admin,$nobody,$test);
         assert($rolesIs->isOne('admin'));
-        
+
         // isAll
         assert(!$rolesIs->isAll('admin'));
-        
+
         // isNobody
         assert(!$rolesIs->isNobody());
         assert($nobody->roles()->isNobody());
-        
+
         // isSomebody
         assert($rolesIs->isSomebody());
         assert(!$nobody->roles()->isSomebody());
-        
+
         // add
         $roles->add($admin,$nobody,$test);
         assert($roles->isCount(3));

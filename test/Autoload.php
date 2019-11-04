@@ -65,9 +65,9 @@ class Autoload extends Base\Test
 
         // allAlias
         assert(is_array(Main\Autoload::allAlias()));
-        
+
         // emptyAlias
-        
+
         // aliasEnding
         assert(Main\Autoload::aliasEnding() === 'Alias');
 
@@ -105,9 +105,9 @@ class Autoload extends Base\Test
 
         // allOverload
         assert(is_array(Main\Autoload::allOverload()));
-        
+
         // emptyOverload
-        
+
         // isRegistered
         assert(Main\Autoload::isRegistered('closure') === true);
 
