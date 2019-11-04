@@ -14,10 +14,6 @@ use Quid\Base;
 // abstract class that provides basic methods to manage a third-party service
 abstract class Service extends Root
 {
-    // trait
-    use _attrOption;
-
-
     // config
     public static $config = [];
 
@@ -28,11 +24,10 @@ abstract class Service extends Root
 
     // construct
     // construit l'objet service
-    public function __construct(string $key,?array $option=null)
+    public function __construct(string $key,?array $attr=null)
     {
-        $this->makeAttr(null);
+        $this->makeAttr($attr);
         $this->setKey($key);
-        $this->option($option);
 
         return;
     }

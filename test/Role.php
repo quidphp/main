@@ -42,7 +42,10 @@ class Role extends Base\Test
 
         // name
         assert($admin->name() === 'admin');
-
+        
+        // is
+        assert(!$nobody->is('bla'));
+        
         // isNobody
         assert($nobody->isNobody());
         assert(!$admin->isNobody());

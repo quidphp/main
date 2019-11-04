@@ -49,7 +49,7 @@ abstract class ServiceVideo extends ServiceRequest
     // retourne la requête à utiliser pour aller chercher l'objet video
     public function request($value,?array $option=null):Request
     {
-        return static::makeRequest(static::target(['value'=>$value]),Base\Arr::plus($this->option(),$option));
+        return static::makeRequest(static::target(['value'=>$value]),Base\Arr::plus($this->attr(),$option));
     }
 
 

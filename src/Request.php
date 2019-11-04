@@ -695,21 +695,26 @@ class Request extends Map
     }
 
 
-    // hasEmptyGenuine
+    // hasValidGenuine
     // retourne vrai si post contient la clé genuine et le contenu est vide
-    public function hasEmptyGenuine():bool
+    // genuine 2 est un champ ajouté sur le front-end
+    public function hasValidGenuine(bool $two=true):bool
     {
         $return = false;
         $post = $this->post();
         $genuine = Base\Html::getGenuineName();
-
-        if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post['genuine']))
-        $return = true;
+        $genuine2 = Base\Html::getGenuineName(2);
+        
+        if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post[$genuine]))
+        {
+            if($two === false || (array_key_exists($genuine2,$post) && !empty($post[$genuine2])))
+            $return = true;
+        }
 
         return $return;
     }
 
-
+    
     // hasUser
     // retourne vrai si la requête courante contient un user
     public function hasUser():bool

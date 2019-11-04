@@ -60,7 +60,81 @@ class Roles extends Map
         return $return;
     }
 
-
+    
+    // isOne
+    // retourne vrai si un des rôles à l'attribut à true
+    public function isOne($value):bool
+    {
+        $return = false;
+        
+        foreach ($this as $role) 
+        {
+            if($role->is($value))
+            {
+                $return = true;
+                break;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
+    // isAll
+    // retourne vrai si tous les rôles ont l'attribut à true
+    public function isAll($value):bool
+    {
+        $return = false;
+        
+        foreach ($this as $role) 
+        {
+            $return = $role->is($value);
+            
+            if($return === false)
+            break;
+        }
+        
+        return $return;
+    }
+    
+    
+    // isNobody
+    // retourne vrai si tout les rôles sont nobody
+    public function isNobody():bool
+    {
+        $return = false;
+        
+        foreach ($this as $role) 
+        {
+            $return = $role->isNobody();
+            
+            if($return === false)
+            break;
+        }
+        
+        return $return;
+    }
+    
+    
+    // isSomebody
+    // retourne vrai si un des rôle est somebody
+    public function isSomebody():bool
+    {
+        $return = false;
+        
+        foreach ($this as $role) 
+        {
+            if($role->isSomebody())
+            {
+                $return = true;
+                break;
+            }
+        }
+        
+        return $return;
+    }
+    
+    
     // add
     // ajoute un ou plusieurs objets roles dans l'objet
     // deux objets ne peuvent pas avoir le même nom ou la même permission

@@ -95,7 +95,15 @@ class Role extends Root
         return $this->name;
     }
 
-
+    
+    // is
+    // retourne vrai si le role a l'attribut true
+    public function is($value):bool
+    {
+        return ($this->getAttr($value) === true)? true:false;
+    }
+    
+    
     // isNobody
     // retourne vrai si la permission est nobody
     public function isNobody():bool

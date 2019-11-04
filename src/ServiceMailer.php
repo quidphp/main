@@ -18,12 +18,11 @@ abstract class ServiceMailer extends Service
     public static $config = [
         'queue'=>null, // queue pour email
         'log'=>null, // classe pour log
-        'option'=>[
-            'key'=>null, // clé pour le service
-            'name'=>null, // nom from par défaut
-            'email'=>null, // email form par défaut
-            'username'=>null, // username pour connexion smtp
-            'password'=>null] // password pour connection smtp
+        'key'=>null, // clé pour le service
+        'name'=>null, // nom from par défaut
+        'email'=>null, // email form par défaut
+        'username'=>null, // username pour connexion smtp
+        'password'=>null // password pour connection smtp
     ];
 
 
@@ -37,9 +36,9 @@ abstract class ServiceMailer extends Service
 
     // construct
     // construit l'objet mail
-    public function __construct(string $key,?array $option=null)
+    public function __construct(string $key,?array $attr=null)
     {
-        parent::__construct($key,$option);
+        parent::__construct($key,$attr);
         $this->prepare();
 
         return;
@@ -69,7 +68,7 @@ abstract class ServiceMailer extends Service
     // sera utilisé comme email s'il n'y a pas de from spécifié
     public function username():string
     {
-        return $this->getOption('username');
+        return $this->getAttr('username');
     }
 
 
@@ -81,14 +80,14 @@ abstract class ServiceMailer extends Service
     public function from():?array
     {
         $return = null;
-        $email = $this->getOption('email');
+        $email = $this->getAttr('email');
 
         if(!Base\Validate::isEmail($email))
         $email = $this->username();
 
         if(Base\Validate::isEmail($email))
         {
-            $name = $this->getOption('name');
+            $name = $this->getAttr('name');
             $return = ['email'=>$email];
 
             if(is_string($name))
@@ -193,7 +192,7 @@ abstract class ServiceMailer extends Service
     // utilisé par les méthodes log
     public function messageWithOption(array $value):array
     {
-        $return = Base\Arr::replace($this->option(),$value);
+        $return = Base\Arr::replace($this->attr(),$value);
         $return['key'] = $this->getKey();
 
         $error = $this->error();

@@ -17,29 +17,30 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // trait
     use Map\_arrs;
     use _inst;
-    use _attrOption;
 
 
     // config
     public static $config = [
-        'base'=>[ // toutes les méthodes renvoyé à base, la session doit être ready
+        'base'=>array( // toutes les méthodes renvoyé à base, la session doit être ready
             'isLang','isIp','isCsrf','isCaptcha','isDesktop','isMobile','isOldIe','isMac','isLinux','isWindows','isBot',
             'getPrefix','expire','timestampCurrent','timestampPrevious','timestampDifference','requestCount','resetRequestCount',
             'userAgent','browserCap','browserName','browserPlatform','browserDevice','env','type','ip','fingerprint',
-            'lang','csrf','refreshCsrf','captcha','refreshCaptcha','emptyCaptcha','version',
-            'remember','setRemember','setsRemember','unsetRemember','rememberEmpty'],
-        'option'=>[
-            'historyClass'=>RequestHistory::class, // classe pour historique de requête
-            'structure'=>[ // callables de structure additionnelles dans data, se merge à celle dans base/session
-                'flash'=>'structureFlash',
-                'history'=>'structureHistory',
-                'timeout'=>'structureTimeout',
-                'com'=>'structureCom'],
-            'setCookie'=>true, // le cookie est réenvoyé à chaque démarrage de la session
-            'registerShutdown'=>true] // le setSaveHandler créer la shutdown function pour session_write_close
+            'lang','csrf','refreshCsrf','getCsrfName','captcha','refreshCaptcha','emptyCaptcha','getCaptchaName','version',
+            'remember','setRemember','setsRemember','unsetRemember','rememberEmpty'),
+        'historyClass'=>RequestHistory::class, // classe pour historique de requête
+        'env'=>null, // défini l'environnement de la session
+        'type'=>null, // défini le type de la session
+        'version'=>null, // défini la version de la session
+        'structure'=>[ // callables de structure additionnelles dans data, se merge à celle dans base/session
+            'flash'=>'structureFlash',
+            'history'=>'structureHistory',
+            'timeout'=>'structureTimeout',
+            'com'=>'structureCom'],
+        'setCookie'=>true, // le cookie est réenvoyé à chaque démarrage de la session
+        'registerShutdown'=>true // le setSaveHandler créer la shutdown function pour session_write_close
     ];
 
-
+    
     // dynamique
     protected $storage = null; // objet de storage de la session
     protected $class = null; // set la classe du storage
@@ -50,13 +51,12 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
 
     // construct
-    // construit l'objet session et merge les options
+    // construit l'objet session et merge les attrs
     // démarre la session
-    public function __construct(string $class,?array $option=null)
+    public function __construct(string $class,?array $attr=null)
     {
-        $this->makeAttr(null);
+        $this->makeAttr($attr);
         $this->setStorageClass($class);
-        $this->option($option);
         $this->start();
 
         return;
@@ -196,13 +196,13 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
 
     // getStructure
-    // retourne la structure de la session à partir des options
+    // retourne la structure de la session à partir des attrs
     // si une valeur de structure est seulement une string, c'est une méthode de cette classe
     // merge avec la structure de base/session
     public function getStructure():array
     {
         $return = [];
-        $structure = $this->getOption('structure');
+        $structure = $this->getAttr('structure');
 
         if(is_array($structure))
         {
@@ -242,7 +242,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     public function structureHistory(string $mode,$value=null)
     {
         $return = $value;
-        $class = $this->getOption('historyClass') ?? RequestHistory::class;
+        $class = $this->getAttr('historyClass') ?? RequestHistory::class;
 
         if($mode === 'insert')
         $return = $class::newOverload();
@@ -260,7 +260,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     public function structureTimeout(string $mode,$value=null)
     {
         $return = $value;
-        $timeout = $this->getOption('timeout');
+        $timeout = $this->getAttr('timeout');
 
         if($mode === 'insert')
         $return = Timeout::newOverload();
@@ -319,7 +319,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     {
         $return = ['class'=>static::class];
         $return['storageClass'] = $this->getStorageClass();
-        $return['option'] = $this->option();
+        $return['attr'] = $this->attr();
         $return = Base\Arr::append($return,Base\Session::info());
 
         return $return;
@@ -502,7 +502,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         if(!$this->isStarted())
         {
             $this->setDefault();
-            $return = Base\Session::start($this->getStructure(),$this->getOption('setCookie'));
+            $return = Base\Session::start($this->getStructure(),$this->getAttr('setCookie'));
 
             if($return === true)
             $this->onStart();
@@ -523,13 +523,13 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // méthode spécifique pour le sid par défaut, utilisé par cli
     protected function setDefault():void
     {
-        Base\Session::setDefault($this->option());
+        Base\Session::setDefault($this->attr());
 
         $sid = $this->getSidDefault();
         if(is_string($sid))
         Base\Session::setSid($sid);
 
-        Base\Session::setSaveHandler($this,$this->getOption('registerShutdown'));
+        Base\Session::setSaveHandler($this,$this->getAttr('registerShutdown'));
 
         return;
     }

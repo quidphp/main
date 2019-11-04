@@ -17,9 +17,8 @@ abstract class ServiceRequest extends Service
     // config
     public static $config = [
         'target'=>null, // cible du service
-        'option'=>[ // option par défaut pour request
-            'ping'=>2,
-            'responseCode'=>200]
+        'ping'=>2,
+        'responseCode'=>200
     ];
 
 
@@ -42,17 +41,17 @@ abstract class ServiceRequest extends Service
 
     // makeRequest
     // retourne un nouvel objet requête
-    // utilise la classe requête dans requestClass et les options dans requestOption
+    // utilise la classe requête dans requestClass et les attrs dans requestOption
     // méthode protégé
-    protected static function makeRequest($value=null,array $option):Request
+    protected static function makeRequest($value=null,array $attr):Request
     {
         $return = null;
         $class = static::requestClass();
 
-        if(empty($option['userAgent']))
-        $option['userAgent'] = static::userAgent();
+        if(empty($attr['userAgent']))
+        $attr['userAgent'] = static::userAgent();
 
-        $return = new $class($value,$option);
+        $return = new $class($value,$attr);
 
         return $return;
     }
@@ -67,7 +66,7 @@ abstract class ServiceRequest extends Service
 
 
     // userAgent
-    // retourne le userAgent à utiliser s'il n'est pas spécifié dans option
+    // retourne le userAgent à utiliser s'il n'est pas spécifié dans attr
     public static function userAgent():string
     {
         return 'QUID/'.Base\Server::quidVersion();

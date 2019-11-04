@@ -367,7 +367,17 @@ class Autoload
         return static::$config['alias'];
     }
 
-
+    
+    // emptyAlias
+    // vide le tableau des alias
+    public static function emptyAlias():void
+    {
+        static::$config['alias'] = array();
+        
+        return;
+    }
+    
+    
     // aliasEnding
     // retourne la fin de classe à utiliser pour les alias automatiques
     public static function aliasEnding():string
@@ -536,6 +546,16 @@ class Autoload
     }
 
 
+    // emptyOverload
+    // vide le tableau des overload
+    public static function emptyOverload():void
+    {
+        static::$config['overload'] = array();
+        
+        return;
+    }
+    
+    
     // isRegistered
     // retourne vrai s'il y a un autoload du type fourni en argument présentement enregistré
     public static function isRegistered(string $type):bool
