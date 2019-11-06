@@ -560,7 +560,7 @@ class Error extends Root
         // errorLog
         if($this->getAttr('errorLog') === true)
         $this->errorLog();
-        
+
         // log
         if(!empty($this->getAttr('log')))
         $this->log();
@@ -602,7 +602,7 @@ class Error extends Root
     {
         $return = null;
         $logs = $this->getAttr('log');
-        
+
         if(!empty($logs))
         {
             if(!is_array($logs))
