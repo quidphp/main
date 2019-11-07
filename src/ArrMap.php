@@ -129,7 +129,7 @@ abstract class ArrMap extends ArrObj
 
     // isEmpty
     // retourne vrai si la map est vide
-    public function isEmpty():bool
+    final public function isEmpty():bool
     {
         return Base\Arr::isEmpty($this->arr());
     }
@@ -137,7 +137,7 @@ abstract class ArrMap extends ArrObj
 
     // isNotEmpty
     // retourne vrai si la map n'est pas vide
-    public function isNotEmpty():bool
+    final public function isNotEmpty():bool
     {
         return Base\Arr::isNotEmpty($this->arr());
     }
@@ -145,7 +145,7 @@ abstract class ArrMap extends ArrObj
 
     // isCount
     // retourne vrai si le count est celui spécifié
-    public function isCount($count):bool
+    final public function isCount($count):bool
     {
         return Base\Arr::isCount($count,$this->arr());
     }
@@ -153,7 +153,7 @@ abstract class ArrMap extends ArrObj
 
     // isMinCount
     // retourne vrai si le count est plus grand ou égal que celui spécifié
-    public function isMinCount($count):bool
+    final public function isMinCount($count):bool
     {
         return Base\Arr::isMinCount($count,$this->arr());
     }
@@ -161,7 +161,7 @@ abstract class ArrMap extends ArrObj
 
     // isMaxCount
     // retourne vrai si le count est plus petit ou égal que celui spécifié
-    public function isMaxCount($count):bool
+    final public function isMaxCount($count):bool
     {
         return Base\Arr::isMaxCount($count,$this->arr());
     }
@@ -171,7 +171,7 @@ abstract class ArrMap extends ArrObj
     // permet de passer la clé et la valeur dans une closure donné en argument
     // la closure est appelé avec this de l'objet courant
     // si on retourne faux, on brise le loop
-    public function each(callable $callable):self
+    final public function each(callable $callable):self
     {
         $i = 0;
         foreach ($this->arr() as $key => $value)

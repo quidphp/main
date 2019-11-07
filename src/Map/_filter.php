@@ -16,7 +16,7 @@ trait _filter
 {
     // filter
     // permet de filtrer l'objet à partir d'une condition à ce moment seul les entrées true sont gardés
-    public function filter($condition,...$args):Main\Map
+    final public function filter($condition,...$args):Main\Map
     {
         $this->checkAllowed('filter');
         $return = $this->onPrepareThis('filter');

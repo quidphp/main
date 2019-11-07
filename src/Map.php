@@ -86,7 +86,6 @@ class Map extends ArrMap
     // onPrepareThis
     // permet de préparer l'objet avant les méthodes de modification
     // par défaut filter map sont clonés
-    // méthode protégé
     protected function onPrepareThis(string $method):self
     {
         return $this;
@@ -96,7 +95,6 @@ class Map extends ArrMap
     // onPrepareKey
     // prépare une clé pour une méthode comme get et slice
     // par défaut, les clés non scalar sont envoyés dans obj/cast et les array dans arrs/keyPrepare
-    // méthode protégé
     protected function onPrepareKey($return)
     {
         if($return instanceof self)
@@ -114,7 +112,6 @@ class Map extends ArrMap
 
     // onPrepareValue
     // prépare une valeur pour une méthode comme keys et search
-    // méthode protégé
     protected function onPrepareValue($return)
     {
         return $return;
@@ -123,7 +120,6 @@ class Map extends ArrMap
 
     // onPrepareValueSet
     // prépare une valeur pour la méthode set
-    // méthode protégé
     protected function onPrepareValueSet($return)
     {
         return $return;
@@ -144,7 +140,6 @@ class Map extends ArrMap
 
     // onPrepareReturn
     // prépare le retour d'une valeur, pour get
-    // méthode protégé
     protected function onPrepareReturn($return)
     {
         return $return;
@@ -153,7 +148,6 @@ class Map extends ArrMap
 
     // onPrepareReturns
     // prépare le retour de plusieurs valeurs, pour gets et slice
-    // méthode protégé
     protected function onPrepareReturns(array $return)
     {
         return $return;
@@ -162,7 +156,6 @@ class Map extends ArrMap
 
     // onCheckArr
     // callback pour les classes qui étendent pour vérifier arr
-    // méthode protégé
     protected function onCheckArr():void
     {
         return;
@@ -182,7 +175,7 @@ class Map extends ArrMap
 
     // clone
     // retourne un close de l'objet
-    public function clone()
+    final public function clone()
     {
         $this->checkAllowed('clone');
         return clone $this;
@@ -191,7 +184,7 @@ class Map extends ArrMap
 
     // recursive
     // retourne la map et toutes les maps contenus de façon récursives dans un tableau multidimensionnel
-    public function recursive():array
+    final public function recursive():array
     {
         $return = $this->arr();
 
@@ -207,7 +200,7 @@ class Map extends ArrMap
 
     // prepareKeys
     // prepare les clés pour les méthodes qui soumettent plusieurs clés comme exists, gets et unset
-    protected function prepareKeys(...$keys):array
+    final protected function prepareKeys(...$keys):array
     {
         $return = [];
 
@@ -228,7 +221,7 @@ class Map extends ArrMap
 
     // prepareValues
     // prépare plusieurs valeurs pour les méthodes qui soumette plusieurs valeurs comme in et remove
-    protected function prepareValues(...$values):array
+    final protected function prepareValues(...$values):array
     {
         $return = [];
 
@@ -249,7 +242,7 @@ class Map extends ArrMap
 
     // prepareReplaces
     // prépare plusieurs valeurs utilisé par une méthode de remplacement
-    protected function prepareReplaces(...$values):array
+    final protected function prepareReplaces(...$values):array
     {
         $return = [];
 
@@ -266,7 +259,7 @@ class Map extends ArrMap
     // vérifie que les valeurs passent le test is avant l'écriture à l'objet, sinon envoie une exception
     // bool initial permet de spécifier si chaque valeur doit être valider individuellement
     // si static is est true, fait appel à la méthode dynamique is
-    protected function checkBefore(bool $array=false,...$values):void
+    final protected function checkBefore(bool $array=false,...$values):void
     {
         if(!empty(static::$is))
         {
@@ -337,7 +330,6 @@ class Map extends ArrMap
 
     // filterCondition
     // utilisé par les méthodes comme first, last (ou filter) pour vérifier si une entrée respecte une condition
-    // méthode protégé
     protected function filterCondition($condition,$key,$value,...$args):bool
     {
         $return = true;
@@ -359,7 +351,7 @@ class Map extends ArrMap
 
     // isValidate
     // retourne vrai si toutes les valeurs réponde à la condition validate
-    public function isValidate($validate):bool
+    final public function isValidate($validate):bool
     {
         return Base\Arr::validate($validate,$this->arr());
     }
@@ -367,7 +359,7 @@ class Map extends ArrMap
 
     // checkMinCount
     // envoie une exception si le min count n'est pas respecté
-    public function checkMinCount($count):self
+    final public function checkMinCount($count):self
     {
         if(!$this->isMinCount($count))
         static::throw($count);
@@ -378,7 +370,7 @@ class Map extends ArrMap
 
     // checkMaxCount
     // envoie une exception si le max count n'est pas respecté
-    public function checkMaxCount($count):self
+    final public function checkMaxCount($count):self
     {
         if(!$this->isMaxCount($count))
         static::throw($count);
@@ -397,7 +389,7 @@ class Map extends ArrMap
 
     // existsFirst
     // retourne la première clé dans le tableau
-    public function existsFirst(...$keys)
+    final public function existsFirst(...$keys)
     {
         $return = null;
 
@@ -417,7 +409,7 @@ class Map extends ArrMap
     // checkGet
     // vérifie que la clé existe et retourne la valeur
     // sinon envoie une exception
-    public function checkGet($key)
+    final public function checkGet($key)
     {
         $return = null;
 
@@ -433,7 +425,7 @@ class Map extends ArrMap
 
     // checkExists
     // vérifie que toutes les clés existent sinon envoie une exception
-    public function checkExists(...$keys):self
+    final public function checkExists(...$keys):self
     {
         if(!$this->exists(...$keys))
         static::throw(...$keys);
@@ -453,7 +445,7 @@ class Map extends ArrMap
     // inFirst
     // retourne la première valeur dans le tableau
     // n'a pas à être étendu
-    public function inFirst(...$values)
+    final public function inFirst(...$values)
     {
         $return = null;
 
@@ -472,7 +464,7 @@ class Map extends ArrMap
 
     // checkIn
     // vérifie que toutes les valeurs sont dans l'objet sinon envoie une exception
-    public function checkIn(...$values):self
+    final public function checkIn(...$values):self
     {
         if(!$this->in(...$values))
         static::throw();
@@ -510,7 +502,7 @@ class Map extends ArrMap
     // first
     // retourne la première valeur du tableau ou la première répondant true à la condition
     // n'a pas à être étendu
-    public function first($condition=null,...$args)
+    final public function first($condition=null,...$args)
     {
         $return = null;
 
@@ -536,7 +528,7 @@ class Map extends ArrMap
     // last
     // retourne la dernière valeur du tableau ou la dernière répondant true à la condition
     // n'a pas à être étendu
-    public function last($condition=null,...$args)
+    final public function last($condition=null,...$args)
     {
         $return = null;
 
@@ -594,7 +586,7 @@ class Map extends ArrMap
     // slice
     // permet de slice une ou plusieurs clés->valeurs de la map
     // utilise les clés start et end
-    public function slice($start,$end)
+    final public function slice($start,$end)
     {
         return $this->onPrepareReturns(Base\Arr::slice($this->onPrepareKey($start),$this->onPrepareKey($end),$this->arr(),static::isSensitive()));
     }
@@ -603,7 +595,7 @@ class Map extends ArrMap
     // sliceIndex
     // permet de slice une ou plusieurs clés->valeurs de la map
     // utilise les clés offset et length
-    public function sliceIndex(int $offset,?int $length)
+    final public function sliceIndex(int $offset,?int $length)
     {
         return $this->onPrepareReturns(Base\Arr::sliceIndex($offset,$length,$this->arr()));
     }
@@ -698,7 +690,7 @@ class Map extends ArrMap
     // overwrite
     // remplace le contenu de la map par un tableau
     // possible de remplacer par une autre instance de map
-    public function overwrite($value):self
+    final public function overwrite($value):self
     {
         $this->checkAllowed('overwrite');
         $this->makeOverwrite($value);
@@ -709,7 +701,6 @@ class Map extends ArrMap
 
     // makeOverwrite
     // permet de faire un overwrite sur un objet sans avoir la permission dans allow
-    // méthode protégé
     protected function makeOverwrite($value):void
     {
         $return = $this->onPrepareThis('overwrite');
@@ -754,7 +745,7 @@ class Map extends ArrMap
 
     // isAllowed
     // retourne vrai si la méthode est permis par la classe
-    public static function isAllowed($value):bool
+    final public static function isAllowed($value):bool
     {
         $return = false;
 

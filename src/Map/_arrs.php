@@ -18,7 +18,7 @@ trait _arrs
     // onPrepareKey
     // prépare une clé pour une méthode comme get et slice
     // ne change pas les array
-    protected function onPrepareKey($return)
+    final protected function onPrepareKey($return)
     {
         if($return instanceof self)
         $return = $return;
@@ -33,7 +33,7 @@ trait _arrs
     // onPrepareReplace
     // méthode appelé avec le contenu des méthodes de remplacement
     // si le tableau de retour est unidimensionnel, passe dans sets pour que les clés avec un slash devinnent un tableau multidimensionnel
-    protected function onPrepareReplace($return)
+    final protected function onPrepareReplace($return)
     {
         $return = parent::onPrepareReplace($return);
 
@@ -46,7 +46,7 @@ trait _arrs
 
     // exists
     // version arrs de exists
-    public function exists(...$keys):bool
+    final public function exists(...$keys):bool
     {
         return Base\Arrs::keysExists($this->prepareKeys(...$keys),$this->arr(),static::isSensitive());
     }
@@ -54,7 +54,7 @@ trait _arrs
 
     // in
     // version arrs de in
-    public function in(...$values):bool
+    final public function in(...$values):bool
     {
         return Base\Arrs::ins($this->prepareValues(...$values),$this->arr(),static::isSensitive());
     }
@@ -62,7 +62,7 @@ trait _arrs
 
     // keys
     // version arrs de keys
-    public function keys($value=null):array
+    final public function keys($value=null):array
     {
         return Base\Arrs::keys($this->arr(),$this->onPrepareValue($value),static::isSensitive());
     }
@@ -70,7 +70,7 @@ trait _arrs
 
     // search
     // version arrs de search
-    public function search($value)
+    final public function search($value)
     {
         return Base\Arrs::search($this->onPrepareValue($value),$this->arr(),static::isSensitive());
     }
@@ -78,7 +78,7 @@ trait _arrs
 
     // values
     // version arrs de values
-    public function values($is=null):array
+    final public function values($is=null):array
     {
         return Base\Arrs::values($this->arr(),$is);
     }
@@ -86,7 +86,7 @@ trait _arrs
 
     // get
     // version arrs de get
-    public function get($key)
+    final public function get($key)
     {
         return $this->onPrepareReturn(Base\Arrs::get($this->onPrepareKey($key),$this->arr(),static::isSensitive()));
     }
@@ -94,7 +94,7 @@ trait _arrs
 
     // gets
     // version arrs de gets
-    public function gets(...$keys)
+    final public function gets(...$keys)
     {
         return $this->onPrepareReturns(Base\Arrs::gets($this->prepareKeys(...$keys),$this->arr(),static::isSensitive()));
     }
@@ -102,7 +102,7 @@ trait _arrs
 
     // index
     // version arrs de index
-    public function index($index)
+    final public function index($index)
     {
         return $this->onPrepareReturn(Base\Arrs::index($index,$this->arr()));
     }
@@ -110,7 +110,7 @@ trait _arrs
 
     // indexes
     // version arrs de indexes
-    public function indexes(...$indexes)
+    final public function indexes(...$indexes)
     {
         return $this->onPrepareReturns(Base\Arrs::indexes($indexes,$this->arr()));
     }
@@ -118,7 +118,7 @@ trait _arrs
 
     // set
     // version arrs de set
-    public function set($key,$value):Main\Map
+    final public function set($key,$value):Main\Map
     {
         $this->checkAllowed('set')->checkBefore(false,$value);
         $return = $this->onPrepareThis('set');
@@ -132,7 +132,7 @@ trait _arrs
 
     // unset
     // version arrs de unset
-    public function unset(...$keys):Main\Map
+    final public function unset(...$keys):Main\Map
     {
         $this->checkAllowed('unset');
         $return = $this->onPrepareThis('unset');
@@ -145,7 +145,7 @@ trait _arrs
     // replace
     // version arrs de replace
     // les valeurs doivent toutes être des tableaux après prepareReplaces
-    public function replace(...$values):Main\Map
+    final public function replace(...$values):Main\Map
     {
         $this->checkAllowed('replace');
         $return = $this->onPrepareThis('replace');
@@ -167,7 +167,7 @@ trait _arrs
 
     // remove
     // version arrs de remove
-    public function remove(...$values):Main\Map
+    final public function remove(...$values):Main\Map
     {
         $this->checkAllowed('remove');
         $return = $this->onPrepareThis('remove');
@@ -180,7 +180,7 @@ trait _arrs
 
     // sort
     // version arrs de keysSort
-    public function sort($sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):Main\Map
+    final public function sort($sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):Main\Map
     {
         $this->checkAllowed('sort');
         $return = $this->onPrepareThis('sort');
@@ -193,7 +193,7 @@ trait _arrs
 
     // sequential
     // version arrs de keysSequential
-    public function sequential():Main\Map
+    final public function sequential():Main\Map
     {
         $this->checkAllowed('sequential');
         $return = $this->onPrepareThis('sequential');

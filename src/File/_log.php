@@ -31,7 +31,7 @@ trait _log
     // log
     // crée une nouvelle entrée du log maintenant
     // et lance le logTrim
-    public static function log(...$values):?Main\Contract\Log
+    final public static function log(...$values):?Main\Contract\Log
     {
         $return = static::storage(...$values);
         static::logTrim();
@@ -42,7 +42,7 @@ trait _log
 
     // logTrim
     // trim le nombre de log dans le chemin par une valeur paramétré
-    public static function logTrim():?int
+    final public static function logTrim():?int
     {
         $return = null;
         $trim = static::$config['deleteTrim'];

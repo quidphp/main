@@ -22,7 +22,7 @@ class ImageRaster extends Image
 
     // captcha
     // écrit un captcha dans le fichier image
-    public function captcha(string $value,?string $font=null,?array $option=null):self
+    final public function captcha(string $value,?string $font=null,?array $option=null):self
     {
         Base\ImageRaster::captcha($value,$font,$this->resource(),$option);
 

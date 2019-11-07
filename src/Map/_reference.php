@@ -16,7 +16,7 @@ trait _reference
 {
     // construct
     // construit l'objet et attribue la référence
-    public function __construct(array &$value)
+    final public function __construct(array &$value)
     {
         $this->data =& $value;
 
@@ -26,7 +26,7 @@ trait _reference
 
     // onCheckArr
     // s'il y a is, fait une validation sur l'ensemble car l'original peut avoir changé
-    protected function onCheckArr():void
+    final protected function onCheckArr():void
     {
         if(!empty(static::$is) && !Base\Arr::validate(static::$is,$this->data))
         static::throw('onlyAccepts',static::$is);

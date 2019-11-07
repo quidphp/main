@@ -32,7 +32,7 @@ class Services extends Map
 
     // construct
     // construit l'objet services
-    public function __construct(?array $value=null)
+    final public function __construct(?array $value=null)
     {
         if(is_array($value))
         {
@@ -47,7 +47,7 @@ class Services extends Map
     // set
     // ajoute un rôle à l'objet roles
     // le init config de role est lancé avant l'ajout
-    public function set($key,$value):parent
+    final public function set($key,$value):parent
     {
         if(!is_string($key))
         static::throw('onlyStringKeyAllowed');
@@ -81,7 +81,7 @@ class Services extends Map
     // pairCastClean
     // retourne un tableau avec les valeurs de cast clean
     // donc les valeurs vides ne sont pas retournés
-    public function pairCastClean():array
+    final public function pairCastClean():array
     {
         return Base\Arr::clean($this->pair('cast'));
     }

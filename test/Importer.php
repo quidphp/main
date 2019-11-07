@@ -16,7 +16,7 @@ use Quid\Main;
 class Importer extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $source = Main\File::new('[assertCommon]/csv.csv',['toUtf8'=>true]);

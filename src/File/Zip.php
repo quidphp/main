@@ -29,7 +29,7 @@ class Zip extends Binary
     // retourne l'objet ZipArchive
     // créer l'objet si inexistant
     // une exception peut être envoyé si la resource n'est pas un vrai fichier
-    public function archive():\ZipArchive
+    final public function archive():\ZipArchive
     {
         $return = null;
 
@@ -55,7 +55,7 @@ class Zip extends Binary
 
     // commit
     // commit les changements à l'archive et enlève l'objet archive
-    public function commit():bool
+    final public function commit():bool
     {
         $return = $this->archive()->close();
         $this->archive = null;
@@ -66,7 +66,7 @@ class Zip extends Binary
 
     // all
     // retourne un tableau avec tous les fichiers contenus dans l'archive
-    public function all():array
+    final public function all():array
     {
         $return = [];
         $archive = $this->archive();
@@ -83,7 +83,7 @@ class Zip extends Binary
     // addFile
     // ajoute un fichier à l'archive
     // des exceptions peuvent être envoyés
-    public function addFile($value,?string $local=null,?array $option=null):bool
+    final public function addFile($value,?string $local=null,?array $option=null):bool
     {
         $return = false;
         $option = Base\Arr::plus(['safeBasename'=>false],$option);
@@ -121,7 +121,7 @@ class Zip extends Binary
 
     // addFiles
     // permet d'ajouter plusieurs fichiers à l'archive zip
-    public function addFiles($values,?string $local=null,?array $option=null):bool
+    final public function addFiles($values,?string $local=null,?array $option=null):bool
     {
         $return = false;
 
@@ -144,7 +144,7 @@ class Zip extends Binary
 
     // extract
     // extrait l'archive vers une destination
-    public function extract(string $value):bool
+    final public function extract(string $value):bool
     {
         return $this->archive()->extractTo(Base\Finder::normalize($value));
     }

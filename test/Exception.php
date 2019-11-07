@@ -16,7 +16,7 @@ use Quid\Main;
 class Exception extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $boot = $data['boot'];

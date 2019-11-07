@@ -36,7 +36,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // créer un nouvel objet exception sans le lancer
     // le code est déterminé dans la classe exception
     // message est passé dans base\exception message
-    public function __construct($message='',?\Throwable $previous=null,?array $attr=null,...$args)
+    final public function __construct($message='',?\Throwable $previous=null,?array $attr=null,...$args)
     {
         $this->makeAttr($attr);
         $this->setArgs(...$args);
@@ -48,7 +48,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // invoke
     // appel de l'exception, renvoie vers trigger
-    public function __invoke(...$args)
+    final public function __invoke(...$args)
     {
         return $this->trigger(...$args);
     }
@@ -56,7 +56,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // toString
     // retourne le output de l'exception
-    public function __toString():string
+    final public function __toString():string
     {
         return static::output($this);
     }
@@ -64,7 +64,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // cast
     // retourne le message de l'exception
-    public function _cast():string
+    final public function _cast():string
     {
         return $this->getMessage();
     }
@@ -72,8 +72,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // setArgs
     // conserve l'argument message dans le constructeur de l'exception
-    // méthode protégé
-    protected function setArgs(...$values):void
+    final protected function setArgs(...$values):void
     {
         $this->args = $values;
 
@@ -83,7 +82,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // args
     // retourne l'argument message dans le constructeur de l'exception
-    public function args():array
+    final public function args():array
     {
         return $this->args;
     }
@@ -92,7 +91,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // messageArgs
     // retourne le message mais en utilisant les arguments du constructeur de l'exception
     // retourne un tableau compatible avec l'objet lang
-    public function messageArgs():?array
+    final public function messageArgs():?array
     {
         $return = null;
         $args = $this->args();
@@ -119,7 +118,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // getMessageArgs
     // retourne le message passé dans lang si objet lang est fourni et s'il y a message args
     // sinon retourne le message normal
-    public function getMessageArgs(?Lang $lang=null,bool $default=true):string
+    final public function getMessageArgs(?Lang $lang=null,bool $default=true):string
     {
         $return = '';
 
@@ -152,7 +151,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // error
     // envoie à la classe error
-    public function error(?array $attr=null):Error
+    final public function error(?array $attr=null):Error
     {
         return Error::newOverload($this,null,$attr);
     }
@@ -160,7 +159,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // trigger
     // envoie à la classse error et trigge l'erreur
-    public function trigger(?array $attr=null):Error
+    final public function trigger(?array $attr=null):Error
     {
         $class = Error::getOverloadClass();
         $return = $class::exception($this,$attr);
@@ -171,7 +170,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // echoOutput
     // affiche le output de l'erreur de l'exception
-    public function echoOutput():void
+    final public function echoOutput():void
     {
         $this->error()->output();
 
@@ -182,7 +181,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // getOutput
     // envoie à la classe error, génère le output et retourne la string
     // ne crée pas d'entrée dans le log
-    public function getOutput():string
+    final public function getOutput():string
     {
         return $this->error()->getOutput();
     }
@@ -190,7 +189,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // log
     // envoie à la classe error et log l'exception selon les classes paramétrés dans error
-    public function log(?array $attr=null):self
+    final public function log(?array $attr=null):self
     {
         $this->error($attr)->log();
 
@@ -200,7 +199,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // com
     // envoie à la classe error et met l'error dans com
-    public function com(?array $attr=null):self
+    final public function com(?array $attr=null):self
     {
         $this->error($attr)->com();
 
@@ -208,10 +207,10 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     }
 
 
-    // onCatched
+    // catched
     // envoie à la classse error et trigge l'erreur
     // utilise les config catched (donc devrait générer une erreur silencieuse)
-    public function onCatched(?array $attr=null):Error
+    final public function catched(?array $attr=null):Error
     {
         return static::staticCatched($this,$attr);
     }
@@ -220,7 +219,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // throw
     // lance une nouvelle exception
     // ajoute la classe et méthode statique appelant au début du message de l'exception
-    public static function throw(...$values):void
+    final public static function throw(...$values):void
     {
         throw new static(Base\Exception::classFunction(Base\Debug::traceIndex(2),null,$values));
 
@@ -230,7 +229,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
     // stack
     // retourne les parents d'une throwable
-    public static function stack(\Throwable $throwable,bool $reverse=false):array
+    final public static function stack(\Throwable $throwable,bool $reverse=false):array
     {
         $return = [];
 
@@ -249,7 +248,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // output
     // permet de générer un output rapide à partir d'une throwable
     // utiliser pour le stack trace dans core/error
-    public static function output(\Throwable $throwable):string
+    final public static function output(\Throwable $throwable):string
     {
         $return = get_class($throwable);
         $return .= ' (#'.$throwable->getCode().') -> ';
@@ -264,8 +263,8 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
 
     // staticCatched
-    // permet d'attraper une exception non quid et de lui faire le traitement onCatched
-    public static function staticCatched(\Exception $exception,?array $attr=null):Error
+    // permet d'attraper une exception non quid et de lui faire le traitement catched
+    final public static function staticCatched(\Exception $exception,?array $attr=null):Error
     {
         $exceptionOption = ($exception instanceof self)? $exception->attr():null;
         $attr = Base\Arr::replace(static::$config,$exceptionOption,$attr);

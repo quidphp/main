@@ -16,7 +16,7 @@ use Quid\Main;
 class Calendar extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $cal = new Main\Calendar([2018,12]);

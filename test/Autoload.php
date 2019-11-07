@@ -16,7 +16,7 @@ use Quid\Main;
 class Autoload extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $a = new Main\Autoload('alias');

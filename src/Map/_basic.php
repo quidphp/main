@@ -16,7 +16,7 @@ trait _basic
 {
     // isIndexed
     // retourne vrai si la map est vide ou contient seulement des clés numériques
-    public function isIndexed():bool
+    final public function isIndexed():bool
     {
         return Base\Arr::isIndexed($this->arr());
     }
@@ -24,7 +24,7 @@ trait _basic
 
     // isSequential
     // retourne vrai si la map est séquentielle
-    public function isSequential():bool
+    final public function isSequential():bool
     {
         return Base\Arr::isSequential($this->arr());
     }
@@ -32,7 +32,7 @@ trait _basic
 
     // isAssoc
     // retourne vrai si le tableau est vide ou associatif
-    public function isAssoc():bool
+    final public function isAssoc():bool
     {
         return Base\Arr::isAssoc($this->arr());
     }
@@ -40,7 +40,7 @@ trait _basic
 
     // hasNumericKey
     // retourne vrai si la map contient au moins une clé numérique, retourne faux si vide
-    public function hasNumericKey():bool
+    final public function hasNumericKey():bool
     {
         return Base\Arr::hasNumericKey($this->arr());
     }
@@ -48,7 +48,7 @@ trait _basic
 
     // hasNonNumericKey
     // retourne vrai si la map contient au moins une clé non numérique, retourne faux si vide
-    public function hasNonNumericKey():bool
+    final public function hasNonNumericKey():bool
     {
         return Base\Arr::hasNonNumericKey($this->arr());
     }
@@ -56,7 +56,7 @@ trait _basic
 
     // hasKeyCaseConflict
     // retourne vrai si la map contient au moins une clé en conflit de case si insensible à la case
-    public function hasKeyCaseConflict():bool
+    final public function hasKeyCaseConflict():bool
     {
         return Base\Arr::hasKeyCaseConflict($this->arr());
     }
@@ -64,7 +64,7 @@ trait _basic
 
     // isUni
     // retourne vrai si la map est vide ou unidimensionnel
-    public function isUni():bool
+    final public function isUni():bool
     {
         return Base\Arr::isUni($this->arr());
     }
@@ -72,7 +72,7 @@ trait _basic
 
     // isMulti
     // retourne vrai si la map est multidimensionnel, retourne faux si vide
-    public function isMulti():bool
+    final public function isMulti():bool
     {
         return Base\Arr::isMulti($this->arr());
     }
@@ -80,7 +80,7 @@ trait _basic
 
     // onlyNumeric
     // retourne vrai si la map est vide ou a seulement des clés et valeurs numérique
-    public function onlyNumeric():bool
+    final public function onlyNumeric():bool
     {
         return Base\Arr::onlyNumeric($this->arr());
     }
@@ -88,7 +88,7 @@ trait _basic
 
     // isSet
     // retourne vrai si la map est vide ou contient seulement des clés numériques et valeurs scalar
-    public function isSet():bool
+    final public function isSet():bool
     {
         return Base\Arr::isSet($this->arr());
     }

@@ -16,7 +16,7 @@ use Quid\Main;
 class Insert extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $i = new Main\Insert(['ok'=>2]);

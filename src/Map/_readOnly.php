@@ -20,7 +20,7 @@ trait _readOnly
 
     // clone
     // ramène readOnly à false sur clone
-    public function __clone()
+    final public function __clone()
     {
         $this->readOnly(false);
 
@@ -30,7 +30,7 @@ trait _readOnly
 
     // isReadOnly
     // retourne vrai si l'objet est en mode readOnly
-    public function isReadOnly():bool
+    final public function isReadOnly():bool
     {
         return $this->readOnly;
     }
@@ -38,7 +38,7 @@ trait _readOnly
 
     // readOnly
     // active ou désactive le mode readOnly
-    public function readOnly(bool $readOnly=true):Main\Map
+    final public function readOnly(bool $readOnly=true):Main\Map
     {
         $this->readOnly = $readOnly;
 
@@ -48,7 +48,7 @@ trait _readOnly
 
     // checkReadOnly
     // retourne l'objet si l'objet n'est pas readOnly, sinon lance une exception
-    protected function checkReadOnly():Main\Map
+    final protected function checkReadOnly():Main\Map
     {
         if($this->isReadOnly())
         static::throw();
@@ -60,7 +60,7 @@ trait _readOnly
     // checkAllowed
     // retourne l'objet si la méthode est permis, sinon lance une exception
     // exception non envoyé si c'est pour jsonSerialize, serialize ou clone
-    protected function checkAllowed(string ...$values):Main\Map
+    final protected function checkAllowed(string ...$values):Main\Map
     {
         foreach ($values as $value)
         {
@@ -77,7 +77,7 @@ trait _readOnly
 
     // allowedReadOnlyMethods
     // retourne les méthodes permises même si readOnly est true
-    public static function allowedReadOnlyMethods():array
+    final public static function allowedReadOnlyMethods():array
     {
         return ['filter','jsonSerialize','serialize','clone'];
     }

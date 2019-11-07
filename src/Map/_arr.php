@@ -17,7 +17,7 @@ trait _arr
 {
     // are
     // retourne vrai si les clés fournis sont l'ensemble des clés de la map
-    public function are(...$keys):bool
+    final public function are(...$keys):bool
     {
         return Base\Arr::keysAre($this->prepareKeys(...$keys),$this->arr(),static::isSensitive());
     }
@@ -26,7 +26,7 @@ trait _arr
     // append
     // ajoute une ou plusieurs valeurs à la fin du tableau
     // si la valeur est un tableau, les clés sont ajoutés au premier niveau de la map
-    public function append(...$values):Main\Map
+    final public function append(...$values):Main\Map
     {
         $this->checkAllowed('append');
         $return = $this->onPrepareThis('append');
@@ -43,7 +43,7 @@ trait _arr
     // prepend
     // ajoute une ou plusieurs valeurs au début du tableau
     // si la valeur est un tableau, les clés sont ajoutés au premier niveau de la map
-    public function prepend(...$values):Main\Map
+    final public function prepend(...$values):Main\Map
     {
         $this->checkAllowed('prepend');
         $return = $this->onPrepareThis('prepend');
@@ -60,7 +60,7 @@ trait _arr
     // pop
     // enlève une ou plusieurs valeurs à la fin du tableau
     // retourne les valeurs enlevés
-    public function pop(int $amount=1)
+    final public function pop(int $amount=1)
     {
         $this->checkAllowed('pop');
         $r = $this->onPrepareThis('pop');
@@ -75,7 +75,7 @@ trait _arr
     // shift
     // enlève une ou plusieurs valeurs au début du tableau
     // retourne les valeurs enlevés
-    public function shift(int $amount=1)
+    final public function shift(int $amount=1)
     {
         $this->checkAllowed('shift');
         $r = $this->onPrepareThis('shift');
@@ -90,7 +90,7 @@ trait _arr
     // replace
     // fait un merge replace avec d'autres valeurs
     // les valeurs doivent toutes être des tableaux après prepareReplaces
-    public function replace(...$values):Main\Map
+    final public function replace(...$values):Main\Map
     {
         $this->checkAllowed('replace');
         $return = $this->onPrepareThis('replace');
@@ -112,7 +112,7 @@ trait _arr
 
     // splice
     // efface et remplace des slices de la map en utilisant start et end
-    public function splice($start,$end,$replace=null):Main\Map
+    final public function splice($start,$end,$replace=null):Main\Map
     {
         $this->checkAllowed('splice');
         $return = $this->onPrepareThis('splice');
@@ -136,7 +136,7 @@ trait _arr
 
     // spliceIndex
     // efface et remplace des slices de la map en utilisant offset et length
-    public function spliceIndex(int $offset,?int $length,$replace=null):Main\Map
+    final public function spliceIndex(int $offset,?int $length,$replace=null):Main\Map
     {
         $this->checkAllowed('splice','index');
         $return = $this->onPrepareThis('splice');
@@ -160,7 +160,7 @@ trait _arr
 
     // insert
     // effectue un remplacement via la méthode splice, n'enlève aucune rangée du tableau
-    public function insert($start,$replace):Main\Map
+    final public function insert($start,$replace):Main\Map
     {
         $this->checkAllowed('insert');
         $return = $this->onPrepareThis('insert');
@@ -183,7 +183,7 @@ trait _arr
 
     // insertIndex
     // effectue un remplacement via la méthode spliceIndex, n'enlève aucune rangée de la map
-    public function insertIndex(int $offset,$replace):Main\Map
+    final public function insertIndex(int $offset,$replace):Main\Map
     {
         $this->checkAllowed('insert','index');
         $return = $this->onPrepareThis('insert');

@@ -74,7 +74,7 @@ class Lang extends Map
 
     // construct
     // construit l'objet lang, fournir toutes les langs sans contenu en premier argument
-    public function __construct($all,?array $attr=null)
+    final public function __construct($all,?array $attr=null)
     {
         $this->makeAttr($attr);
         $this->setLang(null,$all);
@@ -85,7 +85,7 @@ class Lang extends Map
 
     // invoke
     // invoke est utiliser comme alias de getAppend
-    public function __invoke(...$args)
+    final public function __invoke(...$args)
     {
         return $this->getAppend(...$args);
     }
@@ -93,8 +93,7 @@ class Lang extends Map
 
     // onPrepareSetInst
     // méthode appeler lors de setInst
-    // méthode protégé
-    protected function onPrepareSetInst():void
+    final protected function onPrepareSetInst():void
     {
         if(Base\Lang::hasCallable())
         static::throw('baseLangAlreadyHasAnInst');
@@ -105,8 +104,7 @@ class Lang extends Map
 
     // onSetInst
     // callback après l'ajout de lang dans inst
-    // méthode protégé
-    protected function onSetInst():void
+    final protected function onSetInst():void
     {
         Base\Lang::setCallable($this->getCallable());
         $this->onChange();
@@ -120,8 +118,7 @@ class Lang extends Map
 
     // onPrepareUnsetInst
     // méthode appeler lors de unsetInst
-    // méthode protégé
-    protected function onPrepareUnsetInst():void
+    final protected function onPrepareUnsetInst():void
     {
         if(!Base\Lang::hasCallable())
         static::throw('baseLangDoesNotHaveAPrimary');
@@ -135,8 +132,7 @@ class Lang extends Map
 
     // onUnsetInst
     // callback après le retrait de lang de inst
-    // méthode protégé
-    protected function onUnsetInst():void
+    final protected function onUnsetInst():void
     {
         Base\Lang::unsetCallable();
 
@@ -150,7 +146,6 @@ class Lang extends Map
     // onChange
     // callback après un ajout, rettait ou changement de langue
     // déclenche root lang set si l'objet est primaire et valide
-    // méthode protégé
     protected function onChange():void
     {
         if($this->inInst())
@@ -165,7 +160,7 @@ class Lang extends Map
 
     // onPrepareReplace
     // prépare le contenu pour une méthode de remplacement comme overwrite, replace ou splice
-    protected function onPrepareReplace($value)
+    final protected function onPrepareReplace($value)
     {
         return parent::onPrepareReplace(Base\Lang::content($value));
     }
@@ -174,7 +169,7 @@ class Lang extends Map
     // baseCall
     // méthode utiliser par baseLang
     // appel une méthode de la classe qui peut retourner un array ou une valeur
-    public function baseCall(string $method,...$args)
+    final public function baseCall(string $method,...$args)
     {
         return $this->$method(...$args);
     }
@@ -184,7 +179,7 @@ class Lang extends Map
     // retourne une référence du tableau à la langue courante, possibilité de spécifier la langue
     // lance la méthode load si le contenu de lang est null
     // méthode protégé pour empêcher des modifications de l'objet par l'extérieur
-    protected function &arr(?string $lang=null):array
+    final protected function &arr(?string $lang=null):array
     {
         $return = [];
         $this->onCheckArr();
@@ -209,7 +204,7 @@ class Lang extends Map
     // permet de charger le contenu d'une lang
     // la méthode utilise la callback onLoad défini dans les options
     // une exception est envoyé si la lang n'existe pas
-    public function load(string $value):self
+    final public function load(string $value):self
     {
         $this->checkLang($value);
         $value = Base\Lang::prepareCode($value);
@@ -232,7 +227,7 @@ class Lang extends Map
 
     // isLang
     // retourne vrai si la valeur est une lang de l'objet
-    public function isLang($value):bool
+    final public function isLang($value):bool
     {
         $return = false;
         $value = Base\Lang::prepareCode($value);
@@ -246,7 +241,7 @@ class Lang extends Map
 
     // checkLang
     // envoie une exception si la langue n'existe pas dans l'objet
-    public function checkLang($value):self
+    final public function checkLang($value):self
     {
         if(!$this->isLang($value))
         static::throw();
@@ -257,7 +252,7 @@ class Lang extends Map
 
     // isLangLoaded
     // retourne vrai si la lang existe et le contenu a été chargé
-    public function isLangLoaded($value):bool
+    final public function isLangLoaded($value):bool
     {
         $return = false;
 
@@ -273,7 +268,7 @@ class Lang extends Map
 
     // isCurrent
     // retourne vrai si la langue courante est la valeur
-    public function isCurrent($value):bool
+    final public function isCurrent($value):bool
     {
         return (Base\Lang::prepareCode($value) === $this->currentLang())? true:false;
     }
@@ -281,7 +276,7 @@ class Lang extends Map
 
     // isOther
     // retourne vrai si la langue est dans l'objet et n'est pas la langue courante
-    public function isOther($value):bool
+    final public function isOther($value):bool
     {
         return ($this->isLang($value) && !$this->isCurrent($value))? true:false;
     }
@@ -289,7 +284,7 @@ class Lang extends Map
 
     // currentLang
     // retourne la langue courante de l'objet
-    public function currentLang():string
+    final public function currentLang():string
     {
         return $this->current;
     }
@@ -297,7 +292,7 @@ class Lang extends Map
 
     // defaultLang
     // retourne la langue par défaut de l'objet
-    public function defaultLang():string
+    final public function defaultLang():string
     {
         return current($this->allLang());
     }
@@ -306,7 +301,7 @@ class Lang extends Map
     // otherLang
     // retourne une langue autre par index ou string
     // possibilité de mettre une autre langue courante en deuxième argument
-    public function otherLang($arg=0,?string $value=null):?string
+    final public function otherLang($arg=0,?string $value=null):?string
     {
         $return = null;
         $others = $this->othersLang($value);
@@ -325,7 +320,7 @@ class Lang extends Map
     // othersLang
     // retourne le tableau des autres langues
     // possibilité de mettre une autre langue courante en deuxième argument
-    public function othersLang(?string $value=null):array
+    final public function othersLang(?string $value=null):array
     {
         $return = [];
         $value = $this->codeLang($value);
@@ -338,7 +333,7 @@ class Lang extends Map
 
     // allLang
     // retourne toutes les langs de l'objet
-    public function allLang()
+    final public function allLang()
     {
         return array_keys($this->data);
     }
@@ -346,7 +341,7 @@ class Lang extends Map
 
     // countLang
     // retourne le nombre de lang dans l'objet
-    public function countLang():int
+    final public function countLang():int
     {
         return count($this->allLang());
     }
@@ -354,7 +349,7 @@ class Lang extends Map
 
     // codeLang
     // retourne le code formatté ou la langue courante si le code formatté est invalide
-    public function codeLang(?string $value=null):string
+    final public function codeLang(?string $value=null):string
     {
         $return = Base\Lang::prepareCode($value);
 
@@ -369,7 +364,7 @@ class Lang extends Map
     // permet d'ajouter les langues et de changer la langue courante
     // vide le tableau all avant de faire l'ajout et changement
     // exception envoyé en cas d'erreur
-    public function setLang(?string $value,$all):self
+    final public function setLang(?string $value,$all):self
     {
         $current = Base\Lang::prepareCode($value);
 
@@ -398,7 +393,7 @@ class Lang extends Map
     // ajoute une ou plusieurs langues
     // exception envoyé en cas d'erreur
     // callback onChange lancé pour chaque ajout
-    public function addLang(string ...$values):self
+    final public function addLang(string ...$values):self
     {
         foreach ($values as $value)
         {
@@ -422,7 +417,7 @@ class Lang extends Map
     // enlève une ou plusieurs langues
     // exception envoyé en cas d'erreur ou si on tente d'enlever la langue courante
     // callback onChange lancé pour chaque retrait
-    public function removeLang(string ...$values):self
+    final public function removeLang(string ...$values):self
     {
         foreach ($values as $value)
         {
@@ -452,7 +447,7 @@ class Lang extends Map
     // change la langue courante si la nouvelle lang existe et n'est pas la courante
     // exception envoyé en cas de langue non existante, pas d'erreur si on change pour la langue courante
     // callback onChange lancé en cas de succès
-    public function changeLang(string $value):self
+    final public function changeLang(string $value):self
     {
         $value = Base\Lang::prepareCode($value);
         $current = $this->current;
@@ -475,7 +470,7 @@ class Lang extends Map
 
     // getCallable
     // retourne la callable à utiliser pour BaseLang
-    public function getCallable():callable
+    final public function getCallable():callable
     {
         return [$this,'baseCall'];
     }
@@ -483,7 +478,7 @@ class Lang extends Map
 
     // checkInst
     // envoie une exception si l'objet n'est pas la primaire ou si BaseLang a une autre primaire
-    public function checkInst():self
+    final public function checkInst():self
     {
         if(!($this->inInst() && Base\Lang::isCallable($this->getCallable())))
         static::throw('objectIsNotPrimary',(Base\Lang::hasCallable())? 'baseLangHasAnotherPrimary':'baseLangHasNoPrimary');
@@ -496,7 +491,7 @@ class Lang extends Map
     // permet de prendre une valeur dans la langue courante ou une autre langue
     // cette méthode est la base des méthodes textes plus avancés
     // la clé est passé dans onPrepareKey qui est passé dans base/obj Cast
-    public function take($key,?string $lang=null)
+    final public function take($key,?string $lang=null)
     {
         return Base\Arrs::get($this->onPrepareKey($key),$this->arr($lang));
     }
@@ -504,7 +499,7 @@ class Lang extends Map
 
     // existsAppend
     // vérifie si une valeur existe dans la langue courante après avoir append plusieurs clés en argument
-    public function existsAppend(...$keys):bool
+    final public function existsAppend(...$keys):bool
     {
         $return = false;
         $append = Base\Arrs::keyPrepares(...$this->prepareKeys(...$keys));
@@ -518,7 +513,7 @@ class Lang extends Map
 
     // existsTake
     // vérifie si une valeur existe, possibilité de mettre la langue en deuxième argument
-    public function existsTake($key,?string $lang=null):bool
+    final public function existsTake($key,?string $lang=null):bool
     {
         return Base\Arrs::keyExists($this->onPrepareKey($key),$this->arr($lang));
     }
@@ -526,7 +521,7 @@ class Lang extends Map
 
     // existsText
     // vérifie si une valeur existe et est scalar, possibilité de mettre la langue en deuxième argument
-    public function existsText($key,?string $lang=null):bool
+    final public function existsText($key,?string $lang=null):bool
     {
         return (is_scalar($this->take($key,$lang)))? true:false;
     }
@@ -534,7 +529,7 @@ class Lang extends Map
 
     // existsTextAppend
     // vérifie si une valeur existe et est scalar après avoir append tous les arguments
-    public function existsTextAppend(...$keys):bool
+    final public function existsTextAppend(...$keys):bool
     {
         $return = false;
         $append = Base\Arrs::keyPrepares(...$this->prepareKeys(...$keys));
@@ -548,7 +543,7 @@ class Lang extends Map
 
     // takes
     // retourne plusieurs éléments du tableau de langue
-    public function takes(array $keys,?string $lang=null):array
+    final public function takes(array $keys,?string $lang=null):array
     {
         $return = [];
 
@@ -565,7 +560,7 @@ class Lang extends Map
     // takeUnpack
     // retourne un élément de langue
     // l'argument est un tableau pack
-    public function takeUnpack(array $array)
+    final public function takeUnpack(array $array)
     {
         return $this->take(...array_values($array));
     }
@@ -573,7 +568,7 @@ class Lang extends Map
 
     // getAppend
     // permet de faire un appel à get après avoir append tous les arguments
-    public function getAppend(...$keys)
+    final public function getAppend(...$keys)
     {
         $return = null;
         $append = Base\Arrs::keyPrepares(...$this->prepareKeys(...$keys));
@@ -587,7 +582,7 @@ class Lang extends Map
 
     // getAll
     // retourne l'élément dans toutes les langues
-    public function getAll($key):array
+    final public function getAll($key):array
     {
         $return = [];
 
@@ -602,7 +597,7 @@ class Lang extends Map
 
     // getOthers
     // retourne l'élément dans toutes les autres langues que la courante
-    public function getOthers($key):array
+    final public function getOthers($key):array
     {
         $return = [];
 
@@ -619,7 +614,7 @@ class Lang extends Map
     // retourne un élément de langue
     // permet le replace et les options
     // la méthode doit retourner string, cast automatiquement les scalar en string
-    public function text($key,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function text($key,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         $return = null;
         $option = $this->textOption($option);
@@ -658,7 +653,7 @@ class Lang extends Map
     // textAfter
     // gère les options html et pattern pour une string texte
     // gère aussi les options case
-    public function textAfter(string $return,?array $option=null):string
+    final public function textAfter(string $return,?array $option=null):string
     {
         if(!empty($option['case']) && is_string($option['case']))
         {
@@ -688,7 +683,7 @@ class Lang extends Map
 
     // textOption
     // retourne le tableau d'option pour la méthode text
-    public function textOption(?array $option=null):array
+    final public function textOption(?array $option=null):array
     {
         return Base\Arr::plus($this->getAttr('text'),$option);
     }
@@ -696,8 +691,7 @@ class Lang extends Map
 
     // textReplace
     // gère le remplacement pour une requête text réussie
-    // méthode protégé
-    protected function textReplace(array $replace,string $return,array $option):string
+    final protected function textReplace(array $replace,string $return,array $option):string
     {
         if(!empty($replace))
         {
@@ -719,8 +713,7 @@ class Lang extends Map
 
     // textNotFound
     // gère le résultat d'une requête text non trouvé
-    // méthode protégé
-    protected function textNotFound($key,?array $replace=null,?string $lang=null,array $option):?string
+    final protected function textNotFound($key,?array $replace=null,?string $lang=null,array $option):?string
     {
         $return = null;
         $key = Base\Arrs::keyPrepare($key);
@@ -770,7 +763,7 @@ class Lang extends Map
     // textAppendOne
     // permet de faire un appel à text avec deux arguments key qui sont append
     // possibilité de changer replace, lang et option
-    public function textAppendOne($key,$key2,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function textAppendOne($key,$key2,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         $return = null;
         $append = Base\Arrs::keyPrepares($key,$key2);
@@ -785,7 +778,7 @@ class Lang extends Map
     // textAppend
     // permet de faire un appel à text avec un nombre illimité d'arguments qui s'append
     // pas de possibilité de changer replace, lang ou option
-    public function textAppend(...$keys):?string
+    final public function textAppend(...$keys):?string
     {
         $return = null;
         $append = Base\Arrs::keyPrepares(...$keys);
@@ -800,7 +793,7 @@ class Lang extends Map
     // textUnpack
     // retourne un élément de langue text avec possibilité de replace et option
     // l'argument est un tableau pack
-    public function textUnpack(array $array):?string
+    final public function textUnpack(array $array):?string
     {
         return $this->text(...array_values($array));
     }
@@ -808,7 +801,7 @@ class Lang extends Map
 
     // textAll
     // retourne un élément text dans toutes les langues
-    public function textAll($key,?array $replace=null,?array $option=null):array
+    final public function textAll($key,?array $replace=null,?array $option=null):array
     {
         $return = [];
 
@@ -823,7 +816,7 @@ class Lang extends Map
 
     // textOthers
     // retourne un élément text dans toutes les autres langues que la courante
-    public function textOthers($key,?array $replace=null,?array $option=null):array
+    final public function textOthers($key,?array $replace=null,?array $option=null):array
     {
         $return = [];
 
@@ -842,7 +835,7 @@ class Lang extends Map
     // value peut être int ou array
     // le premier remplacement est remplacement de segment
     // l'argument plural est le remplacement pour pluriel
-    public function plural($value,$key,?array $replace=null,?array $plural=null,?string $lang=null,?array $option=null):?string
+    final public function plural($value,$key,?array $replace=null,?array $plural=null,?string $lang=null,?array $option=null):?string
     {
         return Base\Str::plural($value,$this->text($key,$replace,$lang,$option),$plural,null,$this->getAttr('wrapPluralKeys'));
     }
@@ -851,7 +844,7 @@ class Lang extends Map
     // html
     // fait une méthode text
     // le résultat valide est passé dans Base\Html::arg
-    public function html($html,$key,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function html($html,$key,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['html'=>$html]));
     }
@@ -860,7 +853,7 @@ class Lang extends Map
     // pattern
     // fait une méthode text
     // le résultat valide est remplacé dans une string pattern
-    public function pattern($pattern,$key,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function pattern($pattern,$key,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['pattern'=>$pattern]));
     }
@@ -869,7 +862,7 @@ class Lang extends Map
     // strict
     // fait une méthode text
     // le résultat doit être valide ou une exception est envoyé
-    public function strict($key,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function strict($key,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['notFound'=>true,'error'=>true,'def'=>false,'same'=>false,'alt'=>null,'other'=>null]));
     }
@@ -878,7 +871,7 @@ class Lang extends Map
     // safe
     // fait une méthode text
     // retourne null si introuvé, aucune erreur envoyé
-    public function safe($key,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function safe($key,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['error'=>false]));
     }
@@ -887,7 +880,7 @@ class Lang extends Map
     // alt
     // fait une méthode text
     // si le résultat est invalide, fait une requête alternative
-    public function alt($key,$alt,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function alt($key,$alt,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['alt'=>$alt]));
     }
@@ -896,7 +889,7 @@ class Lang extends Map
     // other
     // fait une méthode text
     // si le résultat est invalide, fait la requête dans une autre langue
-    public function other($key,$other=0,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function other($key,$other=0,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['other'=>$other]));
     }
@@ -905,7 +898,7 @@ class Lang extends Map
     // def
     // fait une méthode text
     // si le résultat est invalide, retourne la clé entière sous forme de string entouré de bracket
-    public function def($key,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function def($key,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['def'=>true]));
     }
@@ -914,7 +907,7 @@ class Lang extends Map
     // same
     // fait une méthode text
     // si le résultat est invalide, retourne la clé entière sous forme de string
-    public function same($key,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function same($key,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['same'=>true]));
     }
@@ -923,7 +916,7 @@ class Lang extends Map
     // translate
     // traduit une valeur d'une langue à une autre
     // retourne un tableau clé -> valeur de toutes les valeurs traduitent
-    public function translate($value,$other=0,?string $lang=null):?array
+    final public function translate($value,$other=0,?string $lang=null):?array
     {
         $return = null;
         $other = $this->otherLang($other,$lang);
@@ -944,7 +937,7 @@ class Lang extends Map
     // retourne un format numérique lié à la classe base/number
     // si key est vide, retourne tout le tableau numberFormat
     // ne lance pas d'erreur si introuvable
-    public function numberFormat(?string $key=null,?string $lang=null)
+    final public function numberFormat(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('numberFormat',$key),$lang);
     }
@@ -954,7 +947,7 @@ class Lang extends Map
     // retourne un format numérique de pourcentage lié à la classe base/number
     // si key est vide, retourne tout le tableau numberFormat
     // ne lance pas d'erreur si introuvable
-    public function numberPercentFormat(?string $key=null,?string $lang=null)
+    final public function numberPercentFormat(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('numberPercentFormat',$key),$lang);
     }
@@ -964,7 +957,7 @@ class Lang extends Map
     // retourne un format monétaire lié à la classe base/number
     // si key est vide, retourne tout le tableau numberMoneyFormat
     // ne lance pas d'erreur si introuvable
-    public function numberMoneyFormat(?string $key=null,?string $lang=null)
+    final public function numberMoneyFormat(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('numberMoneyFormat',$key),$lang);
     }
@@ -974,7 +967,7 @@ class Lang extends Map
     // retourne un format de taille lié à la classe base/number
     // si key est vide, retourne tout le tableau numberPhoneFormat
     // ne lance pas d'erreur si introuvable
-    public function numberPhoneFormat(?string $key=null,?string $lang=null)
+    final public function numberPhoneFormat(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('numberPhoneFormat',$key),$lang);
     }
@@ -984,7 +977,7 @@ class Lang extends Map
     // retourne un format de taille lié à la classe base/number
     // si key est vide, retourne tout le tableau numberSizeFormat
     // ne lance pas d'erreur si introuvable
-    public function numberSizeFormat(?string $key=null,?string $lang=null)
+    final public function numberSizeFormat(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('numberSizeFormat',$key),$lang);
     }
@@ -993,7 +986,7 @@ class Lang extends Map
     // dateMonth
     // retourne un nom de mois lié à la classe base/date à partir du tableau de langue
     // si key est vide, retourne tout le tableau dateMonth
-    public function dateMonth(?int $key=null,?string $lang=null)
+    final public function dateMonth(?int $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('dateMonth',$key),$lang);
     }
@@ -1003,7 +996,7 @@ class Lang extends Map
     // retourne un format de date lié à la classe base/date
     // si key est vide, retourne tout le tableau dateFormat
     // ne lance pas d'erreur si introuvable
-    public function dateFormat(?int $key=null,?string $lang=null)
+    final public function dateFormat(?int $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('dateFormat',$key),$lang);
     }
@@ -1012,7 +1005,7 @@ class Lang extends Map
     // dateStr
     // retourne un text dateStr lié à la classe base/date à partir du tableau de langue
     // si key est vide, retourne tout le tableau dateStr
-    public function dateStr(?string $key=null,?string $lang=null)
+    final public function dateStr(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('dateStr',$key),$lang);
     }
@@ -1021,7 +1014,7 @@ class Lang extends Map
     // datePlaceholder
     // retourne un text dateStr lié à la classe base/date à partir du tableau de langue
     // si key est vide, retourne tout le tableau datePlaceholder
-    public function datePlaceholder(?string $key=null,?string $lang=null)
+    final public function datePlaceholder(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('datePlaceholder',$key),$lang);
     }
@@ -1030,7 +1023,7 @@ class Lang extends Map
     // dateDay
     // retourne nom de jour lié à la classe base/date à partir du tableau de langue
     // si key est vide, retourne tout le tableau dateDay
-    public function dateDay(?string $key=null,?string $lang=null)
+    final public function dateDay(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('dateDay',$key),$lang);
     }
@@ -1039,7 +1032,7 @@ class Lang extends Map
     // dateDayShort
     // retourne un nom de jour court lié à la classe base/date à partir du tableau de langue
     // si key est vide, retourne tout le tableau dateDayShort
-    public function dateDayShort(?string $key=null,?string $lang=null)
+    final public function dateDayShort(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('dateDayShort',$key),$lang);
     }
@@ -1048,7 +1041,7 @@ class Lang extends Map
     // headerResponseStatus
     // retourne un nom statut de réponse lié à la classe base/header à partir du tableau de langue
     // si key est vide, retourne tout le tableau headerResponseStatus
-    public function headerResponseStatus(?int $key=null,?string $lang=null)
+    final public function headerResponseStatus(?int $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('headerResponseStatus',$key),$lang);
     }
@@ -1058,7 +1051,7 @@ class Lang extends Map
     // retourne un code d'erreur lié à la classe base/error
     // si key est vide, retourne tout le tableau errorCode
     // ne lance pas d'erreur si introuvable
-    public function errorCode(?int $key=null,?string $lang=null)
+    final public function errorCode(?int $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('errorCode',$key),$lang);
     }
@@ -1068,7 +1061,7 @@ class Lang extends Map
     // retourne un nom d'erreur lié à la classe base/error
     // si key est vide, retourne tout le tableau errorLabel
     // ne lance pas d'erreur si introuvable
-    public function errorLabel(?int $key=null,?string $lang=null)
+    final public function errorLabel(?int $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('errorLabel',$key),$lang);
     }
@@ -1078,7 +1071,7 @@ class Lang extends Map
     // retourne un texte de communication, le type doit être spécifié
     // path peut être string ou array
     // utilise def, donc aucune erreur envoyé si inexistant
-    public function com(string $type,$path,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function com(string $type,$path,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->safe($this->getPath('com',[$type,$path]),$replace,$lang,$option);
     }
@@ -1088,7 +1081,7 @@ class Lang extends Map
     // retourne un texte de communication positif
     // path peut être string ou array
     // utilise def, donc aucune erreur envoyé si inexistant
-    public function pos($path,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function pos($path,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->def($this->getPath('pos',$path),$replace,$lang,$option);
     }
@@ -1098,7 +1091,7 @@ class Lang extends Map
     // retourne un texte de communication négatif
     // path peut être string ou array
     // utilise def, donc aucune erreur envoyé si inexistant
-    public function neg($path,?array $replace=null,?string $lang=null,?array $option=null):?string
+    final public function neg($path,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->def($this->getPath('neg',$path),$replace,$lang,$option);
     }
@@ -1107,7 +1100,7 @@ class Lang extends Map
     // getPath
     // retourne un chemin pour pour aller chercher un type de text dans un objet lang
     // retourne une string
-    public function getPath(string $type,$append=null):string
+    final public function getPath(string $type,$append=null):string
     {
         $return = $this->getAttr(['path',$type]);
 

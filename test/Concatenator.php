@@ -16,7 +16,7 @@ use Quid\Main;
 class Concatenator extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $target = '[assertCurrent]/concatenate.php';

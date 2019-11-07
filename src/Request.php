@@ -116,7 +116,7 @@ class Request extends Map
 
     // invoke
     // retourne une des propriétés de l'objet via une des méthodes get
-    public function __invoke(...$args)
+    final public function __invoke(...$args)
     {
         $return = null;
 
@@ -137,7 +137,7 @@ class Request extends Map
 
     // toString
     // retourne la méthode output cast en string
-    public function __toString():string
+    final public function __toString():string
     {
         return Base\Str::cast($this->output());
     }
@@ -145,8 +145,7 @@ class Request extends Map
 
     // onSetInst
     // méthode appeler après setInst
-    // méthode protégé
-    protected function onSetInst():void
+    final protected function onSetInst():void
     {
         $this->readOnly(true);
 
@@ -156,8 +155,7 @@ class Request extends Map
 
     // onUnsetInst
     // méthode appeler après unsetInst
-    // méthode protégé
-    protected function onUnsetInst():void
+    final protected function onUnsetInst():void
     {
         $this->readOnly(false);
 
@@ -167,7 +165,7 @@ class Request extends Map
 
     // cast
     // retourne la valeur cast, la méthode output
-    public function _cast():string
+    final public function _cast():string
     {
         return $this->output();
     }
@@ -175,7 +173,7 @@ class Request extends Map
 
     // toArray
     // retourne tout l'objet sous forme de tableau
-    public function toArray():array
+    final public function toArray():array
     {
         return get_object_vars($this);
     }
@@ -184,7 +182,7 @@ class Request extends Map
     // jsonSerialize
     // json serialize la requête avec le id
     // retourne save info
-    public function jsonSerialize():array
+    final public function jsonSerialize():array
     {
         $this->checkAllowed('jsonSerialize');
         return $this->safeInfo(true);
@@ -193,7 +191,7 @@ class Request extends Map
 
     // isLive
     // retourne vrai si la requête est live
-    public function isLive():bool
+    final public function isLive():bool
     {
         return $this->live;
     }
@@ -201,8 +199,7 @@ class Request extends Map
 
     // setLive
     // genre la valeur à la propriété live
-    // méthode protégé
-    protected function setLive(bool $value):void
+    final protected function setLive(bool $value):void
     {
         $this->live = $value;
 
@@ -212,7 +209,7 @@ class Request extends Map
 
     // isCli
     // retourne vrai si la requête est du cli
-    public function isCli():bool
+    final public function isCli():bool
     {
         return $this->cli;
     }
@@ -221,7 +218,7 @@ class Request extends Map
     // setCli
     // détermine si la requête provient du cli
     // value doit être bool
-    public function setCli(bool $value):self
+    final public function setCli(bool $value):self
     {
         $this->cli = $value;
 
@@ -231,7 +228,7 @@ class Request extends Map
 
     // getLogData
     // retourne les data pour le log
-    public function getLogData():?array
+    final public function getLogData():?array
     {
         return $this->log;
     }
@@ -239,7 +236,7 @@ class Request extends Map
 
     // setLog
     // permet d'attributer des datas au log
-    public function setLogData(?array $value):self
+    final public function setLogData(?array $value):self
     {
         $this->log = $value;
 
@@ -249,7 +246,7 @@ class Request extends Map
 
     // getAttrBase
     // permet d'obtenir une option merge avec les config dans base/request
-    public function getAttrBase(string $key)
+    final public function getAttrBase(string $key)
     {
         $return = $this->getAttr($key);
         $base = Base\Request::$config[$key] ?? null;
@@ -270,7 +267,7 @@ class Request extends Map
     // setDefault
     // applique les défauts à la requête
     // si fill est true, ne remplace pas les valeurs non null
-    public function setDefault(bool $fill=true):self
+    final public function setDefault(bool $fill=true):self
     {
         $default = $this->default();
 
@@ -296,7 +293,7 @@ class Request extends Map
 
     // str
     // envoie info à http str qui retourne une string pour représenter la requête
-    public function str(?array $option=null):string
+    final public function str(?array $option=null):string
     {
         return Base\Http::str($this->info(),$option);
     }
@@ -306,7 +303,7 @@ class Request extends Map
     // construit l'uri à partir du tableau parse
     // n'est pas encodé ou décodé, plus rapide que les autres méthodes
     // absolut est true si le host de la requête n'est pas celui courant
-    public function uri(?bool $absolute=null):string
+    final public function uri(?bool $absolute=null):string
     {
         $return = '';
 
@@ -326,7 +323,7 @@ class Request extends Map
 
     // output
     // retourne l'uri, peut être relatif ou absolut dépendamment des options uri
-    public function output(?array $option=null):?string
+    final public function output(?array $option=null):?string
     {
         return Base\Uri::output($this->uri(true),Base\Arr::plus($this->getAttr('uri'),$option));
     }
@@ -334,7 +331,7 @@ class Request extends Map
 
     // relative
     // retourne l'uri relative de la requête
-    public function relative(?array $option=null):?string
+    final public function relative(?array $option=null):?string
     {
         return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getAttr('uri'),$option));
     }
@@ -342,7 +339,7 @@ class Request extends Map
 
     // relativeExists
     // retourne l'uri relative de la requête, base uri va vérifier qu'elle existe
-    public function relativeExists(?array $option=null)
+    final public function relativeExists(?array $option=null)
     {
         return Base\Uri::relative($this->uri(false),Base\Arr::plus($this->getAttr('uri'),$option,['exists'=>true]));
     }
@@ -350,7 +347,7 @@ class Request extends Map
 
     // absolute
     // retourne l'uri absolue de la requête
-    public function absolute(?array $option=null):?string
+    final public function absolute(?array $option=null):?string
     {
         return Base\Uri::absolute($this->uri(true),null,Base\Arr::plus($this->getAttr('uri'),$option));
     }
@@ -361,7 +358,7 @@ class Request extends Map
     // plusieurs paramètres peuvent être pris de l'uri, pas seulement le path
     // par exemple host, user, pass, port, query et fragment
     // par l'option par défaut, l'uri est décodé
-    public function setUri(string $value,?bool $decode=null):self
+    final public function setUri(string $value,?bool $decode=null):self
     {
         $parse = Base\Uri::parse($value,$decode ?? $this->getAttr('decode'));
 
@@ -377,7 +374,7 @@ class Request extends Map
 
     // setAbsolute
     // alias de setUri
-    public function setAbsolute(string $value,?bool $decode=null):self
+    final public function setAbsolute(string $value,?bool $decode=null):self
     {
         return $this->setUri($value,$decode);
     }
@@ -386,7 +383,7 @@ class Request extends Map
     // info
     // retourne un tableau complet à partir de la requête
     // possible d'exporter le id
-    public function info(bool $id=false):array
+    final public function info(bool $id=false):array
     {
         $return = $this->parse();
 
@@ -421,7 +418,7 @@ class Request extends Map
     // exporte les informations de la requête, utiliser par Tablelog
     // similaire à info pour mais post et headers incluent seulement les clés et true comme valeur
     // possible d'exporter le id
-    public function safeInfo(bool $id=false):array
+    final public function safeInfo(bool $id=false):array
     {
         $return = $this->parse();
 
@@ -449,7 +446,7 @@ class Request extends Map
     // export
     // exporte les informations liés à la requête courante
     // possible d'exporter le id
-    public function export(bool $id=false):array
+    final public function export(bool $id=false):array
     {
         $return = $this->parse();
         $return['method'] = $this->method();
@@ -470,7 +467,7 @@ class Request extends Map
 
     // parse
     // retourne le tableau parse de l'objet
-    public function parse():array
+    final public function parse():array
     {
         $return = [];
         $return['scheme'] = $this->scheme();
@@ -489,7 +486,7 @@ class Request extends Map
     // change
     // remplace des valeurs d'éléments de la requête
     // ces valeurs sont appliqués tel quel et ne sont pas décodés
-    public function change(array $value):self
+    final public function change(array $value):self
     {
         foreach (Base\Request::prepareChangeArray($value) as $key => $value)
         {
@@ -510,7 +507,7 @@ class Request extends Map
     // fait un changement sur une propriété
     // si requête est live et liveBase est true, renvoie à base/request pour faire le changement la aussi
     // fait le checkReadOnly
-    protected function property(string $key,$value,bool $liveBase=true):self
+    final protected function property(string $key,$value,bool $liveBase=true):self
     {
         $this->checkReadOnly();
         $this->$key = $value;
@@ -530,7 +527,7 @@ class Request extends Map
 
     // isSsl
     // retourne vrai si la requête est ssl
-    public function isSsl():bool
+    final public function isSsl():bool
     {
         return Base\Http::ssl($this->scheme);
     }
@@ -538,7 +535,7 @@ class Request extends Map
 
     // isAjax
     // retourne vrai si la requête est ajax
-    public function isAjax():bool
+    final public function isAjax():bool
     {
         return ($this->header('X-Requested-With') === 'XMLHttpRequest')? true:false;
     }
@@ -546,7 +543,7 @@ class Request extends Map
 
     // isGet
     // retourne vrai si la requête est get
-    public function isGet():bool
+    final public function isGet():bool
     {
         return ($this->method() === 'get')? true:false;
     }
@@ -554,7 +551,7 @@ class Request extends Map
 
     // isPost
     // retourne vrai si la requête est post
-    public function isPost():bool
+    final public function isPost():bool
     {
         return ($this->method() === 'post')? true:false;
     }
@@ -563,7 +560,7 @@ class Request extends Map
     // isPostWithoutData
     // retourne vrai si la requête est post mais qu'il n'y a pas de données post
     // ceci peut arriver lors du chargement d'un fichier plus lourd que php ini
-    public function isPostWithoutData():bool
+    final public function isPostWithoutData():bool
     {
         return ($this->isPost() && empty($this->post()))? true:false;
     }
@@ -572,7 +569,7 @@ class Request extends Map
     // isRefererInternal
     // retourne vrai si le referrer est interne (donc même host que le courant)
     // possible de fournir un tableau d'autres hosts considérés comme internal
-    public function isRefererInternal($hosts=null):bool
+    final public function isRefererInternal($hosts=null):bool
     {
         return (!empty($this->referer(true,$hosts)))? true:false;
     }
@@ -581,7 +578,7 @@ class Request extends Map
     // isInternalPost
     // retourne vrai si la requête semble être un post avec un referer provenant du même domaine
     // possible de fournir un tableau d'autres hosts considérés comme internal
-    public function isInternalPost($hosts=null):bool
+    final public function isInternalPost($hosts=null):bool
     {
         return ($this->isPost() && $this->isRefererInternal($hosts))? true:false;
     }
@@ -590,7 +587,7 @@ class Request extends Map
     // isExternalPost
     // retourne vrai si la requête semble être un post avec un referer provenant d'un autre domaine
     // possible de fournir un tableau d'autres hosts considérés comme internal
-    public function isExternalPost($hosts=null):bool
+    final public function isExternalPost($hosts=null):bool
     {
         return ($this->isPost() && !$this->isRefererInternal($hosts))? true:false;
     }
@@ -598,7 +595,7 @@ class Request extends Map
 
     // isStandard
     // retourne vrai si la requête est de méthode get et pas ajax
-    public function isStandard():bool
+    final public function isStandard():bool
     {
         return ($this->isGet() && !$this->isAjax())? true:false;
     }
@@ -606,7 +603,7 @@ class Request extends Map
 
     // isPathEmpty
     // retourne vrai si le chemin de la requête est vide (ou seulement /)
-    public function isPathEmpty():bool
+    final public function isPathEmpty():bool
     {
         return ($this->path(true) === '')? true:false;
     }
@@ -614,7 +611,7 @@ class Request extends Map
 
     // isPathMatchEmpty
     // retourne vrai si le chemin match de la requête est vide (ou seulement /)
-    public function isPathMatchEmpty():bool
+    final public function isPathMatchEmpty():bool
     {
         return ($this->pathMatch() === '')? true:false;
     }
@@ -622,7 +619,7 @@ class Request extends Map
 
     // isSelected
     // retourne vrai si la requête est sélectionné dans base attr
-    public function isSelected():bool
+    final public function isSelected():bool
     {
         return Base\Attr::isSelectedUri($this->uri());
     }
@@ -631,7 +628,7 @@ class Request extends Map
     // isCachable
     // retourne vrai si la requête est cachable
     // ce doit être une requête de méthode get, sans post et avec chemin sécuritaire
-    public function isCachable():bool
+    final public function isCachable():bool
     {
         return ($this->isGet() && !$this->hasPost() && $this->isPathSafe())? true:false;
     }
@@ -640,7 +637,7 @@ class Request extends Map
     // isRedirectable
     // retourne vrai si la requête est redirectable
     // ce doit être une requête de méthode get, sans post et avec chemin sécuritaire
-    public function isRedirectable():bool
+    final public function isRedirectable():bool
     {
         return ($this->isGet() && !$this->hasPost() && $this->isPathSafe())? true:false;
     }
@@ -649,7 +646,7 @@ class Request extends Map
     // isFailedFileUpload
     // retourne vrai si la requête semble être un envoie de fichier raté
     // doit être live
-    public function isFailedFileUpload():bool
+    final public function isFailedFileUpload():bool
     {
         return ($this->isLive() && $this->isPostWithoutData() && Base\Superglobal::hasServerLengthWithoutPost())? true:false;
     }
@@ -657,7 +654,7 @@ class Request extends Map
 
     // hasExtension
     // retourne vrai si la requête a une extension
-    public function hasExtension():bool
+    final public function hasExtension():bool
     {
         return Base\Path::hasExtension($this->path());
     }
@@ -665,7 +662,7 @@ class Request extends Map
 
     // hasQuery
     // retourne vrai si la requête a un query
-    public function hasQuery():bool
+    final public function hasQuery():bool
     {
         return (!empty($this->query))? true:false;
     }
@@ -673,7 +670,7 @@ class Request extends Map
 
     // hasLang
     // retourne vrai si la requête a une lang
-    public function hasLang():bool
+    final public function hasLang():bool
     {
         return (!empty($this->lang))? true:false;
     }
@@ -681,7 +678,7 @@ class Request extends Map
 
     // hasPost
     // retourne vrai si la requête courante contient des données post
-    public function hasPost():bool
+    final public function hasPost():bool
     {
         return (!empty($this->post()))? true:false;
     }
@@ -689,7 +686,7 @@ class Request extends Map
 
     // hasData
     // retourne vrai si la requête courante contient des données get ou post
-    public function hasData():bool
+    final public function hasData():bool
     {
         return ($this->hasQuery() || $this->hasPost())? true:false;
     }
@@ -698,7 +695,7 @@ class Request extends Map
     // hasValidGenuine
     // retourne vrai si post contient la clé genuine et le contenu est vide
     // genuine 2 est un champ ajouté sur le front-end
-    public function hasValidGenuine(bool $two=true):bool
+    final public function hasValidGenuine(bool $two=true):bool
     {
         $return = false;
         $post = $this->post();
@@ -717,7 +714,7 @@ class Request extends Map
 
     // hasUser
     // retourne vrai si la requête courante contient un user
-    public function hasUser():bool
+    final public function hasUser():bool
     {
         return (is_string($this->user()))? true:false;
     }
@@ -725,7 +722,7 @@ class Request extends Map
 
     // hasPass
     // retourne vrai si la requête courante contient un pass
-    public function hasPass():bool
+    final public function hasPass():bool
     {
         return (is_string($this->pass()))? true:false;
     }
@@ -733,7 +730,7 @@ class Request extends Map
 
     // hasFragment
     // retourne vrai si la requête courante contient un fragment
-    public function hasFragment():bool
+    final public function hasFragment():bool
     {
         return (is_string($this->fragment()))? true:false;
     }
@@ -741,7 +738,7 @@ class Request extends Map
 
     // hasIp
     // retourne vrai si la requête courante contient un ip
-    public function hasIp():bool
+    final public function hasIp():bool
     {
         return (!empty($this->ip()))? true:false;
     }
@@ -749,7 +746,7 @@ class Request extends Map
 
     // hasUserAgent
     // retourne vrai si la requête courante contient un userAgent
-    public function hasUserAgent():bool
+    final public function hasUserAgent():bool
     {
         return (!empty($this->userAgent()))? true:false;
     }
@@ -757,7 +754,7 @@ class Request extends Map
 
     // hasHeaders
     // retourne vrai si le tableau headers n'est pas vide
-    public function hasHeaders():bool
+    final public function hasHeaders():bool
     {
         return (!empty($this->headers()))? true:false;
     }
@@ -765,7 +762,7 @@ class Request extends Map
 
     // isHeader
     // retourne vrai si la ou les clés headers existent
-    public function isHeader(...$keys):bool
+    final public function isHeader(...$keys):bool
     {
         return Base\Header::exists($keys,$this->headers());
     }
@@ -773,7 +770,7 @@ class Request extends Map
 
     // isDesktop
     // retourne vrai si le userAgent est desktop
-    public function isDesktop():bool
+    final public function isDesktop():bool
     {
         return Base\Browser::isDesktop($this->userAgent())? true:false;
     }
@@ -781,7 +778,7 @@ class Request extends Map
 
     // isMobile
     // retourne vrai si le userAgent est mobile
-    public function isMobile():bool
+    final public function isMobile():bool
     {
         return Base\Browser::isMobile($this->userAgent())? true:false;
     }
@@ -789,7 +786,7 @@ class Request extends Map
 
     // isOldIe
     // retourne vrai si le userAgent est Internet Explorer < 9
-    public function isOldIe():bool
+    final public function isOldIe():bool
     {
         return Base\Browser::isOldIe($this->userAgent())? true:false;
     }
@@ -797,7 +794,7 @@ class Request extends Map
 
     // isMac
     // retourne vrai si le userAgent est sur MacOs
-    public function isMac():bool
+    final public function isMac():bool
     {
         return Base\Browser::isMac($this->userAgent())? true:false;
     }
@@ -805,7 +802,7 @@ class Request extends Map
 
     // isLinux
     // retourne vrai si le userAgent est sur Linux
-    public function isLinux():bool
+    final public function isLinux():bool
     {
         return Base\Browser::isLinux($this->userAgent())? true:false;
     }
@@ -813,7 +810,7 @@ class Request extends Map
 
     // isWindows
     // retourne vrai si le userAgent est sur Windows
-    public function isWindows():bool
+    final public function isWindows():bool
     {
         return Base\Browser::isWindows($this->userAgent())? true:false;
     }
@@ -821,7 +818,7 @@ class Request extends Map
 
     // isBot
     // retourne vrai si le userAgent est un bot
-    public function isBot():bool
+    final public function isBot():bool
     {
         return Base\Browser::isBot($this->userAgent())? true:false;
     }
@@ -829,7 +826,7 @@ class Request extends Map
 
     // isInternal
     // retourne vrai si la requête est interne, même host que la requête courante
-    public function isInternal():bool
+    final public function isInternal():bool
     {
         return Base\Uri::isInternal($this->uri());
     }
@@ -837,7 +834,7 @@ class Request extends Map
 
     // isExternal
     // retourne vrai si la requête est externe, host différent que requête courante
-    public function isExternal():bool
+    final public function isExternal():bool
     {
         return Base\Uri::isExternal($this->uri());
     }
@@ -845,7 +842,7 @@ class Request extends Map
 
     // isScheme
     // retourne vrai si la requête a un scheme du type spécifié
-    public function isScheme($value):bool
+    final public function isScheme($value):bool
     {
         return Base\Uri::isScheme($value,$this->uri());
     }
@@ -853,7 +850,7 @@ class Request extends Map
 
     // isHost
     // retourne vrai si la requête a l'hôte spécifié
-    public function isHost($value):bool
+    final public function isHost($value):bool
     {
         return Base\Uri::isHost($value,$this->uri());
     }
@@ -861,7 +858,7 @@ class Request extends Map
 
     // isSchemeHost
     // retourne vrai si la requête a le schemeHost spécifié
-    public function isSchemeHost($value):bool
+    final public function isSchemeHost($value):bool
     {
         return Base\Uri::isSchemeHost($value,$this->uri());
     }
@@ -870,7 +867,7 @@ class Request extends Map
     // isExtension
     // retourne vrai si la requête à une extension du type
     // possibilité de mettre une ou plusieurs target
-    public function isExtension(...$values):bool
+    final public function isExtension(...$values):bool
     {
         return Base\Uri::isExtension($values,$this->uri());
     }
@@ -879,7 +876,7 @@ class Request extends Map
     // isQuery
     // retourne vrai si l'uri a des query en argument
     // possibilité de mettre une ou plusieurs valeurs
-    public function isQuery(...$values):bool
+    final public function isQuery(...$values):bool
     {
         return Base\Uri::isQuery($values,$this->uri());
     }
@@ -887,7 +884,7 @@ class Request extends Map
 
     // isLang
     // retourne vrai si la requête a la langue spécifié
-    public function isLang($value):bool
+    final public function isLang($value):bool
     {
         return Base\Path::isLang($value,$this->path());
     }
@@ -895,7 +892,7 @@ class Request extends Map
 
     // isIp
     // retourne vrai si le ip est celui fourni
-    public function isIp($value):bool
+    final public function isIp($value):bool
     {
         return (is_string($value) && $value === $this->ip())? true:false;
     }
@@ -903,7 +900,7 @@ class Request extends Map
 
     // isIpLocal
     // retourne vrai si le ip est local
-    public function isIpLocal():bool
+    final public function isIpLocal():bool
     {
         return ($this->hasIp() && Base\Ip::isLocal($this->ip()))? true:false;
     }
@@ -911,7 +908,7 @@ class Request extends Map
 
     // isIpAllowed
     // retourne vrai si le ip est permis en fonction du whitelist et blacklist gardé dans les config de la classe
-    public function isIpAllowed():bool
+    final public function isIpAllowed():bool
     {
         return ($this->hasIp() && Base\Ip::allowed($this->ip(),$this->getAttr('ipAllowed')))? true:false;
     }
@@ -919,7 +916,7 @@ class Request extends Map
 
     // isPathSafe
     // retourne vrai si le path est considéré comme safe
-    public function isPathSafe():bool
+    final public function isPathSafe():bool
     {
         return Base\Path::isSafe($this->path(),$this->getAttrBase('safe'));
     }
@@ -927,7 +924,7 @@ class Request extends Map
 
     // isPathArgument
     // retourne vrai si le chemin est un argument (commence par - )
-    public function isPathArgument():bool
+    final public function isPathArgument():bool
     {
         return Base\Path::isArgument($this->path());
     }
@@ -935,7 +932,7 @@ class Request extends Map
 
     // isPathArgumentNotCli
     // retourne vrai si le chemin est un argument (commence par - ) mais que la requête n'est pas cli
-    public function isPathArgumentNotCli():bool
+    final public function isPathArgumentNotCli():bool
     {
         return ($this->isPathArgument() && !$this->isCli())? true:false;
     }
@@ -943,7 +940,7 @@ class Request extends Map
 
     // hasFiles
     // retourne vrai si la requête contient des fichiers
-    public function hasFiles():bool
+    final public function hasFiles():bool
     {
         return (!empty($this->files))? true:false;
     }
@@ -951,7 +948,7 @@ class Request extends Map
 
     // checkPathSafe
     // envoie une exception si le chemin n'est pas safe
-    public function checkPathSafe():self
+    final public function checkPathSafe():self
     {
         if(!$this->isPathSafe())
         static::throw();
@@ -962,7 +959,7 @@ class Request extends Map
 
     // checkRequired
     // lance une exception si une des propriétés requises est null
-    public function checkRequired():self
+    final public function checkRequired():self
     {
         foreach (static::$required as $key)
         {
@@ -976,7 +973,7 @@ class Request extends Map
 
     // checkAfter
     // lancé après chaque méthode en écriture, cast le tableau post
-    public function checkAfter():parent
+    final public function checkAfter():parent
     {
         $this->data = Base\Arrs::cast($this->data);
 
@@ -987,7 +984,7 @@ class Request extends Map
     // setId
     // change le id unique de la requête
     // si value est null, génère un id unique en utilisant la config id length
-    public function setId(?string $value=null):self
+    final public function setId(?string $value=null):self
     {
         if(empty($value))
         $value = Base\Str::random($this->getAttrBase('idLength'));
@@ -1000,7 +997,7 @@ class Request extends Map
 
     // id
     // retourne le id unique de la requête
-    public function id():string
+    final public function id():string
     {
         return $this->id;
     }
@@ -1008,7 +1005,7 @@ class Request extends Map
 
     // scheme
     // retourne le scheme courant de la requête
-    public function scheme():?string
+    final public function scheme():?string
     {
         return $this->scheme;
     }
@@ -1018,7 +1015,7 @@ class Request extends Map
     // change le scheme courant de la requête
     // change aussi le port
     // value ne peut pas être null
-    public function setScheme(string $value):self
+    final public function setScheme(string $value):self
     {
         if(Base\Uri::isSchemeValid($value))
         {
@@ -1038,7 +1035,7 @@ class Request extends Map
 
     // user
     // retourne le user de la requête
-    public function user():?string
+    final public function user():?string
     {
         return $this->user;
     }
@@ -1047,7 +1044,7 @@ class Request extends Map
     // setUser
     // change le user de la requête
     // value peut être null
-    public function setUser(?string $value):self
+    final public function setUser(?string $value):self
     {
         return $this->property('user',$value);
     }
@@ -1055,7 +1052,7 @@ class Request extends Map
 
     // pass
     // retourne le pass de la requête
-    public function pass():?string
+    final public function pass():?string
     {
         return $this->pass;
     }
@@ -1064,7 +1061,7 @@ class Request extends Map
     // setPass
     // change le pass de la requête
     // value peut être null
-    public function setPass(?string $value):self
+    final public function setPass(?string $value):self
     {
         return $this->property('pass',$value);
     }
@@ -1072,7 +1069,7 @@ class Request extends Map
 
     // host
     // retourne le host de la requête
-    public function host():?string
+    final public function host():?string
     {
         return $this->host;
     }
@@ -1081,7 +1078,7 @@ class Request extends Map
     // setHost
     // change le host de la requête
     // value ne peut pas être null
-    public function setHost(string $value):self
+    final public function setHost(string $value):self
     {
         if(Base\Http::isHost($value))
         $this->property('host',$value);
@@ -1096,7 +1093,7 @@ class Request extends Map
     // isSchemeHostCurrent
     // retourne vrai si le scheme host est celui de la requête courante
     // passe dans base/request
-    public function isSchemeHostCurrent():bool
+    final public function isSchemeHostCurrent():bool
     {
         return Base\Request::isSchemeHost($this->schemeHost());
     }
@@ -1104,7 +1101,7 @@ class Request extends Map
 
     // port
     // retourne le port de la requête
-    public function port():?int
+    final public function port():?int
     {
         return $this->port;
     }
@@ -1114,7 +1111,7 @@ class Request extends Map
     // change le port de la requête
     // change aussi le scheme
     // value peut être null
-    public function setPort(?int $value):self
+    final public function setPort(?int $value):self
     {
         $this->property('port',$value);
 
@@ -1129,7 +1126,7 @@ class Request extends Map
     // path
     // retourne le chemin de la requête
     // si stripStart est true, enlève le slash du début
-    public function path(bool $stripStart=false):?string
+    final public function path(bool $stripStart=false):?string
     {
         $return = $this->path;
 
@@ -1144,7 +1141,7 @@ class Request extends Map
     // change le chemin de la requête
     // value ne peut pas être null
     // si le path a une langue, envoie dans setLang
-    public function setPath(string $value):self
+    final public function setPath(string $value):self
     {
         $this->property('path',$value);
 
@@ -1158,7 +1155,7 @@ class Request extends Map
 
     // pathStripStart
     // retourne le path de la requête sans le séparateur au début
-    public function pathStripStart():?string
+    final public function pathStripStart():?string
     {
         return $this->path(true);
     }
@@ -1167,7 +1164,7 @@ class Request extends Map
     // pathinfo
     // retourne le tableau pathinfo de la requête
     // peut aussi retourner une seule variable pathinfo
-    public function pathinfo(?int $key=null)
+    final public function pathinfo(?int $key=null)
     {
         return Base\Path::info($this->uri(),$key);
     }
@@ -1175,7 +1172,7 @@ class Request extends Map
 
     // changePathinfo
     // change un ou plusieurs éléments du pathinfo de la requête
-    public function changePathinfo(array $change):self
+    final public function changePathinfo(array $change):self
     {
         return $this->setPath(Base\Path::change($change,$this->path()));
     }
@@ -1183,7 +1180,7 @@ class Request extends Map
 
     // keepPathinfo
     // garde un ou plusieurs éléments du pathinfo de la requête
-    public function keepPathinfo(array $change):self
+    final public function keepPathinfo(array $change):self
     {
         return $this->setPath(Base\Path::keep($change,$this->path()));
     }
@@ -1191,7 +1188,7 @@ class Request extends Map
 
     // removePathinfo
     // enlève un ou plusieurs éléments du pathinfo de la requête
-    public function removePathinfo(array $change):self
+    final public function removePathinfo(array $change):self
     {
         return $this->setPath(Base\Path::remove($change,$this->path()));
     }
@@ -1199,7 +1196,7 @@ class Request extends Map
 
     // dirname
     // retourne le dirname du path de la requête
-    public function dirname():?string
+    final public function dirname():?string
     {
         return Base\Path::dirname($this->path());
     }
@@ -1207,7 +1204,7 @@ class Request extends Map
 
     // addDirname
     // ajoute un dirname après le dirname du path de la requête
-    public function addDirname(string $change):self
+    final public function addDirname(string $change):self
     {
         return $this->setPath(Base\Path::addDirname($change,$this->path()));
     }
@@ -1215,7 +1212,7 @@ class Request extends Map
 
     // changeDirname
     // change le dirname du path de la requête
-    public function changeDirname(string $change):self
+    final public function changeDirname(string $change):self
     {
         return $this->setPath(Base\Path::changeDirname($change,$this->path()));
     }
@@ -1223,7 +1220,7 @@ class Request extends Map
 
     // removeDirname
     // enlève un dirname au path de la requête
-    public function removeDirname():self
+    final public function removeDirname():self
     {
         return $this->setPath(Base\Path::removeDirname($this->path()));
     }
@@ -1231,7 +1228,7 @@ class Request extends Map
 
     // basename
     // retourne le basename du path de la requête
-    public function basename():?string
+    final public function basename():?string
     {
         return Base\Path::basename($this->path());
     }
@@ -1239,7 +1236,7 @@ class Request extends Map
 
     // addBasename
     // ajoute un basename après le dirname du path de la requête
-    public function addBasename(string $change):self
+    final public function addBasename(string $change):self
     {
         return $this->setPath(Base\Path::addBasename($change,$this->path()));
     }
@@ -1247,7 +1244,7 @@ class Request extends Map
 
     // changeBasename
     // change le basename du path de la requête
-    public function changeBasename(string $change):self
+    final public function changeBasename(string $change):self
     {
         return $this->setPath(Base\Path::changeBasename($change,$this->path()));
     }
@@ -1255,7 +1252,7 @@ class Request extends Map
 
     // removeBasename
     // enlève le basename du path de la requête
-    public function removeBasename():self
+    final public function removeBasename():self
     {
         return $this->setPath(Base\Path::removeBasename($this->path()));
     }
@@ -1263,7 +1260,7 @@ class Request extends Map
 
     // filename
     // retourne le filename du path de la requête
-    public function filename():?string
+    final public function filename():?string
     {
         return Base\Path::filename($this->path());
     }
@@ -1271,7 +1268,7 @@ class Request extends Map
 
     // addFilename
     // ajoute un filename après le dirname du path de la requête
-    public function addFilename(string $change):self
+    final public function addFilename(string $change):self
     {
         return $this->setPath(Base\Path::addFilename($change,$this->path()));
     }
@@ -1279,7 +1276,7 @@ class Request extends Map
 
     // changeFilename
     // change le filename du path de la requête
-    public function changeFilename(string $change):self
+    final public function changeFilename(string $change):self
     {
         return $this->setPath(Base\Path::changeFilename($change,$this->path()));
     }
@@ -1287,7 +1284,7 @@ class Request extends Map
 
     // removeFilename
     // enlève un filename du path de la requête
-    public function removeFilename():self
+    final public function removeFilename():self
     {
         return $this->setPath(Base\Path::removeFilename($this->path()));
     }
@@ -1295,7 +1292,7 @@ class Request extends Map
 
     // extension
     // retourne l'extension du path de la requête
-    public function extension():?string
+    final public function extension():?string
     {
         return Base\Path::extension($this->path());
     }
@@ -1303,7 +1300,7 @@ class Request extends Map
 
     // addExtension
     // ajoute l'extension après le dirname du path de la requête
-    public function addExtension(string $change):self
+    final public function addExtension(string $change):self
     {
         return $this->setPath(Base\Path::addExtension($change,$this->path()));
     }
@@ -1311,7 +1308,7 @@ class Request extends Map
 
     // changeExtension
     // change l'extension du path de la requête
-    public function changeExtension(string $change):self
+    final public function changeExtension(string $change):self
     {
         return $this->setPath(Base\Path::changeExtension($change,$this->path()));
     }
@@ -1319,7 +1316,7 @@ class Request extends Map
 
     // removeExtension
     // enlève une extension au path de la requête
-    public function removeExtension():self
+    final public function removeExtension():self
     {
         return $this->setPath(Base\Path::removeExtension($this->path()));
     }
@@ -1328,7 +1325,7 @@ class Request extends Map
     // mime
     // retourne le mimetype du path de la requête à partir de son extension
     // ne vérifie pas l'existence du fichier
-    public function mime():?string
+    final public function mime():?string
     {
         return Base\Path::mime($this->path());
     }
@@ -1338,7 +1335,7 @@ class Request extends Map
     // ajoute un code de langue au path de la requête
     // ajoute même si le code existe déjà
     // le path sera retourné vide si le code langue est invalide
-    public function addLang(string $change):self
+    final public function addLang(string $change):self
     {
         return $this->setPath(Base\Path::addLang($change,$this->path()));
     }
@@ -1347,7 +1344,7 @@ class Request extends Map
     // changeLang
     // ajoute ou remplace un code de langue au path de la requête
     // le path sera retourné vide si le code langue est invalide
-    public function changeLang(string $change):self
+    final public function changeLang(string $change):self
     {
         return $this->setPath(Base\Path::changeLang($change,$this->path()));
     }
@@ -1356,7 +1353,7 @@ class Request extends Map
     // removeLang
     // enlève un code de langue au path de la requête
     // retourne le chemin dans tous les cas
-    public function removeLang():self
+    final public function removeLang():self
     {
         return $this->setPath(Base\Path::removeLang($this->path()));
     }
@@ -1364,7 +1361,7 @@ class Request extends Map
 
     // pathPrepend
     // prepend un path derrière le path de la requête
-    public function pathPrepend(string $value):self
+    final public function pathPrepend(string $value):self
     {
         return $this->setPath(Base\Path::prepend($this->path(true),$value));
     }
@@ -1372,7 +1369,7 @@ class Request extends Map
 
     // pathAppend
     // append un path devant le path de la requête
-    public function pathAppend(string $value):self
+    final public function pathAppend(string $value):self
     {
         return $this->setPath(Base\Path::append($this->path(true),$value));
     }
@@ -1380,7 +1377,7 @@ class Request extends Map
 
     // pathExplode
     // explode le path de la requête
-    public function pathExplode():array
+    final public function pathExplode():array
     {
         return Base\Path::arr($this->path(true));
     }
@@ -1388,7 +1385,7 @@ class Request extends Map
 
     // pathGet
     // retourne un index du path de la requête
-    public function pathGet(int $index):?string
+    final public function pathGet(int $index):?string
     {
         return Base\Path::get($index,$this->path(true));
     }
@@ -1396,7 +1393,7 @@ class Request extends Map
 
     // pathCount
     // count le nombre de niveau dans le path de la requête
-    public function pathCount():int
+    final public function pathCount():int
     {
         return Base\Path::count($this->path(true));
     }
@@ -1404,7 +1401,7 @@ class Request extends Map
 
     // pathSlice
     // tranche des slices du path de la requête en utilisant offset et length
-    public function pathSlice(int $offset,?int $length):array
+    final public function pathSlice(int $offset,?int $length):array
     {
         return Base\Path::slice($offset,$length,$this->path(true));
     }
@@ -1412,7 +1409,7 @@ class Request extends Map
 
     // pathSplice
     // efface et remplace des slices du path de la requête en utilisant offset et length
-    public function pathSplice(int $offset,?int $length,$replace=null):self
+    final public function pathSplice(int $offset,?int $length,$replace=null):self
     {
         return $this->setPath(Base\Path::splice($offset,$length,$this->path(true),$replace));
     }
@@ -1420,7 +1417,7 @@ class Request extends Map
 
     // pathInsert
     // ajoute un ou plusieurs éléments dans le path sans ne rien effacer
-    public function pathInsert(int $offset,$replace):self
+    final public function pathInsert(int $offset,$replace):self
     {
         return $this->setPath(Base\Path::insert($offset,$replace,$this->path(true)));
     }
@@ -1428,7 +1425,7 @@ class Request extends Map
 
     // pathMatch
     // retourne le chemin sans le code de langue et sans le wrap du début
-    public function pathMatch():string
+    final public function pathMatch():string
     {
         return Base\Path::match($this->path(),$this->getAttrBase('lang'));
     }
@@ -1436,7 +1433,7 @@ class Request extends Map
 
     // query
     // retourne la query string de la requête
-    public function query():?string
+    final public function query():?string
     {
         return $this->query;
     }
@@ -1446,7 +1443,7 @@ class Request extends Map
     // change la query string de la requête
     // accepte un tableau ou string en argument
     // value peut être null
-    public function setQuery($value):self
+    final public function setQuery($value):self
     {
         if(is_array($value))
         $value = Base\Uri::buildQuery($value,false);
@@ -1463,7 +1460,7 @@ class Request extends Map
 
     // queryArray
     // retourne la query string de la requête sous forme de tableau
-    public function queryArray():array
+    final public function queryArray():array
     {
         return (is_string($this->query))? Base\Uri::parseQuery($this->query):[];
     }
@@ -1471,7 +1468,7 @@ class Request extends Map
 
     // getQuery
     // retourne la valeur d'une clé get query
-    public function getQuery($key)
+    final public function getQuery($key)
     {
         return Base\Arr::get($key,$this->queryArray());
     }
@@ -1479,7 +1476,7 @@ class Request extends Map
 
     // getsQuery
     // retournes plusieurs valeurs dans query
-    public function getsQuery(...$keys):array
+    final public function getsQuery(...$keys):array
     {
         return Base\Arr::gets($keys,$this->queryArray());
     }
@@ -1487,7 +1484,7 @@ class Request extends Map
 
     // addQuery
     // insert ou update une valeur dans query
-    public function addQuery($key,$value):self
+    final public function addQuery($key,$value):self
     {
         return $this->setQuery(Base\Uri::buildQuery(Base\Arr::set($key,$value,$this->queryArray())));
     }
@@ -1495,7 +1492,7 @@ class Request extends Map
 
     // setsQuery
     // insert ou update une ou plusieurs valeurs dans query
-    public function setsQuery(array $values):self
+    final public function setsQuery(array $values):self
     {
         return $this->setQuery(Base\Uri::buildQuery(Base\Arr::sets($values,$this->queryArray())));
     }
@@ -1503,7 +1500,7 @@ class Request extends Map
 
     // unsetQuery
     // enlève une ou plusieurs clés dans query
-    public function unsetQuery(...$keys):self
+    final public function unsetQuery(...$keys):self
     {
         return $this->setQuery(Base\Uri::buildQuery(Base\Arr::unsets($keys,$this->queryArray())));
     }
@@ -1511,7 +1508,7 @@ class Request extends Map
 
     // setArgv
     // permet de lier des query à la requête à partir d'un tableau d'options de cli
-    public function setArgv(array $values):self
+    final public function setArgv(array $values):self
     {
         $query = Base\Cli::parseLongOptions(...$values);
         if(!empty($query))
@@ -1523,7 +1520,7 @@ class Request extends Map
 
     // fragment
     // retourne le fragment de la requête
-    public function fragment():?string
+    final public function fragment():?string
     {
         return $this->fragment;
     }
@@ -1532,7 +1529,7 @@ class Request extends Map
     // setFragment
     // change le fragment de la requête
     // value peut être null
-    public function setFragment(?string $value):self
+    final public function setFragment(?string $value):self
     {
         return $this->property('fragment',$value);
     }
@@ -1541,7 +1538,7 @@ class Request extends Map
     // lang
     // retourne la langue de la requête
     // la langue est automatiquement considéré à partir du path
-    public function lang():?string
+    final public function lang():?string
     {
         return $this->lang;
     }
@@ -1550,7 +1547,7 @@ class Request extends Map
     // setLang
     // change la langue de la requête, créer aussi le header accept-language
     // value peut être null
-    public function setLang(?string $value,bool $header=true):self
+    final public function setLang(?string $value,bool $header=true):self
     {
         $value = Base\Lang::prepareCode($value);
 
@@ -1573,7 +1570,7 @@ class Request extends Map
 
     // langHeader
     // retourne la valeur du header lang de la requête
-    public function langHeader()
+    final public function langHeader()
     {
         return $this->header('Accept-Language');
     }
@@ -1582,7 +1579,7 @@ class Request extends Map
     // setLangHeader
     // change le accept-language de la requête dans les headers
     // value peut être null
-    public function setLangHeader(?string $value):self
+    final public function setLangHeader(?string $value):self
     {
         $this->setHeader('Accept-Language',$value);
 
@@ -1592,7 +1589,7 @@ class Request extends Map
 
     // schemeHost
     // retourne le scheme et host de l'uri de la requête
-    public function schemeHost():string
+    final public function schemeHost():string
     {
         return Base\Uri::schemeHost($this->uri(true));
     }
@@ -1600,7 +1597,7 @@ class Request extends Map
 
     // schemeHostPath
     // retourne le scheme, domaine et path de l'uri de la requête
-    public function schemeHostPath():string
+    final public function schemeHostPath():string
     {
         return Base\Uri::schemeHostPath($this->uri(true));
     }
@@ -1608,7 +1605,7 @@ class Request extends Map
 
     // hostPath
     // retourne le domaine et path de l'uri de la requête
-    public function hostPath():string
+    final public function hostPath():string
     {
         return Base\Uri::hostPath($this->uri(true));
     }
@@ -1616,7 +1613,7 @@ class Request extends Map
 
     // pathQuery
     // retourne le path et la query de la requête
-    public function pathQuery():string
+    final public function pathQuery():string
     {
         return Base\Uri::pathQuery($this->uri(true));
     }
@@ -1624,7 +1621,7 @@ class Request extends Map
 
     // method
     // retourne la méthode de la requête
-    public function method():?string
+    final public function method():?string
     {
         return $this->method;
     }
@@ -1633,7 +1630,7 @@ class Request extends Map
     // setMethod
     // change la méthode de la requête
     // value ne peut pas être null
-    public function setMethod(string $value):self
+    final public function setMethod(string $value):self
     {
         if(Base\Http::isMethod($value))
         $this->property('method',strtolower($value));
@@ -1648,7 +1645,7 @@ class Request extends Map
     // setAjax
     // change la valeur ajax de la requête dans les headers
     // value doit être bool
-    public function setAjax(bool $value):self
+    final public function setAjax(bool $value):self
     {
         if($value === true)
         $this->setHeader('X-Requested-With','XMLHttpRequest');
@@ -1662,7 +1659,7 @@ class Request extends Map
     // setSsl
     // change la valeur ssl de la requête, donc change le scheme
     // value doit être bool
-    public function setSsl(bool $value):self
+    final public function setSsl(bool $value):self
     {
         $this->setScheme(Base\Http::scheme($value));
 
@@ -1677,7 +1674,7 @@ class Request extends Map
     // possibilité d'enlever les tags html dans le tableau de retour
     // possibilité d'inclure les données chargés en provenance de files comme variable post
     // les données de files sont reformat par défaut, mais post a toujours précédente sur files
-    public function post(bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false):array
+    final public function post(bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false):array
     {
         $return = [];
         $files = ($includeFiles === true)? $this->filesArray():null;
@@ -1689,7 +1686,7 @@ class Request extends Map
 
     // postJson
     // retourne le tableau post de la requête sous forme de json
-    public function postJson(bool $onlyCol=false,bool $stripTags=false,bool $includeFiles=false):string
+    final public function postJson(bool $onlyCol=false,bool $stripTags=false,bool $includeFiles=false):string
     {
         return Base\Json::encode($this->post($onlyCol,$stripTags,$includeFiles));
     }
@@ -1697,7 +1694,7 @@ class Request extends Map
 
     // postQuery
     // retourne le tableau post de la requête sous forme de query
-    public function postQuery(bool $onlyCol=false,bool $stripTags=false,bool $encode=true):?string
+    final public function postQuery(bool $onlyCol=false,bool $stripTags=false,bool $encode=true):?string
     {
         return Base\Uri::buildQuery($this->post($onlyCol,$stripTags),$encode);
     }
@@ -1705,7 +1702,7 @@ class Request extends Map
 
     // csrf
     // retourne la chaîne csrf de la requête
-    public function csrf():?string
+    final public function csrf():?string
     {
         $return = null;
         $name = Base\Session::getCsrfName();
@@ -1725,7 +1722,7 @@ class Request extends Map
 
     // captcha
     // retourne la chaîne captcha de la requête
-    public function captcha():?string
+    final public function captcha():?string
     {
         $return = null;
         $name = Base\Session::getCaptchaName();
@@ -1746,7 +1743,7 @@ class Request extends Map
     // change le tableau post de la requête
     // si le tableau n'est pas vide, mais la méthode post par défaut
     // value doit absolument être array
-    public function setPost(array $value):self
+    final public function setPost(array $value):self
     {
         if(!empty($value))
         $this->setMethod('post');
@@ -1759,7 +1756,7 @@ class Request extends Map
 
     // ip
     // retourne le ip de la requête
-    public function ip():?string
+    final public function ip():?string
     {
         return $this->ip;
     }
@@ -1768,7 +1765,7 @@ class Request extends Map
     // setIp
     // change le ip de la requête
     // value peut être null
-    public function setIp(?string $value):self
+    final public function setIp(?string $value):self
     {
         if($value === null || Base\Ip::is($value))
         $this->property('ip',$value);
@@ -1782,7 +1779,7 @@ class Request extends Map
 
     // userAgent
     // retourne le userAgent de la requête
-    public function userAgent()
+    final public function userAgent()
     {
         return $this->header('User-Agent');
     }
@@ -1791,7 +1788,7 @@ class Request extends Map
     // setUserAgent
     // change le userAgent de la requête dans les headers
     // value peut être null
-    public function setUserAgent(?string $value):self
+    final public function setUserAgent(?string $value):self
     {
         $this->setHeader('User-Agent',$value);
 
@@ -1802,7 +1799,7 @@ class Request extends Map
     // referer
     // retourne l'uri référent à la requête
     // possible de retourner seulement si le referer est interne (et possible de spécifier un tableau d'host considéré comme interne)
-    public function referer(bool $internal=false,$hosts=null):?string
+    final public function referer(bool $internal=false,$hosts=null):?string
     {
         $return = null;
         $referer = $this->header('Referer');
@@ -1820,7 +1817,7 @@ class Request extends Map
     // setReferer
     // change le setReferer de la requête dans les headers
     // value peut être null
-    public function setReferer(?string $value):self
+    final public function setReferer(?string $value):self
     {
         $this->setHeader('Referer',$value);
 
@@ -1830,7 +1827,7 @@ class Request extends Map
 
     // timestamp
     // retourne le timestamp de la requête
-    public function timestamp():?int
+    final public function timestamp():?int
     {
         return $this->timestamp;
     }
@@ -1839,7 +1836,7 @@ class Request extends Map
     // setTimestamp
     // change le timestamp de la requête
     // value peut être null
-    public function setTimestamp(?int $value):self
+    final public function setTimestamp(?int $value):self
     {
         return $this->property('timestamp',$value);
     }
@@ -1847,7 +1844,7 @@ class Request extends Map
 
     // headers
     // retourne les headers de la requête
-    public function headers():array
+    final public function headers():array
     {
         return $this->headers;
     }
@@ -1855,7 +1852,7 @@ class Request extends Map
 
     // header
     // retourne un header de la requête
-    public function header(string $key)
+    final public function header(string $key)
     {
         return Base\Header::get($key,$this->headers());
     }
@@ -1864,7 +1861,7 @@ class Request extends Map
     // setHeaders
     // remplace les headers
     // value doit être un tableau
-    public function setHeaders(array $values):self
+    final public function setHeaders(array $values):self
     {
         $this->property('headers',[]);
         $this->addHeaders($values);
@@ -1875,7 +1872,7 @@ class Request extends Map
 
     // addHeaders
     // ajoute les headers à ceux existant
-    public function addHeaders(array $values):self
+    final public function addHeaders(array $values):self
     {
         foreach ($values as $key => $value)
         {
@@ -1889,7 +1886,7 @@ class Request extends Map
 
     // setHeader
     // ajoute ou change un header
-    public function setHeader(string $key,$value):self
+    final public function setHeader(string $key,$value):self
     {
         return $this->property('headers',Base\Header::set($key,$value,$this->headers()));
     }
@@ -1897,7 +1894,7 @@ class Request extends Map
 
     // unsetHeader
     // enlève un ou plusieurs headers
-    public function unsetHeader(...$keys):self
+    final public function unsetHeader(...$keys):self
     {
         return $this->property('headers',Base\Header::unsets($keys,$this->headers()));
     }
@@ -1905,7 +1902,7 @@ class Request extends Map
 
     // fingerprint
     // retourne le fingerprint des headers
-    public function fingerprint(array $keys):?string
+    final public function fingerprint(array $keys):?string
     {
         return Base\Header::fingerprint($this->headers(),$keys);
     }
@@ -1913,7 +1910,7 @@ class Request extends Map
 
     // browserCap
     // retourne les capacités du browser en fonction du userAgent
-    public function browserCap():?array
+    final public function browserCap():?array
     {
         return (is_string($userAgent = $this->userAgent()))? Base\Browser::cap($userAgent):null;
     }
@@ -1921,7 +1918,7 @@ class Request extends Map
 
     // browserName
     // retourne le nom du browser du userAgent
-    public function browserName():?string
+    final public function browserName():?string
     {
         return (is_string($userAgent = $this->userAgent()))? Base\Browser::name($userAgent):null;
     }
@@ -1929,7 +1926,7 @@ class Request extends Map
 
     // browserPlatform
     // retourne la plateforme du browser du userAgent
-    public function browserPlatform():?string
+    final public function browserPlatform():?string
     {
         return (is_string($userAgent = $this->userAgent()))? Base\Browser::platform($userAgent):null;
     }
@@ -1937,7 +1934,7 @@ class Request extends Map
 
     // browserDevice
     // retourne le device du browser du userAgent
-    public function browserDevice():?string
+    final public function browserDevice():?string
     {
         return (is_string($userAgent = $this->userAgent()))? Base\Browser::device($userAgent):null;
     }
@@ -1945,7 +1942,7 @@ class Request extends Map
 
     // setFiles
     // change les fichiers liés à la requête si existant
-    public function setFiles(?array $array=null):self
+    final public function setFiles(?array $array=null):self
     {
         $value = [];
         if(is_array($array))
@@ -1962,7 +1959,7 @@ class Request extends Map
 
     // filesArray
     // retourne le tableau fichier
-    public function filesArray():array
+    final public function filesArray():array
     {
         return $this->files;
     }
@@ -1971,7 +1968,7 @@ class Request extends Map
     // files
     // retourne un objet files pour le contenu d'un champ
     // retourne null si le champ n'existe pas
-    public function files($key):?Files
+    final public function files($key):?Files
     {
         $return = null;
         $array = $this->filesArray();
@@ -1994,7 +1991,7 @@ class Request extends Map
     // file
     // retourne un fichier d'un champ
     // peut retourner null
-    public function file($key,int $index=0):?File
+    final public function file($key,int $index=0):?File
     {
         $return = null;
         $files = $this->files($key);
@@ -2010,7 +2007,7 @@ class Request extends Map
     // retourne l'uri de redirection si l'uri de la requête présente des défauts
     // par exemple path unsafe, double slash, slash à la fin ou manque pathLang
     // possibilité de retourner le chemin absolut
-    public function redirect(bool $absolute=false):?string
+    final public function redirect(bool $absolute=false):?string
     {
         $return = null;
         $return = Base\Path::redirect($this->path(true),$this->getAttrBase('safe'),$this->getAttrBase('lang'));
@@ -2024,7 +2021,7 @@ class Request extends Map
 
     // curl
     // retourne un objet Res avec la resource curl a utilisé pour la requête
-    public function curl(?array $option=null):Res
+    final public function curl(?array $option=null):Res
     {
         $return = null;
         $lowOption = ['userAgent'=>$this->userAgent()];
@@ -2049,7 +2046,7 @@ class Request extends Map
     // curlExec
     // lance la requête curl sur la requête courante
     // retourne un tableau avec les headers, la resource et le timestamp
-    public function curlExec(?array $option=null):?array
+    final public function curlExec(?array $option=null):?array
     {
         $return = null;
         $option = Base\Arr::plus($this->attr(),$option);
@@ -2119,7 +2116,7 @@ class Request extends Map
 
     // trigger
     // trigger la requête et retourne un objet réponse
-    public function trigger(?array $option=null):Response
+    final public function trigger(?array $option=null):Response
     {
         return Response::newOverload($this,$option);
     }
@@ -2127,7 +2124,7 @@ class Request extends Map
 
     // default
     // retourne le tableau des défauts pour une nouvelle requête
-    public function default(?array $value=null):array
+    final public function default(?array $value=null):array
     {
         $return = [];
         $value = Base\Arr::plus($this->getAttr('default'),$value);
@@ -2151,7 +2148,7 @@ class Request extends Map
     // live
     // créer un objet requête à partir de la requête courante dans base request
     // la requête crée n'agit pas comme référence de la requête courante
-    public static function live():self
+    final public static function live():self
     {
         return new static(null);
     }
@@ -2160,7 +2157,7 @@ class Request extends Map
     // checkPing
     // vérifie que l'hôte est joignable sur le port spécifié
     // sinon envoie une exception attrapable
-    public static function checkPing(string $host,int $port=80,int $timeout=2):bool
+    final public static function checkPing(string $host,int $port=80,int $timeout=2):bool
     {
         $return = Base\Network::isOnline($host,$port,$timeout);
 

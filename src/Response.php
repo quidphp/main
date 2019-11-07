@@ -32,7 +32,7 @@ class Response extends Res
     // construct
     // construit l'objet réponse à partir d'une requête
     // trigge la requête à la construction
-    public function __construct($request=null,?array $option=null)
+    final public function __construct($request=null,?array $option=null)
     {
         $this->setRequest($request);
         $this->trigger($option);
@@ -44,7 +44,7 @@ class Response extends Res
 
     // toString
     // retourne le body de la réponse
-    public function __toString():string
+    final public function __toString():string
     {
         return $this->body();
     }
@@ -52,7 +52,7 @@ class Response extends Res
 
     // clone
     // clone est permis
-    public function __clone()
+    final public function __clone()
     {
         return;
     }
@@ -60,7 +60,7 @@ class Response extends Res
 
     // toArray
     // retourne tout l'objet sous forme de tableau sauf cache et index
-    public function toArray():array
+    final public function toArray():array
     {
         return Base\Arr::unsets(['cache','index'],get_object_vars($this));
     }
@@ -68,7 +68,7 @@ class Response extends Res
 
     // cast
     // retourne le body de la réponse
-    public function _cast():string
+    final public function _cast():string
     {
         return $this->body();
     }
@@ -76,8 +76,7 @@ class Response extends Res
 
     // setRequest
     // change l'objet requête de l'objet
-    // méthode protégé
-    protected function setRequest($request=null):void
+    final protected function setRequest($request=null):void
     {
         if(!$request instanceof Request)
         $request = Request::newOverload($request);
@@ -90,7 +89,7 @@ class Response extends Res
 
     // request
     // retourne l'objet requête
-    public function request():Request
+    final public function request():Request
     {
         return $this->request;
     }
@@ -98,7 +97,7 @@ class Response extends Res
 
     // trigger
     // trigge la requête et envoie le tableau curlExec dans la méthode setExec
-    protected function trigger(?array $option=null):void
+    final protected function trigger(?array $option=null):void
     {
         $request = $this->request();
         $exec = $request->curlExec($option);
@@ -110,7 +109,7 @@ class Response extends Res
 
     // setExec
     // traite un tableau exec, en provenance de request curlExec
-    protected function setExec(array $exec):void
+    final protected function setExec(array $exec):void
     {
         if(Base\Arr::keysExists(['header','resource','timestamp'],$exec))
         {
@@ -128,7 +127,7 @@ class Response extends Res
 
     // setHeaders
     // attribue les headers de la réponse
-    protected function setHeaders(array $headers):void
+    final protected function setHeaders(array $headers):void
     {
         $this->header = $headers;
 
@@ -138,7 +137,7 @@ class Response extends Res
 
     // headers
     // retourne les headers de l'objet réponse
-    public function headers():array
+    final public function headers():array
     {
         return $this->header;
     }
@@ -146,7 +145,7 @@ class Response extends Res
 
     // setResource
     // change la resource phpTemp de l'objet réponse
-    public function setResource($value,?array $option=null):void
+    final public function setResource($value,?array $option=null):void
     {
         if(!empty($this->resource))
         static::throw('resourceAlreadySet');
@@ -163,8 +162,7 @@ class Response extends Res
 
     // setTimestamp
     // change le timestamp de réception de la réponse
-    // méthode protégé
-    protected function setTimestamp(int $value):void
+    final protected function setTimestamp(int $value):void
     {
         $this->timestamp = $value;
 
@@ -174,7 +172,7 @@ class Response extends Res
 
     // timestamp
     // retourne le timestamp de réception de la réponse, si existant
-    public function timestamp():?int
+    final public function timestamp():?int
     {
         return $this->timestamp;
     }
@@ -183,8 +181,7 @@ class Response extends Res
     // setId
     // change le id unique de la réponse
     // génère un id unique en utilisant la config id length
-    // méthode protégé
-    protected function setId():void
+    final protected function setId():void
     {
         $this->id = Base\Str::random(Base\Response::$config['idLength']);
 
@@ -194,7 +191,7 @@ class Response extends Res
 
     // id
     // retourne le id unique de la réponse
-    public function id():string
+    final public function id():string
     {
         return $this->id;
     }
@@ -202,7 +199,7 @@ class Response extends Res
 
     // isWritable
     // ne pas permettre écriture sur la resource de la réponse
-    public function isWritable():bool
+    final public function isWritable():bool
     {
         return false;
     }
@@ -211,7 +208,7 @@ class Response extends Res
     // body
     // retourne le body de la réponse sous forme de string
     // si format est true, le body est formatté avant d'être retourné, support pour json
-    public function body(bool $format=false)
+    final public function body(bool $format=false)
     {
         $return = $this->read();
 
@@ -227,7 +224,7 @@ class Response extends Res
 
     // is200
     // retourne vrai si le code de la réponse est 200
-    public function is200():bool
+    final public function is200():bool
     {
         return Base\Header::is200($this->headers());
     }
@@ -235,7 +232,7 @@ class Response extends Res
 
     // isCodePositive
     // retourne vrai si le code de la réponse est positive (200 à 399)
-    public function isCodePositive():bool
+    final public function isCodePositive():bool
     {
         return Base\Header::isCodePositive($this->headers());
     }
@@ -243,7 +240,7 @@ class Response extends Res
 
     // isCodeLoggable
     // retourne vrai si le code de la réponse positive mais pas 301
-    public function isCodeLoggable():bool
+    final public function isCodeLoggable():bool
     {
         return Base\Header::isCodeLoggable($this->headers());
     }
@@ -251,7 +248,7 @@ class Response extends Res
 
     // isCodeError
     // retourne vrai si le code de la réponse est 400 ou 404
-    public function isCodeError():bool
+    final public function isCodeError():bool
     {
         return Base\Header::isCodeError($this->headers());
     }
@@ -259,7 +256,7 @@ class Response extends Res
 
     // isCodeServerError
     // retourne vrai si le code de la réponse est 500
-    public function isCodeServerError():bool
+    final public function isCodeServerError():bool
     {
         return Base\Header::isCodeServerError($this->headers());
     }
@@ -267,7 +264,7 @@ class Response extends Res
 
     // isHtml
     // retourne vrai si la réponse est de content type html
-    public function isHtml():bool
+    final public function isHtml():bool
     {
         return $this->isContentType('html');
     }
@@ -275,7 +272,7 @@ class Response extends Res
 
     // isJson
     // retourne vrai si la réponse est de content type json
-    public function isJson():bool
+    final public function isJson():bool
     {
         return $this->isContentType('json');
     }
@@ -283,7 +280,7 @@ class Response extends Res
 
     // isXml
     // retourne vrai si la réponse est de content type xml
-    public function isXml():bool
+    final public function isXml():bool
     {
         return $this->isContentType('xml');
     }
@@ -291,7 +288,7 @@ class Response extends Res
 
     // isCode
     // retourne vrai le code de la réponse est un de ceux donnés
-    public function isCode(...$values):bool
+    final public function isCode(...$values):bool
     {
         return Base\Header::isCode($values,$this->headers());
     }
@@ -299,7 +296,7 @@ class Response extends Res
 
     // isCodeBetween
     // retourne vrai si le code est entre les valeurs from et to
-    public function isCodeBetween($from,$to):bool
+    final public function isCodeBetween($from,$to):bool
     {
         return Base\Header::isCodeBetween($from,$to,$this->headers());
     }
@@ -307,7 +304,7 @@ class Response extends Res
 
     // isCodeIn
     // retourne vrai si le code se trouve dans le groupe (la centaine) donné en argument
-    public function isCodeIn($value):bool
+    final public function isCodeIn($value):bool
     {
         return Base\Header::isCodeIn($value,$this->headers());
     }
@@ -316,7 +313,7 @@ class Response extends Res
     // isContentType
     // retourne vrai si le tableau header contient le content-type donné en argument
     // si la réponse est false, essaie via mimeGroup
-    public function isContentType($value):bool
+    final public function isContentType($value):bool
     {
         $return = Base\Header::isContentType($value,$this->headers());
 
@@ -329,7 +326,7 @@ class Response extends Res
 
     // code
     // retourne le code de la réponse
-    public function code():int
+    final public function code():int
     {
         return Base\Header::code($this->headers());
     }
@@ -337,7 +334,7 @@ class Response extends Res
 
     // protocol
     // retourne le protocol http à partir du header status
-    public function protocol():?string
+    final public function protocol():?string
     {
         return Base\Header::protocol($this->headers());
     }
@@ -345,7 +342,7 @@ class Response extends Res
 
     // statusText
     // retourne le texte relié à un code status
-    public function statusText():?string
+    final public function statusText():?string
     {
         return Base\Header::statusText($this->headers());
     }
@@ -353,7 +350,7 @@ class Response extends Res
 
     // status
     // retourne la string header status
-    public function status():?string
+    final public function status():?string
     {
         return Base\Header::status($this->headers());
     }
@@ -363,7 +360,7 @@ class Response extends Res
     // retourne le content type à partir des headers
     // si la variable parse n'est pas vide, le content type est envoyé dans header/parseContentType
     // si la variable parse est 2, retourne l'extension
-    public function contentType(?int $parse=1):?string
+    final public function contentType(?int $parse=1):?string
     {
         return Base\Header::contentType($this->headers(),$parse);
     }
@@ -371,7 +368,7 @@ class Response extends Res
 
     // contentLength
     // retourne le content length à partir des headers
-    public function contentLength():?int
+    final public function contentLength():?int
     {
         return Base\Header::contentLength($this->headers());
     }
@@ -379,7 +376,7 @@ class Response extends Res
 
     // absolute
     // retourne l'uri absolute de la requête
-    public function absolute(?array $option=null):?string
+    final public function absolute(?array $option=null):?string
     {
         return $this->request()->absolute($option);
     }

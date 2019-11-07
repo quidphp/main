@@ -20,7 +20,7 @@ trait _cache
 
     // cache
     // retourne la cache si existante, sinon crée la cache à partir de la callable sans argument
-    public function cache($key,\Closure $closure=null,bool $cache=true)
+    final public function cache($key,\Closure $closure=null,bool $cache=true)
     {
         $return = null;
 
@@ -57,7 +57,7 @@ trait _cache
 
     // emptyCache
     // vide le tableau de cache
-    public function emptyCache():self
+    final public function emptyCache():self
     {
         $this->cache = [];
 
@@ -67,7 +67,7 @@ trait _cache
 
     // allCache
     // retourne toute la cache
-    public function allCache():array
+    final public function allCache():array
     {
         return $this->cache;
     }

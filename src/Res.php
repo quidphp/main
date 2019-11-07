@@ -152,7 +152,7 @@ class Res extends ArrObj
     // call
     // si une méthode est appelé et qu'elle n'est pas défini
     // renvoie vers base/res si la méthode est allouée
-    public function __call(string $method,array $args)
+    final public function __call(string $method,array $args)
     {
         return $this->base($method,true,...$args);
     }
@@ -161,7 +161,7 @@ class Res extends ArrObj
     // jsonSerialize
     // serialize l'objet avec json_encode
     // encode le tableau des lignes de la resource
-    public function jsonSerialize()
+    final public function jsonSerialize()
     {
         return $this->read();
     }
@@ -185,7 +185,7 @@ class Res extends ArrObj
 
     // offsetSet
     // ajoute ou change la valeur d'une clé dans la resource
-    public function offsetSet($key,$value):void
+    final public function offsetSet($key,$value):void
     {
         $arr = Base\Arr::set($key,$value,$this->arr());
         $this->overwrite($arr);
@@ -197,7 +197,7 @@ class Res extends ArrObj
     // offsetUnset
     // enlève une clé dans la resource
     // envoie une exception si non existant
-    public function offsetUnset($key):void
+    final public function offsetUnset($key):void
     {
         if($this->offsetExists($key))
         {
@@ -215,7 +215,7 @@ class Res extends ArrObj
     // arr
     // retourne le tableau des lignes
     // envoie une exception si pas readable ni seekableTellable
-    protected function arr():array
+    final protected function arr():array
     {
         $this->check('isReadable','isSeekableTellable');
         return $this->lines();
@@ -243,7 +243,7 @@ class Res extends ArrObj
 
     // unsetResource
     // délie la resource de l'objet
-    public function unsetResource():void
+    final public function unsetResource():void
     {
         $this->resource = null;
 
@@ -254,7 +254,7 @@ class Res extends ArrObj
     // resource
     // retourne la resource
     // crée la resource si pas encore existante
-    public function resource()
+    final public function resource()
     {
         $return = null;
         $remember = null;
@@ -288,8 +288,7 @@ class Res extends ArrObj
     // base
     // permet de faire un appel à la classe base/res
     // les méthodes permises sont dans le tableau statique base
-    // méthode protégé
-    protected function base(string $method,bool $exception=true,...$args)
+    final protected function base(string $method,bool $exception=true,...$args)
     {
         $return = null;
         $found = false;
@@ -329,7 +328,7 @@ class Res extends ArrObj
     // envoie une exception si une méthode alloué ne retourne pas true
     // les méthodes définis ont priorités sur celles de base
     // possible de mettre plusieurs méthodes
-    public function check(string ...$methods):self
+    final public function check(string ...$methods):self
     {
         foreach ($methods as $method)
         {
@@ -347,7 +346,7 @@ class Res extends ArrObj
     // isScheme
     // retourne vrai si la resource a le scheme spécifié dans son uri
     // attention: certains types de resources, comme file peuvent être fonctionnelles sans avoir de scheme
-    public function isScheme(string $target):bool
+    final public function isScheme(string $target):bool
     {
         return Base\Res::isScheme($target,$this->resource());
     }
@@ -355,7 +354,7 @@ class Res extends ArrObj
 
     // isExtension
     // retourne vrai si la resource a l'extension spécifié dans son uri
-    public function isExtension($target):bool
+    final public function isExtension($target):bool
     {
         return Base\Res::isExtension($target,$this->resource());
     }
@@ -363,7 +362,7 @@ class Res extends ArrObj
 
     // isMimeGroup
     // retourne vrai si le mime type est du group spécifé
-    public function isMimeGroup($group,bool $fromPath=true):bool
+    final public function isMimeGroup($group,bool $fromPath=true):bool
     {
         return Base\Res::isMimeGroup($group,$this->resource(),$fromPath);
     }
@@ -371,7 +370,7 @@ class Res extends ArrObj
 
     // isMimeFamily
     // retourne vrai si le mime type est de la famille spécifé
-    public function isMimeFamily($family,bool $fromPath=true):bool
+    final public function isMimeFamily($family,bool $fromPath=true):bool
     {
         return Base\Res::isMimeFamily($family,$this->resource(),$fromPath);
     }
@@ -380,7 +379,7 @@ class Res extends ArrObj
     // isFilePermission
     // vérifie s'il est possible d'accéder à la resource fichier en lecture, écriture ou éxécution
     // possibilité de spécifier un user ou un groupe, par défaut le user et groupe courant
-    public function isFilePermission(string $type,$user=null,$group=null):bool
+    final public function isFilePermission(string $type,$user=null,$group=null):bool
     {
         return Base\Res::isFilePermission($type,$this->resource(),$user=null,$group=null);
     }
@@ -389,7 +388,7 @@ class Res extends ArrObj
     // isOwner
     // retourne vrai si l'utilisateur est propriétraire de la resource
     // si user est null, utilise l'utilisateur courant
-    public function isOwner($user=null):bool
+    final public function isOwner($user=null):bool
     {
         return Base\Res::isOwner($this->resource(),$user);
     }
@@ -398,7 +397,7 @@ class Res extends ArrObj
     // isGroup
     // retourne vrai si le groupe est le même que le groupe du fichier
     // si group est null, utilise le groupe courant
-    public function isGroup($group=null):bool
+    final public function isGroup($group=null):bool
     {
         return Base\Res::isGroup($this->resource(),$group);
     }
@@ -407,7 +406,7 @@ class Res extends ArrObj
     // setPhpContextOption
     // permet de lier une clé -> valeur à l'intérieur du contexte de la ressource
     // n'a pas besoin d'être phpWritable
-    public function setPhpContextOption(string $key,$value):self
+    final public function setPhpContextOption(string $key,$value):self
     {
         $set = Base\Res::setPhpContextOption($key,$value,$this->resource());
 
@@ -420,7 +419,7 @@ class Res extends ArrObj
 
     // setContextMime
     // permet de lier un mime au sein du contexte de la ressource
-    public function setContextMime(string $mime):self
+    final public function setContextMime(string $mime):self
     {
         $set = Base\Res::setContextMime($mime,$this->resource());
 
@@ -433,7 +432,7 @@ class Res extends ArrObj
 
     // setContextBasename
     // permet de lier un basename au sein du contexte de la ressource
-    public function setContextBasename(string $basename):self
+    final public function setContextBasename(string $basename):self
     {
         $set = Base\Res::setContextBasename($basename,$this->resource());
 
@@ -447,7 +446,7 @@ class Res extends ArrObj
     // setContextEol
     // permet changer la valeur eol au sein du contexte de la ressource
     // peut être null ou false
-    public function setContextEol($separator):self
+    final public function setContextEol($separator):self
     {
         $set = Base\Res::setContextEol($separator,$this->resource());
 
@@ -461,7 +460,7 @@ class Res extends ArrObj
     // getPhpContextOption
     // retourne une option de contexte ou null
     // possible de creuser dans le tableau ou mettre null comme clé (retourne tout le tableau php)
-    public function getPhpContextOption($key=null)
+    final public function getPhpContextOption($key=null)
     {
         return Base\Res::getPhpContextOption($key,$this->resource());
     }
@@ -470,7 +469,7 @@ class Res extends ArrObj
     // permissionChange
     // change la permission de la resource fichier
     // envoie une exception en cas d'échec
-    public function permissionChange($mode):self
+    final public function permissionChange($mode):self
     {
         $change = Base\Res::permissionChange($mode,$this->resource());
 
@@ -484,7 +483,7 @@ class Res extends ArrObj
     // ownerChange
     // change le owner de la resource fichier
     // envoie une exception en cas d'échec
-    public function ownerChange($user):self
+    final public function ownerChange($user):self
     {
         $change = Base\Res::ownerChange($user,$this->resource());
 
@@ -498,7 +497,7 @@ class Res extends ArrObj
     // groupChange
     // change le groupe de la resource fichier
     // envoie une exception en cas d'échec
-    public function groupChange($group):self
+    final public function groupChange($group):self
     {
         $change = Base\Res::groupChange($group,$this->resource());
 
@@ -519,7 +518,7 @@ class Res extends ArrObj
 
     // read
     // lit le contenu de la resource en format brut
-    public function read($seek=0,$length=true,?array $option=null)
+    final public function read($seek=0,$length=true,?array $option=null)
     {
         $this->check('isReadable');
         return Base\Res::read($seek,$length,$this->resource(),Base\Arr::plus($this->readOption(),$option));
@@ -529,7 +528,7 @@ class Res extends ArrObj
     // readRaw
     // lit le contenu de la resource en format brut
     // ne tient pas compte de readOption
-    public function readRaw($seek=0,$length=true,?array $option=null):string
+    final public function readRaw($seek=0,$length=true,?array $option=null):string
     {
         $this->check('isReadable');
         return Base\Res::read($seek,$length,$this->resource(),$option);
@@ -538,7 +537,7 @@ class Res extends ArrObj
 
     // seek
     // permet de seek la resource
-    public function seek($seek=0,?int $type=SEEK_SET):self
+    final public function seek($seek=0,?int $type=SEEK_SET):self
     {
         $this->check('isSeekable');
         Base\Res::seek($seek,$this->resource(),$type);
@@ -550,7 +549,7 @@ class Res extends ArrObj
     // seekCurrent
     // déplace le pointeur de la resource à partir de sa position courante
     // position ne peut pas être PHP_INT_MAX pour SET_CUR
-    public function seekCurrent($seek):self
+    final public function seekCurrent($seek):self
     {
         $this->check('isSeekable');
         Base\Res::seekCurrent($seek,$this->resource());
@@ -562,7 +561,7 @@ class Res extends ArrObj
     // seekEnd
     // envoie le pointeur de la resource à la fin
     // ne fonctionne pas avec une ressource directoire
-    public function seekEnd($seek=0):self
+    final public function seekEnd($seek=0):self
     {
         $this->check('isSeekable');
         Base\Res::seekEnd($seek,$this->resource());
@@ -574,7 +573,7 @@ class Res extends ArrObj
     // seekRewind
     // rewind le pointeur de la resource au début
     // contrairement à seek, rewind ne vérifie pas la fin de la resource avec une lecture une bit plus loin
-    public function seekRewind():self
+    final public function seekRewind():self
     {
         $this->check('isSeekable');
         Base\Res::seekRewind($this->resource());
@@ -585,7 +584,7 @@ class Res extends ArrObj
 
     // lines
     // retourne un tableau des lignes de la resource
-    public function lines($offset=0,$length=true,?array $option=null):?array
+    final public function lines($offset=0,$length=true,?array $option=null):?array
     {
         $return = Base\Res::lines($offset,$length,$this->resource(),Base\Arr::plus($this->readOption(),$option));
 
@@ -595,7 +594,7 @@ class Res extends ArrObj
 
     // line
     // retourne la ligne courante de la resource
-    public function line(?array $option=null)
+    final public function line(?array $option=null)
     {
         $return = Base\Res::line($this->resource(),Base\Arr::plus($this->readOption(),$option));
 
@@ -606,7 +605,7 @@ class Res extends ArrObj
     // lineRef
     // retourne la ligne courante de la resource à partir d'un offset, length et un i
     // le i doit être passé par référence
-    public function lineRef($offset=true,$length=true,int &$i,?array $option=null)
+    final public function lineRef($offset=true,$length=true,int &$i,?array $option=null)
     {
         $return = Base\Res::lineRef($this->resource(),$offset,$length,$i,Base\Arr::plus($this->readOption(),$option));
 
@@ -616,7 +615,7 @@ class Res extends ArrObj
 
     // lineFirst
     // retourne la première ligne de la resource
-    public function lineFirst(?array $option=null)
+    final public function lineFirst(?array $option=null)
     {
         $return = Base\Res::lineFirst($this->resource(),Base\Arr::plus($this->readOption(),$option));
 
@@ -626,7 +625,7 @@ class Res extends ArrObj
 
     // lineLast
     // retourne la dernière ligne de la resource
-    public function lineLast(?array $option=null)
+    final public function lineLast(?array $option=null)
     {
         $return = Base\Res::lineLast($this->resource(),Base\Arr::plus($this->readOption(),$option));
 
@@ -637,7 +636,7 @@ class Res extends ArrObj
     // lineChunk
     // permet de subdiviser le tableau de l'ensemble des lignes de la resource par longueur
     // retourne un tableau multidimensionnel colonne
-    public function lineChunk(int $each,bool $preserve=true,?array $option=null):?array
+    final public function lineChunk(int $each,bool $preserve=true,?array $option=null):?array
     {
         $return = Base\Res::lineChunk($each,$this->resource(),$preserve,Base\Arr::plus($this->readOption(),$option));
 
@@ -656,7 +655,7 @@ class Res extends ArrObj
     // si callback retourne faux, la colonne existante est stocké et fermé
     // si callback retourne null, la ligne est stocké si la colonne est ouverte, sinon elle est ignoré
     // retourne un tableau multidimensionnel colonne
-    public function lineChunkWalk(callable $callback,?array $option=null):?array
+    final public function lineChunkWalk(callable $callback,?array $option=null):?array
     {
         $return = Base\Res::lineChunkWalk($callback,$this->resource(),Base\Arr::plus($this->readOption(),$option));
 
@@ -671,8 +670,7 @@ class Res extends ArrObj
 
     // lineReturns
     // gère la valeur de retour pour lines
-    // méthode protégé
-    protected function lineReturns(array $return):array
+    final protected function lineReturns(array $return):array
     {
         foreach ($return as $key => $value)
         {
@@ -685,7 +683,6 @@ class Res extends ArrObj
 
     // lineReturn
     // gère la valeur de retour pour line
-    // méthode protégé
     protected function lineReturn($return)
     {
         return $return;
@@ -699,7 +696,7 @@ class Res extends ArrObj
     // retourne le nombre de chunk de données envoyés ou null si la resource n'est pas lisible
     // ne peut pas être une resource directoire
     // option clean, rewind, flush et sleep
-    public function passthruChunk($length,?array $option=null):?int
+    final public function passthruChunk($length,?array $option=null):?int
     {
         return Base\Res::passthruChunk($length,$this->resource(),$option);
     }
@@ -709,7 +706,7 @@ class Res extends ArrObj
     // retourne le nombre d'occurences d'une substring dans une ressource
     // si sub contient le separateur, la recherche se fait dans tout le fichier et non pas par ligne
     // les fichiers csv seront traités en tant que string et non pas array
-    public function subCount(string $sub,?array $option=null):?int
+    final public function subCount(string $sub,?array $option=null):?int
     {
         return Base\Res::subCount($sub,$this->resource(),$option);
     }
@@ -728,7 +725,7 @@ class Res extends ArrObj
     // possibilité de barrer la ressource pendant l'opération
     // possibilité de flush le buffer pour que le contenu soit écrit immédiatement dans la ressource
     // envoie une exception si le contenu n'a pas été écrit en entier
-    public function write($content,?array $option=null):self
+    final public function write($content,?array $option=null):self
     {
         $r = Base\Res::write($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option));
 
@@ -742,7 +739,7 @@ class Res extends ArrObj
     // writeRaw
     // écrit le contenu de la resource en format brut
     // ne tient pas compte de writeOption
-    public function writeRaw($content,?array $option=null):self
+    final public function writeRaw($content,?array $option=null):self
     {
         $r = Base\Res::write($content,$this->resource(),$option);
 
@@ -756,7 +753,7 @@ class Res extends ArrObj
     // overwrite
     // effacer le contenu de la ressource et ensuite écrit le nouveau contenu
     // envoie une exception si le contenu n'a pas été écrit en entier
-    public function overwrite($content,?array $option=null):self
+    final public function overwrite($content,?array $option=null):self
     {
         $r = Base\Res::overwrite($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option));
 
@@ -771,7 +768,7 @@ class Res extends ArrObj
     // prepend du contenu dans une ressource
     // si newline est true, ajoute une newline à la fin du nouveau contenu
     // envoie une exception si le contenu n'a pas été écrit en entier
-    public function prepend($content,?array $option=null):self
+    final public function prepend($content,?array $option=null):self
     {
         $r = Base\Res::prepend($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option));
 
@@ -785,7 +782,7 @@ class Res extends ArrObj
     // append
     // append du contenu dans une ressource
     // envoie une exception si le contenu n'a pas été écrit en entier
-    public function append($content,?array $option=null):self
+    final public function append($content,?array $option=null):self
     {
         $r = Base\Res::append($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option));
 
@@ -799,7 +796,7 @@ class Res extends ArrObj
     // lineSplice
     // permet d'enlever et éventuellement remplacer des lignes dans la ressource
     // offset accepte un chiffre négatif
-    public function lineSplice(int $offset,int $length,$replace=null,?array $option=null):self
+    final public function lineSplice(int $offset,int $length,$replace=null,?array $option=null):self
     {
         Base\Res::lineSplice($offset,$length,$this->resource(),$replace,true,Base\Arr::plus($this->writeOption(),$option));
 
@@ -809,7 +806,7 @@ class Res extends ArrObj
 
     // lineSpliceFirst
     // permet d'enlever et éventuellement remplacer la première ligne de la ressource
-    public function lineSpliceFirst($replace=null,?array $option=null):self
+    final public function lineSpliceFirst($replace=null,?array $option=null):self
     {
         Base\Res::lineSpliceFirst($this->resource(),$replace,true,Base\Arr::plus($this->writeOption(),$option));
 
@@ -819,7 +816,7 @@ class Res extends ArrObj
 
     // lineSpliceLast
     // permet d'enlever et éventuellement remplacer la dernière ligne de la ressource
-    public function lineSpliceLast($replace=null,?array $option=null):self
+    final public function lineSpliceLast($replace=null,?array $option=null):self
     {
         Base\Res::lineSpliceLast($this->resource(),$replace,true,Base\Arr::plus($this->writeOption(),$option));
 
@@ -831,7 +828,7 @@ class Res extends ArrObj
     // permet d'insérer du nouveau contenu à un numéro de ligne dans la ressource
     // le reste du contenu est repoussé
     // offset accepte un chiffre négatif
-    public function lineInsert(int $offset,$replace,?array $option=null):self
+    final public function lineInsert(int $offset,$replace,?array $option=null):self
     {
         Base\Res::lineInsert($offset,$replace,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
 
@@ -843,7 +840,7 @@ class Res extends ArrObj
     // permet de passer chaque ligne de la resource dans un callback
     // si le callback retourne faux, la ligne est retiré
     // la ressource est automatiquement modifié
-    public function lineFilter(callable $callback,?array $option=null):self
+    final public function lineFilter(callable $callback,?array $option=null):self
     {
         Base\Res::lineFilter($callback,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
 
@@ -854,7 +851,7 @@ class Res extends ArrObj
     // lineMap
     // permet de passer chaque ligne de la resource dans un callback
     // la ligne est remplacé par la valeur de retour du callback
-    public function lineMap(callable $callback,?array $option=null):self
+    final public function lineMap(callable $callback,?array $option=null):self
     {
         Base\Res::lineMap($callback,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
 
@@ -866,7 +863,7 @@ class Res extends ArrObj
     // vide une resource
     // size permet de définir quel taille la ressource doit avoir après l'opération, donc la méthode truncate à partir de la fin
     // possibilité de barrer la ressource pendant l'opération
-    public function empty(int $size=0,?array $option=null):self
+    final public function empty(int $size=0,?array $option=null):self
     {
         Base\Res::empty($this->resource(),$size,$option);
 
@@ -877,7 +874,7 @@ class Res extends ArrObj
     // touch
     // touche une resource fichier et change les dates d'accès et de modification
     // envoie une exception en cas d'échec
-    public function touch():self
+    final public function touch():self
     {
         $touch = Base\Res::touch($this->resource());
 
@@ -891,7 +888,7 @@ class Res extends ArrObj
     // rename
     // renomme une resource fichier, retourne la nouvelle resource en cas de succès
     // met à jour la resource de l'objet ou envoie une exception
-    public function rename($target):self
+    final public function rename($target):self
     {
         $rename = Base\Res::rename($target,$this->resource());
 
@@ -908,7 +905,7 @@ class Res extends ArrObj
     // changeDirname
     // renomme le dirname de la resource fichier, garde le basename
     // met à jour la resource de l'objet ou envoie une exception
-    public function changeDirname($dirname):self
+    final public function changeDirname($dirname):self
     {
         $rename = Base\Res::changeDirname($dirname,$this->resource());
 
@@ -925,7 +922,7 @@ class Res extends ArrObj
     // changeBasename
     // renomme le basename de la resource fichier, garde le dirname
     // met à jour la resource de l'objet ou envoie une exception
-    public function changeBasename(string $basename):self
+    final public function changeBasename(string $basename):self
     {
         $rename = Base\Res::changeBasename($basename,$this->resource());
 
@@ -942,7 +939,7 @@ class Res extends ArrObj
     // changeExtension
     // change l'extension d'une resource fichier, garde le dirname et filename
     // met à jour la resource de l'objet ou envoie une exception
-    public function changeExtension(string $extension):self
+    final public function changeExtension(string $extension):self
     {
         $rename = Base\Res::changeExtension($extension,$this->resource());
 
@@ -959,7 +956,7 @@ class Res extends ArrObj
     // removeExtension
     // enlève l'extension d'une resource fichier, garde le dirname et filename
     // met à jour la resource de l'objet ou envoie une exception
-    public function removeExtension():self
+    final public function removeExtension():self
     {
         $rename = Base\Res::removeExtension($this->resource());
 
@@ -976,7 +973,7 @@ class Res extends ArrObj
     // moveUploaded
     // déplace une resource fichier venant d'être chargé
     // met à jour la resource de l'objet ou envoie une exception
-    public function moveUploaded($target):self
+    final public function moveUploaded($target):self
     {
         $rename = Base\Res::moveUploaded($target,$this->resource());
 
@@ -993,7 +990,7 @@ class Res extends ArrObj
     // copy
     // copy une resource fichier
     // la resource reste la même, envoie une exception en cas d'échec
-    public function copy($to):self
+    final public function copy($to):self
     {
         $copy = Base\Res::copy($to,$this->resource());
 
@@ -1007,7 +1004,7 @@ class Res extends ArrObj
     // copyInDirname
     // copy une resource fichier, garde le même dirname
     // la resource reste la même, envoie une exception en cas d'échec
-    public function copyInDirname(string $basename):self
+    final public function copyInDirname(string $basename):self
     {
         $copy = Base\Res::copyInDirname($basename,$this->resource());
 
@@ -1021,7 +1018,7 @@ class Res extends ArrObj
     // copyWithBasename
     // copy une resource fichier, garde le même basename
     // la resource reste la même, envoie une exception en cas d'échec
-    public function copyWithBasename($dirname):self
+    final public function copyWithBasename($dirname):self
     {
         $copy = Base\Res::copyWithBasename($dirname,$this->resource());
 
@@ -1035,7 +1032,7 @@ class Res extends ArrObj
     // unlink
     // efface le fichier de la resource, retourne un booléean
     // enlève la resource en cas de succès, sinon envoie une exception
-    public function unlink(bool $exception=true):bool
+    final public function unlink(bool $exception=true):bool
     {
         $return = Base\Res::unlink($this->resource());
 
@@ -1053,7 +1050,7 @@ class Res extends ArrObj
     // écrire le contenu de la resource dans un nouveau fichier
     // envoie une exception si la resource n'est pas responsable
     // retourne un objet file, avec la bonne classe selon le mime group
-    public function toFile($value,?array $option=null):File
+    final public function toFile($value,?array $option=null):File
     {
         $return = null;
         $option = Base\Arr::plus(['create'=>true],$option);

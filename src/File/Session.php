@@ -21,7 +21,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // storageDirname
     // retounre le dirname du storage, le dossier ou les fichiers sessions sont gargés
-    public static function storageDirname():string
+    final public static function storageDirname():string
     {
         return Base\Session::getSavePath(true);
     }
@@ -29,7 +29,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionSid
     // retourne la clé de session
-    public function sessionSid():string
+    final public function sessionSid():string
     {
         return $this->filename();
     }
@@ -37,7 +37,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionData
     // retourne les données de la session
-    public function sessionData():string
+    final public function sessionData():string
     {
         return $this->readRaw();
     }
@@ -45,7 +45,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionWrite
     // écrit de nouvelles données dans le fichier session
-    public function sessionWrite(string $data):bool
+    final public function sessionWrite(string $data):bool
     {
         $return = true;
         $this->overwrite($data,['callback'=>null]);
@@ -56,7 +56,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionUpdateTimestamp
     // update le timestamp du fichier session, retourne true même si rien n'a changé
-    public function sessionUpdateTimestamp():bool
+    final public function sessionUpdateTimestamp():bool
     {
         $this->touch();
 
@@ -66,7 +66,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionDestroy
     // détruit le fichier de session
-    public function sessionDestroy():bool
+    final public function sessionDestroy():bool
     {
         return $this->unlink();
     }
@@ -74,7 +74,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionDir
     // retourne le directoire de session
-    public static function sessionDir(string $path,string $name):string
+    final public static function sessionDir(string $path,string $name):string
     {
         $return = null;
 
@@ -87,7 +87,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionPath
     // retourne le chemin de session
-    public static function sessionPath(string $path,string $name,string $sid):string
+    final public static function sessionPath(string $path,string $name,string $sid):string
     {
         $return = null;
 
@@ -100,7 +100,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionExists
     // retourne vrai si le sid exists pour le nom donné
-    public static function sessionExists(string $path,string $name,string $sid):bool
+    final public static function sessionExists(string $path,string $name,string $sid):bool
     {
         $return = false;
         $path = static::sessionPath($path,$name,$sid);
@@ -115,7 +115,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
     // sessionCreate
     // crée une nouvelle session avec le nom et side donné
     // retourne une classe qui implémente Contract\Session
-    public static function sessionCreate(string $path,string $name,string $sid):?Main\Contract\Session
+    final public static function sessionCreate(string $path,string $name,string $sid):?Main\Contract\Session
     {
         $return = null;
 
@@ -133,7 +133,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
     // sessionRead
     // lit une session à partir d'un nom et d'un sid
     // retourne une classe qui implémente Contract\Session
-    public static function sessionRead(string $path,string $name,string $sid):?Main\Contract\Session
+    final public static function sessionRead(string $path,string $name,string $sid):?Main\Contract\Session
     {
         $return = null;
 
@@ -149,7 +149,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
 
     // sessionGarbageCollect
     // lance le processus de garbageCollect pour le nom de session donné
-    public static function sessionGarbageCollect(string $path,string $name,int $lifetime,$not=null):int
+    final public static function sessionGarbageCollect(string $path,string $name,int $lifetime,$not=null):int
     {
         $return = 0;
         $dir = static::sessionDir($path,$name);

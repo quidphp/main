@@ -16,7 +16,7 @@ use Quid\Main;
 class RequestHistory extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $request = new Main\Request('/test.jpg');

@@ -39,7 +39,7 @@ class Csv extends Text implements Main\Contract\Import
 
     // same
     // retourne vrai si toutes les colonnes du tableau csv ont le même count et les mêmes clés
-    public function same():bool
+    final public function same():bool
     {
         return Base\Csv::same($this->read());
     }
@@ -48,7 +48,7 @@ class Csv extends Text implements Main\Contract\Import
     // clean
     // efface toutes les colonnes qui n'ont pas la même longueur et les mêmes clés que la première
     // si removeEmpty est true, une colonne dont toutes les valeurs sont vides est éliminé
-    public function clean(bool $removeEmpty=true):array
+    final public function clean(bool $removeEmpty=true):array
     {
         return Base\Csv::clean($this->read(),$removeEmpty);
     }
@@ -57,7 +57,7 @@ class Csv extends Text implements Main\Contract\Import
     // assoc
     // la première colonne contient les headers
     // le nom des headers est appliqué comme clé à chaque colonne
-    public function assoc(bool $clean=false,bool $removeEmpty=true):array
+    final public function assoc(bool $clean=false,bool $removeEmpty=true):array
     {
         return Base\Csv::assoc($this->read(),$clean,$removeEmpty);
     }
@@ -66,8 +66,7 @@ class Csv extends Text implements Main\Contract\Import
     // lineReturn
     // gère la valeur de retour pour line
     // peut encoder le retour, trim chaque valeur ainsi que caster les valeurs numériques string
-    // méthode protégé
-    protected function lineReturn($return)
+    final protected function lineReturn($return)
     {
         $closure = function(string $return,array $option) {
             if(!empty($option['toUtf8']))
@@ -94,7 +93,7 @@ class Csv extends Text implements Main\Contract\Import
 
     // sourceRewind
     // ramène le pointeur de la source au début
-    public function sourceRewind():void
+    final public function sourceRewind():void
     {
         $this->seekRewind();
 
@@ -105,7 +104,7 @@ class Csv extends Text implements Main\Contract\Import
     // sourceOne
     // retourne une entrée de la source
     // i agit comme référence
-    public function sourceOne($offset=true,$length=true,int &$i,?array $option=null)
+    final public function sourceOne($offset=true,$length=true,int &$i,?array $option=null)
     {
         return $this->lineRef($offset,$length,$i,$option);
     }
@@ -113,7 +112,7 @@ class Csv extends Text implements Main\Contract\Import
 
     // targetInsert
     // fait une insertion sur le fichier, utilisé à partir de main/importer
-    public function targetInsert(array $data,?array $option=null):bool
+    final public function targetInsert(array $data,?array $option=null):bool
     {
         $return = false;
 
@@ -130,7 +129,7 @@ class Csv extends Text implements Main\Contract\Import
 
     // targetUpdate
     // fait une mise à jour sur le fichier, utilisé à partir de main/importer
-    public function targetUpdate(array $data,int $offset,?array $option=null):bool
+    final public function targetUpdate(array $data,int $offset,?array $option=null):bool
     {
         $return = false;
 
@@ -146,7 +145,7 @@ class Csv extends Text implements Main\Contract\Import
 
     // targetDelete
     // fait une suppresion sur le fichier, utilisé à partir de main/importer
-    public function targetDelete(int $offset,?array $option=null):bool
+    final public function targetDelete(int $offset,?array $option=null):bool
     {
         $return = false;
 
@@ -162,7 +161,7 @@ class Csv extends Text implements Main\Contract\Import
 
     // targetTruncate
     // vide le fichier, utilisé à partir de main/importer
-    public function targetTruncate(?array $option=null):bool
+    final public function targetTruncate(?array $option=null):bool
     {
         $return = false;
 
@@ -178,7 +177,7 @@ class Csv extends Text implements Main\Contract\Import
 
     // readCallback
     // utilisé lors du read pour un csv
-    public static function readCallback($value):?array
+    final public static function readCallback($value):?array
     {
         return Base\Csv::strToArr($value,Base\Arr::gets(['delimiter','enclosure','escape'],static::$config['read']));
     }

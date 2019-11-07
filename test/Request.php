@@ -16,7 +16,7 @@ use Quid\Main;
 class Request extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $uri = 'http://google.com/lavieestlaide?get=laol#lastchance';

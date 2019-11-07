@@ -25,7 +25,7 @@ class Localization extends Map
     // construct
     // construit l'objet de localization
     // une string json ou un array doit être fourni
-    public function __construct($value)
+    final public function __construct($value)
     {
         if(is_string($value))
         $value = Base\Json::decode($value);
@@ -42,7 +42,7 @@ class Localization extends Map
 
     // toString
     // affiche l'objet comme string, retourne la string input
-    public function __toString():string
+    final public function __toString():string
     {
         return $this->input();
     }
@@ -51,7 +51,7 @@ class Localization extends Map
     // onPrepareReplace
     // prépare le tableau de remplacement en vue d'un overwrite
     // une exception sera envoyé si le tableau n'est pas dans le bon format
-    public function onPrepareReplace($value)
+    final protected function onPrepareReplace($value)
     {
         $return = null;
 
@@ -76,7 +76,7 @@ class Localization extends Map
 
     // inUsa
     // retourne vrai si le pays de la localization est USA
-    public function inUsa()
+    final public function inUsa()
     {
         return (strtoupper($this->countryCode()) === 'US')? true:false;
     }
@@ -84,7 +84,7 @@ class Localization extends Map
 
     // lat
     // retourne la valeur lat sous forme de float
-    public function lat():float
+    final public function lat():float
     {
         return Base\Number::cast($this->get('lat'));
     }
@@ -92,7 +92,7 @@ class Localization extends Map
 
     // lng
     // retourne la valeur lng sous forme de float
-    public function lng():float
+    final public function lng():float
     {
         return Base\Number::cast($this->get('lng'));
     }
@@ -100,7 +100,7 @@ class Localization extends Map
 
     // latLng
     // retourne le tableau latlng
-    public function latLng():array
+    final public function latLng():array
     {
         return ['lat'=>$this->lat(),'lng'=>$this->lng()];
     }
@@ -108,7 +108,7 @@ class Localization extends Map
 
     // input
     // retourne la string input si existante
-    public function input():?string
+    final public function input():?string
     {
         return $this->get('input');
     }
@@ -116,7 +116,7 @@ class Localization extends Map
 
     // countryCode
     // retourne le code de pays
-    public function countryCode():string
+    final public function countryCode():string
     {
         return $this->get('countryCode');
     }

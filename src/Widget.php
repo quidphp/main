@@ -23,7 +23,7 @@ abstract class Widget extends Root
 
     // toString
     // renvoie le html de l'élément
-    public function __toString():string
+    final public function __toString():string
     {
         return $this->html();
     }
@@ -31,7 +31,7 @@ abstract class Widget extends Root
 
     // clone
     // clone est permis
-    public function __clone()
+    final public function __clone()
     {
         return;
     }
@@ -39,7 +39,7 @@ abstract class Widget extends Root
 
     // toArray
     // retourne la structure de l'élément sous forme de tableau multidimensionnel
-    public function toArray():array
+    final public function toArray():array
     {
         return $this->structure();
     }
@@ -57,7 +57,7 @@ abstract class Widget extends Root
 
     // setCallback
     // attribute un tableau ou objet callback à la classe
-    public function setCallback(string $key,?callable $value):self
+    final public function setCallback(string $key,?callable $value):self
     {
         $this->callback[$key] = $value;
 
@@ -67,7 +67,7 @@ abstract class Widget extends Root
 
     // callback
     // retourne un callback lié, si existant
-    public function callback(string $key):?callable
+    final public function callback(string $key):?callable
     {
         return (array_key_exists($key,$this->callback))? $this->callback[$key]:null;
     }

@@ -36,7 +36,7 @@ abstract class ServiceMailer extends Service
 
     // construct
     // construit l'objet mail
-    public function __construct(string $key,?array $attr=null)
+    final public function __construct(string $key,?array $attr=null)
     {
         parent::__construct($key,$attr);
         $this->prepare();
@@ -57,7 +57,7 @@ abstract class ServiceMailer extends Service
 
     // isActive
     // retourne vrai si l'envoie de courriel est activé globalement
-    public function isActive():bool
+    final public function isActive():bool
     {
         return Base\Email::isActive();
     }
@@ -66,7 +66,7 @@ abstract class ServiceMailer extends Service
     // username
     // retourne le username des paramètres de connection
     // sera utilisé comme email s'il n'y a pas de from spécifié
-    public function username():string
+    final public function username():string
     {
         return $this->getAttr('username');
     }
@@ -77,7 +77,7 @@ abstract class ServiceMailer extends Service
     // utilise la clé email ou username pour déterminer le email par défaut
     // utilise la clé name pour déterminer le nom par défaut
     // le tableau message a priorité sur cette valeur
-    public function from():?array
+    final public function from():?array
     {
         $return = null;
         $email = $this->getAttr('email');
@@ -100,7 +100,7 @@ abstract class ServiceMailer extends Service
 
     // reset
     // délie l'objet mailer, l'objet n'est plus isReady
-    public function reset():void
+    final public function reset():void
     {
         $this->checkReady();
         $this->mailer = null;
@@ -111,7 +111,7 @@ abstract class ServiceMailer extends Service
 
     // mailer
     // retourne l'instance de l'objet mailer
-    public function mailer():object
+    final public function mailer():object
     {
         return $this->checkReady()->mailer;
     }
@@ -119,7 +119,7 @@ abstract class ServiceMailer extends Service
 
     // isReady
     // retourne vrai si l'objet email est prêt à être utilisé
-    public function isReady():bool
+    final public function isReady():bool
     {
         return (!empty($this->mailer))? true:false;
     }
@@ -127,7 +127,7 @@ abstract class ServiceMailer extends Service
 
     // checkReady
     // lance une exception si le status n'est pas le même que celui donné en argument
-    public function checkReady(bool $value=true)
+    final public function checkReady(bool $value=true)
     {
         $ready = $this->isReady();
 
@@ -146,7 +146,7 @@ abstract class ServiceMailer extends Service
     // met le username comme email par défaut si from n'est pas spécifié
     // envoie une exception si le message est invalide après préparation
     // sinon retourne le tableau message
-    public function prepareMessage($value):array
+    final public function prepareMessage($value):array
     {
         $return = null;
         $value = $this->messageCastObj($value);
@@ -176,8 +176,7 @@ abstract class ServiceMailer extends Service
     // messageCastObj
     // cast la valuer si c'est un objet avec une méthode sendEmail
     // utilisé pour modèles de courriel
-    // méthode protégé
-    protected function messageCastObj($return)
+    final protected function messageCastObj($return)
     {
         if(is_object($return) && method_exists($return,'sendEmail'))
         $return = $return->sendEmail();
@@ -190,7 +189,7 @@ abstract class ServiceMailer extends Service
     // retourne un tableau mergé message et options, sans le mot de passe
     // inclut error s'il y a
     // utilisé par les méthodes log
-    public function messageWithOption(array $value):array
+    final public function messageWithOption(array $value):array
     {
         $return = Base\Arr::replace($this->attr(),$value);
         $return['key'] = $this->getKey();
@@ -208,7 +207,7 @@ abstract class ServiceMailer extends Service
 
     // send
     // envoie le courriel maintenant
-    public function send($value):bool
+    final public function send($value):bool
     {
         return $this->trigger($value);
     }
@@ -217,7 +216,7 @@ abstract class ServiceMailer extends Service
     // sendOnCloseDown
     // envoie le courriel au closeDown de l'application
     // retourne null
-    public function sendOnCloseDown($value):void
+    final public function sendOnCloseDown($value):void
     {
         Base\Response::onCloseDown(function() use($value) {
             $this->trigger($value);
@@ -231,8 +230,7 @@ abstract class ServiceMailer extends Service
     // permet d'envoyer un courriel à partir d'un tableau message
     // tous les champs contact, sauf from, peuvent avoir de multiples destinataires
     // peut envoyer maintenant ou au closeDown
-    // méthode protégé
-    protected function sendNowOrOnCloseDown($value,bool $onCloseDown=false):?bool
+    final protected function sendNowOrOnCloseDown($value,bool $onCloseDown=false):?bool
     {
         return ($onCloseDown === true)? $this->sendOnCloseDown($value):$this->send($value);
     }
@@ -240,7 +238,7 @@ abstract class ServiceMailer extends Service
 
     // sendTest
     // permet d'envoyer un courriel test
-    public function sendTest($value=null,bool $onCloseDown=false):?bool
+    final public function sendTest($value=null,bool $onCloseDown=false):?bool
     {
         $return = null;
         $value = $this->messageCastObj($value);
@@ -260,7 +258,7 @@ abstract class ServiceMailer extends Service
 
     // sendLoop
     // permet d'envoyer plusieurs messages à partir d'un tableau multidimensionnel
-    public function sendLoop(array $values,bool $onCloseDown=false):array
+    final public function sendLoop(array $values,bool $onCloseDown=false):array
     {
         $return = [];
 
@@ -278,7 +276,7 @@ abstract class ServiceMailer extends Service
     // envoie une exception si la classe n'existe pas
     // la queue peut être vidé dans le script, au closeDown, ou via un script cron
     // si queue failed, c'est probablement à cause des permissions de l'user
-    public function queue($value):bool
+    final public function queue($value):bool
     {
         $return = false;
         $message = $this->prepareMessage($value);
@@ -304,7 +302,7 @@ abstract class ServiceMailer extends Service
 
     // queueTest
     // permet de queue un courriel test
-    public function queueTest($value):bool
+    final public function queueTest($value):bool
     {
         $return = null;
         $value = $this->messageCastObj($value);
@@ -324,7 +322,7 @@ abstract class ServiceMailer extends Service
 
     // queueLoop
     // permet de queue plusieurs messages à partir d'un tableau multidimensionnel
-    public function queueLoop(array $values):array
+    final public function queueLoop(array $values):array
     {
         $return = [];
 
@@ -341,7 +339,7 @@ abstract class ServiceMailer extends Service
     // permet de dispatch un message
     // la méthode utilisée est déterminée dans la configuration de la classe
     // envoie une exception si la méthode est invalide
-    public function dispatch($value):?bool
+    final public function dispatch($value):?bool
     {
         $return = null;
         $dispatch = static::getDispatch();
@@ -353,7 +351,7 @@ abstract class ServiceMailer extends Service
 
     // dispatchLoop
     // permet de dispatch plusieurs messages à partir d'un tableau multidimensionnel
-    public function dispatchLoop(array $values):array
+    final public function dispatchLoop(array $values):array
     {
         $return = [];
 
@@ -368,8 +366,7 @@ abstract class ServiceMailer extends Service
 
     // log
     // permet de log un message si une classe log est lié
-    // méthode protégé
-    protected function log(bool $status,array $message):void
+    final protected function log(bool $status,array $message):void
     {
         $log = $this->logClass();
 
@@ -383,7 +380,7 @@ abstract class ServiceMailer extends Service
     // queueClass
     // retourne la classe pour queue
     // envoie une classe si la classe est invalide
-    public function queueClass():?string
+    final public function queueClass():?string
     {
         $return = $this->getAttr('queue');
 
@@ -397,7 +394,7 @@ abstract class ServiceMailer extends Service
     // logClass
     // retourne la classe pour log
     // envoie une classe si la classe est invalide
-    public function logClass():?string
+    final public function logClass():?string
     {
         $return = $this->getAttr('log');
 
@@ -410,7 +407,7 @@ abstract class ServiceMailer extends Service
 
     // getDispatch
     // retourne la méthode dispatch
-    public static function getDispatch():string
+    final public static function getDispatch():string
     {
         return static::$dispatch;
     }
@@ -418,7 +415,7 @@ abstract class ServiceMailer extends Service
 
     // setDispatch
     // change la méthode de dispatch
-    public static function setDispatch(string $value):void
+    final public static function setDispatch(string $value):void
     {
         if(in_array($value,['send','sendOnCloseDown','queue'],true))
         static::$dispatch = $value;
@@ -432,7 +429,7 @@ abstract class ServiceMailer extends Service
 
     // getOverloadKeyPrepend
     // retourne le prepend de la clé à utiliser pour le tableau overload
-    public static function getOverloadKeyPrepend():?string
+    final public static function getOverloadKeyPrepend():?string
     {
         return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'Service':null;
     }

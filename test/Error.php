@@ -16,7 +16,7 @@ use Quid\Main;
 class Error extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $error = new Main\Error(['test',__FILE__,$line = __LINE__,E_USER_WARNING],1);

@@ -16,7 +16,7 @@ trait _sequential
 {
     // sequential
     // ramène les clés de la map séquentielle, numérique et en ordre
-    public function sequential():Main\Map
+    final public function sequential():Main\Map
     {
         $this->checkAllowed('sequential');
         $return = $this->onPrepareThis('sequential');

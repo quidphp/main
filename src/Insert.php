@@ -23,7 +23,7 @@ class Insert extends Map
 
     // set
     // comme set, mais vérifie que la clé n'existe pas
-    public function set($key,$value):parent
+    final public function set($key,$value):parent
     {
         if($key !== null && $this->exists($key))
         static::throw('cannotUpdateExistingKey');

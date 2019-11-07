@@ -20,7 +20,7 @@ trait _inst
 
     // onPrepareSetInst
     // prépare l'objet qui sera ajouté au inst
-    protected function onPrepareSetInst():void
+    final protected function onPrepareSetInst():void
     {
         return;
     }
@@ -28,7 +28,7 @@ trait _inst
 
     // onSetInst
     // callback après l'ajout d'un objet dans inst
-    protected function onSetInst():void
+    final protected function onSetInst():void
     {
         return;
     }
@@ -36,7 +36,7 @@ trait _inst
 
     // onPrepareUnsetInst
     // prépare l'objet qui sera sorti du inst
-    protected function onPrepareUnsetInst():void
+    final protected function onPrepareUnsetInst():void
     {
         return;
     }
@@ -44,7 +44,7 @@ trait _inst
 
     // onUnsetInst
     // callback après le retrait d'un objet de inst
-    protected function onUnsetInst():void
+    final protected function onUnsetInst():void
     {
         return;
     }
@@ -52,7 +52,7 @@ trait _inst
 
     // inInst
     // retourne vrai si l'objet courant est dans inst
-    public function inInst():bool
+    final public function inInst():bool
     {
         return (in_array($this,static::$inst,true))? true:false;
     }
@@ -60,7 +60,7 @@ trait _inst
 
     // checkInst
     // envoie une exception si l'objet courant n'est pas dans inst
-    public function checkInst():self
+    final public function checkInst():self
     {
         if(!$this->inInst())
         static::throw();
@@ -75,7 +75,7 @@ trait _inst
     // onSetInst appelé après l'ajout dans inst
     // une exception est lancé si un objet du même nom existe déjà
     // si instname retourne une valeur identique peu importe l'objet, inst ne peut contenir qu'un objet
-    public function setInst():self
+    final public function setInst():self
     {
         $value = $this->instName();
 
@@ -101,7 +101,7 @@ trait _inst
     // onPrepareUnsetInst appelé avant le retrait de inst
     // onUnsetInst appelé après le retrait de inst
     // une exception est lancé si l'objet n'est pas dans inst
-    public function unsetInst():self
+    final public function unsetInst():self
     {
         $value = $this->instName();
 
@@ -121,7 +121,7 @@ trait _inst
 
     // hasInst
     // retourne vrai s'il y a au moins une instance
-    public static function hasInst():bool
+    final public static function hasInst():bool
     {
         return (!empty(static::$inst))? true:false;
     }
@@ -130,7 +130,7 @@ trait _inst
     // isInst
     // retourne vrai si l'instance existe
     // peut soumettre une instance, le nom ou l'index
-    public static function isInst($value=0):bool
+    final public static function isInst($value=0):bool
     {
         $return = false;
 
@@ -150,7 +150,7 @@ trait _inst
     // inst
     // retourne une instance de la classe par instance, nom ou index
     // une exception est envoyé si le retour n'est pas une instance de la classe
-    public static function inst($value=0,bool $throw=true):?self
+    final public static function inst($value=0,bool $throw=true):?self
     {
         $return = null;
 
@@ -173,7 +173,7 @@ trait _inst
     // instSafe
     // retourne une instance de la classe par instance, nom ou index
     // une exception n'est jamais envoyé
-    public static function instSafe($value=0)
+    final public static function instSafe($value=0)
     {
         return static::inst($value,false);
     }
@@ -182,7 +182,7 @@ trait _inst
     // isReady
     // retourne vrai si la classe est ready
     // méthode qui doit être étendu
-    public function isReady():bool
+    final public function isReady():bool
     {
         return false;
     }
@@ -192,7 +192,7 @@ trait _inst
     // retourne l'instance de la classe si prête
     // la méthode isReady est utilisé pour déterminer si la classe est prête
     // n'envoie pas d'exception
-    public static function instReady($value=0):?self
+    final public static function instReady($value=0):?self
     {
         $return = null;
 
@@ -210,7 +210,7 @@ trait _inst
     // instName
     // génère le nom de inst pour la classe
     // si le nom est le même pour tous les objets, il ne sera possible que d'ajouter un seul objet dans inst
-    public function instName():string
+    final public function instName():string
     {
         return static::class;
     }
@@ -218,7 +218,7 @@ trait _inst
 
     // insts
     // retourne le tableau inst
-    public static function insts():array
+    final public static function insts():array
     {
         return static::$inst;
     }
@@ -226,7 +226,7 @@ trait _inst
 
     // instNew
     // crée une nouvelle instance de la classe et place dans inst
-    public static function instNew(...$values):self
+    final public static function instNew(...$values):self
     {
         return (new static(...$values))->setInst();
     }

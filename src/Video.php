@@ -31,7 +31,7 @@ class Video extends Map
 
     // construct
     // créer l'objet video, le premier argument doit être un tableau ou une chaîne json
-    public function __construct($value,?array $attr=null)
+    final public function __construct($value,?array $attr=null)
     {
         $this->makeAttr($attr);
 
@@ -50,7 +50,7 @@ class Video extends Map
 
     // toString
     // affiche l'objet comme string, retourne le html
-    public function __toString():string
+    final public function __toString():string
     {
         return $this->html();
     }
@@ -58,7 +58,7 @@ class Video extends Map
 
     // grab
     // retourne une valeur de la map, en utilisation la clé tel que défini dans attr
-    public function grab(string $key)
+    final public function grab(string $key)
     {
         $return = null;
         $realKey = $this->getAttr($key);
@@ -76,7 +76,7 @@ class Video extends Map
     // name
     // retourne le nom de la vidéo
     // est facultatif
-    public function name():?string
+    final public function name():?string
     {
         $return = null;
         $name = $this->grab('name');
@@ -92,7 +92,7 @@ class Video extends Map
     // retourne la date de la vidéo
     // possible de spécifier un format
     // est facultatif
-    public function date($format=null)
+    final public function date($format=null)
     {
         $return = null;
         $date = $this->grab('date');
@@ -118,7 +118,7 @@ class Video extends Map
     // retourne la description de la vidéo
     // possible de spécifier une longueur d'excerpt
     // est facultatif
-    public function description(?int $length=null):?string
+    final public function description(?int $length=null):?string
     {
         $return = null;
         $description = $this->grab('description');
@@ -138,7 +138,7 @@ class Video extends Map
     // absolute
     // retourne le lien absolue de la vidéo
     // est obligatoire
-    public function absolute():string
+    final public function absolute():string
     {
         $return = null;
         $absolute = $this->grab('absolute');
@@ -153,7 +153,7 @@ class Video extends Map
     // thumbnail
     // retourne le lien vers le thumbnail de la vidéo
     // est facultatif
-    public function thumbnail():?string
+    final public function thumbnail():?string
     {
         $return = null;
         $thumbnail = $this->grab('thumbnail');
@@ -168,7 +168,7 @@ class Video extends Map
     // html
     // retourne le code html de la vidéo
     // est obligatoire
-    public function html():string
+    final public function html():string
     {
         $return = null;
         $html = $this->grab('html');
@@ -182,7 +182,7 @@ class Video extends Map
 
     // input
     // retourne la string input si existante
-    public function input():?string
+    final public function input():?string
     {
         return $this->get('input');
     }

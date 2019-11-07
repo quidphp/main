@@ -19,7 +19,7 @@ trait _classe
 
     // classeOrObj
     // retourne que le trait doit utilisé l'appelation de classe
-    public static function classeOrObj():string
+    final public static function classeOrObj():string
     {
         return 'classe';
     }

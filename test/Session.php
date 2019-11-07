@@ -16,7 +16,7 @@ use Quid\Main;
 class Session extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         Base\Session::destroy(true,true);

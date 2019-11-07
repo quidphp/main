@@ -16,7 +16,7 @@ use Quid\Main;
 class Role extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $admin = new Main\Role('admin',80,['admin'=>true]);

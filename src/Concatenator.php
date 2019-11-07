@@ -41,7 +41,7 @@ class Concatenator extends Map
 
     // construct
     // construit l'objet de phpConcatenator
-    public function __construct(?array $attr=null)
+    final public function __construct(?array $attr=null)
     {
         $this->makeAttr($attr);
 
@@ -52,7 +52,7 @@ class Concatenator extends Map
     // add
     // ajoute une entrée au concatenateur
     // chaque entrée peut avoir ses propres options
-    public function add($value,?array $attr=null):self
+    final public function add($value,?array $attr=null):self
     {
         if(!empty($value))
         {
@@ -71,7 +71,7 @@ class Concatenator extends Map
     // addStr
     // ajoute une entrée string au concatenateur, ceci sera wrapper dans une closure
     // chaque entrée peut avoir ses propres options
-    public function addStr(string $value,?array $attr=null):self
+    final public function addStr(string $value,?array $attr=null):self
     {
         return $this->add(function() use($value) { return $value; },$attr);
     }
@@ -80,7 +80,7 @@ class Concatenator extends Map
     // parse
     // retourne un tableau avec toutes les entrées parse
     // est utilisé lors du trigger
-    public function parse():array
+    final public function parse():array
     {
         $return = [];
 
@@ -99,8 +99,7 @@ class Concatenator extends Map
     // prepareEntry
     // permet de préparer une entrée de l'objet concatenateur
     // retourne un tableau avec deux éléments
-    // méthode protégé
-    protected function prepareEntry($value,?array $attr=null):?array
+    final protected function prepareEntry($value,?array $attr=null):?array
     {
         $return = null;
         $attr = Base\Arr::plus($this->getAttr('entry'),$attr);
@@ -119,8 +118,7 @@ class Concatenator extends Map
 
     // getEntryFiles
     // retourne un tableau avec tous les fichiers d'une entrée du concatenateur
-    // méthode protégé
-    protected function getEntryFiles($value,array $attr):array
+    final protected function getEntryFiles($value,array $attr):array
     {
         $return = [];
 
@@ -163,7 +161,7 @@ class Concatenator extends Map
     // trigger
     // lance la compilation de tous les entrées liés à l'objet
     // retourne la string concatene
-    public function trigger():string
+    final public function trigger():string
     {
         $return = '';
         $start = $this->getAttr('start',true);
@@ -202,7 +200,7 @@ class Concatenator extends Map
 
     // triggerWrite
     // trigger et écrit dans le fichier donné en argument
-    public function triggerWrite($value):File
+    final public function triggerWrite($value):File
     {
         $return = File::newCreate($value);
 
@@ -218,8 +216,7 @@ class Concatenator extends Map
 
     // makeEntry
     // génère le contenu d'une entrée sous forme de string
-    // méthode protégé
-    protected function makeEntry(array $values,array $attr):?string
+    final protected function makeEntry(array $values,array $attr):?string
     {
         $return = '';
         $separator = $attr['separator'];
@@ -262,8 +259,7 @@ class Concatenator extends Map
 
     // prepareEntryFile
     // génère le contenu d'un fichier d'une entrée sous forme de string
-    // méthode protégé
-    protected function prepareEntryFile(string $return,array $attr):string
+    final protected function prepareEntryFile(string $return,array $attr):string
     {
         $lineStart = $attr['lineStart'];
         $lineEnd = $attr['lineEnd'];

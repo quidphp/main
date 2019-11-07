@@ -66,7 +66,7 @@ class Error extends Root
 
     // construct
     // constructeur public de l'erreur
-    public function __construct($value=null,?int $code=null,?array $attr=null)
+    final public function __construct($value=null,?int $code=null,?array $attr=null)
     {
         $this->makeAttr($attr);
 
@@ -81,7 +81,7 @@ class Error extends Root
 
     // invoke
     // appel de la classe, renvoie vers trigger
-    public function __invoke(...$args):self
+    final public function __invoke(...$args):self
     {
         return $this->trigger(...$args);
     }
@@ -89,7 +89,7 @@ class Error extends Root
 
     // toString
     // retourne le nom de l'erreur
-    public function __toString():string
+    final public function __toString():string
     {
         return $this->titleMessage();
     }
@@ -98,7 +98,7 @@ class Error extends Root
     // toArray
     // retourne l'erreur sous une forme tableau
     // utilisé par logError
-    public function toArray():array
+    final public function toArray():array
     {
         $return = [];
         $return['message'] = $this->getMessage();
@@ -114,7 +114,7 @@ class Error extends Root
     // cast
     // retourne la valeur cast
     // la méthode utilisé pour cast peut être défini dans attr
-    public function _cast():string
+    final public function _cast():string
     {
         $return = '';
         $method = $this->getAttr('cast');
@@ -127,7 +127,7 @@ class Error extends Root
 
     // isException
     // retourne vrai si l'erreur provient d'une exception
-    public function isException():bool
+    final public function isException():bool
     {
         return ($this->getCode() > 30)? true:false;
     }
@@ -135,7 +135,7 @@ class Error extends Root
 
     // makeSilent
     // rend une erreur silencieuse
-    public function makeSilent():self
+    final public function makeSilent():self
     {
         $this->setAttr('cleanBuffer',false);
         $this->setAttr('output',false);
@@ -147,7 +147,7 @@ class Error extends Root
 
     // id
     // retourne le id unique de l'erreur, avec le id de la réponse
-    public function id(?int $inc=null):string
+    final public function id(?int $inc=null):string
     {
         return implode('-',[Base\Response::id(),$this->splId()]);
     }
@@ -155,7 +155,7 @@ class Error extends Root
 
     // basename
     // retourne le basename à utiliser avec l'erreur
-    public function basename(?int $inc=null):string
+    final public function basename(?int $inc=null):string
     {
         $return = '';
         $arr = [];
@@ -174,7 +174,7 @@ class Error extends Root
 
     // getMessage
     // retourne le message de l'erreur
-    public function getMessage():string
+    final public function getMessage():string
     {
         return $this->message;
     }
@@ -182,8 +182,7 @@ class Error extends Root
 
     // setMessage
     // enregistre le message de l'erreur
-    // méthode protégé
-    protected function setMessage(string $message):void
+    final protected function setMessage(string $message):void
     {
         $this->message = $message;
 
@@ -193,7 +192,7 @@ class Error extends Root
 
     // getCode
     // retourne le code de l'erreur
-    public function getCode():int
+    final public function getCode():int
     {
         return $this->code;
     }
@@ -202,7 +201,7 @@ class Error extends Root
     // setCode
     // enregistre le code de l'erreur
     // les attrs sont mis à jour
-    protected function setCode(int $code):void
+    final protected function setCode(int $code):void
     {
         $this->code = $code;
         $this->attr($this->getType());
@@ -213,7 +212,7 @@ class Error extends Root
 
     // getFile
     // retourne le fichier de l'erreur
-    public function getFile():string
+    final public function getFile():string
     {
         return $this->file;
     }
@@ -221,8 +220,7 @@ class Error extends Root
 
     // setFile
     // enregistre le fichier de l'erreur
-    // méthode protégé
-    protected function setFile(string $file):void
+    final protected function setFile(string $file):void
     {
         $this->file = $file;
 
@@ -232,7 +230,7 @@ class Error extends Root
 
     // getLine
     // retourne la ligne de l'erreur
-    public function getLine():int
+    final public function getLine():int
     {
         return $this->line;
     }
@@ -240,8 +238,7 @@ class Error extends Root
 
     // setLine
     // enregistre la ligne de l'erreur
-    // méthode protégé
-    protected function setLine(int $line):void
+    final protected function setLine(int $line):void
     {
         $this->line = $line;
 
@@ -252,7 +249,7 @@ class Error extends Root
     // getTrace
     // retoune la trace de l'erreur
     // les attrs traceLength et traceArgs sont utilisés ici si les arguments length et args ne sont pas spécifiés
-    public function getTrace(?int $length=null,?bool $args=null):array
+    final public function getTrace(?int $length=null,?bool $args=null):array
     {
         $length = $length ?? $this->getAttr('traceLength',true) ?? 1;
         $args = $args ?? $this->getAttr('traceArgs') ?? false;
@@ -264,7 +261,7 @@ class Error extends Root
 
     // getTraceLastCall
     // retourne la dernière fonction ou méthode appelée
-    public function getTraceLastCall():?string
+    final public function getTraceLastCall():?string
     {
         return Base\Debug::traceLastCall($this->getFile(),$this->getLine(),$this->trace);
     }
@@ -274,8 +271,7 @@ class Error extends Root
     // enregistre la trace dans l'objet
     // si le trace ne contient pas file et line, prépend le pour que le rendu trace soit similaires aux exceptions
     // si la première trace est une classe qui lance des exception via root/throw, enlève la classe, function et type du tableau trace
-    // méthode protégé
-    protected function setTrace(array $trace):void
+    final protected function setTrace(array $trace):void
     {
         $this->trace = $trace;
         $trace = $this->getTrace();
@@ -293,7 +289,7 @@ class Error extends Root
     // getInfo
     // retourne la ou les info de l'erreur ou de l'exception
     // info est utilisé dans le titre pour erreur et exception
-    public function getInfo()
+    final public function getInfo()
     {
         return $this->info;
     }
@@ -302,8 +298,7 @@ class Error extends Root
     // setInfo
     // change la ou les info lié à l'erreur
     // code de l'erreur php ou nom de la classe
-    // méthode protégé
-    protected function setInfo($value=null):void
+    final protected function setInfo($value=null):void
     {
         if(is_scalar($value))
         $this->info = $value;
@@ -315,7 +310,7 @@ class Error extends Root
     // getStack
     // retourne les parents de l'exception
     // retourne null si l'erreur n'est pas une exception
-    public function getStack():?array
+    final public function getStack():?array
     {
         return $this->stack;
     }
@@ -323,8 +318,7 @@ class Error extends Root
 
     // setStack
     // garde en mémoire le stack des exceptions
-    // méthode protégé
-    protected function setStack(array $value):void
+    final protected function setStack(array $value):void
     {
         $this->stack = $value;
 
@@ -334,7 +328,7 @@ class Error extends Root
 
     // getContent
     // retourne le contenu additionnelle d'une exception étendu
-    public function getContent():?string
+    final public function getContent():?string
     {
         return $this->content;
     }
@@ -342,8 +336,7 @@ class Error extends Root
 
     // setContent
     // change le contenu additionnelle d'une exception étendu
-    // méthode protégé
-    protected function setContent(?string $value):void
+    final protected function setContent(?string $value):void
     {
         $this->content = $value;
 
@@ -354,7 +347,7 @@ class Error extends Root
     // prepare
     // prépare l'erreur, data peut être throwable, array ou string
     // va chercher le dernier fichier et numéro de ligne si ces paramètres ne sont pas dans précisés
-    protected function prepare($value=null,?int $code=null):void
+    final protected function prepare($value=null,?int $code=null):void
     {
         if(is_string($value))
         $value = [$value];
@@ -401,7 +394,7 @@ class Error extends Root
     // prepareThrowable
     // prépare l'erreur, data doit être throwable
     // prend file et line de trace index 0 si l'exception a été crée dans les classes exception ou root (par les méthodes throw)
-    protected function prepareThrowable(\Throwable $value):void
+    final protected function prepareThrowable(\Throwable $value):void
     {
         $code = static::grabCode($value);
         $trace = $value->getTrace();
@@ -449,7 +442,7 @@ class Error extends Root
 
     // type
     // retourne le tableau de type pour l'erreur
-    public function getType():array
+    final public function getType():array
     {
         return $this->getAttr(['type',$this->getCode()]) ?? [];
     }
@@ -457,7 +450,7 @@ class Error extends Root
 
     // getKey
     // retourne la clé de l'erreur
-    public function getKey():?string
+    final public function getKey():?string
     {
         $return = null;
         $key = $this->getAttr('key');
@@ -472,7 +465,7 @@ class Error extends Root
     // title
     // retourne le titre à afficher pour l'erreur
     // met aussi le code de l'erreur en paranthèse
-    public function title():string
+    final public function title():string
     {
         $return = $this->name();
 
@@ -501,7 +494,7 @@ class Error extends Root
 
     // titleMessage
     // retourne le titre avec le message
-    public function titleMessage(string $separator='->'):string
+    final public function titleMessage(string $separator='->'):string
     {
         $return = $this->title();
         $return .= ' -> ';
@@ -513,7 +506,7 @@ class Error extends Root
 
     // name
     // retourne le nom du code d'erreur
-    public function name():string
+    final public function name():string
     {
         $return = '';
         $code = $this->getCode();
@@ -543,7 +536,7 @@ class Error extends Root
 
     // trigger
     // lance les actions liés à l'erreur
-    public function trigger(bool $callback=true):self
+    final public function trigger(bool $callback=true):self
     {
         if($callback === true)
         Base\Call::back('callback',$this->attr(),$this);
@@ -554,8 +547,7 @@ class Error extends Root
 
     // dispatch
     // fait le dispatch
-    // méthode protégé
-    protected function dispatch():self
+    final protected function dispatch():self
     {
         // errorLog
         if($this->getAttr('errorLog') === true)
@@ -587,7 +579,7 @@ class Error extends Root
 
     // errorLog
     // écrit le message d'erreur log
-    protected function errorLog():self
+    final protected function errorLog():self
     {
         Base\Error::log($this->getOutputArray(false));
 
@@ -598,7 +590,7 @@ class Error extends Root
     // log
     // queue le log dans la ou les classes fournis en attr
     // un seul log est effectué, donc passe seulement au prochain si le return est null
-    public function log():?Contract\Log
+    final public function log():?Contract\Log
     {
         $return = null;
         $logs = $this->getAttr('log');
@@ -626,7 +618,7 @@ class Error extends Root
 
     // com
     // ajoute un contenu dans l'objet com si disponible
-    public function com():self
+    final public function com():self
     {
         $com = static::getCom();
         if(!empty($com))
@@ -639,7 +631,7 @@ class Error extends Root
     // output
     // fait un output de l'erreur
     // output différent si c'est cli ou non
-    public function output():void
+    final public function output():void
     {
         if(Base\Server::isCli())
         $this->outputCli();
@@ -653,7 +645,7 @@ class Error extends Root
 
     // getOutput
     // retourne le output de l'erreur
-    public function getOutput():string
+    final public function getOutput():string
     {
         $return = '';
 
@@ -669,7 +661,7 @@ class Error extends Root
 
     // outputCli
     // envoie le output pour le cli
-    public function outputCli():void
+    final public function outputCli():void
     {
         Base\Buffer::flushEcho($this->cli());
 
@@ -679,7 +671,7 @@ class Error extends Root
 
     // cli
     // génère le output pour le cli
-    public function cli():string
+    final public function cli():string
     {
         $return = '';
 
@@ -695,7 +687,7 @@ class Error extends Root
 
     // outputHtml
     // envoie le output pour le html
-    public function outputHtml():void
+    final public function outputHtml():void
     {
         Base\Response::serverError();
 
@@ -713,7 +705,7 @@ class Error extends Root
 
     // html
     // génère le html de l'erreur
-    public function html():string
+    final public function html():string
     {
         $return = '';
 
@@ -745,7 +737,7 @@ class Error extends Root
 
     // makeOutputArray
     // retourne le tableau des valeurs pour le output de l'erreur
-    public function makeOutputArray(bool $showTrace=true):array
+    final public function makeOutputArray(bool $showTrace=true):array
     {
         $return = [];
 
@@ -807,7 +799,7 @@ class Error extends Root
 
     // getOutputArray
     // retourne les entrées du tableau de output qu'il faut afficher selon l'attr outputDepth
-    public function getOutputArray(bool $showTrace=true):array
+    final public function getOutputArray(bool $showTrace=true):array
     {
         $return = [];
         $outputDepth = $this->getAttr('outputDepth');
@@ -827,7 +819,7 @@ class Error extends Root
 
     // handler
     // methode pour set_error_handler
-    public static function handler(int $errorCode,string $message,string $file,int $line,$arg=null,?array $attr=null):?self
+    final public static function handler(int $errorCode,string $message,string $file,int $line,$arg=null,?array $attr=null):?self
     {
         $return = null;
         $errorReporting = Base\Error::reporting();
@@ -846,7 +838,7 @@ class Error extends Root
 
     // exception
     // méthode pour les exceptions
-    public static function exception(\Throwable $throwable,?array $attr=null):self
+    final public static function exception(\Throwable $throwable,?array $attr=null):self
     {
         $error = new static($throwable,null,$attr);
 
@@ -856,7 +848,7 @@ class Error extends Root
 
     // assert
     // methode pour assert_callback
-    public static function assert(string $file,int $line,$code=null,?string $message=null,?array $attr=null):self
+    final public static function assert(string $file,int $line,$code=null,?string $message=null,?array $attr=null):self
     {
         $code = static::grabCode('assert');
         $error = new static([$message,$file,$line],$code,$attr);
@@ -867,8 +859,7 @@ class Error extends Root
 
     // make
     // crée une erreur erreurs avec type -> silent, recoverable et fatal
-    // méthode protégé
-    protected static function make(string $type,string $message,?array $attr=null):self
+    final protected static function make(string $type,string $message,?array $attr=null):self
     {
         $code = static::grabCode($type);
         $error = new static($message,$code,$attr);
@@ -879,7 +870,7 @@ class Error extends Root
 
     // silent
     // gère une erreur silencieuse
-    public static function silent(string $value,?array $attr=null):self
+    final public static function silent(string $value,?array $attr=null):self
     {
         return static::make('silent',$value,$attr);
     }
@@ -887,7 +878,7 @@ class Error extends Root
 
     // warning
     // gère une erreur warning
-    public static function warning(string $value,?array $attr=null):self
+    final public static function warning(string $value,?array $attr=null):self
     {
         return static::make('warning',$value,$attr);
     }
@@ -895,7 +886,7 @@ class Error extends Root
 
     // fatal
     // gère une erreur fatal
-    public static function fatal(string $value,?array $attr=null):self
+    final public static function fatal(string $value,?array $attr=null):self
     {
         return static::make('fatal',$value,$attr);
     }
@@ -903,7 +894,7 @@ class Error extends Root
 
     // defaultCode
     // retourne le code par défaut dans config, s'applique aussi aux exceptions sans code
-    public static function defaultCode():?int
+    final public static function defaultCode():?int
     {
         return static::$config['default'] ?? null;
     }
@@ -913,7 +904,7 @@ class Error extends Root
     // retourne le code de l'erreur
     // value peut être int, string ou throwable
     // string peut être default
-    public static function grabCode($value):int
+    final public static function grabCode($value):int
     {
         $return = null;
         $key = null;
@@ -962,7 +953,7 @@ class Error extends Root
 
     // getLang
     // retourne la lang liée à la classe erreur
-    public static function getLang():?Lang
+    final public static function getLang():?Lang
     {
         return static::$lang;
     }
@@ -970,7 +961,7 @@ class Error extends Root
 
     // setLang
     // lie une lang à la classe erreur
-    public static function setLang(?Lang $lang):void
+    final public static function setLang(?Lang $lang):void
     {
         static::$lang = $lang;
 
@@ -980,7 +971,7 @@ class Error extends Root
 
     // getCom
     // retourne la com liée à la classe erreur
-    public static function getCom():?Com
+    final public static function getCom():?Com
     {
         return static::$com;
     }
@@ -988,7 +979,7 @@ class Error extends Root
 
     // setCom
     // lie un objet com à la classe erreur
-    public static function setCom(?Com $com):void
+    final public static function setCom(?Com $com):void
     {
         static::$com = $com;
 
@@ -998,7 +989,7 @@ class Error extends Root
 
     // setDefaultOutputDepth
     // change la valeur par défaut du output depth dans attr avant la création de l'objet erreur
-    public static function setDefaultOutputDepth($value):void
+    final public static function setDefaultOutputDepth($value):void
     {
         if($value === true)
         $value = 7;
@@ -1015,7 +1006,7 @@ class Error extends Root
 
     // getTraceLength
     // callback pour retourner la longueur du trace, différent si c'est cli
-    public static function getTraceLength():int
+    final public static function getTraceLength():int
     {
         return (Base\Server::isCli())? 3:20;
     }

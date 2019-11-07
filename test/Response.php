@@ -16,7 +16,7 @@ use Quid\Main;
 class Response extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $mediaJpg = '[assertMedia]/jpg.jpg';

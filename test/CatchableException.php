@@ -16,7 +16,7 @@ use Quid\Main;
 class CatchableException extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $e = new Main\CatchableException('well');

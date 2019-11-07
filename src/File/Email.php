@@ -26,7 +26,7 @@ class Email extends Json implements Main\Contract\Email
 
     // contentType
     // retourne le type de contenu du email, retourne string
-    public function contentType():string
+    final public function contentType():string
     {
         return $this->readGet('contentType');
     }
@@ -34,7 +34,7 @@ class Email extends Json implements Main\Contract\Email
 
     // subject
     // retourne le sujet du email
-    public function subject():string
+    final public function subject():string
     {
         return $this->readGet('subject');
     }
@@ -42,7 +42,7 @@ class Email extends Json implements Main\Contract\Email
 
     // body
     // retourne le body du email
-    public function body():string
+    final public function body():string
     {
         return $this->readGet('body');
     }
@@ -51,7 +51,7 @@ class Email extends Json implements Main\Contract\Email
     // serviceMailer
     // retourne l'objet mailer à utiliser pour envoyer le courriel
     // peut envoyer une exception
-    public static function serviceMailer($key=null):Main\ServiceMailer
+    final public static function serviceMailer($key=null):Main\ServiceMailer
     {
         $return = null;
 
@@ -70,7 +70,7 @@ class Email extends Json implements Main\Contract\Email
     // setMailer
     // permet de lier un objet mailer à la classe
     // key doit être une string
-    public static function setMailer(string $key,Main\ServiceMailer $value):void
+    final public static function setMailer(string $key,Main\ServiceMailer $value):void
     {
         static::$config['mailer'][$key] = $value;
 

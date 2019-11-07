@@ -24,7 +24,7 @@ class Xml extends Root
 
     // construct
     // construit l'objet xml, le urlset doit être fourni en argument
-    public function __construct(string $urlset)
+    final public function __construct(string $urlset)
     {
         $urlset = Base\Xml::urlset($urlset) ?? $urlset;
         $this->xml = new \SimpleXMLElement($urlset);
@@ -35,7 +35,7 @@ class Xml extends Root
 
     // toString
     // retourne le output du xml
-    public function __toString():string
+    final public function __toString():string
     {
         return $this->output();
     }
@@ -43,7 +43,7 @@ class Xml extends Root
 
     // clone
     // clone est permis
-    public function __clone()
+    final public function __clone()
     {
         return;
     }
@@ -51,7 +51,7 @@ class Xml extends Root
 
     // cast
     // retourne le output du xml
-    public function _cast()
+    final public function _cast()
     {
         return $this->output();
     }
@@ -59,7 +59,7 @@ class Xml extends Root
 
     // xml
     // retourne l'objet simpleXml
-    public function xml():\SimpleXMLElement
+    final public function xml():\SimpleXMLElement
     {
         return $this->xml;
     }
@@ -67,7 +67,7 @@ class Xml extends Root
 
     // output
     // output le xml en string
-    public function output():string
+    final public function output():string
     {
         return $this->xml->asXML();
     }
@@ -76,7 +76,7 @@ class Xml extends Root
     // sitemap
     // ajoute des uris dans le document xml
     // utilisé pour générer un sitemap
-    public function sitemap(string ...$values):self
+    final public function sitemap(string ...$values):self
     {
         $xml = $this->xml();
 

@@ -43,7 +43,7 @@ class Extender extends Map
 
     // construct
     // construit l'objet
-    public function __construct($namespaces=null,?array $attr=null)
+    final public function __construct($namespaces=null,?array $attr=null)
     {
         $this->makeAttr($attr);
 
@@ -59,8 +59,7 @@ class Extender extends Map
 
     // onAddNamespace
     // callback après la méthode addNamespace
-    // méthode protégé
-    protected function onAddNamespace():void
+    final protected function onAddNamespace():void
     {
         return;
     }
@@ -69,7 +68,7 @@ class Extender extends Map
     // isExtended
     // retourne vrai si la clé est étendu
     // doit se retrouver dans le tableau extend
-    public function isExtended($value):bool
+    final public function isExtended($value):bool
     {
         return (is_string($value) && array_key_exists($value,$this->extend))? true:false;
     }
@@ -77,7 +76,7 @@ class Extender extends Map
 
     // areSubClassOf
     // retourne vrai si toutes les classes sont des sous classes de
-    public function areSubClassOf(string $class):bool
+    final public function areSubClassOf(string $class):bool
     {
         $return = true;
 
@@ -97,7 +96,7 @@ class Extender extends Map
     // add
     // ajoute une ou plusieurs classes à l'objet
     // si des objets sont fournis, prend la classe
-    public function add(...$values):self
+    final public function add(...$values):self
     {
         $values = $this->prepareValues(...$values);
 
@@ -117,7 +116,7 @@ class Extender extends Map
     // ajoute toutes les classes d'un namespace à l'objet
     // considère les classes existantes et celles dans base/autoload closure
     // ne creuse pas dans les sous-dossiers
-    public function addNamespace(string ...$values):self
+    final public function addNamespace(string ...$values):self
     {
         $onlyClass = $this->getAttr('onlyClass');
         $noSubDir = $this->getAttr('noSubDir');
@@ -146,7 +145,7 @@ class Extender extends Map
 
     // firstNotSubClassOf
     // retourne la première classe qui n'est pas une sous-classe de
-    public function firstNotSubClassOf(string $class):?string
+    final public function firstNotSubClassOf(string $class):?string
     {
         $return = null;
 
@@ -165,7 +164,7 @@ class Extender extends Map
 
     // checkSubClassOf
     // envoie une exception si une des classes de l'étendeur n'est pas une sous-classe de la classe donnée en argument
-    public function checkSubClassOf(string $class):self
+    final public function checkSubClassOf(string $class):self
     {
         $not = $this->firstNotSubClassOf($class);
         if(!empty($not))
@@ -177,7 +176,7 @@ class Extender extends Map
 
     // checkExtend
     // vérifie que les classes de date existent et étendent bien la valuer extend, si spécifié
-    public function checkExtend():self
+    final public function checkExtend():self
     {
         foreach ($this as $key => $value)
         {
@@ -199,7 +198,7 @@ class Extender extends Map
 
     // checkParentSameName
     // permet de vérifie que toutes les classes ont un parent avec le même nom
-    public function checkParentSameName():self
+    final public function checkParentSameName():self
     {
         foreach ($this as $key => $value)
         {
@@ -218,7 +217,7 @@ class Extender extends Map
     // ajoute une classe à l'objet extender
     // exception envoyé si une classe existe déjà et que la nouvelle ne l'étend pas
     // les traits et interfaces sont ignorés
-    public function set($key,$value):parent
+    final public function set($key,$value):parent
     {
         $methodIgnore = $this->getAttr('methodIgnore');
         $subClass = $this->getAttr('subClass');
@@ -277,7 +276,7 @@ class Extender extends Map
 
     // extended
     // retourne un clone de l'objet avec seulement les classes étendus
-    public function extended():self
+    final public function extended():self
     {
         return $this->filter(function($value,$key) {
             return ($this->isExtended($key))? true:false;
@@ -287,7 +286,7 @@ class Extender extends Map
 
     // extendSync
     // synchronise le tableau extend après chaque changement à l'objet
-    public function extendSync():self
+    final public function extendSync():self
     {
         $data =& $this->arr();
         foreach ($this->extend as $key => $oldClass)
@@ -303,7 +302,7 @@ class Extender extends Map
     // overload
     // passe chaque classe dans l'objet et ajoute la dans base/autoload overload
     // garde en mémoire le overload dans la propriété overload
-    public function overload():self
+    final public function overload():self
     {
         $prepend = $this->getAttr('overloadKeyPrepend');
 
@@ -334,7 +333,7 @@ class Extender extends Map
 
     // overloadSync
     // synchronise le tableau overload avec la classe base/autoload
-    public function overloadSync():self
+    final public function overloadSync():self
     {
         foreach ($this->overload as $key => $value)
         {
@@ -349,7 +348,7 @@ class Extender extends Map
     // créer un alias pour chaque classe
     // le pattern vient de la classe main/autoload
     // si extend est true, prend le nom de classe originale avant qu'il soit étendu
-    public function alias(?string $pattern=null,bool $extend=true):self
+    final public function alias(?string $pattern=null,bool $extend=true):self
     {
         if($pattern === null)
         $ending = Autoload::aliasEnding();
@@ -374,7 +373,7 @@ class Extender extends Map
 
     // getKey
     // retourne la clé à utiliser pour la map
-    public static function getKey($value)
+    final public static function getKey($value)
     {
         return Base\Fqcn::name($value);
     }
@@ -383,7 +382,7 @@ class Extender extends Map
     // checkNoSubDir
     // envoie une exception si un des chemins contient un sous-directoire
     // test juste le premier directoire si all est false
-    protected static function checkNoSubDir(array $values,bool $all=false):void
+    final protected static function checkNoSubDir(array $values,bool $all=false):void
     {
         foreach ($values as $key => $value)
         {

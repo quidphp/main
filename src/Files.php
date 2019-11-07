@@ -31,7 +31,7 @@ class Files extends Map
 
     // construct
     // construit un nouvel objet files
-    public function __construct(...$values)
+    final public function __construct(...$values)
     {
         if(!empty($values))
         $this->add(...$values);
@@ -43,7 +43,7 @@ class Files extends Map
     // onPrepareReturns
     // prépare le retour pour indexes, gets, slice et slice index
     // les lignes sont toujours retournés dans un nouvel objet cells
-    protected function onPrepareReturns(array $array):self
+    final protected function onPrepareReturns(array $array):self
     {
         $return = new static();
 
@@ -59,7 +59,7 @@ class Files extends Map
 
     // safeBasename
     // retourne tous les basenames des fichiers
-    public function safeBasename(?string $key=null):?array
+    final public function safeBasename(?string $key=null):?array
     {
         return $this->pair('safeBasename',$key);
     }
@@ -67,7 +67,7 @@ class Files extends Map
 
     // set
     // ajoute un fichier dans l'objet files
-    public function set($key,$value):parent
+    final public function set($key,$value):parent
     {
         if(!$value instanceof File)
         $value = File::newOverload($value);
@@ -85,7 +85,7 @@ class Files extends Map
     // add
     // permet d'ajouter plusieurs fichiers dans files
     // possible aussi de fournir un autre objet files
-    public function add(...$values):self
+    final public function add(...$values):self
     {
         $this->checkAllowed('add');
         $values = $this->prepareValues(...$values);
@@ -103,7 +103,7 @@ class Files extends Map
     // dirMethod
     // ajoute le contenu de tout un directoire dans l'objet, la méthode à utiliser doit être fourni en premier argument
     // peut envoyer une exception
-    public function dirMethod(string $method,...$args):self
+    final public function dirMethod(string $method,...$args):self
     {
         if(strpos($method,'get') === 0)
         {
@@ -129,7 +129,7 @@ class Files extends Map
     // dir
     // ajoute le contenu de tout un directoire dans l'objet
     // utilise la méthode dir::get
-    public function dir($path,bool $dig=false,?array $option=null):self
+    final public function dir($path,bool $dig=false,?array $option=null):self
     {
         return $this->dirMethod('get',$path,$dig,$option);
     }
@@ -138,7 +138,7 @@ class Files extends Map
     // dirVisible
     // ajoute tous les fichiers visibles du répertoire dans l'objet
     // utilise la méthode dir::getVisible
-    public function dirVisible($path,bool $dig=false,?array $option=null):self
+    final public function dirVisible($path,bool $dig=false,?array $option=null):self
     {
         return $this->dirMethod('getVisible',$path,$dig,$option);
     }
@@ -147,7 +147,7 @@ class Files extends Map
     // dirExtension
     // ajoute le contenu de tout un directoire dans l'objet dont l'extension est celle fourni
     // utilise la méthode dir::getExtension
-    public function dirExtension($path,$extension=null,bool $dig=false,?array $option=null):self
+    final public function dirExtension($path,$extension=null,bool $dig=false,?array $option=null):self
     {
         return $this->dirMethod('getExtension',$path,$extension,$dig,$option);
     }
@@ -155,7 +155,7 @@ class Files extends Map
 
     // concatenate
     // permet de concatener tous les fichiers et retourner le rendu dans un fichier
-    public function concatenate($target,?callable $callable=null,string $separator=PHP_EOL,?array $option=null):File
+    final public function concatenate($target,?callable $callable=null,string $separator=PHP_EOL,?array $option=null):File
     {
         $return = File::newCreate($target,$option);
         Base\Res::concatenate($return->resource(),$callable,$separator,...$this->pair('resource'));
@@ -165,7 +165,7 @@ class Files extends Map
 
     // concatenateString
     // permet de concatener tous les fichiers et retourner le rendu combiné dans une string
-    public function concatenateString(?callable $callable=null,string $separator=PHP_EOL):?string
+    final public function concatenateString(?callable $callable=null,string $separator=PHP_EOL):?string
     {
         return Base\Res::concatenateString($callable,$separator,...$this->pair('resource'));
     }
@@ -174,7 +174,7 @@ class Files extends Map
     // unlink
     // efface tous les fichiers de l'objet
     // retourne le nombre de fichier effacés
-    public function unlink():int
+    final public function unlink():int
     {
         $return = 0;
 
@@ -191,7 +191,7 @@ class Files extends Map
     // makeUploadArray
     // retourne un tableau multidimensionnel de upload array à partir de l'objet fichiers
     // possible de remplir les trous
-    public function makeUploadArray(bool $fill=false):array
+    final public function makeUploadArray(bool $fill=false):array
     {
         $return = [];
 
@@ -211,7 +211,7 @@ class Files extends Map
     // permet d'archiver tous les fichiers dans un zip
     // peut envoyer des exceptions
     // retourne la resource zip
-    public function zip($value,?string $local=null,?array $option=null):File\Zip
+    final public function zip($value,?string $local=null,?array $option=null):File\Zip
     {
         $return = File\Zip::new($value,['create'=>true]);
 
@@ -231,7 +231,7 @@ class Files extends Map
     // méthode statique qui permet de reformatter un tableau de files
     // pouvant contenir des objets files ou file
     // possible de remplir les trous
-    public static function uploadArrayReformat(array $return,bool $fill=false):array
+    final public static function uploadArrayReformat(array $return,bool $fill=false):array
     {
         $uploadEmpty = Base\File::makeUploadArrayEmpty();
 

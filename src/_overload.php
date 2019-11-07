@@ -16,7 +16,7 @@ trait _overload
 {
     // getOverloadKey
     // retourne la clé utilisé pour le tableau overload
-    public static function getOverloadKey():string
+    final public static function getOverloadKey():string
     {
         $return = static::className();
         $prepend = static::getOverloadKeyPrepend();
@@ -38,7 +38,7 @@ trait _overload
 
     // getOverloadClass
     // retourne la classe à utiliser pour un overload
-    public static function getOverloadClass():string
+    final public static function getOverloadClass():string
     {
         return Autoload::getOverload(static::getOverloadKey(),static::class);
     }

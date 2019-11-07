@@ -16,7 +16,7 @@ use Quid\Main;
 class Update extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $array = [1=>'test','bla'=>'OK'];

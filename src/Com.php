@@ -32,7 +32,7 @@ class Com extends Map
 
     // construct
     // construit l'objet de communication
-    public function __construct(?array $value=null,?array $attr=null)
+    final public function __construct(?array $value=null,?array $attr=null)
     {
         $this->makeAttr($attr);
         $this->setType($value);
@@ -43,7 +43,7 @@ class Com extends Map
 
     // toString
     // output de com
-    public function __toString():string
+    final public function __toString():string
     {
         return $this->output();
     }
@@ -52,7 +52,7 @@ class Com extends Map
     // onPrepareValue
     // prépare une valeur pour une méthode comme in, keys et search
     // support pour retrouver une valeur du tableau de communication via un tableau a deux index (type,key)
-    protected function onPrepareValue($return)
+    final protected function onPrepareValue($return)
     {
         if(is_array($return) && count($return) === 2)
         $return = $this->find($return,$this->arr());
@@ -63,7 +63,7 @@ class Com extends Map
 
     // cast
     // cast l'objet, output com
-    public function _cast():string
+    final public function _cast():string
     {
         return $this->output();
     }
@@ -71,7 +71,7 @@ class Com extends Map
 
     // is
     // méthode de validation de map pour push et unshift
-    public function is($value):bool
+    final public function is($value):bool
     {
         $return = false;
 
@@ -93,7 +93,7 @@ class Com extends Map
 
     // isType
     // retourne vrai si le type est supporté par l'objet
-    public function isType($value):bool
+    final public function isType($value):bool
     {
         return (is_string($value) && in_array($value,$this->type,true))? true:false;
     }
@@ -101,7 +101,7 @@ class Com extends Map
 
     // checkType
     // envoie une exception si le type n'est pas supporté par l'objet
-    public function checkType($value):self
+    final public function checkType($value):self
     {
         if(!$this->isType($value))
         static::throw();
@@ -112,7 +112,7 @@ class Com extends Map
 
     // type
     // retourne le type ou le type par défaut si null
-    public function type(?string $type=null):string
+    final public function type(?string $type=null):string
     {
         return ($type === null)? $this->getAttr('default'):$type;
     }
@@ -120,7 +120,7 @@ class Com extends Map
 
     // getType
     // retourne le tableau des types
-    public function getType():array
+    final public function getType():array
     {
         return $this->type;
     }
@@ -129,8 +129,7 @@ class Com extends Map
     // setType
     // remplace les types et vide le tableau
     // si value est null, prend les types par défaut dans config
-    // méthode protégé
-    protected function setType(?array $value=null):void
+    final protected function setType(?array $value=null):void
     {
         if($value === null)
         $value = $this->getAttr('all');
@@ -151,7 +150,6 @@ class Com extends Map
     // lang
     // retourne l'objet lang
     // envoie une exception si introuvable
-    // méthode protégé
     protected function lang(?Lang $return=null):Lang
     {
         if(empty($return))
@@ -165,7 +163,7 @@ class Com extends Map
     // prépare le payload en vue d'un ajout
     // si type est null, utilise le type par défaut
     // exception envoyé si le tableau de retour est vide, très strict
-    public function payload(?string $type,$path,?array $replace=null,$attr=null,array ...$ins):array
+    final public function payload(?string $type,$path,?array $replace=null,$attr=null,array ...$ins):array
     {
         $return = null;
         $type = $this->type($type);
@@ -214,7 +212,7 @@ class Com extends Map
 
     // find
     // méthode utilisé par onPrepareValue et update pour trouver un élément de communication commun
-    public function find(array $return,array $data)
+    final public function find(array $return,array $data)
     {
         $return = array_values($return);
         $value = $this->payload(...$return);
@@ -240,8 +238,7 @@ class Com extends Map
     // la méthode est récursive
     // replace et attr sont merge
     // in est unshift ou push
-    // méthode protégé
-    protected function update(string $method,array $value,array $return):array
+    final protected function update(string $method,array $value,array $return):array
     {
         if(in_array($method,['unshift','push'],true))
         {
@@ -290,7 +287,7 @@ class Com extends Map
     // unshift
     // ajoute une valeur au début du tableau
     // bloque les doublons
-    public function unshift(...$values):parent
+    final public function unshift(...$values):parent
     {
         $data =& $this->arr();
 
@@ -318,7 +315,7 @@ class Com extends Map
     // push
     // ajoute une valeur à la fin du tableau
     // bloque les doublons
-    public function push(...$values):parent
+    final public function push(...$values):parent
     {
         $data =& $this->arr();
 
@@ -345,7 +342,7 @@ class Com extends Map
 
     // prepend
     // prepend une nouvelle entrée au tableau de communication
-    public function prepend(?string $type,$path,?array $replace=null,$attr=null,array ...$ins):self
+    final public function prepend(?string $type,$path,?array $replace=null,$attr=null,array ...$ins):self
     {
         return $this->unshift($this->payload($type,$path,$replace,$attr,...$ins));
     }
@@ -353,7 +350,7 @@ class Com extends Map
 
     // append
     // ajoute une nouvelle entrée au tableau de communication
-    public function append(?string $type,$path,?array $replace=null,$attr=null,array ...$ins):self
+    final public function append(?string $type,$path,?array $replace=null,$attr=null,array ...$ins):self
     {
         return $this->push($this->payload($type,$path,$replace,$attr,...$ins));
     }
@@ -361,7 +358,7 @@ class Com extends Map
 
     // pos
     // ajoute un élément de type positif
-    public function pos($path,?array $replace=null,$attr=null,array ...$ins):self
+    final public function pos($path,?array $replace=null,$attr=null,array ...$ins):self
     {
         return $this->append('pos',$path,$replace,$attr,...$ins);
     }
@@ -369,7 +366,7 @@ class Com extends Map
 
     // posPrepend
     // prepend un élément de type positif
-    public function posPrepend($path,?array $replace=null,$attr=null,array ...$ins):self
+    final public function posPrepend($path,?array $replace=null,$attr=null,array ...$ins):self
     {
         return $this->prepend('pos',$path,$replace,$attr,...$ins);
     }
@@ -377,7 +374,7 @@ class Com extends Map
 
     // neg
     // ajoute un élément de type négatif
-    public function neg($path,?array $replace=null,$attr=null,array ...$ins):self
+    final public function neg($path,?array $replace=null,$attr=null,array ...$ins):self
     {
         return $this->append('neg',$path,$replace,$attr,...$ins);
     }
@@ -385,7 +382,7 @@ class Com extends Map
 
     // negPrepend
     // prepend un élément de type négatif
-    public function negPrepend($path,?array $replace=null,$attr=null,array ...$ins):self
+    final public function negPrepend($path,?array $replace=null,$attr=null,array ...$ins):self
     {
         return $this->prepend('neg',$path,$replace,$attr,...$ins);
     }
@@ -393,7 +390,7 @@ class Com extends Map
 
     // neutral
     // ajoute un élément de type neutre
-    public function neutral($path,?array $replace=null,$attr=null,array ...$ins):self
+    final public function neutral($path,?array $replace=null,$attr=null,array ...$ins):self
     {
         return $this->append('neutral',$path,$replace,$attr,...$ins);
     }
@@ -401,7 +398,7 @@ class Com extends Map
 
     // neutralPrepend
     // prepend un élément de type neutre
-    public function neutralPrepend($path,?array $replace=null,$attr=null,array ...$ins):self
+    final public function neutralPrepend($path,?array $replace=null,$attr=null,array ...$ins):self
     {
         return $this->prepend('neutral',$path,$replace,$attr,...$ins);
     }
@@ -410,7 +407,7 @@ class Com extends Map
     // posNeg
     // ajoute un élément positif et/ou négatif
     // les valeurs nulls sont ignorés
-    public function posNeg($pos=null,$neg=null,?array $replace=null,$attr=null,array ...$ins):self
+    final public function posNeg($pos=null,$neg=null,?array $replace=null,$attr=null,array ...$ins):self
     {
         if($pos !== null)
         $this->pos($pos,$replace,$attr,...$ins);
@@ -425,7 +422,7 @@ class Com extends Map
     // posNegPrepend
     // prepend un élément positif et/ou négatif
     // les valeurs nulls sont ignorés
-    public function posNegPrepend($pos=null,$neg=null,?array $replace=null,$attr=null,array ...$ins):self
+    final public function posNegPrepend($pos=null,$neg=null,?array $replace=null,$attr=null,array ...$ins):self
     {
         if($pos !== null)
         $this->posPrepend($pos,$replace,$attr,...$ins);
@@ -441,7 +438,7 @@ class Com extends Map
     // méthode utilisé par différentes classes pour faire de la com pos, neg
     // pos ou neg doit avoir une valeur non null, sinon skip
     // loggé et/ou envoyé une exception s'il y a des messages négatifs
-    public function posNegLogStrict(string $type,bool $bool,$pos,$neg,?string $log=null,?array $option=null):self
+    final public function posNegLogStrict(string $type,bool $bool,$pos,$neg,?string $log=null,?array $option=null):self
     {
         if(strlen($type) && ($pos !== null || $neg !== null))
         {
@@ -463,7 +460,7 @@ class Com extends Map
 
     // depth
     // retourne la profondeur de l'objet de communication
-    public function depth():int
+    final public function depth():int
     {
         return Base\Arrs::depth($this->arr());
     }
@@ -472,7 +469,7 @@ class Com extends Map
     // stripFloor
     // enlève le premier niveau du tableau de communication
     // les données dans les étages plus profond sont conservés
-    public function stripFloor():self
+    final public function stripFloor():self
     {
         $data =& $this->arr();
         $keep = [];
@@ -495,7 +492,7 @@ class Com extends Map
     // keepFloor
     // conserve le premier niveau du tableau de communication
     // les données dans les étages plus profond sont effacés
-    public function keepFloor():self
+    final public function keepFloor():self
     {
         $data =& $this->arr();
 
@@ -512,7 +509,7 @@ class Com extends Map
     // keepCeiling
     // permet de garder seulement le niveau de communication le plus élevé
     // les données dans les étages inférieurs sont effacés
-    public function keepCeiling():self
+    final public function keepCeiling():self
     {
         $depth = $this->depth();
 
@@ -536,7 +533,7 @@ class Com extends Map
 
     // keepFirst
     // garde seulement la première entrée de l'objet com
-    public function keepFirst():self
+    final public function keepFirst():self
     {
         $first = $this->first();
         $data =& $this->arr();
@@ -548,7 +545,7 @@ class Com extends Map
 
     // keepLast
     // garde seulement la dernière entrée de l'objet com
-    public function keepLast():self
+    final public function keepLast():self
     {
         $last = $this->last();
         $data =& $this->arr();
@@ -560,7 +557,7 @@ class Com extends Map
 
     // stripType
     // enlève les éléments de communication de premier niveau ayant le type donnée en argument
-    public function stripType(?string $type=null):self
+    final public function stripType(?string $type=null):self
     {
         $type = $this->type($type);
         $data =& $this->arr();
@@ -577,7 +574,7 @@ class Com extends Map
 
     // keepType
     // garde les éléments de communication de premier niveau ayant le type donnée en argument
-    public function keepType(?string $type=null):self
+    final public function keepType(?string $type=null):self
     {
         $type = $this->type($type);
         $data =& $this->arr();
@@ -595,7 +592,7 @@ class Com extends Map
     // prepareIn
     // méthode utilisé pour générer le tableau de communication pour une structure complexe à multiple niveaux
     // n'ajoute pas à l'objet
-    public function prepareIn(string $type,?string $inType=null,array $array,?array $replace=null):array
+    final public function prepareIn(string $type,?string $inType=null,array $array,?array $replace=null):array
     {
         $return = [];
         $this->checkType($type);
@@ -633,8 +630,7 @@ class Com extends Map
     // prépare un élément du tableau
     // retourne null ou un tableau avec deux ou trois index, le premier est le type et le deuxième le texte
     // le troisième index serait in ou le tableau a creusé
-    // méthode protégé
-    protected function prepare(array $value,Lang $obj,?string $lang=null,?array $option=null):?array
+    final protected function prepare(array $value,Lang $obj,?string $lang=null,?array $option=null):?array
     {
         $return = null;
 
@@ -673,7 +669,7 @@ class Com extends Map
     // output
     // fait ou output en html de tout le contenu de objet com
     // l'objet lang peut être fourni, possible de changer la lang de sortie et les options
-    public function output(?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final public function output(?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         return $this->makeOutput(null,$this->arr(),$obj,$lang,$option);
     }
@@ -681,7 +677,7 @@ class Com extends Map
 
     // outputNeg
     // fait un output en html des contenus négatifs de l'objet com
-    public function outputNeg(?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final public function outputNeg(?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         return $this->makeOutput('neg',$this->arr(),$obj,$lang,$option);
     }
@@ -689,7 +685,7 @@ class Com extends Map
 
     // outputPos
     // fait un output en html des contenus positifs de l'objet com
-    public function outputPos(?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final public function outputPos(?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         return $this->makeOutput('pos',$this->arr(),$obj,$lang,$option);
     }
@@ -697,7 +693,7 @@ class Com extends Map
 
     // outputNeutral
     // fait un output en html des contenus neutres de l'objet com
-    public function outputNeutral(?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final public function outputNeutral(?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         return $this->makeOutput('neutral',$this->arr(),$obj,$lang,$option);
     }
@@ -710,8 +706,7 @@ class Com extends Map
     // si l'objet lang n'est pas fourni, va chercher celu dans inst
     // s'il faut creuser le tableau, la valeur types devient null afin d'obtenir les messages de tous les types en creusant
     // des exceptions peuvent être envoyés
-    // méthode protégé
-    protected function makeOutput($types,array $data,?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final protected function makeOutput($types,array $data,?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         $return = '';
 
@@ -756,7 +751,7 @@ class Com extends Map
 
     // flush
     // fait ou output en html de tout le contenu de objet com et ensuite vide l'objet
-    public function flush(?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final public function flush(?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         return $this->makeFlush(null,$this->arr(),$obj,$lang,$option);
     }
@@ -765,7 +760,7 @@ class Com extends Map
     // flushNeg
     // fait un output en html des contenus négatifs de l'objet com et ensuite vide l'objet entièrement
     // les messages des autres types sont aussi effacés
-    public function flushNeg(?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final public function flushNeg(?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         return $this->makeFlush('neg',$this->arr(),$obj,$lang,$option);
     }
@@ -774,7 +769,7 @@ class Com extends Map
     // flushPos
     // fait un output en html des contenus positifs de l'objet com et ensuite vide l'objet entièrement
     // les messages des autres types sont aussi effacés
-    public function flushPos(?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final public function flushPos(?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         return $this->makeFlush('pos',$this->arr(),$obj,$lang,$option);
     }
@@ -783,7 +778,7 @@ class Com extends Map
     // flushNeutral
     // fait un output en html des contenus neutres de l'objet com et ensuite vide l'objet entièrement
     // les messages des autres types sont aussi effacés
-    public function flushNeutral(?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final public function flushNeutral(?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         return $this->makeFlush('neutral',$this->arr(),$obj,$lang,$option);
     }
@@ -792,8 +787,7 @@ class Com extends Map
     // makeFlush
     // fait un output en html des messages avec types fournis en arguments et ensuite vide l'objet entièrement
     // les messages des autres types sont aussi effacés
-    // méthode protégé
-    protected function makeFlush($types,array $data,?Lang $obj=null,?string $lang=null,?array $option=null):string
+    final protected function makeFlush($types,array $data,?Lang $obj=null,?string $lang=null,?array $option=null):string
     {
         $return = $this->makeOutput($types,$data,$obj,$lang,$option);
         $this->empty();
@@ -804,7 +798,7 @@ class Com extends Map
 
     // error
     // ajoute un message à partir d'un objet d'error
-    public function error(Error $value):self
+    final public function error(Error $value):self
     {
         return $this->neg($value);
     }

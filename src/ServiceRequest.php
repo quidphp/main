@@ -25,7 +25,7 @@ abstract class ServiceRequest extends Service
     // target
     // retourne la target du service
     // envoie une exception si vide
-    public static function target(?array $replace=null):string
+    final public static function target(?array $replace=null):string
     {
         $return = static::$config['target'] ?? null;
 
@@ -42,8 +42,7 @@ abstract class ServiceRequest extends Service
     // makeRequest
     // retourne un nouvel objet requête
     // utilise la classe requête dans requestClass et les attrs dans requestOption
-    // méthode protégé
-    protected static function makeRequest($value=null,array $attr):Request
+    final protected static function makeRequest($value=null,array $attr):Request
     {
         $return = null;
         $class = static::requestClass();
@@ -59,7 +58,7 @@ abstract class ServiceRequest extends Service
 
     // requestClass
     // retourne la classe à utiliser pour request
-    public static function requestClass():string
+    final public static function requestClass():string
     {
         return Request::getOverloadClass();
     }
@@ -67,7 +66,7 @@ abstract class ServiceRequest extends Service
 
     // userAgent
     // retourne le userAgent à utiliser s'il n'est pas spécifié dans attr
-    public static function userAgent():string
+    final public static function userAgent():string
     {
         return 'QUID/'.Base\Server::quidVersion();
     }

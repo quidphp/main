@@ -27,7 +27,7 @@ class Error extends Dump implements Main\Contract\Log, Main\Contract\FileStorage
 
     // isStorageDataValid
     // retourne vrai si les datas fournis sont valides pour logError
-    public static function isStorageDataValid(...$values):bool
+    final public static function isStorageDataValid(...$values):bool
     {
         return (!empty($values) && $values[0] instanceof Main\Error)? true:false;
     }
@@ -35,7 +35,7 @@ class Error extends Dump implements Main\Contract\Log, Main\Contract\FileStorage
 
     // storageData
     // retourne les données à mettre dans le fichier logError
-    public static function storageData(...$values)
+    final public static function storageData(...$values)
     {
         return (!empty($values[0]))? $values[0]->toArray():[];
     }
@@ -43,7 +43,7 @@ class Error extends Dump implements Main\Contract\Log, Main\Contract\FileStorage
 
     // storageFilename
     // retourne le filename de l'error, par défaut utilise le id de l'erreur
-    public static function storageFilename(...$values):string
+    final public static function storageFilename(...$values):string
     {
         return (static::isStorageDataValid(...$values))? $values[0]->basename(static::$config['inc']):null;
     }

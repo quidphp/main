@@ -16,7 +16,7 @@ trait _nav
 {
     // pageSlice
     // permet de slice l'objet à partir d'une page et d'une limite
-    public function pageSlice(int $page,int $limit):self
+    final public function pageSlice(int $page,int $limit):self
     {
         $return = new static();
         $slice = Base\Nav::pageSlice($page,$limit,$this->arr());
@@ -30,7 +30,7 @@ trait _nav
 
     // pageFirst
     // retourne la première page
-    public function pageFirst(int $limit):?int
+    final public function pageFirst(int $limit):?int
     {
         return Base\Nav::pageFirst($this->arr(),$limit);
     }
@@ -38,7 +38,7 @@ trait _nav
 
     // pagePrev
     // retourne la page précédente
-    public function pagePrev(int $page,int $limit):?int
+    final public function pagePrev(int $page,int $limit):?int
     {
         return Base\Nav::pagePrev($page,$this->arr(),$limit);
     }
@@ -46,7 +46,7 @@ trait _nav
 
     // pageNext
     // retourne la page suivante
-    public function pageNext(int $page,int $limit):?int
+    final public function pageNext(int $page,int $limit):?int
     {
         return Base\Nav::pageNext($page,$this->arr(),$limit);
     }
@@ -54,7 +54,7 @@ trait _nav
 
     // pageLast
     // retourne la dernière page
-    public function pageLast(int $limit):?int
+    final public function pageLast(int $limit):?int
     {
         return Base\Nav::pageLast($this->arr(),$limit);
     }
@@ -62,7 +62,7 @@ trait _nav
 
     // general
     // retourne un tableau contenant un maximum d'informations relatives aux pages
-    public function general(int $page,int $limit,int $amount=3):?array
+    final public function general(int $page,int $limit,int $amount=3):?array
     {
         return Base\Nav::general($page,$this->arr(),$limit,$amount);
     }

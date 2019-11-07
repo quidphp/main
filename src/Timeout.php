@@ -27,7 +27,7 @@ class Timeout extends Map
 
     // isTimedOut
     // retourne vrai si l'entrée dans l'objet est en timeout
-    public function isTimedOut($key):bool
+    final public function isTimedOut($key):bool
     {
         return ($this->getExpire($key) !== null)? true:false;
     }
@@ -35,7 +35,7 @@ class Timeout extends Map
 
     // isMaxed
     // retourne vrai si le compte de l'entrée est au maximum autorisé
-    public function isMaxed($key):bool
+    final public function isMaxed($key):bool
     {
         $return = false;
         $value = $this->get($key);
@@ -52,7 +52,7 @@ class Timeout extends Map
 
     // set
     // permet d'ajouter ou modifier une entrée dans l'objet
-    public function set($key,$value):parent
+    final public function set($key,$value):parent
     {
         return $this->change($key,$value,false);
     }
@@ -61,7 +61,7 @@ class Timeout extends Map
     // change
     // permet de changer une entrée en conservant les valeurs existantes
     // n'envoie pas d'exception si l'entrée n'existe pas
-    public function change($key,$value,bool $merge=true):self
+    final public function change($key,$value,bool $merge=true):self
     {
         $key = $this->onPrepareKey($key);
         $current = null;
@@ -89,7 +89,7 @@ class Timeout extends Map
     // changes
     // permet de changer plusieurs entrées en conservant les valeurs existantes
     // n'envoie pas d'exception si l'entrée n'existe pas
-    public function changes(array $keyValue):self
+    final public function changes(array $keyValue):self
     {
         foreach ($keyValue as $key => $value)
         {
@@ -103,7 +103,7 @@ class Timeout extends Map
     // getCount
     // retourne le compte actuelle de l'entrée
     // si resetOnTimeout est vrai, si l'entrée n'est plus en timeout le compte est ramené à zéro avant le retour
-    public function getCount($key,bool $resetOnTimeout=true):?int
+    final public function getCount($key,bool $resetOnTimeout=true):?int
     {
         $return = null;
         $value = $this->get($key);
@@ -127,7 +127,7 @@ class Timeout extends Map
     // permet de changer le count actuelle de l'entrée
     // si count est null, met le max
     // met le timestamp actuel
-    public function setCount($key,?int $count=null,?int $timestamp=null):self
+    final public function setCount($key,?int $count=null,?int $timestamp=null):self
     {
         $this->checkExists($key);
         $this->resetOne($key);
@@ -144,7 +144,7 @@ class Timeout extends Map
 
     // block
     // similaire à setCount, count est mis au max
-    public function block($key):self
+    final public function block($key):self
     {
         return $this->setCount($key);
     }
@@ -153,7 +153,7 @@ class Timeout extends Map
     // addCount
     // permet d'ajouter ou incrémenter un count à l'entrée
     // met le timestamp actuel
-    public function addCount($key,int $count=1,?int $timestamp=null):self
+    final public function addCount($key,int $count=1,?int $timestamp=null):self
     {
         $this->checkExists($key);
         $this->resetOne($key);
@@ -169,7 +169,7 @@ class Timeout extends Map
 
     // increment
     // similaire à addCount, count ne peut être que 1
-    public function increment($key):self
+    final public function increment($key):self
     {
         return $this->addCount($key);
     }
@@ -177,7 +177,7 @@ class Timeout extends Map
 
     // resetCount
     // ramène le count et le timestamp de l'entrée à l'état initial
-    public function resetCount($key):self
+    final public function resetCount($key):self
     {
         $this->checkExists($key);
         $data =& $this->arr();
@@ -193,7 +193,7 @@ class Timeout extends Map
     // getTimestamp
     // retourne le timestamp courant de l'entrée
     // si resetOnTimeout est vrai, si l'entrée n'est plus en timeout le compte est ramené à zéro avant le retour du timestamp null
-    public function getTimestamp($key,bool $resetOnTimeout=true):?int
+    final public function getTimestamp($key,bool $resetOnTimeout=true):?int
     {
         $value = $this->get($key);
 
@@ -214,7 +214,7 @@ class Timeout extends Map
 
     // setTimestamp
     // change le timestamp pour une entrée
-    public function setTimestamp($key,?int $timestamp=null):self
+    final public function setTimestamp($key,?int $timestamp=null):self
     {
         $this->checkExists($key);
         $data =& $this->arr();
@@ -232,7 +232,7 @@ class Timeout extends Map
 
     // resetTimestamp
     // reset le timestamp pour une entrée
-    public function resetTimestamp($key):self
+    final public function resetTimestamp($key):self
     {
         $this->checkExists($key);
         $data =& $this->arr();
@@ -248,7 +248,7 @@ class Timeout extends Map
     // getExpire
     // retourne le nombre de secondes avant que le timeout sur l'entrée soit expiré
     // retourne null si l'entrée n'est pas en timeout
-    public function getExpire($key):?int
+    final public function getExpire($key):?int
     {
         $return = null;
         $value = $this->get($key);
@@ -271,7 +271,7 @@ class Timeout extends Map
 
     // resetOne
     // si l'entrée est maxed mais plus en timeout, envoie dans resetCount
-    public function resetOne($key):self
+    final public function resetOne($key):self
     {
         if($this->isMaxed($key) && !$this->isTimedOut($key))
         $this->resetCount($key);
@@ -282,7 +282,7 @@ class Timeout extends Map
 
     // resetAll
     // passe chaque entrée dans la méthode resetOne
-    public function resetAll():self
+    final public function resetAll():self
     {
         foreach ($this->keys() as $key)
         {
@@ -296,7 +296,7 @@ class Timeout extends Map
     // checkValueValid
     // met une valeur par défaut pour count et timestamp
     // envoie une exception si le tableau value est invalid
-    public static function checkValueValid(array $return):array
+    final public static function checkValueValid(array $return):array
     {
         $return['count'] = (empty($return['count']))? 0:$return['count'];
         $return['timestamp'] = (empty($return['timestamp']))? null:$return['timestamp'];

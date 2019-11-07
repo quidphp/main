@@ -16,7 +16,7 @@ trait _cloner
 {
     // onPrepareThis
     // l'objet est cloner avant chaque modification
-    protected function onPrepareThis(string $method):Main\Map
+    final protected function onPrepareThis(string $method):Main\Map
     {
         return clone $this;
     }

@@ -26,7 +26,7 @@ trait _classeObj
 
     // onPrepareThis
     // retourne l'objet cloner pour certaines méthodes
-    protected function onPrepareThis(string $method):Main\Map
+    final protected function onPrepareThis(string $method):Main\Map
     {
         return (in_array($method,['filter','sortBy'],true))? $this->clone():$this;
     }
@@ -35,7 +35,7 @@ trait _classeObj
     // only
     // garde seulement les valeurs données en argument
     // utilise filter
-    public function only(...$values)
+    final public function only(...$values)
     {
         $values = $this->prepareKeys(...$values);
         return $this->filter(function($value,$key) use($values) {
@@ -46,7 +46,7 @@ trait _classeObj
 
     // not
     // clone l'objet et enlève les valeurs données via unset
-    public function not(...$values)
+    final public function not(...$values)
     {
         return $this->clone()->unset(...$values);
     }
@@ -54,7 +54,7 @@ trait _classeObj
 
     // pair
     // retourne un tableau associatif avec le clé et le résultat d'une méthode
-    public function pair(string $method,...$args):array
+    final public function pair(string $method,...$args):array
     {
         $return = [];
         $type = static::classeOrObj();
@@ -75,7 +75,7 @@ trait _classeObj
     // pairStr
     // retourne une string avec le résultat combiné d'une méthode
     // exception envoyé si résultat d'une méthode non scalaire et non null
-    public function pairStr(string $method,...$args):string
+    final public function pairStr(string $method,...$args):string
     {
         $return = '';
         $type = static::classeOrObj();
@@ -100,8 +100,7 @@ trait _classeObj
 
     // filterCondition
     // utilisé par les méthodes comme filter pour vérifier si une entrée respecte une condition
-    // méthode protégé
-    protected function filterCondition($condition,$key,$value,...$args):bool
+    final protected function filterCondition($condition,$key,$value,...$args):bool
     {
         $return = true;
         $type = static::classeOrObj();
@@ -139,7 +138,7 @@ trait _classeObj
     // permet de grouper le contenu en multiples classes ou objets groupé par la valeur d'un résultat de méthode
     // la valeur doit être key, donc null et booléean envoie une exception
     // retourne un tableau avec des classes ou objets
-    public function group(string $method,...$args):array
+    final public function group(string $method,...$args):array
     {
         $return = [];
         $type = static::classeOrObj();
@@ -174,7 +173,7 @@ trait _classeObj
     // sortBy
     // sort l'objet par le résultat d'une méthode
     // clone l'objet
-    public function sortBy(string $method,bool $sort=true,...$args):self
+    final public function sortBy(string $method,bool $sort=true,...$args):self
     {
         $this->checkAllowed('sort');
         $return = $this->onPrepareThis('sortBy');
@@ -194,7 +193,7 @@ trait _classeObj
     // ramène l'objet dans son sort naturel
     // la méthode doit être défini dans la propriété static sortDefault
     // ne clone pas l'objet
-    public function sortDefault():self
+    final public function sortDefault():self
     {
         $this->checkAllowed('sort');
         $return = $this->onPrepareThis('sort');

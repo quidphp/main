@@ -18,7 +18,7 @@ trait _prepend
     // set
     // ajoute ou change une clé valeur dans la map, accepte une clé null
     // si la clé n'existe pas elle est prepend
-    public function set($key,$value):Main\Map
+    final public function set($key,$value):Main\Map
     {
         $this->checkAllowed('set');
         $return = $this->onPrepareThis('set');
@@ -40,7 +40,7 @@ trait _prepend
 
     // add
     // raccourci pour unshift
-    public function add(...$values):Main\Map
+    final public function add(...$values):Main\Map
     {
         return $this->unshift(...$values);
     }
@@ -48,7 +48,7 @@ trait _prepend
 
     // pend
     // raccourci pour prepend
-    public function pend(...$values):Main\Map
+    final public function pend(...$values):Main\Map
     {
         return $this->prepend(...$values);
     }

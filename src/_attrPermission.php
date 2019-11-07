@@ -17,7 +17,7 @@ trait _attrPermission
     // attrPermissionRef
     // retourne le tableau de la source des paramètres de permission
     // doit retourner une référence
-    protected function &attrPermissionRef():array
+    final protected function &attrPermissionRef():array
     {
         $attr =& $this->attrRef();
 
@@ -35,7 +35,7 @@ trait _attrPermission
 
     // onRolePermission
     // permet de spécifier une méthode lors de chaque appel à roleHasPermission
-    protected function onRolePermission($key,array $array):bool
+    final protected function onRolePermission($key,array $array):bool
     {
         return true;
     }
@@ -43,7 +43,7 @@ trait _attrPermission
 
     // hasPermission
     // retourne vrai si toutes les permissions sont accordés au rôle par défaut
-    public function hasPermission(...$keys):bool
+    final public function hasPermission(...$keys):bool
     {
         $return = false;
         $roles = $this->attrPermissionRolesObject();
@@ -62,7 +62,7 @@ trait _attrPermission
 
     // checkPermission
     // envoie une exception si la ou les permissions ne sont pas accordés au rôle par défaut
-    public function checkPermission(...$keys):self
+    final public function checkPermission(...$keys):self
     {
         if($this->hasPermission(...$keys) !== true)
         static::throw(...$keys);
@@ -74,7 +74,7 @@ trait _attrPermission
     // rolesHasPermission
     // retourne vrai si les rôles peuvent faire l'action
     // si un des roles retourne true, à ce moment c'est true
-    public function rolesHasPermission($key,Roles $roles,bool $exception=true):bool
+    final public function rolesHasPermission($key,Roles $roles,bool $exception=true):bool
     {
         $return = false;
 
@@ -93,7 +93,7 @@ trait _attrPermission
 
     // roleHasPermission
     // retourne vrai si le rôle peut faire l'action
-    public function roleHasPermission($key,Role $role,bool $exception=true):bool
+    final public function roleHasPermission($key,Role $role,bool $exception=true):bool
     {
         $return = null;
         $one = $this->getPermission($role);
@@ -120,7 +120,7 @@ trait _attrPermission
     // getPermission
     // retourne le tableau de la source des paramètres d'un rôle
     // les permissions se construisent avec *, ensuite tous les roles retournées par useAlso et ensuite le nom du rôle
-    public function getPermission(Role $role):array
+    final public function getPermission(Role $role):array
     {
         $return = [];
         $all = $this->attrPermissionRef();
@@ -144,7 +144,7 @@ trait _attrPermission
 
     // setPermission
     // permet de changer le contenu d'une permission pour un rôle
-    public function setPermission(array $value,$role=null):void
+    final public function setPermission(array $value,$role=null):void
     {
         $all =& $this->attrPermissionRef();
         $key = '*';

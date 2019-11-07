@@ -26,7 +26,7 @@ class Json extends Text
 
     // readGet
     // permet de faire une lecture et retourner seulement une valeur de l'objet json
-    public function readGet($key=null)
+    final public function readGet($key=null)
     {
         $return = null;
         $source = $this->read();

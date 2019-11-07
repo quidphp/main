@@ -17,7 +17,7 @@ trait _insensitive
 {
     // append
     // version insensible de append
-    public function append(...$values):Main\Map
+    final public function append(...$values):Main\Map
     {
         $this->checkAllowed('append');
         $return = $this->onPrepareThis('append');
@@ -33,7 +33,7 @@ trait _insensitive
 
     // prepend
     // version insensible de prepend
-    public function prepend(...$values):Main\Map
+    final public function prepend(...$values):Main\Map
     {
         $this->checkAllowed('prepend');
         $return = $this->onPrepareThis('prepend');
@@ -49,7 +49,7 @@ trait _insensitive
 
     // isSensitive
     // retourne faux
-    public static function isSensitive():bool
+    final public static function isSensitive():bool
     {
         return false;
     }

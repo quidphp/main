@@ -32,7 +32,7 @@ class Roles extends Map
 
     // onPrepareKey
     // prepare une clé pour les méthodes qui soumette une clé
-    protected function onPrepareKey($return)
+    final protected function onPrepareKey($return)
     {
         if($return instanceof Role)
         $return = $return->permission();
@@ -49,7 +49,7 @@ class Roles extends Map
 
     // onPrepareValue
     // si la valeur est un tableau crée un objet
-    protected function onPrepareValue($return)
+    final protected function onPrepareValue($return)
     {
         if(is_array($return))
         {
@@ -63,7 +63,7 @@ class Roles extends Map
 
     // isOne
     // retourne vrai si un des rôles à l'attribut à true
-    public function isOne($value):bool
+    final public function isOne($value):bool
     {
         $return = false;
 
@@ -82,7 +82,7 @@ class Roles extends Map
 
     // isAll
     // retourne vrai si tous les rôles ont l'attribut à true
-    public function isAll($value):bool
+    final public function isAll($value):bool
     {
         $return = false;
 
@@ -100,7 +100,7 @@ class Roles extends Map
 
     // isNobody
     // retourne vrai si tout les rôles sont nobody
-    public function isNobody():bool
+    final public function isNobody():bool
     {
         $return = false;
 
@@ -118,7 +118,7 @@ class Roles extends Map
 
     // isSomebody
     // retourne vrai si un des rôle est somebody
-    public function isSomebody():bool
+    final public function isSomebody():bool
     {
         $return = false;
 
@@ -138,7 +138,7 @@ class Roles extends Map
     // add
     // ajoute un ou plusieurs objets roles dans l'objet
     // deux objets ne peuvent pas avoir le même nom ou la même permission
-    public function add(...$values):self
+    final public function add(...$values):self
     {
         $this->checkAllowed('add');
         $values = $this->prepareValues(...$values);
@@ -168,7 +168,7 @@ class Roles extends Map
 
     // nobody
     // retorne le premier role nobody
-    public function nobody():?Role
+    final public function nobody():?Role
     {
         return $this->first(['isNobody'=>true]);
     }
@@ -177,7 +177,7 @@ class Roles extends Map
     // main
     // retourne le rôle avec la plus grande permission
     // ceci est considéré comme le rôle principale
-    public function main():?Role
+    final public function main():?Role
     {
         $return = null;
         $data = $this->arr();
@@ -194,7 +194,7 @@ class Roles extends Map
 
     // makeFromArray
     // construit un objet roles à partir d'un tableau
-    public static function makeFromArray(array $array):self
+    final public static function makeFromArray(array $array):self
     {
         $return = static::newOverload();
 

@@ -32,7 +32,7 @@ class Calendar extends Widget
 
     // construct
     // construit l'objet calendar
-    public function __construct($value=null,?array $attr=null)
+    final public function __construct($value=null,?array $attr=null)
     {
         $this->makeAttr($attr);
         $this->setTimestamp($value);
@@ -43,7 +43,7 @@ class Calendar extends Widget
 
     // cast
     // pour cast, retourne le timestamp du calendrier
-    public function _cast():int
+    final public function _cast():int
     {
         return $this->timestamp();
     }
@@ -52,7 +52,7 @@ class Calendar extends Widget
     // setTimestamp
     // change le timestamp de l'objet
     // exception envoyé si ce n'est pas un int
-    public function setTimestamp($value=null):self
+    final public function setTimestamp($value=null):self
     {
         $value = Base\Date::time($value);
 
@@ -68,7 +68,7 @@ class Calendar extends Widget
 
     // timestamp
     // retourne le timestamp de l'objet calendar
-    public function timestamp():int
+    final public function timestamp():int
     {
         return $this->timestamp;
     }
@@ -76,7 +76,7 @@ class Calendar extends Widget
 
     // prevTimestamp
     // retourne le timestamp du mois précédent
-    public function prevTimestamp():int
+    final public function prevTimestamp():int
     {
         return Base\Date::addMonth(-1,$this->timestamp());
     }
@@ -84,7 +84,7 @@ class Calendar extends Widget
 
     // nextTimestamp
     // retourne le timestamp du mois suivant
-    public function nextTimestamp():int
+    final public function nextTimestamp():int
     {
         return Base\Date::addMonth(1,$this->timestamp());
     }
@@ -94,7 +94,7 @@ class Calendar extends Widget
     // retourne un tableau avec les attributs d'un timestamp
     // peut être today, in et out
     // peut être utilisé comme attribut html
-    public function parseTimestamp(int $value):array
+    final public function parseTimestamp(int $value):array
     {
         $return = [];
         $value = Base\Date::floorDay($value);
@@ -123,7 +123,7 @@ class Calendar extends Widget
 
     // setFormat
     // permet de lier un format à mettre dans les attributs de colonne
-    public function setFormat(?string $value):self
+    final public function setFormat(?string $value):self
     {
         $this->format = $value;
 
@@ -133,7 +133,7 @@ class Calendar extends Widget
 
     // format
     // retourne le format lié
-    public function format():?string
+    final public function format():?string
     {
         return $this->format;
     }
@@ -141,7 +141,7 @@ class Calendar extends Widget
 
     // isSelected
     // retourne vrai si le timestamp est dans une journée sélectionné
-    public function isSelected(int $value):bool
+    final public function isSelected(int $value):bool
     {
         $return = false;
         $selected = $this->selected();
@@ -164,7 +164,7 @@ class Calendar extends Widget
 
     // setSelected
     // permet de mettre un ou plusieurs timestamp comme sélectionné
-    public function setSelected($value):self
+    final public function setSelected($value):self
     {
         if(is_numeric($value))
         $value = [$value];
@@ -178,7 +178,7 @@ class Calendar extends Widget
 
     // selected
     // retourne les timestamp sélectionnés
-    public function selected():?array
+    final public function selected():?array
     {
         return $this->selected;
     }
@@ -186,7 +186,7 @@ class Calendar extends Widget
 
     // structure
     // retourne la structure du calendrier
-    public function structure():array
+    final public function structure():array
     {
         return Base\Date::calendar($this->timestamp(),true,true);
     }
@@ -194,7 +194,7 @@ class Calendar extends Widget
 
     // output
     // génère le calendrier en html
-    public function output():string
+    final public function output():string
     {
         $return = $this->head();
         $return .= $this->body();
@@ -205,7 +205,7 @@ class Calendar extends Widget
 
     // head
     // génère la partie supérieure du calendrier
-    protected function head():string
+    final protected function head():string
     {
         $return = Base\Html::divOp($this->getAttr('attr/head'));
         $timestamp = $this->timestamp();
@@ -240,7 +240,7 @@ class Calendar extends Widget
 
     // body
     // génère la table du calendrier
-    protected function body():string
+    final protected function body():string
     {
         $return = Base\Html::divOp($this->getAttr('attr/body'));
         $return .= Base\Html::tableOp();
@@ -255,7 +255,7 @@ class Calendar extends Widget
 
     // tableHead
     // génère le thead de la table du calendrier
-    protected function tableHead():string
+    final protected function tableHead():string
     {
         $return = '';
         $ths = [];
@@ -278,7 +278,7 @@ class Calendar extends Widget
 
     // tableBody
     // génère le tbody de la table du calendrier
-    protected function tableBody():string
+    final protected function tableBody():string
     {
         $return = '';
         $structure = $this->structure();

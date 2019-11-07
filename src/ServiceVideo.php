@@ -25,7 +25,7 @@ abstract class ServiceVideo extends ServiceRequest
     // query
     // lance la requête et retourne un objet video en cas de succès
     // plusieurs exceptions peuvent être envoyés
-    public function query($value):?Video
+    final public function query($value):?Video
     {
         $return = null;
         $request = $this->request($value);
@@ -47,7 +47,7 @@ abstract class ServiceVideo extends ServiceRequest
 
     // request
     // retourne la requête à utiliser pour aller chercher l'objet video
-    public function request($value,?array $option=null):Request
+    final public function request($value,?array $option=null):Request
     {
         return static::makeRequest(static::target(['value'=>$value]),Base\Arr::plus($this->attr(),$option));
     }
@@ -55,7 +55,7 @@ abstract class ServiceVideo extends ServiceRequest
 
     // makeVideo
     // créer un objet video en utilisation les options de la classe
-    public static function makeVideo($value):?Video
+    final public static function makeVideo($value):?Video
     {
         $return = null;
         $option = static::videoOption();
@@ -73,7 +73,7 @@ abstract class ServiceVideo extends ServiceRequest
 
     // videoOption
     // retourne les options pour l'objet vidéo
-    public static function videoOption():array
+    final public static function videoOption():array
     {
         return static::$config['video'];
     }
@@ -81,7 +81,7 @@ abstract class ServiceVideo extends ServiceRequest
 
     // videoRequired
     // retourne les clés requises pour l'objet vidéo
-    public static function videoRequired():array
+    final public static function videoRequired():array
     {
         return static::$config['required'];
     }
@@ -89,7 +89,7 @@ abstract class ServiceVideo extends ServiceRequest
 
     // getOverloadKeyPrepend
     // retourne le prepend de la clé à utiliser pour le tableau overload
-    public static function getOverloadKeyPrepend():?string
+    final public static function getOverloadKeyPrepend():?string
     {
         return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'Service':null;
     }

@@ -16,7 +16,7 @@ use Quid\Main;
 class Map extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $array = ['test'=>'ok','what'=>'LOL','james'=>2,3];

@@ -57,7 +57,7 @@ trait _attr
 
     // isAttrNotEmpty
     // retourne vrai si l'attribut n'est pas vide
-    public function isAttrNotEmpty($key):bool
+    final public function isAttrNotEmpty($key):bool
     {
         return (Base\Validate::isReallyEmpty($this->getAttr($key)))? false:true;
     }
@@ -66,7 +66,7 @@ trait _attr
     // getAttr
     // retourne un attribut
     // possible d'appeler si call est true
-    public function getAttr($key,bool $call=false,...$args)
+    final public function getAttr($key,bool $call=false,...$args)
     {
         $return = Base\Arrs::get($key,$this->attrRef());
 
@@ -79,7 +79,7 @@ trait _attr
 
     // setAttr
     // permet de changer la valeur d'un attribut
-    public function setAttr($key,$value):self
+    final public function setAttr($key,$value):self
     {
         $attr =& $this->attrRef();
         Base\Arrs::setRef($key,$value,$attr);
@@ -91,7 +91,7 @@ trait _attr
     // attr
     // possible de merger un tableau par dessus les attr
     // retourne les attr
-    public function attr(?array $value=null):array
+    final public function attr(?array $value=null):array
     {
         $return =& $this->attrRef();
 

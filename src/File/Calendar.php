@@ -36,7 +36,7 @@ class Calendar extends Text
 
     // event
     // retourne la string calendar pour un tableau événement
-    public function event(array $array):?string
+    final public function event(array $array):?string
     {
         $return = null;
         $array = Base\Obj::cast($array);
@@ -73,7 +73,7 @@ class Calendar extends Text
 
     // writeEvent
     // écrit la string événement dans le fichier calendar
-    public function writeEvent(array $array):self
+    final public function writeEvent(array $array):self
     {
         $event = $this->event($array);
 

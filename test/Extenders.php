@@ -16,7 +16,7 @@ use Quid\Main;
 class Extenders extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         $ex = new Main\Extender(__NAMESPACE__);

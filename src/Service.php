@@ -36,7 +36,7 @@ abstract class Service extends Root
     // cast
     // cast retourne null
     // un service étendre cette méthode, est utilisé par route pour mettre l'api key de googleMaps dans header
-    public function _cast():?string
+    final public function _cast():?string
     {
         return null;
     }
@@ -44,7 +44,7 @@ abstract class Service extends Root
 
     // setKey
     // entrepose la clé du service
-    public function setKey(string $key):void
+    final public function setKey(string $key):void
     {
         $this->key = $key;
 
@@ -54,7 +54,7 @@ abstract class Service extends Root
 
     // getKey
     // retourne la clé du service
-    public function getKey():string
+    final public function getKey():string
     {
         return $this->key;
     }
@@ -87,7 +87,7 @@ abstract class Service extends Root
     // checkPing
     // vérifie que l'hôte est joignable sur le port spécifié
     // sinon envoie une exception attrapable
-    public static function checkPing(string $host,int $port=80,int $timeout=2):bool
+    final public static function checkPing(string $host,int $port=80,int $timeout=2):bool
     {
         return Request::checkPing($host,$port,$timeout);
     }

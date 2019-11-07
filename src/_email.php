@@ -27,7 +27,7 @@ trait _email
 
     // messageSegment
     // retourne un tableau avec les segments requis pour envoyer le email
-    public function messageSegment():array
+    final public function messageSegment():array
     {
         $return = [];
         $delimiter = $this->getSegmentChars();
@@ -43,7 +43,7 @@ trait _email
     // prépare le tableau message à envoyer dans core/email
     // seul to est requis et peut prendre plusieurs formes (string, array)
     // une exception est envoyé si tous les segments requis ne sont pas fournis dans replace
-    public function prepareMessage($to,?array $replace=null,?array $return=null):array
+    final public function prepareMessage($to,?array $replace=null,?array $return=null):array
     {
         $return = ($return === null)? []:$return;
         $replace = ($replace === null)? []:$replace;
@@ -75,7 +75,7 @@ trait _email
     // sendMethod
     // méthode protégé pour envoyer ou queue le email
     // la méthode peut retourner null dans le cas de sendOnCloseDown
-    protected function sendMethod(string $method,$key,$to,?array $replace=null,?array $message=null):?bool
+    final protected function sendMethod(string $method,$key,$to,?array $replace=null,?array $message=null):?bool
     {
         $return = false;
         $email = ($key instanceof ServiceMailer)? $key:static::serviceMailer($key);
@@ -99,7 +99,7 @@ trait _email
 
     // send
     // envoie le courriel maintenant
-    public function send($key,$to,?array $replace=null,?array $message=null):bool
+    final public function send($key,$to,?array $replace=null,?array $message=null):bool
     {
         return $this->sendMethod('send',$key,$to,$replace,$message);
     }
@@ -107,7 +107,7 @@ trait _email
 
     // sendOnCloseDown
     // envoie le courriel à la fermeture du script ou de boot
-    public function sendOnCloseDown($key,$to,?array $replace=null,?array $message=null):void
+    final public function sendOnCloseDown($key,$to,?array $replace=null,?array $message=null):void
     {
         $this->sendMethod('sendOnCloseDown',$key,$to,$replace,$message);
 
@@ -117,7 +117,7 @@ trait _email
 
     // queue
     // queue le courriel pour envoie plus tard
-    public function queue($key,$to,?array $replace=null,?array $message=null):bool
+    final public function queue($key,$to,?array $replace=null,?array $message=null):bool
     {
         return $this->sendMethod('queue',$key,$to,$replace,$message);
     }
@@ -125,7 +125,7 @@ trait _email
 
     // dispatch
     // dispatch le courriel selon la méthode par défaut défini dans la classe de courriel
-    public function dispatch($key,$to,?array $replace=null,?array $message=null):bool
+    final public function dispatch($key,$to,?array $replace=null,?array $message=null):bool
     {
         return $this->sendMethod('dispatch',$key,$to,$replace,$message);
     }
@@ -133,7 +133,7 @@ trait _email
 
     // getSegmentChars
     // retourne les caractères de segments à utiliser
-    public function getSegmentChars()
+    final public function getSegmentChars()
     {
         return $this->getAttr('segment');
     }

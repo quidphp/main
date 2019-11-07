@@ -33,7 +33,7 @@ class Role extends Root
     // toutes les méthodes de cet objet sont statiques
     // le paramétrage d'un rôle se fait uniquemment via le tableau config
     // l'objet est seulement utilisé pour faciliter le typage et le passage en argument
-    public function __construct(string $name,int $permission,?array $attr=null)
+    final public function __construct(string $name,int $permission,?array $attr=null)
     {
         $attr = Base\Arrs::replace(static::$config,$attr);
         $this->makeAttr($attr);
@@ -46,7 +46,7 @@ class Role extends Root
 
     // clone
     // clone est permis
-    public function __clone()
+    final public function __clone()
     {
         return;
     }
@@ -54,7 +54,7 @@ class Role extends Root
 
     // cast
     // retourne le numéro de la permisison
-    public function _cast():int
+    final public function _cast():int
     {
         return $this->permission();
     }
@@ -62,7 +62,7 @@ class Role extends Root
 
     // setPermission
     // conserve le code de permission
-    public function setPermission(int $value):void
+    final public function setPermission(int $value):void
     {
         $this->permission = $value;
 
@@ -72,7 +72,7 @@ class Role extends Root
 
     // permission
     // retourne le code de permission de la classe
-    public function permission():int
+    final public function permission():int
     {
         return $this->permission;
     }
@@ -80,7 +80,7 @@ class Role extends Root
 
     // setName
     // conserve le nom du rôle
-    public function setName(string $value):void
+    final public function setName(string $value):void
     {
         $this->name = $value;
 
@@ -90,7 +90,7 @@ class Role extends Root
 
     // name
     // retourne le nom du role
-    public function name():string
+    final public function name():string
     {
         return $this->name;
     }
@@ -98,7 +98,7 @@ class Role extends Root
 
     // is
     // retourne vrai si le role a l'attribut true
-    public function is($value):bool
+    final public function is($value):bool
     {
         return ($this->getAttr($value) === true)? true:false;
     }
@@ -106,7 +106,7 @@ class Role extends Root
 
     // isNobody
     // retourne vrai si la permission est nobody
-    public function isNobody():bool
+    final public function isNobody():bool
     {
         return ($this->permission() <= 1)? true:false;
     }
@@ -114,7 +114,7 @@ class Role extends Root
 
     // isSomebody
     // retourne vrai si la permission est somebody
-    public function isSomebody():bool
+    final public function isSomebody():bool
     {
         return ($this->permission() > 1)? true:false;
     }
@@ -123,7 +123,7 @@ class Role extends Root
     // useAlso
     // retourne un tableau de classe de role compatible avec le role courant
     // est utilisé dans le trait _attrPermission
-    public function useAlso()
+    final public function useAlso()
     {
         return $this->getAttr('useAlso');
     }
@@ -131,7 +131,7 @@ class Role extends Root
 
     // roles
     // retourne un objet roles avec le rôle courant dans l'objet
-    public function roles():Roles
+    final public function roles():Roles
     {
         $return = Roles::newOverload();
         $return->add($this);

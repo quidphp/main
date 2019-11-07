@@ -17,7 +17,7 @@ trait _sort
 {
     // sort
     // sort les clés de la map
-    public function sort($sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):Main\Map
+    final public function sort($sort=true,int $type=SORT_FLAG_CASE | SORT_NATURAL):Main\Map
     {
         $this->checkAllowed('sort');
         $return = $this->onPrepareThis('sort');
@@ -30,7 +30,7 @@ trait _sort
 
     // shuffle
     // shuffle les valeurs de la map tout en conservant les clés
-    public function shuffle():Main\Map
+    final public function shuffle():Main\Map
     {
         $this->checkAllowed('sort');
         $return = $this->onPrepareThis('sort');
@@ -43,7 +43,7 @@ trait _sort
 
     // reverse
     // reverse l'ordre des valeurs de la map tout en conservant les clés
-    public function reverse(bool $preserve=true):Main\Map
+    final public function reverse(bool $preserve=true):Main\Map
     {
         $this->checkAllowed('sort');
         $return = $this->onPrepareThis('sort');

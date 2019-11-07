@@ -16,7 +16,7 @@ trait _flash
 {
     // onPrepareValueSet
     // les valeurs sont cast sur set
-    protected function onPrepareValueSet($return)
+    final protected function onPrepareValueSet($return)
     {
         $return = Base\Obj::cast($return);
 
@@ -27,7 +27,7 @@ trait _flash
     // get
     // retourne une valeur d'une clé dans la map
     // efface la valeur après lecture
-    public function get($key)
+    final public function get($key)
     {
         $return = null;
 
@@ -44,7 +44,7 @@ trait _flash
     // gets
     // retourne plusieurs valeurs de clés dans la map
     // efface les valeurs après lecture
-    public function gets(...$keys):array
+    final public function gets(...$keys):array
     {
         $return = [];
 

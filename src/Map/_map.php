@@ -18,7 +18,7 @@ trait _map
     // map
     // permet d'utiliser une callable pour changer les valeurs de l'objet
     // la nouvelle valeur est passé dans la méthode set
-    public function map(callable $map,...$args):Main\Map
+    final public function map(callable $map,...$args):Main\Map
     {
         $this->checkAllowed('map');
         $return = $this->onPrepareThis('map');

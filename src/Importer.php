@@ -43,7 +43,7 @@ class Importer extends Map
 
     // construct
     // construit l'objet importer
-    public function __construct(Contract\Import $source,Contract\Import $target,?array $attr=null)
+    final public function __construct(Contract\Import $source,Contract\Import $target,?array $attr=null)
     {
         $this->makeAttr($attr);
         $this->setSource($source);
@@ -55,7 +55,7 @@ class Importer extends Map
 
     // setSource
     // lie l'objet source
-    public function setSource(Contract\Import $value):self
+    final public function setSource(Contract\Import $value):self
     {
         $this->source = $value;
 
@@ -65,7 +65,7 @@ class Importer extends Map
 
     // source
     // retourne l'objet source
-    public function source(bool $rewind=false):Contract\Import
+    final public function source(bool $rewind=false):Contract\Import
     {
         $return = $this->source;
 
@@ -78,7 +78,7 @@ class Importer extends Map
 
     // setTarget
     // lie l'objet target
-    public function setTarget(Contract\Import $value):self
+    final public function setTarget(Contract\Import $value):self
     {
         $this->target = $value;
 
@@ -88,7 +88,7 @@ class Importer extends Map
 
     // target
     // retourne l'objet target
-    public function target():Contract\Import
+    final public function target():Contract\Import
     {
         return $this->target;
     }
@@ -97,7 +97,7 @@ class Importer extends Map
     // set
     // set pour importer
     // key doit être int et value doit être une string représentant un nom de colonne
-    public function set($key,$value):parent
+    final public function set($key,$value):parent
     {
         $value = Base\Obj::cast($value);
 
@@ -116,7 +116,7 @@ class Importer extends Map
     // setCallback
     // lie une callback à une colonne déjà set
     // envoie une exception si la clé n'existe pas
-    public function setCallback($key,?callable $callable):self
+    final public function setCallback($key,?callable $callable):self
     {
         $this->checkExists($key);
         $this->callable[$key] = $callable;
@@ -128,7 +128,7 @@ class Importer extends Map
     // setRequired
     // marque une colonne comme requise ou non
     // envoie une exception si la clé n'existe pas
-    public function setRequired($key,bool $required=false):self
+    final public function setRequired($key,bool $required=false):self
     {
         $this->checkExists($key);
         $this->required[$key] = $required;
@@ -139,7 +139,7 @@ class Importer extends Map
 
     // clean
     // enlève les callables et required pour toutes les clés de colonnes inexistants
-    protected function clean():void
+    final protected function clean():void
     {
         foreach ($this->callable as $key => $value)
         {
@@ -161,7 +161,7 @@ class Importer extends Map
     // lie une colonne de la source, à une colonne dans la target
     // peut aussi marquer une colonne comme requise
     // peut aussi lié une callable qui agira comme array_map
-    public function associate($key,$value,bool $required=false,?callable $callable=null):self
+    final public function associate($key,$value,bool $required=false,?callable $callable=null):self
     {
         $this->set($key,$value);
         $this->setRequired($key,$required);
@@ -173,7 +173,7 @@ class Importer extends Map
 
     // getMap
     // retourne un tableau avec la clé de colonne, la colonne et si présent, la callable et le statut required
-    public function getMap($key):?array
+    final public function getMap($key):?array
     {
         $return = null;
         $value = $this->get($key);
@@ -192,7 +192,7 @@ class Importer extends Map
 
     // getMaps
     // retourne un tableau multidimensionnel avec tous les liens colonnes et callable
-    public function getMaps():array
+    final public function getMaps():array
     {
         $return = [];
 
@@ -208,7 +208,7 @@ class Importer extends Map
     // checkMaps
     // retourne un tableau multidimensionnel avec tous les liens colonnes et callable
     // envoie une exception si vide
-    public function checkMaps():array
+    final public function checkMaps():array
     {
         $return = $this->getMaps();
 
@@ -221,7 +221,7 @@ class Importer extends Map
 
     // emulate
     // émule l'insertion des lignes
-    public function emulate($offset=true,$length=true,?array $attr=null):array
+    final public function emulate($offset=true,$length=true,?array $attr=null):array
     {
         $return = ['total'=>[],'data'=>[]];
         $attr = Base\Arr::plus($this->attr(),$attr);
@@ -243,7 +243,7 @@ class Importer extends Map
 
     // makeTotal
     // calcul le total des lignes valides et non valides
-    protected function makeTotal(array $data):array
+    final protected function makeTotal(array $data):array
     {
         $return = ['valid'=>0,'invalid'=>0,'save'=>0,'noSave'=>0,'insert'=>0,'update'=>0,'delete'=>0];
 
@@ -276,7 +276,7 @@ class Importer extends Map
     // prepareReturn
     // prépare le tableau de retour
     // si slim est true, alors enlève object et source de chaque tableau data
-    protected function prepareReturn(array $return,array $attr):array
+    final protected function prepareReturn(array $return,array $attr):array
     {
         $attr = Base\Arr::plus($this->attr(),$attr);
 
@@ -298,7 +298,7 @@ class Importer extends Map
     // callback par cellule et ensuite pour la ligne dans son entièreté
     // une ligne retournera null si un des champs requis est vide
     // si required est true, utilise la méthode base/validate isReallyEmpty
-    public function one(array $value):array
+    final public function one(array $value):array
     {
         $return = ['action'=>null,'valid'=>false,'error'=>null,'save'=>false,'int'=>null,'data'=>[],'source'=>$value];
         $maps = $this->checkMaps();
@@ -346,7 +346,7 @@ class Importer extends Map
     // oneAfter
     // après one, s'il y a des données à la ligne
     // détecte si valide et l'action à utiliser
-    protected function oneAfter(array $return):array
+    final protected function oneAfter(array $return):array
     {
         if(!empty($return['data']))
         {
@@ -375,7 +375,7 @@ class Importer extends Map
 
     // trigger
     // prépare et insère les lignes dans la table de données
-    public function trigger($offset=true,$length=true,?array $attr=null):array
+    final public function trigger($offset=true,$length=true,?array $attr=null):array
     {
         $return = ['total'=>[],'data'=>[]];
         $attr = Base\Arr::plus($this->attr(),$attr);

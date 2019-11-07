@@ -17,7 +17,7 @@ trait _count
 {
     // unsetAfterCount
     // enlève les entrées après un certain nombre
-    public function unsetAfterCount(int $count):Main\Map
+    final public function unsetAfterCount(int $count):Main\Map
     {
         $this->checkAllowed('unsetAfterCount');
         $return = $this->onPrepareThis('unsetAfterCount');

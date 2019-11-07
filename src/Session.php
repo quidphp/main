@@ -53,7 +53,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // construct
     // construit l'objet session et merge les attrs
     // démarre la session
-    public function __construct(string $class,?array $attr=null)
+    final public function __construct(string $class,?array $attr=null)
     {
         $this->makeAttr($attr);
         $this->setStorageClass($class);
@@ -65,7 +65,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // onCheckArr
     // callback avant accès à arr
-    protected function onCheckArr():void
+    final protected function onCheckArr():void
     {
         $this->checkReady();
 
@@ -101,8 +101,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // onPrepareUnsetInst
     // méthode appeler avant unsetInst
-    // méthode protégé
-    protected function onPrepareUnsetInst():void
+    final protected function onPrepareUnsetInst():void
     {
         if($this->isReady())
         $this->commit();
@@ -114,7 +113,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // call
     // renvoie des méthodes à base
     // la session doit être active pour les méthodes dans config/base
-    public function __call(string $key,array $args)
+    final public function __call(string $key,array $args)
     {
         $return = null;
         $base = $this->getAttr('base');
@@ -137,7 +136,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // setStorageClass
     // applique la classe de storage
-    protected function setStorageClass(string $value):void
+    final protected function setStorageClass(string $value):void
     {
         if(class_exists($value,true) && Base\Classe::hasInterface(Contract\Session::class,$value))
         $this->class = $value;
@@ -151,7 +150,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // getStorageClass
     // retourne le classe de storage
-    public function getStorageClass():string
+    final public function getStorageClass():string
     {
         return $this->class;
     }
@@ -159,7 +158,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // isStarted
     // retourne vrai si la session est démarré et lié
-    public function isStarted():bool
+    final public function isStarted():bool
     {
         return (session_status() === PHP_SESSION_ACTIVE)? true:false;
     }
@@ -167,7 +166,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // isReady
     // retourne vrai si la session est démarré et lié à inst
-    public function isReady():bool
+    final public function isReady():bool
     {
         return ($this->isStarted() && $this->hasStorage())? true:false;
     }
@@ -175,7 +174,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // checkStarted
     // retourne vrai si la session est démarré, envoie une exception si non
-    protected function checkStarted():self
+    final protected function checkStarted():self
     {
         if($this->isStarted() === false)
         static::throw();
@@ -186,7 +185,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // checkReady
     // retourne vrai si la session est ready, envoie une exception si non
-    protected function checkReady():self
+    final protected function checkReady():self
     {
         if($this->isReady() === false)
         static::throw();
@@ -199,7 +198,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne la structure de la session à partir des attrs
     // si une valeur de structure est seulement une string, c'est une méthode de cette classe
     // merge avec la structure de base/session
-    public function getStructure():array
+    final public function getStructure():array
     {
         $return = [];
         $structure = $this->getAttr('structure');
@@ -222,7 +221,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // structureFlash
     // gère le champ structure flash de la session
     // mode insert, update ou is
-    public function structureFlash(string $mode,$value=null)
+    final public function structureFlash(string $mode,$value=null)
     {
         $return = $value;
 
@@ -239,7 +238,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // structureHistory
     // gère le champ structure history de la session
     // mode insert, update ou is
-    public function structureHistory(string $mode,$value=null)
+    final public function structureHistory(string $mode,$value=null)
     {
         $return = $value;
         $class = $this->getAttr('historyClass') ?? RequestHistory::class;
@@ -257,7 +256,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // structureTimeout
     // gère le champ structure timeout de la session
     // mode insert, update ou is
-    public function structureTimeout(string $mode,$value=null)
+    final public function structureTimeout(string $mode,$value=null)
     {
         $return = $value;
         $timeout = $this->getAttr('timeout');
@@ -278,7 +277,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // structureCom
     // gère le champ structure com de la session
     // mode insert, update ou is
-    public function structureCom(string $mode,$value=null)
+    final public function structureCom(string $mode,$value=null)
     {
         $return = $value;
 
@@ -294,7 +293,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // hasStorage
     // retourne vrai si la session a présentement un storage lié
-    public function hasStorage():bool
+    final public function hasStorage():bool
     {
         return (!empty($this->storage))? true:false;
     }
@@ -302,7 +301,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // storage
     // retourne la row de la session ou envoie une exception si non existante
-    public function storage():Contract\Session
+    final public function storage():Contract\Session
     {
         $return = $this->storage;
 
@@ -315,7 +314,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // info
     // retourne un tableau contenant un maximum d'information sur la session
-    public function info():array
+    final public function info():array
     {
         $return = ['class'=>static::class];
         $return['storageClass'] = $this->getStorageClass();
@@ -342,8 +341,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // checkSid
     // vérifie que le id est valide ou envoie une exception
-    // méthode protégé
-    protected function checkSid($sid):self
+    final protected function checkSid($sid):self
     {
         $prefix = Base\Session::getPrefix();
         if(!is_string($sid) || !Base\Session::validateId($sid,$prefix))
@@ -356,7 +354,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // restart
     // vide, détruit et démarrer la session
     // le id de la session est aussi changé lors du redémarrage
-    public function restart():self
+    final public function restart():self
     {
         $this->empty();
         $this->terminate();
@@ -369,7 +367,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // regenerateId
     // change le id de session et garde les données
     // possibilité de delete l'ancienne session
-    public function regenerateId(bool $delete=true):self
+    final public function regenerateId(bool $delete=true):self
     {
         $this->checkReady();
 
@@ -385,7 +383,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // encode
     // encode le contenu du tableau session selon le serialize handler
-    public function encode():?string
+    final public function encode():?string
     {
         $this->checkReady();
         return Base\Session::encode();
@@ -394,7 +392,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // decode
     // decode une string et remplace le contenu du tableau session
-    public function decode(string $value):self
+    final public function decode(string $value):self
     {
         $this->checkReady();
 
@@ -409,7 +407,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // reset
     // remplace le contenu du tableau session par les valeurs originales
-    public function reset():self
+    final public function reset():self
     {
         $this->checkReady();
 
@@ -426,7 +424,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // termine la session sans écrire les changements
     // la session doit être active et ne sera pas effacé
     // si unsetArray est true, la superglobale session sera vidé
-    public function abort(bool $unsetArray=true):self
+    final public function abort(bool $unsetArray=true):self
     {
         $this->checkReady();
 
@@ -441,7 +439,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // écrit les changements et termine la session
     // la session doit être active et ne sera pas effacé
     // si unsetArray est true, le tableau session sera vidé
-    public function commit(bool $unsetArray=true):self
+    final public function commit(bool $unsetArray=true):self
     {
         $this->checkReady();
 
@@ -456,7 +454,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // efface le contenu de la session et du tableau session
     // la méthode parent de map est appelé
     // la session elle-même n'est pas effacé, seul son contenu est effacé
-    public function empty():parent
+    final public function empty():parent
     {
         $this->checkReady();
         parent::empty();
@@ -471,7 +469,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // terminate
     // destroy la session
     // possibilité de empty les données et/ou unset le cookie
-    public function terminate(bool $empty=true,bool $unsetCookie=true):self
+    final public function terminate(bool $empty=true,bool $unsetCookie=true):self
     {
         $this->checkReady();
 
@@ -487,7 +485,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // garbageCollect
     // lance le processus de garbageCollect et retourne le nombre de sessions effacés
-    public function garbageCollect():?int
+    final public function garbageCollect():?int
     {
         $this->checkReady();
         return Base\Session::garbageCollect();
@@ -497,7 +495,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // start
     // démarre la session
     // envoie une exception en cas d'échec, lance onStart en cas de succès
-    public function start():self
+    final public function start():self
     {
         if(!$this->isStarted())
         {
@@ -521,7 +519,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // setDefault
     // permet de set les defaults dans base session
     // méthode spécifique pour le sid par défaut, utilisé par cli
-    protected function setDefault():void
+    final protected function setDefault():void
     {
         Base\Session::setDefault($this->attr());
 
@@ -545,7 +543,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // history
     // retourne l'objet request history
-    public function history():RequestHistory
+    final public function history():RequestHistory
     {
         return $this->get('history');
     }
@@ -553,7 +551,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // historyEmpty
     // vide l'objet request history
-    public function historyEmpty():self
+    final public function historyEmpty():self
     {
         $this->history()->empty();
 
@@ -563,7 +561,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // timeout
     // retourne l'objet timeout
-    public function timeout():Timeout
+    final public function timeout():Timeout
     {
         return $this->get('timeout');
     }
@@ -571,7 +569,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // timeoutEmpty
     // vide l'objet timeout
-    public function timeoutEmpty():self
+    final public function timeoutEmpty():self
     {
         $timeout = $this->timeout();
         $timeout->empty();
@@ -582,7 +580,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // com
     // retourne l'objet com
-    public function com():Com
+    final public function com():Com
     {
         return $this->get('com');
     }
@@ -590,7 +588,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // comEmpty
     // vide l'objet com
-    public function comEmpty():self
+    final public function comEmpty():self
     {
         $this->com()->empty();
 
@@ -600,7 +598,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // flash
     // retourne l'objet session flash
-    public function flash():Flash
+    final public function flash():Flash
     {
         return $this->get('flash');
     }
@@ -608,7 +606,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
     // flashEmpty
     // vide l'objet flash
-    public function flashEmpty():self
+    final public function flashEmpty():self
     {
         $this->flash()->empty();
 
@@ -619,7 +617,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // create_sid
     // crée une nouvelle clé de session
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    public function create_sid():?string
+    final public function create_sid():?string
     {
         $return = null;
         $this->checkStarted();
@@ -639,7 +637,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // open
     // tente d'ouvrir la session
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    public function open($path,$name):bool
+    final public function open($path,$name):bool
     {
         $return = false;
         $this->checkStarted();
@@ -659,7 +657,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // validateId
     // validate le id de session
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    public function validateId($sid):bool
+    final public function validateId($sid):bool
     {
         $return = false;
         $this->checkStarted();
@@ -673,7 +671,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // read
     // lit le contenu de la session
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    public function read($sid):string
+    final public function read($sid):string
     {
         $return = '';
         $this->checkStarted();
@@ -703,7 +701,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // write
     // écrit le contenu dans la session
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    public function write($sid,$data):bool
+    final public function write($sid,$data):bool
     {
         $return = false;
         $this->checkStarted();
@@ -717,7 +715,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // updateTimestamp
     // met à jour le timestamp de la session, si les données n'ont pas changés
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    public function updateTimestamp($sid,$data):bool
+    final public function updateTimestamp($sid,$data):bool
     {
         $return = false;
         $this->checkReady();
@@ -732,7 +730,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // ferme la session, doit retourner true
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
     // appele la méthode onEnd
-    public function close():bool
+    final public function close():bool
     {
         $return = true;
         $this->checkStarted();
@@ -745,7 +743,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // destroy
     // tente de détruire la session
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    public function destroy($sid):bool
+    final public function destroy($sid):bool
     {
         $return = false;
         $this->checkReady();
@@ -759,7 +757,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // gc
     // processus de garbage collect
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    public function gc($lifetime):bool
+    final public function gc($lifetime):bool
     {
         $return = false;
         $this->checkReady();

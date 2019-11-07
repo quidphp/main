@@ -16,7 +16,7 @@ use Quid\Main;
 class Xml extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $xml = new Main\Xml('sitemap');

@@ -30,7 +30,7 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
 
     // onUnqueue
     // sur unqueue efface le fichier automatiquement
-    protected function onUnqueue():void
+    final protected function onUnqueue():void
     {
         $this->unlink();
 
@@ -41,7 +41,7 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
     // unqueue
     // permet de faire unqueue du fichier
     // envoie une exception si pas de callable lié
-    public function unqueue()
+    final public function unqueue()
     {
         $return = null;
         $callable = $this->getAttr('unqueue');
@@ -59,7 +59,7 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
     // queue
     // créer une nouvelle entrée dans la queue
     // incremente la valeur inc
-    public static function queue(...$values):?Main\Contract\Queue
+    final public static function queue(...$values):?Main\Contract\Queue
     {
         return static::storage(...$values);
     }
@@ -68,7 +68,7 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
     // getQueued
     // retourne un objet avec toutes les entrées queued
     // la plus ancienne est retourné en premier
-    public static function getQueued(?int $limit=null):?Main\Map
+    final public static function getQueued(?int $limit=null):?Main\Map
     {
         return static::storageSort(false,$limit);
     }
@@ -76,7 +76,7 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
 
     // setUnqueueCallable
     // permet d'attribuer une callable pour le unqueue
-    public static function setUnqueueCallable(callable $callable):void
+    final public static function setUnqueueCallable(callable $callable):void
     {
         static::$config['unqueue'] = $callable;
 

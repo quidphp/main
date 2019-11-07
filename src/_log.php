@@ -21,7 +21,7 @@ trait _log
     // logOnCloseDown
     // queue l'insertion d'une nouvelle entrée du log au closeDown
     // lance logTrim si c'est le dernier élément de la queue
-    public static function logOnCloseDown(...$values):void
+    final public static function logOnCloseDown(...$values):void
     {
         Base\Response::onCloseDown(function() use($values) {
             static::log(...$values);

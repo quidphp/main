@@ -16,7 +16,7 @@ use Quid\Main;
 class Res extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // prepare
         Base\Dir::reset('[assertCurrent]');

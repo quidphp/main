@@ -59,7 +59,7 @@ class File extends Res
 
     // construct
     // construit l'objet fichier
-    public function __construct($value,?array $attr=null)
+    final public function __construct($value,?array $attr=null)
     {
         $attr = $this->prepareOption($value,$attr);
         $this->makeAttr($attr);
@@ -71,7 +71,7 @@ class File extends Res
 
     // isResourceValid
     // méthode qui détermine si la resource est courante valide pour la classe
-    public function isResourceValid():bool
+    final public function isResourceValid():bool
     {
         $return = false;
         $mimeGroup = static::defaultMimeGroup();
@@ -89,7 +89,7 @@ class File extends Res
 
     // checkResourceValid
     // envoie une exception si la resource courante n'est pas valide pour la classe
-    public function checkResourceValid():self
+    final public function checkResourceValid():self
     {
         if(!$this->isResourceValid())
         static::throw();
@@ -101,7 +101,7 @@ class File extends Res
     // prepareOption
     // essaie d'attribuer un mime à utiliser si non défini
     // retourne le tableau option
-    protected function prepareOption($value,?array $option=null):array
+    final protected function prepareOption($value,?array $option=null):array
     {
         $return = (array) $option;
 
@@ -128,7 +128,7 @@ class File extends Res
 
     // readOption
     // retourne les options à utiliser lors du read
-    public function readOption():?array
+    final public function readOption():?array
     {
         return $this->getAttr('read');
     }
@@ -136,7 +136,7 @@ class File extends Res
 
     // writeOption
     // retourne les options à utiliser pour écrire dans l'objet
-    public function writeOption():?array
+    final public function writeOption():?array
     {
         return $this->getAttr('write');
     }
@@ -144,7 +144,7 @@ class File extends Res
 
     // unlinkOnShutdown
     // permet de unlink le fichier au shutdown, s'il existe toujours
-    public function unlinkOnShutdown():void
+    final public function unlinkOnShutdown():void
     {
         Base\File::unlinkOnShutdown($this->path());
 
@@ -155,7 +155,7 @@ class File extends Res
     // makeUploadArray
     // retourne un upload array à partir d'un fichier
     // envoie une exception si le retour est null
-    public function makeUploadArray(int $error=0,bool $is=true):array
+    final public function makeUploadArray(int $error=0,bool $is=true):array
     {
         $return = Base\File::makeUploadArray($this,$error,$is);
 
@@ -168,7 +168,7 @@ class File extends Res
 
     // files
     // créer un nouvel objet files et met le fichier courant dedans
-    public function files(...$args):Files
+    final public function files(...$args):Files
     {
         $return = static::newFiles(...$args);
         $return->add($this);
@@ -179,7 +179,7 @@ class File extends Res
 
     // defaultMimeGroup
     // retourne le mime groupe par défaut pour la classe
-    public static function defaultMimeGroup():?string
+    final public static function defaultMimeGroup():?string
     {
         $return = static::$config['group'] ?? null;
         $return = (empty($return))? null:$return;
@@ -190,7 +190,7 @@ class File extends Res
 
     // defaultExtension
     // retourne l'extension par défaut selon le mime groupe de la classe
-    public static function defaultExtension():?string
+    final public static function defaultExtension():?string
     {
         $return = null;
         $group = static::defaultMimeGroup();
@@ -204,7 +204,7 @@ class File extends Res
 
     // getClass
     // retourne la classe à utiliser avec la méthode new
-    public static function getClass($value,?array $option=null):string
+    final public static function getClass($value,?array $option=null):string
     {
         $return = static::class;
 
@@ -245,7 +245,7 @@ class File extends Res
 
     // getClassFromGroup
     // retourne la classe à utiliser à partir du groupe
-    public static function getClassFromGroup(string $group):?string
+    final public static function getClassFromGroup(string $group):?string
     {
         return (array_key_exists($group,static::$param['groupClass']))? static::$param['groupClass'][$group]:null;
     }
@@ -253,7 +253,7 @@ class File extends Res
 
     // getDirnameFromValue
     // retourne le dirname à partir d'une valeur passé dans file::new
-    public static function getDirnameFromValue($value):?string
+    final public static function getDirnameFromValue($value):?string
     {
         $return = null;
 
@@ -272,7 +272,7 @@ class File extends Res
 
     // getClassFromDirname
     // retourne la classe à utiliser à partir du dirname (en lien avec storageClass)
-    public static function getClassFromDirname(string $value):?string
+    final public static function getClassFromDirname(string $value):?string
     {
         $return = null;
 
@@ -302,7 +302,7 @@ class File extends Res
     // il est possible de créer un fichier inexistant dans cette classe, si option a create=>true
     // exception envoyé si le fichier n'est pas créable
     // si value est déjà une instance de file, retourne l'objet directement
-    public static function new($value,?array $option=null):self
+    final public static function new($value,?array $option=null):self
     {
         $return = null;
 
@@ -321,7 +321,7 @@ class File extends Res
 
     // newCreate
     // comme new, mais create est true par défaut
-    public static function newCreate($value,?array $option=null):self
+    final public static function newCreate($value,?array $option=null):self
     {
         return static::newOverload($value,Base\Arr::plus($option,['create'=>true]));
     }
@@ -329,7 +329,7 @@ class File extends Res
 
     // newOverload
     // fait un overload sur la classe et ensuite passe à new
-    public static function newOverload(...$values):Root
+    final public static function newOverload(...$values):Root
     {
         return static::getOverloadClass()::new(...$values);
     }
@@ -337,7 +337,7 @@ class File extends Res
 
     // newFiles
     // retourne un nouvel objet files, overload
-    public static function newFiles(...$args):Files
+    final public static function newFiles(...$args):Files
     {
         return Files::newOverload(...$args);
     }
@@ -346,7 +346,7 @@ class File extends Res
     // registerClass
     // permet d'enregister une classe fichier
     // méthode à étendre
-    public static function registerClass():void
+    final public static function registerClass():void
     {
         return;
     }
@@ -354,7 +354,7 @@ class File extends Res
 
     // registerGroup
     // permet d'enregister un nouveau mime et mettre la classe dans group
-    public static function registerGroup(string $name,string $mime,$extension,$families=null):void
+    final public static function registerGroup(string $name,string $mime,$extension,$families=null):void
     {
         Base\Mime::register($mime,$extension,$name,$families);
         static::$param['groupClass'][$name] = static::class;
@@ -365,7 +365,7 @@ class File extends Res
 
     // registerStorage
     // permet d'enregister une classe de storage
-    public static function registerStorage(string $name):void
+    final public static function registerStorage(string $name):void
     {
         static::$param['storageClass'][$name] = static::class;
 
@@ -375,7 +375,7 @@ class File extends Res
 
     // registerUtil
     // permet d'enregister une classe util
-    public static function registerUtil(string $name):void
+    final public static function registerUtil(string $name):void
     {
         static::$param['utilClass'][$name] = static::class;
 
@@ -385,7 +385,7 @@ class File extends Res
 
     // getOverloadKeyPrepend
     // retourne le prepend de la clé à utiliser pour le tableau overload
-    public static function getOverloadKeyPrepend():?string
+    final public static function getOverloadKeyPrepend():?string
     {
         return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'File':null;
     }

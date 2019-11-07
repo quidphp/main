@@ -24,7 +24,7 @@ trait _storage
 
     // isStorageDataValid
     // retourne vrai si les datas fournis sont valides
-    public static function isStorageDataValid(...$values):bool
+    final public static function isStorageDataValid(...$values):bool
     {
         return true;
     }
@@ -32,7 +32,7 @@ trait _storage
 
     // storageDirname
     // retourne le dirname pour le storage
-    public static function storageDirname():string
+    final public static function storageDirname():string
     {
         $return = static::$config['dirname'] ?? null;
 
@@ -45,7 +45,7 @@ trait _storage
 
     // setStorageDirname
     // permet de changer le dirname pour le storage
-    public static function setStorageDirname(string $value):void
+    final public static function setStorageDirname(string $value):void
     {
         static::$config['dirname'] = $value;
 
@@ -56,7 +56,7 @@ trait _storage
     // storageFilename
     // retourne le filename pour le log
     // id de réponse ainsi qu'un int qui s'auto-incrémente
-    public static function storageFilename(...$values):string
+    final public static function storageFilename(...$values):string
     {
         return Base\Response::id().'-'.static::$config['inc'];
     }
@@ -64,7 +64,7 @@ trait _storage
 
     // storagePath
     // retourne le chemin à utiliser pour stocker le storage
-    public static function storagePath(...$values):string
+    final public static function storagePath(...$values):string
     {
         $return = null;
         $build['dirname'] = static::storageDirname(...$values);
@@ -78,7 +78,7 @@ trait _storage
 
     // storageData
     // retourne les données à mettre dans le fichier
-    public static function storageData(...$values)
+    final public static function storageData(...$values)
     {
         return (count($values) === 1)? $values[0]:$values;
     }
@@ -87,7 +87,7 @@ trait _storage
     // storageAll
     // retourne on objet files avec tous les fichiers dans le dossier de storage
     // l'ordre dans le fichier est alphabétique
-    public static function storageAll(?array $option=null):Main\Files
+    final public static function storageAll(?array $option=null):Main\Files
     {
         $return = Main\Files::newOverload();
         $dirname = static::storageDirname();
@@ -100,7 +100,7 @@ trait _storage
     // storageSort
     // retourne on objet files avec les fichiers les plus récent dans le dossier de storage
     // les fichiers sont ordonnées du plus récent au plus ancien
-    public static function storageSort($sort=true,?int $limit=null,string $format='dateModify',?array $option=null):Main\Files
+    final public static function storageSort($sort=true,?int $limit=null,string $format='dateModify',?array $option=null):Main\Files
     {
         $return = Main\Files::newOverload();
         $dirname = static::storageDirname();
@@ -121,7 +121,7 @@ trait _storage
     // storageSkip
     // retourne on objet files avec tous les fichiers après la limite spécifié en argument
     // permet par exemple d'effacer tous les fichiers après 100
-    public static function storageSkip(int $limit,$sort=true,string $format='dateModify',?array $option=null):Main\Files
+    final public static function storageSkip(int $limit,$sort=true,string $format='dateModify',?array $option=null):Main\Files
     {
         $return = Main\Files::newOverload();
         $dirname = static::storageDirname();
@@ -136,7 +136,7 @@ trait _storage
 
     // storageTrim
     // trim le nombre d'entré par une valeur paramétré dans static config
-    public static function storageTrim(int $trim):?int
+    final public static function storageTrim(int $trim):?int
     {
         $unlinks = static::storageSkip($trim,false);
         $return = $unlinks->unlink();
@@ -147,8 +147,7 @@ trait _storage
 
     // storage
     // crée une nouvelle entrée du storage maintenant
-    // méthode protégé
-    public static function storage(...$values):?self
+    final public static function storage(...$values):?self
     {
         $return = null;
 

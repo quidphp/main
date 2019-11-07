@@ -16,7 +16,7 @@ use Quid\Main;
 class Insensitive extends Base\Test
 {
     // trigger
-    public static function trigger(array $data):bool
+    final public static function trigger(array $data):bool
     {
         // construct
         $ins = new Main\Insensitive(['test'=>'James','ok'=>2]);

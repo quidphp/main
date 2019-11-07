@@ -28,7 +28,7 @@ class Extenders extends Map
 
     // construct
     // construit l'objet extenders, doit fournir null ou un array avec clé string
-    public function __construct(?array $value=null)
+    final public function __construct(?array $value=null)
     {
         if(!empty($value))
         $this->sets($value);
@@ -39,7 +39,7 @@ class Extenders extends Map
 
     // is
     // vérifie que la valeur est une instance de extender
-    public function is($value):bool
+    final public function is($value):bool
     {
         return ($value instanceof Extender)? true:false;
     }
@@ -48,7 +48,7 @@ class Extenders extends Map
     // set
     // envoie une exception si key n'est pas string
     // renvoie au set de map
-    public function set($key,$value):parent
+    final public function set($key,$value):parent
     {
         if(!is_string($key))
         static::throw('onlyAcceptsStringKeys');

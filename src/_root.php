@@ -79,7 +79,7 @@ trait _root
 
     // toJson
     // cast l'objet en json
-    public function toJson():?string
+    final public function toJson():?string
     {
         return Base\Json::encode($this);
     }
@@ -119,7 +119,7 @@ trait _root
 
     // splId
     // retourne le id unique de l'objet
-    public function splId():int
+    final public function splId():int
     {
         return Base\Obj::id($this);
     }
@@ -127,7 +127,7 @@ trait _root
 
     // splHash
     // retourne le hash de l'objet
-    public function splHash():string
+    final public function splHash():string
     {
         return Base\Obj::hash($this);
     }
@@ -136,7 +136,7 @@ trait _root
     // help
     // retourne un tableau d'aide sur l'objet de la classe
     // par défaut private est false
-    public function help(bool $private=false,bool $deep=false):array
+    final public function help(bool $private=false,bool $deep=false):array
     {
         $return = [];
         $vars = ($private === true)? get_object_vars($this):null;
