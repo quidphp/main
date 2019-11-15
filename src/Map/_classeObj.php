@@ -71,10 +71,10 @@ trait _classeObj
         return $return;
     }
 
-    
+
     // pairEqual
     // retourne vrai si le résultat de toutes les méthodes est la valeur donnée en deuxième argument
-    final public function pairEqual($equal,string $method,...$args):bool 
+    final public function pairEqual($equal,string $method,...$args):bool
     {
         $return = false;
         $type = static::classeOrObj();
@@ -83,15 +83,15 @@ trait _classeObj
         {
             $result = ($type === 'obj')? $value->$method(...$args):$value::$method(...$args);
             $return = ($result === $equal);
-            
+
             if($return === false)
             break;
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // pairStr
     // retourne une string avec le résultat combiné d'une méthode
     // exception envoyé si résultat d'une méthode non scalaire et non null
