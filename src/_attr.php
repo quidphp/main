@@ -70,7 +70,7 @@ trait _attr
     {
         $return = Base\Arrs::get($key,$this->attrRef());
 
-        if($call === true && static::classIsCallable($return))
+        if($call === true && static::isCallable($return))
         $return = Base\Call::withObj($this,$return,...$args);
 
         return $return;

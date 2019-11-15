@@ -71,7 +71,27 @@ trait _classeObj
         return $return;
     }
 
+    
+    // pairEqual
+    // retourne vrai si le résultat de toutes les méthodes est la valeur donnée en deuxième argument
+    final public function pairEqual($equal,string $method,...$args):bool 
+    {
+        $return = false;
+        $type = static::classeOrObj();
 
+        foreach ($this->arr() as $value)
+        {
+            $result = ($type === 'obj')? $value->$method(...$args):$value::$method(...$args);
+            $return = ($result === $equal);
+            
+            if($return === false)
+            break;
+        }
+        
+        return $return;
+    }
+    
+    
     // pairStr
     // retourne une string avec le résultat combiné d'une méthode
     // exception envoyé si résultat d'une méthode non scalaire et non null
@@ -105,7 +125,7 @@ trait _classeObj
         $return = true;
         $type = static::classeOrObj();
 
-        if(static::classIsCallable($condition))
+        if(static::isCallable($condition))
         $return = (Base\Call::withObj($this,$condition,$value,$key,...$args) === true)? true:false;
 
         elseif(is_array($condition))

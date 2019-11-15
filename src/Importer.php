@@ -317,7 +317,7 @@ class Importer extends Map
                     $required = $maps[$k][2] ?? false;
                     $callable = $maps[$k][3] ?? null;
 
-                    if(static::classIsCallable($callable))
+                    if(static::isCallable($callable))
                     $v = $callable($v,$value,$line);
 
                     if($v === false || ($required === true && Base\Validate::isReallyEmpty($v)))
@@ -357,7 +357,7 @@ class Importer extends Map
         }
 
         $lineCallback = $this->getAttr('lineCallback');
-        if(static::classIsCallable($lineCallback))
+        if(static::isCallable($lineCallback))
         $return = $lineCallback($return);
 
         if($return['valid'] === true)
@@ -388,7 +388,7 @@ class Importer extends Map
         if($empty === true)
         $target->targetTruncate($attr['truncate'] ?? null);
 
-        if(static::classIsCallable($onBefore))
+        if(static::isCallable($onBefore))
         $onBefore($this);
 
         while ($line = $source->sourceOne($offset,$length,$i))

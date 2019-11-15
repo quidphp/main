@@ -123,7 +123,7 @@ class Lang extends Map
         if(!Base\Lang::hasCallable())
         static::throw('baseLangDoesNotHaveAPrimary');
 
-        elseif(!Base\Lang::isCallable($this->getCallable()))
+        elseif(!Base\Lang::getCallable() === $this->getCallable())
         static::throw('baseLangHasAnotherPrimary');
 
         return;
@@ -211,7 +211,7 @@ class Lang extends Map
         $content = [];
         $onLoad = $this->getAttr('onLoad');
 
-        if(static::classIsCallable($onLoad))
+        if(static::isCallable($onLoad))
         {
             $onLoad = $onLoad($value);
 
@@ -480,7 +480,7 @@ class Lang extends Map
     // envoie une exception si l'objet n'est pas la primaire ou si BaseLang a une autre primaire
     final public function checkInst():self
     {
-        if(!($this->inInst() && Base\Lang::isCallable($this->getCallable())))
+        if(!($this->inInst() && Base\Lang::getCallable() === $this->getCallable()))
         static::throw('objectIsNotPrimary',(Base\Lang::hasCallable())? 'baseLangHasAnotherPrimary':'baseLangHasNoPrimary');
 
         return $this;

@@ -132,7 +132,15 @@ trait _root
         return Base\Obj::hash($this);
     }
 
-
+    
+    // callThis
+    // appele une closure avec un bind entre this et l'objet courant
+    final public function callThis(\Closure $closure,...$args) 
+    {
+        return Base\Call::bindTo($this,$closure,...$args);
+    }
+    
+    
     // help
     // retourne un tableau d'aide sur l'objet de la classe
     // par défaut private est false

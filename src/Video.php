@@ -66,7 +66,7 @@ class Video extends Map
         if(is_string($realKey))
         $return = $this->get($realKey);
 
-        elseif(static::classIsCallable($realKey))
+        elseif(static::isCallable($realKey))
         $return = $realKey($this);
 
         return $return;

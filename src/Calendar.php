@@ -17,10 +17,9 @@ class Calendar extends Widget
     // config
     public static $config = [
         'formatCurrent'=>'calendar', // format de date pour le mois
-        'attr'=>[ // attr pour le output
-            'head'=>'head',
-            'current'=>'current',
-            'body'=>'body']
+        'head'=>'head',
+        'current'=>'current',
+        'body'=>'body'
     ];
 
 
@@ -207,7 +206,7 @@ class Calendar extends Widget
     // génère la partie supérieure du calendrier
     final protected function head():string
     {
-        $return = Base\Html::divOp($this->getAttr('attr/head'));
+        $return = Base\Html::divOp($this->getAttr('head'));
         $timestamp = $this->timestamp();
 
         $callback = $this->callback('prev');
@@ -220,7 +219,7 @@ class Calendar extends Widget
         $formatCurrent = $this->getAttr('formatCurrent');
         if(!empty($formatCurrent))
         {
-            $return .= Base\Html::divOp($this->getAttr('attr/current'));
+            $return .= Base\Html::divOp($this->getAttr('current'));
             $return .= Base\Date::format($formatCurrent,$timestamp);
             $return .= Base\Html::divCl();
         }
@@ -242,7 +241,7 @@ class Calendar extends Widget
     // génère la table du calendrier
     final protected function body():string
     {
-        $return = Base\Html::divOp($this->getAttr('attr/body'));
+        $return = Base\Html::divOp($this->getAttr('body'));
         $return .= Base\Html::tableOp();
         $return .= $this->tableHead();
         $return .= $this->tableBody();

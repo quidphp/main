@@ -2136,7 +2136,7 @@ class Request extends Map
                 if(is_string($value))
                 $return[$key] = $value;
 
-                elseif(static::classIsCallable($value))
+                elseif(static::isCallable($value))
                 $return[$key] = $value();
             }
         }

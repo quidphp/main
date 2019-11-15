@@ -191,7 +191,7 @@ class Concatenator extends Map
         if(is_string($end))
         $return .= $end;
 
-        if(static::classIsCallable($callable))
+        if(static::isCallable($callable))
         $return = $callable($return);
 
         return $return;
@@ -220,8 +220,8 @@ class Concatenator extends Map
     {
         $return = '';
         $separator = $attr['separator'];
-        $start = (static::classIsCallable($attr['start']))? $attr['start']($attr):$attr['start'];
-        $end = (static::classIsCallable($attr['end']))? $attr['end']($attr):$attr['end'];
+        $start = (static::isCallable($attr['start']))? $attr['start']($attr):$attr['start'];
+        $end = (static::isCallable($attr['end']))? $attr['end']($attr):$attr['end'];
 
         if(is_string($start))
         $return .= $start;
@@ -271,7 +271,7 @@ class Concatenator extends Map
         if(is_string($return) && is_int($lineEnd))
         $return = Base\Str::lineSplice(-$lineEnd,$lineEnd,null,$return);
 
-        if(is_string($return) && static::classIsCallable($content))
+        if(is_string($return) && static::isCallable($content))
         $return = $content($return);
 
         return $return;

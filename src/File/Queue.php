@@ -46,7 +46,7 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
         $return = null;
         $callable = $this->getAttr('unqueue');
 
-        if(static::classIsCallable($callable))
+        if(static::isCallable($callable))
         $return = Base\Call::withObj($this,$callable);
 
         else
