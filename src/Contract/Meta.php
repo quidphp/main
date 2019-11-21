@@ -32,14 +32,14 @@ interface Meta
     // retourne les données pour le meta image
     public function getMetaImage($value=null);
 
-
-    // getBodyClass
-    // retourne les données les classes de body
-    public function getBodyClass($value=null);
-
-
-    // getBodyStyle
-    // retourne les données pour les styles de body
-    public function getBodyStyle($value=null);
+    
+    // getHtmlAttr
+    // retourne les données des attributs de html
+    public function getHtmlAttr($value=null);
+    
+    
+    // getBodyAttr
+    // retourne les données des attributs de body
+    public function getBodyAttr($value=null);
 }
 ?>

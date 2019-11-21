@@ -38,7 +38,7 @@ trait _storage
 
         if(!empty($return))
         $return = Base\Finder::normalize($return);
-
+        
         return $return;
     }
 

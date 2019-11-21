@@ -20,7 +20,6 @@ class Error extends Dump implements Main\Contract\Log, Main\Contract\FileStorage
 
     // config
     public static $config = [
-        'dirname'=>'[storage]/error',
         'deleteTrim'=>50
     ];
 
