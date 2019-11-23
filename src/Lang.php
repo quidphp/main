@@ -62,7 +62,12 @@ class Lang extends Map
             'errorLabel'=>'error/label',
             'com'=>'com',
             'pos'=>'com/pos',
-            'neg'=>'com/neg']
+            'neg'=>'com/neg',
+            'bool'=>'relation/bool',
+            'relation'=>'relation',
+            'langLabel'=>'relation/lang',
+            'roleLabel'=>'role/label',
+            'roleDescription'=>'role/description']
     ];
 
 
@@ -1068,6 +1073,14 @@ class Lang extends Map
         return $this->take($this->getPath('errorLabel',$key),$lang);
     }
 
+    
+    // existsCom
+    // retourne vrai si un élément de com existe pour le type et la valeur spécifié
+    final public function existsCom(string $type,$path,?string $lang=null):bool
+    {
+        return $this->existsText($this->getPath('com',[$type,$path]),$lang);
+    }
+
 
     // com
     // retourne un texte de communication, le type doit être spécifié
@@ -1096,6 +1109,79 @@ class Lang extends Map
     final public function neg($path,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->def($this->getPath('neg',$path),$replace,$lang,$option);
+    }
+
+    
+    // existsRelation
+    // retourne vrai si un élément de relation existe et est texte
+    final public function existsRelation($value=null,?string $lang=null):bool
+    {
+        $return = $this->existsText($this->getPath('relation',$value),$lang);
+
+        if($return === false)
+        $return = $this->existsText($value,$lang);
+
+        return $return;
+    }
+
+
+    // relation
+    // retourne un texte ou un tableau de texte de relation
+    // utilise take, donc pas d'option
+    // si retour est null, fait un take sans le path relation
+    // envoie une exception si le retour est toujours null
+    // le tableau des relations est maintenant sort par valeur de clé
+    // possible de sort le résultat, par défaut true
+    final public function relation($value=null,?string $lang=null,bool $sort=false)
+    {
+        $return = $this->take($this->getPath('relation',$value),$lang);
+
+        if($return === null)
+        {
+            $return = $this->take($value,$lang);
+
+            if($return === null)
+            static::throw('notFound',$value);
+        }
+
+        if($sort === true && is_array($return) && !empty($return))
+        ksort($return);
+
+        return $return;
+    }
+
+    
+    // bool
+    // retourne le texte pour un booléean, true ou false, 0 ou 1
+    final public function bool($key,$lang=null,?array $option=null):?string
+    {
+        return $this->text($this->getPath('bool',(is_scalar($key))? (int) $key:$key),null,$lang,$option);
+    }
+    
+    
+    // langLabel
+    // retourne le label d'une langue
+    final public function langLabel(string $value,?string $lang=null,?array $option=null):?string
+    {
+        return $this->text($this->getPath('langLabel',$value),null,$lang,$option);
+    }
+
+
+    // roleLabel
+    // retourne le label d'un role
+    // une erreur sera envoyé si le role n'existe pas
+    final public function roleLabel(int $role,?string $lang=null,?array $option=null):?string
+    {
+        return $this->text($this->getPath('roleLabel',$role),null,$lang,$option);
+    }
+
+
+    // roleDescription
+    // retourne la description d'un role
+    // par défaut, la méthode error n'est pas lancé et retournera null si aucune description
+    final public function roleDescription(int $role,?array $replace=null,?string $lang=null,?array $option=null):?string
+    {
+        return $this->safe($this->getPath('roleDescription',$role),$replace,$lang,$option);
     }
 
 

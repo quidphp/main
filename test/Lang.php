@@ -313,6 +313,9 @@ class Lang extends Base\Test
         assert(count($lang->errorLabel()) === 13);
         assert($lang->errorLabel(1) === 'Erreur');
         assert($lang->errorLabel(1,'en') === 'Error');
+        
+        // existsCom
+        assert($lang->existsCom('pos','insert/*/success'));
 
         // com
         assert($lang->com('neg','login/cantFindUser') === "L'utilisateur n'existe pas");
@@ -326,6 +329,30 @@ class Lang extends Base\Test
         // neg
         assert($lang->neg('login/userCantLogin') === "L'utilisateur ne peut pas se connecter");
         assert($lang->neg('login/cantFindUserz') === '[com/neg/login/cantFindUserz]');
+        
+        // existsRelation
+        assert($lang->existsRelation('bool/1'));
+        assert(!$lang->existsRelation('bool/appaa'));
+
+        // relation
+        assert(Base\Arrs::is($lang->relation()));
+        assert($lang->relation('bool/1','en') === 'Yes');
+        
+        // bool
+        assert($lang->bool(true) === 'Oui');
+        assert($lang->bool(false,'en') === 'No');
+        assert($lang->bool(0,'en') === 'No');
+        assert($lang->bool('0','en') === 'No');
+
+        // langLabel
+        assert($lang->langLabel('fr') === 'Français');
+
+        // roleLabel
+        assert($lang->roleLabel(80) === 'Administrateur');
+        assert($lang->roleLabel(80,'en') === 'Admin');
+
+        // roleDescription
+        assert($lang->roleDescription(3) === null);
 
         // getPath
         assert($lang->getPath('numberFormat') === 'number/format');

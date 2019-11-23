@@ -697,10 +697,10 @@ class Error extends Root
         $html = $this->html();
 
         if(empty($buffer))
-        $html = Base\Html::docTitleBody($this->title(),$html);
+        $html = Base\Html::docTitleBody($this->title(),$html,array('data-error'=>'fatal'));
 
         Base\Buffer::flushEcho($html);
-
+        
         return;
     }
 
