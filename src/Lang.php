@@ -1073,7 +1073,7 @@ class Lang extends Map
         return $this->take($this->getPath('errorLabel',$key),$lang);
     }
 
-    
+
     // existsCom
     // retourne vrai si un élément de com existe pour le type et la valeur spécifié
     final public function existsCom(string $type,$path,?string $lang=null):bool
@@ -1111,7 +1111,7 @@ class Lang extends Map
         return $this->def($this->getPath('neg',$path),$replace,$lang,$option);
     }
 
-    
+
     // existsRelation
     // retourne vrai si un élément de relation existe et est texte
     final public function existsRelation($value=null,?string $lang=null):bool
@@ -1150,15 +1150,15 @@ class Lang extends Map
         return $return;
     }
 
-    
+
     // bool
     // retourne le texte pour un booléean, true ou false, 0 ou 1
     final public function bool($key,$lang=null,?array $option=null):?string
     {
         return $this->text($this->getPath('bool',(is_scalar($key))? (int) $key:$key),null,$lang,$option);
     }
-    
-    
+
+
     // langLabel
     // retourne le label d'une langue
     final public function langLabel(string $value,?string $lang=null,?array $option=null):?string

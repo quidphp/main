@@ -313,7 +313,7 @@ class Lang extends Base\Test
         assert(count($lang->errorLabel()) === 13);
         assert($lang->errorLabel(1) === 'Erreur');
         assert($lang->errorLabel(1,'en') === 'Error');
-        
+
         // existsCom
         assert($lang->existsCom('pos','insert/*/success'));
 
@@ -329,7 +329,7 @@ class Lang extends Base\Test
         // neg
         assert($lang->neg('login/userCantLogin') === "L'utilisateur ne peut pas se connecter");
         assert($lang->neg('login/cantFindUserz') === '[com/neg/login/cantFindUserz]');
-        
+
         // existsRelation
         assert($lang->existsRelation('bool/1'));
         assert(!$lang->existsRelation('bool/appaa'));
@@ -337,7 +337,7 @@ class Lang extends Base\Test
         // relation
         assert(Base\Arrs::is($lang->relation()));
         assert($lang->relation('bool/1','en') === 'Yes');
-        
+
         // bool
         assert($lang->bool(true) === 'Oui');
         assert($lang->bool(false,'en') === 'No');
