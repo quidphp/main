@@ -36,6 +36,7 @@ class Error extends Root
         'log'=>null, // classes pour log, peut être string ou array, s'il y a en plusieurs utilise seulement le premier qui fonctionne
         'kill'=>true, // fin de php
         'default'=>22, // code par défaut si vide
+        'doc'=>array('html'=>"data-error='fatal'",'head'=>null), // attribut pour les balises lors de la création de la page html, fournir des string pas de un array
         'throwMethod'=>'throwCommon', // nom de la méthode throw utilisé à travers quid
         'type'=>[ // description des types
             1=>['key'=>'error','name'=>'Error'],
@@ -697,7 +698,10 @@ class Error extends Root
         $html = $this->html();
 
         if(empty($buffer))
-        $html = Base\Html::docTitleBody($this->title(),$html,['data-error'=>'fatal']);
+        {
+            $doc = $this->getAttr('doc');
+            $html = Base\Html::docSimple($this->title(),$html,$doc);
+        }
 
         Base\Buffer::flushEcho($html);
 
@@ -1013,7 +1017,17 @@ class Error extends Root
         return (Base\Server::isCli())? 3:20;
     }
 
-
+    
+    // setDocHead
+    // permet d'ajouter du contenu dans le head html pour les erreurs fatales, par exemple un fichier css
+    final public static function setDocHead(string $value):void 
+    {
+        static::$config['doc']['head'] = $value;
+        
+        return;
+    }
+    
+    
     // init
     // initialise la prise en charge des erreurs, exception et assertion
     public static function init():void

@@ -170,7 +170,7 @@ class Error extends Base\Test
         assert(count($error->getOutputArray()) === 3);
 
         // attr
-        assert(count($error->attr()) === 18);
+        assert(count($error->attr()) === 19);
 
         // handler
 
@@ -214,7 +214,9 @@ class Error extends Base\Test
 
         // getTraceLength
         assert(is_int(Main\Error::getTraceLength()));
-
+        
+        // setDocHead
+        
         // init
 
         return true;

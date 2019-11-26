@@ -480,8 +480,6 @@ class Com extends Map
         {
             if(is_array($value) && array_key_exists(4,$value))
             $keep = Base\Arr::append($keep,$value[4]);
-
-            unset($data[$key]);
         }
 
         if(!empty($keep))
