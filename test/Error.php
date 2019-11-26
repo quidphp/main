@@ -214,9 +214,9 @@ class Error extends Base\Test
 
         // getTraceLength
         assert(is_int(Main\Error::getTraceLength()));
-        
+
         // setDocHead
-        
+
         // init
 
         return true;
