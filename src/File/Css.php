@@ -17,8 +17,8 @@ class Css extends Text
 {
     // trait
     use _concatenate;
-    
-    
+
+
     // config
     public static $config = [
         'group'=>'css',
