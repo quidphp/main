@@ -15,9 +15,14 @@ namespace Quid\Main\File;
 // class for a css or scss file
 class Css extends Text
 {
+    // trait
+    use _concatenate;
+    
+    
     // config
     public static $config = [
-        'group'=>'css'
+        'group'=>'css',
+        'extension'=>['css','scss']
     ];
 }
 

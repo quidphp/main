@@ -15,9 +15,14 @@ namespace Quid\Main\File;
 // class for a js file
 class Js extends Text
 {
+    // trait
+    use _concatenate;
+    
+    
     // config
     public static $config = [
-        'group'=>'js'
+        'group'=>'js',
+        'extension'=>['js','jsx']
     ];
 }
 

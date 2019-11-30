@@ -15,9 +15,14 @@ namespace Quid\Main\File;
 // class for a php file
 class Php extends Text
 {
+    // trait
+    use _concatenate;
+    
+    
     // config
     public static $config = [
-        'group'=>'php'
+        'group'=>'php',
+        'extension'=>'php'
     ];
 }
 
