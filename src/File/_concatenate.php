@@ -73,8 +73,8 @@ trait _concatenate
     {
         return (array) static::$config['concatenateExtension'];
     }
-    
-    
+
+
     // concatenateMany
     // génère plusieurs concatenations de fichiers
     final public static function concatenateMany(array $value,?array $option=null):Main\Files
@@ -109,14 +109,14 @@ trait _concatenate
         $to = $array['to'] ?? null;
         $from = $array['from'] ?? null;
         $overwrite = $array['overwrite'] ?? null;
-        
+
         if(is_string($to) && !empty($to) && !empty($from))
         {
             if($overwrite === true || Base\Dir::isOlderThanFrom($to,$from,true,['visible'=>true,'extension'=>$extension]))
             {
                 $keys = ['to','from','overwrite'];
                 $option = Base\Arr::keysStrip($keys,$array);
-                
+
                 $return = static::newCreate($to);
                 $return->concatenateFrom($from,$option);
             }
