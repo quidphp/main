@@ -224,7 +224,7 @@ class Timeout extends Map
 
         if(array_key_exists($key,$data))
         {
-            $timestamp = (is_int($timestamp))? $timestamp:Base\Date::timestamp();
+            $timestamp = (is_int($timestamp))? $timestamp:Base\Datetime::timestamp();
             $data[$key]['timestamp'] = $timestamp;
         }
 
@@ -259,7 +259,7 @@ class Timeout extends Map
         {
             if(is_int($value['timeout']) && is_int($value['timestamp']))
             {
-                $current = Base\Date::timestamp();
+                $current = Base\Datetime::timestamp();
                 $expire = ($value['timestamp'] + $value['timeout']) - $current;
 
                 if($expire > 0)

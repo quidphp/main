@@ -61,7 +61,7 @@ trait _attr
     // retourne vrai si l'attribut n'est pas vide
     final public function isAttrNotEmpty($key):bool
     {
-        return (Base\Validate::isReallyEmpty($this->getAttr($key)))? false:true;
+        return (Base\Vari::isReallyEmpty($this->getAttr($key)))? false:true;
     }
 
 

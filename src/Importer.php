@@ -322,7 +322,7 @@ class Importer extends Map
                     if(static::isCallable($callable))
                     $v = $callable($v,$value,$line);
 
-                    if($v === false || ($required === true && Base\Validate::isReallyEmpty($v)))
+                    if($v === false || ($required === true && Base\Vari::isReallyEmpty($v)))
                     {
                         $return['error'] = [$col=>$original];
                         break;

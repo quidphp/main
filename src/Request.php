@@ -55,7 +55,7 @@ class Request extends Map
             'method'=>'get', // method par défaut
             'lang'=>[Base\Lang::class,'current'], // lang par défaut
             'ip'=>[Base\Server::class,'addr'], // ip du serveur par défaut
-            'timestamp'=>[Base\Date::class,'getTimestamp']] // timestamp de date par défaut
+            'timestamp'=>[Base\Datetime::class,'getTimestamp']] // timestamp de date par défaut
     ];
 
 
@@ -2110,7 +2110,7 @@ class Request extends Map
         $return = [];
         $return['header'] = $exec['header'];
         $return['resource'] = $exec['resource'];
-        $return['timestamp'] = Base\Date::timestamp();
+        $return['timestamp'] = Base\Datetime::timestamp();
 
         return $return;
     }

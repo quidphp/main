@@ -48,7 +48,7 @@ trait _queue
 
         if(!empty($queues))
         {
-            $maxTime = (is_int($timeLimit))? (Base\Date::timestamp() + $timeLimit):null;
+            $maxTime = (is_int($timeLimit))? (Base\Datetime::timestamp() + $timeLimit):null;
 
             foreach ($queues as $key => $obj)
             {
@@ -61,7 +61,7 @@ trait _queue
                     if(is_numeric($sleep))
                     Base\Response::sleep($sleep);
 
-                    if(is_int($maxTime) && Base\Date::timestamp() > $maxTime)
+                    if(is_int($maxTime) && Base\Datetime::timestamp() > $maxTime)
                     break;
                 }
 

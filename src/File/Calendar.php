@@ -56,8 +56,8 @@ class Calendar extends Text
                 $replace = [];
 
                 $replace['%timezone%'] = $timezone;
-                $replace['%dateStart%'] = Base\Date::format('ics',$array['dateStart']);
-                $replace['%dateEnd%'] = Base\Date::format('ics',$array['dateEnd']);
+                $replace['%dateStart%'] = Base\Datetime::format('ics',$array['dateStart']);
+                $replace['%dateEnd%'] = Base\Datetime::format('ics',$array['dateEnd']);
                 $replace['%name%'] = $name;
                 $replace['%location%'] = $location;
                 $replace['%description%'] = $description;

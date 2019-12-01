@@ -22,7 +22,7 @@ class Js extends Text
     // config
     public static $config = [
         'group'=>'js',
-        'extension'=>['js','jsx']
+        'concatenateExtension'=>['js','jsx']
     ];
 }
 

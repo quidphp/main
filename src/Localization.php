@@ -88,7 +88,7 @@ class Localization extends Map
     // retourne la valeur lat sous forme de float
     final public function lat():float
     {
-        return Base\Number::cast($this->get('lat'));
+        return Base\Num::cast($this->get('lat'));
     }
 
 
@@ -96,7 +96,7 @@ class Localization extends Map
     // retourne la valeur lng sous forme de float
     final public function lng():float
     {
-        return Base\Number::cast($this->get('lng'));
+        return Base\Num::cast($this->get('lng'));
     }
 
 

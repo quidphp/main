@@ -62,7 +62,7 @@ class Calendar extends Base\Test
         // isSelected
 
         // setSelected
-        assert($cal->setSelected(Base\Date::mk(2018,12,4)) === $cal);
+        assert($cal->setSelected(Base\Datetime::mk(2018,12,4)) === $cal);
 
         // selected
         assert($cal->selected() === [1543899600]);

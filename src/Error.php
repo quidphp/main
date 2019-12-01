@@ -162,7 +162,7 @@ class Error extends Root
     {
         $return = '';
         $arr = [];
-        $arr[] = Base\Date::format('Y_m_d_H_i_s');
+        $arr[] = Base\Datetime::format('Y_m_d_H_i_s');
         $arr[] = Base\Path::filename($this->getFile());
         $arr[] = $this->getLine();
 

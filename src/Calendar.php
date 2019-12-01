@@ -55,10 +55,10 @@ class Calendar extends Widget
     // exception envoyé si ce n'est pas un int
     final public function setTimestamp($value=null):self
     {
-        $value = Base\Date::time($value);
+        $value = Base\Datetime::time($value);
 
         if(is_int($value))
-        $this->timestamp = Base\Date::floorMonth($value);
+        $this->timestamp = Base\Datetime::floorMonth($value);
 
         if(!is_int($this->timestamp))
         static::throw('invalidTimestamp');
@@ -79,7 +79,7 @@ class Calendar extends Widget
     // retourne le timestamp du mois précédent
     final public function prevTimestamp():int
     {
-        return Base\Date::addMonth(-1,$this->timestamp());
+        return Base\Datetime::addMonth(-1,$this->timestamp());
     }
 
 
@@ -87,7 +87,7 @@ class Calendar extends Widget
     // retourne le timestamp du mois suivant
     final public function nextTimestamp():int
     {
-        return Base\Date::addMonth(1,$this->timestamp());
+        return Base\Datetime::addMonth(1,$this->timestamp());
     }
 
 
@@ -98,13 +98,13 @@ class Calendar extends Widget
     final public function parseTimestamp(int $value):array
     {
         $return = [];
-        $value = Base\Date::floorDay($value);
+        $value = Base\Datetime::floorDay($value);
         $format = $this->format();
 
-        if(Base\Date::isToday($value))
+        if(Base\Datetime::isToday($value))
         $return[] = 'today';
 
-        if(Base\Date::isMonth($value,null,$this->timestamp()))
+        if(Base\Datetime::isMonth($value,null,$this->timestamp()))
         $return[] = 'in';
 
         else
@@ -116,7 +116,7 @@ class Calendar extends Widget
         $return['data-timestamp'] = $value;
 
         if(is_string($format))
-        $return['data-format'] = Base\Date::format($format,$value);
+        $return['data-format'] = Base\Datetime::format($format,$value);
 
         return $return;
     }
@@ -151,7 +151,7 @@ class Calendar extends Widget
         {
             foreach ($selected as $v)
             {
-                if(is_numeric($v) && Base\Date::isDay($v,null,$value))
+                if(is_numeric($v) && Base\Datetime::isDay($v,null,$value))
                 {
                     $return = true;
                     break;
@@ -189,7 +189,7 @@ class Calendar extends Widget
     // retourne la structure du calendrier
     final public function structure():array
     {
-        return Base\Date::calendar($this->timestamp(),true,true);
+        return Base\Datetime::calendar($this->timestamp(),true,true);
     }
 
 
@@ -222,7 +222,7 @@ class Calendar extends Widget
         if(!empty($formatCurrent))
         {
             $return .= Base\Html::divOp($this->getAttr('current'));
-            $return .= Base\Date::format($formatCurrent,$timestamp);
+            $return .= Base\Datetime::format($formatCurrent,$timestamp);
             $return .= Base\Html::divCl();
         }
 
@@ -260,7 +260,7 @@ class Calendar extends Widget
     {
         $return = '';
         $ths = [];
-        $daysShort = Base\Date::getDaysShort();
+        $daysShort = Base\Datetime::getDaysShort();
 
         if(!empty($daysShort) && count($daysShort) === 7)
         {
@@ -296,7 +296,7 @@ class Calendar extends Widget
                 {
                     if(is_int($timestamp))
                     {
-                        $day = Base\Date::day($timestamp);
+                        $day = Base\Datetime::day($timestamp);
 
                         if(is_int($day))
                         {

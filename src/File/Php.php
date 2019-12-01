@@ -22,7 +22,7 @@ class Php extends Text
     // config
     public static $config = [
         'group'=>'php',
-        'extension'=>'php'
+        'concatenateExtension'=>'php'
     ];
 }
 

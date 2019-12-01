@@ -22,7 +22,7 @@ class Css extends Text
     // config
     public static $config = [
         'group'=>'css',
-        'extension'=>['css','scss']
+        'concatenateExtension'=>['css','scss']
     ];
 }
 

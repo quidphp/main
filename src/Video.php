@@ -101,14 +101,14 @@ class Video extends Map
 
         if(is_string($date))
         {
-            $date = Base\Date::time($date,'sql');
+            $date = Base\Datetime::time($date,'sql');
 
             if(is_int($date))
             {
                 $return = $date;
 
                 if(is_scalar($format))
-                $return = Base\Date::format($format,$return);
+                $return = Base\Datetime::format($format,$return);
             }
         }
 

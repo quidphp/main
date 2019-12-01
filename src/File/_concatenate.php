@@ -19,9 +19,9 @@ trait _concatenate
 {
     // configConcatenate
     public static $configConcatenate = [
-        'service'=>null,
         'concatenator'=>null,
-        'extension'=>null
+        'concatenateService'=>null,
+        'concatenateExtension'=>null
     ];
 
 
@@ -30,7 +30,7 @@ trait _concatenate
     // utilise la classe main/concatenator
     final public function concatenateFrom($values,?array $option=null):self
     {
-        $option = Base\Arr::plus(['extension'=>$this->getAttr('extension'),'separator'=>PHP_EOL.PHP_EOL,'concatenator'=>null],$option);
+        $option = Base\Arr::plus(['extension'=>$this->getAttr('concatenateExtension'),'separator'=>PHP_EOL.PHP_EOL,'concatenator'=>null],$option);
 
         if(!is_array($values))
         $values = (array) $values;
@@ -59,11 +59,11 @@ trait _concatenate
     }
 
 
-    // getServiceClass
+    // concatenateService
     // retourne la classe du service
-    final protected function getServiceClass():string
+    final protected function concatenateService():string
     {
-        return $this->getAttr('service')::getOverloadClass();
+        return $this->getAttr('concatenateService')::getOverloadClass();
     }
 
 
@@ -71,7 +71,58 @@ trait _concatenate
     // retourne les extensions pour la concatenation
     final public static function concatenateExtension():array
     {
-        return (array) static::$config['extension'];
+        return (array) static::$config['concatenateExtension'];
+    }
+    
+    
+    // concatenateMany
+    // génère plusieurs concatenations de fichiers
+    final public static function concatenateMany(array $value,?array $option=null):Main\Files
+    {
+        $return = Main\Files::newOverload();
+
+        foreach ($value as $key => $array)
+        {
+            if(is_string($key) && is_array($array) && !empty($array))
+            {
+                $array = Base\Arrs::replace($option,$array);
+                $file = static::concatenateOne($key,$array);
+
+                if(!empty($file))
+                $return->add($file);
+            }
+        }
+
+        return $return;
+    }
+
+
+    // concatenateOne
+    // passe à travers une demande de concatenation
+    // si overwrite est true, écrase le fichier dans tous les cas
+    // si overwrite est null, écrase le fichier seulement si la date de modifcation des sources est plus récente
+    final protected static function concatenateOne(string $key,array $array):?Main\File
+    {
+        $return = null;
+        $extension = static::concatenateExtension();
+
+        $to = $array['to'] ?? null;
+        $from = $array['from'] ?? null;
+        $overwrite = $array['overwrite'] ?? null;
+        
+        if(is_string($to) && !empty($to) && !empty($from))
+        {
+            if($overwrite === true || Base\Dir::isOlderThanFrom($to,$from,true,['visible'=>true,'extension'=>$extension]))
+            {
+                $keys = ['to','from','overwrite'];
+                $option = Base\Arr::keysStrip($keys,$array);
+                
+                $return = static::newCreate($to);
+                $return->concatenateFrom($from,$option);
+            }
+        }
+
+        return $return;
     }
 }
 ?>
