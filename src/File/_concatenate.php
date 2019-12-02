@@ -77,16 +77,16 @@ trait _concatenate
 
     // concatenateMany
     // génère plusieurs concatenations de fichiers
-    final public static function concatenateMany(array $value,?array $option=null):Main\Files
+    final public static function concatenateMany(array $value,?array $overOption=null,?array $option=null):Main\Files
     {
         $return = Main\Files::newOverload();
 
         foreach ($value as $key => $array)
         {
-            if(is_string($key) && is_array($array) && !empty($array))
+            if(is_array($array) && !empty($array))
             {
-                $array = Base\Arrs::replace($option,$array);
-                $file = static::concatenateOne($key,$array);
+                $array = Base\Arrs::replace($option,$array,$overOption);
+                $file = static::concatenateOne($array);
 
                 if(!empty($file))
                 $return->add($file);
@@ -96,30 +96,45 @@ trait _concatenate
         return $return;
     }
 
-
+    
+    // shouldConcatenateOne
+    // retourne vrai s'il faut lancer la concatenation pour l'array
+    final public static function shouldConcatenateOne(array $array):bool
+    {
+        $return = false;
+        $to = $array['to'] ?? null;
+        $from = $array['from'] ?? null;
+        $overwrite = $array['overwrite'] ?? null;
+        
+        if(is_string($to) && !empty($to) && !empty($from))
+        {
+            $extension = static::concatenateExtension();
+            
+            if($overwrite === true || Base\Dir::isOlderThanFrom($to,$from,true,['visible'=>true,'extension'=>$extension]))
+            $return = true;
+        }
+        
+        return $return;
+    }
+    
+    
     // concatenateOne
     // passe à travers une demande de concatenation
     // si overwrite est true, écrase le fichier dans tous les cas
     // si overwrite est null, écrase le fichier seulement si la date de modifcation des sources est plus récente
-    final protected static function concatenateOne(string $key,array $array):?Main\File
+    final public static function concatenateOne(array $array):?Main\File
     {
         $return = null;
-        $extension = static::concatenateExtension();
 
-        $to = $array['to'] ?? null;
-        $from = $array['from'] ?? null;
-        $overwrite = $array['overwrite'] ?? null;
-
-        if(is_string($to) && !empty($to) && !empty($from))
+        if(static::shouldConcatenateOne($array))
         {
-            if($overwrite === true || Base\Dir::isOlderThanFrom($to,$from,true,['visible'=>true,'extension'=>$extension]))
-            {
-                $keys = ['to','from','overwrite'];
-                $option = Base\Arr::keysStrip($keys,$array);
+            $to = $array['to'];
+            $from = $array['from'];
+            $keys = ['to','from','overwrite'];
+            $option = Base\Arr::keysStrip($keys,$array);
 
-                $return = static::newCreate($to);
-                $return->concatenateFrom($from,$option);
-            }
+            $return = static::newCreate($to);
+            $return->concatenateFrom($from,$option);
         }
 
         return $return;

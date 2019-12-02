@@ -38,9 +38,9 @@ abstract class ServiceMailer extends Service
 
     // construct
     // construit l'objet mail
-    final public function __construct(string $key,?array $attr=null)
+    final public function __construct(?array $attr=null)
     {
-        parent::__construct($key,$attr);
+        parent::__construct($attr);
         $this->prepare();
 
         return;
@@ -194,7 +194,7 @@ abstract class ServiceMailer extends Service
     final public function messageWithOption(array $value):array
     {
         $return = Base\Arr::replace($this->attr(),$value);
-        $return['key'] = $this->getKey();
+        $return['key'] = $this->getServiceKey(true);
 
         $error = $this->error();
         if(!empty($error))

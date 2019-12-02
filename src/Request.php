@@ -55,7 +55,7 @@ class Request extends Map
             'method'=>'get', // method par défaut
             'lang'=>[Base\Lang::class,'current'], // lang par défaut
             'ip'=>[Base\Server::class,'addr'], // ip du serveur par défaut
-            'timestamp'=>[Base\Datetime::class,'getTimestamp']] // timestamp de date par défaut
+            'timestamp'=>[Base\Datetime::class,'now']] // timestamp de date par défaut
     ];
 
 
@@ -596,10 +596,10 @@ class Request extends Map
 
 
     // isStandard
-    // retourne vrai si la requête est de méthode get et pas ajax
+    // retourne vrai si la requête est de méthode get et pas ajax et pas cli
     final public function isStandard():bool
     {
-        return ($this->isGet() && !$this->isAjax())? true:false;
+        return ($this->isGet() && !$this->isAjax() && !$this->isCli())? true:false;
     }
 
 
@@ -880,7 +880,7 @@ class Request extends Map
     // possibilité de mettre une ou plusieurs valeurs
     final public function isQuery(...$values):bool
     {
-        return Base\Uri::isQuery($values,$this->uri());
+        return Base\Arr::keysExists($values,$this->queryArray());
     }
 
 
@@ -1467,7 +1467,7 @@ class Request extends Map
         return (is_string($this->query))? Base\Uri::parseQuery($this->query):[];
     }
 
-
+    
     // getQuery
     // retourne la valeur d'une clé get query
     final public function getQuery($key)
@@ -1513,6 +1513,7 @@ class Request extends Map
     final public function setArgv(array $values):self
     {
         $query = Base\Cli::parseLongOptions(...$values);
+        
         if(!empty($query))
         $this->setQuery($query);
 
@@ -2110,7 +2111,7 @@ class Request extends Map
         $return = [];
         $return['header'] = $exec['header'];
         $return['resource'] = $exec['resource'];
-        $return['timestamp'] = Base\Datetime::timestamp();
+        $return['timestamp'] = Base\Datetime::now();
 
         return $return;
     }

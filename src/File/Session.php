@@ -155,7 +155,7 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
     {
         $return = 0;
         $dir = static::sessionDir($path,$name);
-        $timestamp = Base\Datetime::timestamp() - $lifetime;
+        $timestamp = Base\Datetime::now() - $lifetime;
         $files = Base\Dir::getFormatSmaller($dir,$timestamp,'dateAccess');
 
         if(!is_array($not))

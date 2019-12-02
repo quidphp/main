@@ -56,7 +56,7 @@ class Session extends Base\Test
         assert($s->getSerializeHandler() === 'php_serialize');
         assert(!empty($s->getSavePath()));
         assert(is_int($s->getLifetime()));
-        assert($s->getExpire() > Base\Datetime::getTimestamp());
+        assert($s->getExpire() > Base\Datetime::now());
         assert(count($s->getGarbageCollect()) === 3);
         assert(count($s->getCookieParams()) === 6);
         assert(count($s->ini()) === 30);

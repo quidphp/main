@@ -21,15 +21,14 @@ abstract class Service extends Root
 
 
     // dynamique
-    protected $key = null; // enregistre la clé de l'objet
+    protected $serviceKey = null; // enregistre la clé de l'objet, utilisé dans l'objet services
 
 
     // construct
     // construit l'objet service
-    public function __construct(string $key,?array $attr=null)
+    public function __construct(?array $attr=null)
     {
         $this->makeAttr($attr);
-        $this->setKey($key);
 
         return;
     }
@@ -44,21 +43,27 @@ abstract class Service extends Root
     }
 
 
-    // setKey
-    // entrepose la clé du service
-    final public function setKey(string $key):void
+    // setServiceKey
+    // entrepose la clé du service pour l'objet services
+    final public function setServiceKey(string $key):void
     {
-        $this->key = $key;
+        $this->serviceKey = $key;
 
         return;
     }
 
 
-    // getKey
-    // retourne la clé du service
-    final public function getKey():string
+    // getServiceKey
+    // retourne la clé du service pour l'objet services
+    // peut retourner null
+    final public function getServiceKey(bool $required=false):?string
     {
-        return $this->key;
+        $return = $this->serviceKey;
+        
+        if($required === true && !is_string($return))
+        static::throw('keyMissing');
+        
+        return $return;
     }
 
 

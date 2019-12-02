@@ -29,7 +29,7 @@ class Services extends Map
 
     // map
     protected static $allow = ['set','unset','remove','sort','clone']; // méthodes permises
-    protected static $sortDefault = 'getKey'; // défini la méthode pour sort par défaut
+    protected static $sortDefault = 'getServiceKey'; // défini la méthode pour sort par défaut
 
 
     // construct
@@ -73,7 +73,8 @@ class Services extends Map
         if(!is_string($class) || !is_subclass_of($class,Service::class,true))
         static::throw('notSubClassOfService',$class);
 
-        $value = new $class($key,...$args);
+        $value = new $class(...$args);
+        $value->setServiceKey($key);
         parent::set($key,$value);
 
         return $this;
