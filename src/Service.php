@@ -59,10 +59,10 @@ abstract class Service extends Root
     final public function getServiceKey(bool $required=false):?string
     {
         $return = $this->serviceKey;
-        
+
         if($required === true && !is_string($return))
         static::throw('keyMissing');
-        
+
         return $return;
     }
 

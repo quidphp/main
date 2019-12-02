@@ -1467,7 +1467,7 @@ class Request extends Map
         return (is_string($this->query))? Base\Uri::parseQuery($this->query):[];
     }
 
-    
+
     // getQuery
     // retourne la valeur d'une clé get query
     final public function getQuery($key)
@@ -1513,7 +1513,7 @@ class Request extends Map
     final public function setArgv(array $values):self
     {
         $query = Base\Cli::parseLongOptions(...$values);
-        
+
         if(!empty($query))
         $this->setQuery($query);
 

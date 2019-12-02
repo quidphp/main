@@ -96,7 +96,7 @@ trait _concatenate
         return $return;
     }
 
-    
+
     // shouldConcatenateOne
     // retourne vrai s'il faut lancer la concatenation pour l'array
     final public static function shouldConcatenateOne(array $array):bool
@@ -105,19 +105,19 @@ trait _concatenate
         $to = $array['to'] ?? null;
         $from = $array['from'] ?? null;
         $overwrite = $array['overwrite'] ?? null;
-        
+
         if(is_string($to) && !empty($to) && !empty($from))
         {
             $extension = static::concatenateExtension();
-            
+
             if($overwrite === true || Base\Dir::isOlderThanFrom($to,$from,true,['visible'=>true,'extension'=>$extension]))
             $return = true;
         }
-        
+
         return $return;
     }
-    
-    
+
+
     // concatenateOne
     // passe à travers une demande de concatenation
     // si overwrite est true, écrase le fichier dans tous les cas
