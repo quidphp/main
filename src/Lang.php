@@ -724,9 +724,12 @@ class Lang extends Map
     {
         $return = null;
         $key = Base\Arrs::keyPrepare($key);
-
+        $error = true;
+        
         if(!empty($key) && is_string($key))
         {
+            $error = false;
+            
             if(!empty($option['alt']))
             {
                 $text = $this->text($option['alt'],$replace,$lang,Base\Arr::plus($option,['html'=>null,'pattern'=>null,'notFound'=>false]));
@@ -753,16 +756,19 @@ class Lang extends Map
                 elseif($option['def'] === true)
                 $return = "[$key]";
 
-                elseif($option['error'] === true)
-                {
-                    if(empty($this->take($key,$lang)))
-                    static::throw($key);
-                    else
-                    static::throw('requiresString',$key);
-                }
+                else
+                $error = true;
             }
         }
-
+        
+        if($error === true && $option['error'] === true)
+        {
+            if(empty($this->take($key,$lang)))
+            static::throw($key);
+            else
+            static::throw('requiresString',$key);
+        }
+        
         return $return;
     }
 
