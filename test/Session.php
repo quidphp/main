@@ -29,7 +29,7 @@ class Session extends Base\Test
 
         // construct
         $s = new Main\Session($class,$default);
-        assert($s->terminate());
+        assert($s->teardown());
         $s = new Main\Session($class,$default);
         assert($s->setLang('en') === $s);
         $sid = $s->getSid();
@@ -195,8 +195,8 @@ class Session extends Base\Test
         assert($s->decode($encode)->isNotEmpty());
         assert($s->toArray() === $_SESSION);
 
-        // terminate
-        assert(!$s->terminate()->isStarted());
+        // teardown
+        assert(!$s->teardown()->isStarted());
         assert($s->start() === $s);
         $s['ok'] = 2;
         assert($s['ok'] === 2);

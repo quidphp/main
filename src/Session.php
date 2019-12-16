@@ -359,7 +359,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     final public function restart():self
     {
         $this->empty();
-        $this->terminate();
+        $this->teardown();
         $this->start();
 
         return $this;
@@ -468,10 +468,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     }
 
 
-    // terminate
+    // teardown
     // destroy la session
     // possibilité de empty les données et/ou unset le cookie
-    final public function terminate(bool $empty=true,bool $unsetCookie=true):self
+    final public function teardown(bool $empty=true,bool $unsetCookie=true):self
     {
         $this->checkReady();
 
