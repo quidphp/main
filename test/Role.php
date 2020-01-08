@@ -21,7 +21,7 @@ class Role extends Base\Test
     final public static function trigger(array $data):bool
     {
         // construct
-        $admin = new Main\Role('admin',80,['admin'=>true]);
+        $admin = new Main\Role('Admin',80,['admin'=>true]);
         $nobody = new Main\Role('nobody',1,['nobody'=>true]);
 
         // clone
@@ -43,7 +43,7 @@ class Role extends Base\Test
         // setName
 
         // name
-        assert($admin->name() === 'admin');
+        assert($admin->name() === 'Admin');
 
         // is
         assert(!$nobody->is('bla'));
