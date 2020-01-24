@@ -206,8 +206,10 @@ class Extender extends Map
         {
             $parent = get_parent_class($value);
             $name = Base\Fqcn::name($value);
-
-            if(empty($parent) || ($name !== Base\Fqcn::name($parent)))
+            $parentName = (!empty($parent))? Base\Fqcn::name($parent):null;
+            $isBoot = (strpos($name,'Boot') !== false || strpos($parentName,'Boot') !== false);
+            
+            if($isBoot === false && ($parentName === null || ($name !== $parentName)))
             static::throw($value,'withParent',$parent,'shouldNotBeThere');
         }
 
@@ -249,7 +251,7 @@ class Extender extends Map
         {
             $class = $this->get($key);
             $extend = $class;
-
+            
             if($value === $class)
             static::throw('alreadyIn',$value);
 

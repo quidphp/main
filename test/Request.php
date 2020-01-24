@@ -207,8 +207,8 @@ class Request extends Base\Test
         assert(!$r->isPathMatchEmpty());
         assert($post->isPathMatchEmpty());
 
-        // isSelected
-        assert(!$r->isSelected());
+        // isSelectedUri
+        assert(!$r->isSelectedUri());
 
         // isCachable
         assert($r->isCachable());

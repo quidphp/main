@@ -619,9 +619,9 @@ class Request extends Map
     }
 
 
-    // isSelected
+    // isSelectedUri
     // retourne vrai si la requête est sélectionné dans base attr
-    final public function isSelected():bool
+    final public function isSelectedUri():bool
     {
         return Base\Attr::isSelectedUri($this->uri());
     }

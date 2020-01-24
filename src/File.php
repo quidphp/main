@@ -209,7 +209,8 @@ class File extends Res
     final public static function getClass($value,?array $option=null):string
     {
         $return = static::class;
-
+        $option = Base\Arr::plus(array('fromPath'=>false),$option);
+        
         if(!in_array($return,static::$param['storageClass'],true) && !in_array($return,static::$param['groupClass'],true) && !in_array($return,static::$param['utilClass'],true))
         {
             $dirname = static::getDirnameFromValue($value);
@@ -222,14 +223,20 @@ class File extends Res
 
             else
             {
-                $group = Base\Mime::getGroup($value);
+                if(is_string($value) && $option['fromPath'] === true)
+                $group = Base\Mime::groupFromBasename($value);
+                
+                else
+                {
+                    $group = Base\Mime::getGroup($value);
 
-                if(empty($group) && !empty($option['mime']))
-                $group = Base\Mime::group($option['mime']);
+                    if(empty($group) && !empty($option['mime']))
+                    $group = Base\Mime::group($option['mime']);
 
-                if(empty($group) && !empty($option['basename']) && is_string($option['basename']))
-                $group = Base\Mime::groupFromBasename($option['basename']);
-
+                    if(empty($group) && !empty($option['basename']) && is_string($option['basename']))
+                    $group = Base\Mime::groupFromBasename($option['basename']);
+                }
+                
                 if(empty($group))
                 $group = static::defaultMimeGroup();
 

@@ -69,10 +69,10 @@ class Files extends Map
 
     // set
     // ajoute un fichier dans l'objet files
-    final public function set($key,$value):parent
+    final public function set($key,$value,?array $option=null):parent
     {
         if(!$value instanceof File)
-        $value = File::newOverload($value);
+        $value = File::newOverload($value,$option);
 
         if($value instanceof File)
         parent::set($key,$value);
