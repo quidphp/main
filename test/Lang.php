@@ -295,7 +295,7 @@ class Lang extends Base\Test
         assert(count($lang->datePlaceholder()) === 3);
         assert($lang->datePlaceholder('dateToDay','en') === 'MM-DD-YYYY');
         assert($lang->datePlaceholder('dateToDay') === 'JJ-MM-AAAA');
-        
+
         // dateDay
         assert($lang->dateDay()[0] === 'Dimanche');
 

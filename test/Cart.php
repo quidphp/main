@@ -21,36 +21,36 @@ class Cart extends Base\Test
     final public static function trigger(array $data):bool
     {
         // construct
-        $cart = new Main\Cart(array(array('test',2)));
-        
+        $cart = new Main\Cart([['test',2]]);
+
         // onPrepareValue
-        
+
         // getItem
-        
+
         // add
-        $cart->add('test',1,array('special'=>true));
-        $cart->add('test2',3,array('special'=>true));
+        $cart->add('test',1,['special'=>true]);
+        $cart->add('test2',3,['special'=>true]);
         assert($cart->isCount(3));
-        
+
         // update
         $cart->update(0,3);
         assert($cart->get(0)['quantity'] === 3);
-        
+
         // updateQuantity
-        
+
         // updateRelative
         $cart->updateRelative(0,-2);
         assert($cart[0]['quantity'] === 1);
         $cart->updateRelative(0,-2);
         assert($cart->isCount(2));
-        
+
         // commit
-        
+
         // indexesFromItem
-        $cart->add('test',1,array('special'=>true));
-        assert($cart->indexesFromItem('test') === array(1,3));
-        assert($cart->indexesFromItem('testz') === array());
-        
+        $cart->add('test',1,['special'=>true]);
+        assert($cart->indexesFromItem('test') === [1,3]);
+        assert($cart->indexesFromItem('testz') === []);
+
         // map
         $cart->filter(function(array $array) {
             ['item'=>$item] = $array;
@@ -60,7 +60,7 @@ class Cart extends Base\Test
         assert($cart->isNotEmpty());
         $cart->unset(2);
         assert($cart->isEmpty());
-        
+
         return true;
     }
 }
