@@ -124,7 +124,7 @@ class Php extends Text
     final public static function innerLinesFromArray(array $lines,?array $option=null):array
     {
         $return = [];
-        $option = Base\Arr::plus(['emptyLine'=>false,'comment'=>false,'initMethod'=>null,'closure'=>false],$option);
+        $option = Base\Arr::plus(['emptyLine'=>false,'comment'=>false,'initMethod'=>null,'closure'=>false,'return'=>true],$option);
         $info = static::infoFromArray($lines);
         $hasNamespace = !empty($info['namespace']);
         $hasName = !empty($info['name']);
@@ -145,6 +145,9 @@ class Php extends Text
             continue;
 
             if($option['comment'] === false && Base\Str::isStart('// ',$valueNoWs))
+            continue;
+
+            if($option['return'] === false && Base\Str::isStart('return ',$value))
             continue;
 
             if($valueNoWs === '' && ($option['emptyLine'] === false || ($hasNamespace === true && $foundNamespace === false)))
