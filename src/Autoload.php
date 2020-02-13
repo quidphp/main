@@ -14,7 +14,7 @@ use Quid\Base;
 
 // autoload
 // class that provides custom autoloading logic, including alias autoloading and class within closures
-class Autoload
+class Autoload extends Base\Root
 {
     // config
     public static $config = [
@@ -640,18 +640,15 @@ class Autoload
                         if(!empty($dir))
                         $array = $dir;
 
-                        else
+                        $file = static::findOne($v,$onlyClass,$declared);
+
+                        if(!empty($file))
                         {
-                            $file = static::findOne($v,$onlyClass,$declared);
+                            if($file === true)
+                            $array[] = $v;
 
-                            if(!empty($file))
-                            {
-                                if($file === true)
-                                $array[] = $v;
-
-                                else
-                                $array[$file] = $v;
-                            }
+                            else
+                            $array[$file] = $v;
                         }
 
                         $return = Base\Arr::appendiUnique($return,$array);

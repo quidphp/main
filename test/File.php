@@ -42,6 +42,9 @@ class File extends Base\Test
         $csv = Main\File::new('[assertCommon]/csv.csv',['toUtf8'=>true]);
         $text = Main\File::newCreate($storage.'/index.php');
         $text->write("lorem ipsum lorem ipsum\nlorem ipsum lorem ipsum2\nlorem ipsum lorem ipsum3\nlorem ipsum lorem ipsum4");
+        $php = Main\File::newCreate($storage.'/php.php');
+        $phpString = "<?php\ndeclare(strict_types=1);\n\n/*\n * This file is part of the QuidPHP package.\n* Author: Pierre-Philippe Emond <emondpph@gmail.com>\n* Website: https://quidphp.com\n* License: https://github.com/quidphp/main/blob/master/LICENSE\n* Readme: https://github.com/quidphp/main/blob/master/README.md\n*/\n\nnamespace Quid\Test\Main;\nuse Quid\Base;\nuse Quid\Main;\n\n// file\n// class for testing Quid\Main\File\nclass File extends Base\Test\n{\n// trigger\nfinal public static function trigger(array \$data):bool\n{\nreturn true;\n}\n}\n?>";
+        $php->write($phpString);
         $raster = Main\File::new($mediaJpg);
         $rasterStorage = Main\File::new('[assertCommon]/png.png');
         $vector = Main\File::new($mediaVector);
@@ -333,7 +336,23 @@ class File extends Base\Test
         assert($pdf::defaultMimeGroup() === 'pdf');
 
         // php
+
         assert($text instanceof Main\File\Php);
+        assert($text->getInfo() === ['name'=>null,'namespace'=>null,'type'=>null]);
+        assert($php->getInfo() === ['name'=>'File','namespace'=>__NAMESPACE__,'type'=>'class']);
+        assert($text->getNamespace() === null);
+        assert($php->getNamespace() === __NAMESPACE__);
+        assert($text->getName() === null);
+        assert($php->getName() === 'File');
+        assert(count($text->innerLines()) === 4);
+        assert(count($php->innerLines()) === 11);
+        assert(count($php->innerLines(['emptyLine'=>true])) === 12);
+        assert(count($php->innerLines(['emptyLine'=>true,'comment'=>true])) === 22);
+        assert($php->innerLines(['initMethod'=>'init'])[10] === 'File::init();');
+        assert(count($php->innerLines(['initMethod'=>'init','closure'=>true])) === 14);
+        assert(strlen(Base\Str::lineImplode($php->innerLines(['initMethod'=>'init','closure'=>true]))) === 250);
+        assert(count($php::infoFromString($phpString)) === 3);
+        assert(strlen($php::innerLinesFromString($phpString)) === 163);
 
         // queue
         assert(Main\File\Queue::setUnqueueCallable(function() {

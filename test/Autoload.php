@@ -117,6 +117,9 @@ class Autoload extends Base\Test
         assert(!empty(Main\Autoload::findNamespace()));
 
         // findOneOrMany
+        assert(count(Main\Autoload::findOneOrMany(Main\File::class)) === 32);
+        assert(count(Main\Autoload::findOneOrMany(static::class)) === 1);
+        assert(count(Main\Autoload::findOneOrMany(Main\Autoload::class)) === 1);
         assert(!empty(Main\Autoload::findOneOrMany([__NAMESPACE__],false,true,true)));
         assert(Main\Autoload::findOneOrMany(\Datetime::class,true,true,true) === [\Datetime::class]);
 
