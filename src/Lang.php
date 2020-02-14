@@ -1178,7 +1178,7 @@ class Lang extends Map
     // une erreur sera envoyé si le role n'existe pas
     final public function roleLabel(int $role,?string $lang=null,?array $option=null):?string
     {
-        return $this->text($this->getPath('roleLabel',$role),null,$lang,$option);
+        return $this->def($this->getPath('roleLabel',$role),null,$lang,$option);
     }
 
 
