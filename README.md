@@ -36,17 +36,19 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 **QuidPHP/Main** is built on the following conventions:
 - *Traits*: Traits filenames start with an underscore (_).
 - *Interfaces*: Interfaces are stored within the Contract subdirectory.
-- *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 - *Type*: Files, function arguments and return types are strict typed.
 - *Dynamic*: Classes are dynamic and objects need to be instantiated, very few static methods
 - *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
+- *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 
 ## Overview
-**QuidPHP/Main** contains 84 classes, traits and interfaces. Here is an overview:
+**QuidPHP/Main** contains 115 classes, traits and interfaces. Here is an overview:
 - [ArrMap](src/ArrMap.php) - Abstract class that provides base methods to make a collection
 - [ArrObj](src/ArrObj.php) - Abstract class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 - [Arrs](src/Arrs.php) - Class for a collection containing a multidimensional array
 - [Autoload](src/Autoload.php) - Class that provides custom autoloading logic, including alias autoloading and class within closures
+- [Calendar](src/Calendar.php) - Class that provides logic for the calendar widget
+- [Cart](src/Cart.php) - Class used to to manage a cart containing different items
 - [CatchableException](src/CatchableException.php) - Class for a catchable exception
 - [Com](src/Com.php) - Class that provides the logic to store positive, negative or neutral communication messages
 - [Concatenator](src/Concatenator.php) - Class used to concatenate the content of many files or directories
@@ -60,16 +62,41 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
     - [Meta](src/Contract/Meta.php) - Interface to describe methods making an objet a source of meta-data
     - [Queue](src/Contract/Queue.php) - Interface to detail the methods required for implementing queuing functionality to an object
     - [Session](src/Contract/Session.php) - Interface to detail the methods required for an objet to be a session storage
-    - [User](src/Contract/User.php) - Interface to detail the methods required for an objet to represent a user
 - [Error](src/Error.php) - Class used as a basic error handler
 - [Exception](src/Exception.php) - Class for a default exception
-- [Extender](src/Extender.php) - Class for a collection containing a listing of classes extending other ones
+- [Extender](src/Extender.php) - Class for a collection containing a list of classes extending others
 - [Extenders](src/Extenders.php) - Class for a collection containing many extender objects
 - [File](src/File.php) - Class for a basic file object
-    - [_csv](src/File/_csv.php) - Trait that provides methods to allow a file object to manage csv data
-    - [_email](src/File/_email.php) - Trait that provides methods to permit a file object to represent an email
+    - [Audio](src/File/Audio.php) - Class for an audio file (like mp3)
+    - [Binary](src/File/Binary.php) - Abstract class for a binary file
+    - [Cache](src/File/Cache.php) - Class for a cache storage file
+    - [Calendar](src/File/Calendar.php) - Class for a calendar file (like ics)
+    - [Css](src/File/Css.php) - Class for a css or scss file
+    - [Csv](src/File/Csv.php) - Class for a csv file
+    - [Doc](src/File/Doc.php) - Class for a doc file, like microsoft word
+    - [Dump](src/File/Dump.php) - Class for file which contains an exported value (similar to var_export)
+    - [Email](src/File/Email.php) - Class for a file which is an email (in json format)
+    - [Error](src/File/Error.php) - Class for an error storage file
+    - [Font](src/File/Font.php) - Class for a font file (like ttf)
+    - [Html](src/File/Html.php) - Class for an html file
+    - [Image](src/File/Image.php) - Abstract class for an image file (raster or vector)
+    - [ImageRaster](src/File/ImageRaster.php) - Class for a pixelated image file
+    - [ImageVector](src/File/ImageVector.php) - Class for a vector image file (like svg)
+    - [Js](src/File/Js.php) - Class for a js file
+    - [Json](src/File/Json.php) - Class for a json file
+    - [Log](src/File/Log.php) - Class for a log storage file
+    - [Pdf](src/File/Pdf.php) - Class for pdf file
+    - [Php](src/File/Php.php) - Class for a php file
+    - [Queue](src/File/Queue.php) - Class for a queue storage file
+    - [Serialize](src/File/Serialize.php) - Class for a file with content that should be serialized
+    - [Session](src/File/Session.php) - Class for a session storage file, which is serialized
+    - [Text](src/File/Text.php) - Abstract class for a text file
+    - [Txt](src/File/Txt.php) - Class for txt file (like txt)
+    - [Video](src/File/Video.php) - Class for a video file (like mp4)
+    - [Xml](src/File/Xml.php) - Class for an xml file
+    - [Zip](src/File/Zip.php) - Class for a zip file
+    - [_concatenate](src/File/_concatenate.php) - Trait with methods to concatenate files and directories
     - [_log](src/File/_log.php) - Trait that grants methods to allow a file object to do logging
-    - [_session](src/File/_session.php) - Trait that provides methods to allow a file object to become a session storage
     - [_storage](src/File/_storage.php) - Trait that provides methods to link a file object to a specific storage directory
 - [Files](src/Files.php) - Class for a collection containing many file objects
 - [Flash](src/Flash.php) - Class for a collection containing flash-like data (delete on read)
@@ -77,8 +104,11 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [Insensitive](src/Insensitive.php) - Class for a collection containing an insensitive array
 - [Insert](src/Insert.php) - Class for a collection containing an insert-only array (cannot update)
 - [Lang](src/Lang.php) - Class for a collection object containing language texts and translations
+    - [En](src/Lang/En.php) - English language content used by this namespace
+    - [Fr](src/Lang/Fr.php) - French language content used by this namespace
+    - [_overload](src/Lang/_overload.php) - Trait which implements the overload logic for the lang classes
 - [Localization](src/Localization.php) - Class for storing localization data, like latitude and longitude
-- [Map](src/Map.php) - Class that provides more complete methods for a collection
+- [Map](src/Map.php) - Class that provides a set of methods for a collection
     - [_arr](src/Map/_arr.php) - Trait that provides methods to allow advanced unidimensional array manipulation to a collection
     - [_arrs](src/Map/_arrs.php) - Trait that provides methods to allow advanced multidimensional array manipulation to a collection
     - [_basic](src/Map/_basic.php) - Trait that provides simple boolean methods to analyze the type of array within the collection
@@ -98,7 +128,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
     - [_sequential](src/Map/_sequential.php) - Trait that makes sure the keys of the collection are always sequential
     - [_sort](src/Map/_sort.php) - Trait that provides methods to change the order of entries within the collection
 - [Request](src/Request.php) - Class with methods to manage an HTTP request
-- [RequestHistory](src/RequestHistory.php) - Class for a collection containing a history of requests
+- [RequestHistory](src/RequestHistory.php) - Class for a collection containing an history of requests
 - [Res](src/Res.php) - Class with methods to manage a resource
 - [Response](src/Response.php) - Class with methods to manage an HTTP response
 - [Role](src/Role.php) - Class that provides basic logic for a role
@@ -110,7 +140,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [ServiceVideo](src/ServiceVideo.php) - Abstract class with basic methods for a service that provides a video object after an HTTP request
 - [Services](src/Services.php) - Class for a collection containing many service objects
 - [Session](src/Session.php) - Class that implements the methods necessary for the SessionHandlerInterface interface
-- [Std](src/Std.php) - Class for a collection with a lot of used traits
+- [Std](src/Std.php) - Class for a collection with a complete set of methods
 - [Timeout](src/Timeout.php) - Class for a collection containing timeout data (to deny an action if it already has happened too much)
 - [Update](src/Update.php) - Class for a collection containing an update-only array (cannot insert after initialization)
 - [Video](src/Video.php) - Class for an object representing a video with some meta-data
@@ -118,23 +148,24 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [Xml](src/Xml.php) - Class that provides basic methods to make an XML sitemap
 - [_arrObj](src/_arrObj.php) - Trait that provides methods to respect the ArrayAccess, Countable and Iterator native interfaces
 - [_attr](src/_attr.php) - Trait that grants methods to work with the dynamic property attr
+- [_attrPermission](src/_attrPermission.php) - Trait that provides methods to work with permissions in attr
 - [_cache](src/_cache.php) - Trait that provides methods to get or set a cached value from an object
 - [_email](src/_email.php) - Trait that provides methods to use the object as an email
 - [_inst](src/_inst.php) - Trait that provides methods to store an instantiated objet within a static property
 - [_log](src/_log.php) - Trait that provides a required method to allow logging with the object
-- [_option](src/_option.php) - Trait that grants methods to work with the dynamic property option
 - [_overload](src/_overload.php) - Trait that allows a class to retrieve its overloaded version - higher up in the class hierarchy
 - [_queue](src/_queue.php) - Trait that provides methods required for implementing queuing functionality to an object
 - [_root](src/_root.php) - Trait that provides basic object methods and magic methods
 - [_rootClone](src/_rootClone.php) - Trait that provides a default __clone magic function
+- [_serialize](src/_serialize.php) - Trait that provides methods for serializing and unserializing object
 - [_throw](src/_throw.php) - Trait that provides static methods to throw exception from an object
 
 ## Testing
-**QuidPHP/Main** contains 39 test classes:
-- [ArrMap](test/ArrMap.php) - Class for testing Quid\Main\ArrMap
-- [ArrObj](test/ArrObj.php) - Class for testing Quid\Main\ArrObj
+**QuidPHP/Main** contains 32 test classes:
 - [Arrs](test/Arrs.php) - Class for testing Quid\Main\Arrs
 - [Autoload](test/Autoload.php) - Class for testing Quid\Main\Autoload
+- [Calendar](test/Calendar.php) - Class for testing Quid\Main\Calendar
+- [Cart](test/Cart.php) - Class for testing Quid\Main\Cart
 - [CatchableException](test/CatchableException.php) - Class for testing Quid\Main\CatchableException
 - [Com](test/Com.php) - Class for testing Quid\Main\Com
 - [Concatenator](test/Concatenator.php) - Class for testing Quid\Main\Concatenator
@@ -157,18 +188,11 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [Response](test/Response.php) - Class for testing Quid\Main\Response
 - [Role](test/Role.php) - Class for testing Quid\Main\Role
 - [Roles](test/Roles.php) - Class for testing Quid\Main\Roles
-- [Root](test/Root.php) - Class for testing Quid\Main\Root
-- [Service](test/Service.php) - Class for testing Quid\Main\Service
-- [ServiceMailer](test/ServiceMailer.php) - Class for testing Quid\Main\ServiceMailer
-- [ServiceRequest](test/ServiceRequest.php) - Class for testing Quid\Main\ServiceRequest
-- [ServiceVideo](test/ServiceVideo.php) - Class for testing Quid\Main\ServiceVideo
-- [Services](test/Services.php) - Class for testing Quid\Main\Services
 - [Session](test/Session.php) - Class for testing Quid\Main\Session
 - [Std](test/Std.php) - Class for testing Quid\Main\Std
 - [Timeout](test/Timeout.php) - Class for testing Quid\Main\Timeout
 - [Update](test/Update.php) - Class for testing Quid\Main\Update
 - [Video](test/Video.php) - Class for testing Quid\Main\Video
-- [Widget](test/Widget.php) - Class for testing Quid\Main\Widget
 - [Xml](test/Xml.php) - Class for testing Quid\Main\Xml
 
 **QuidPHP/Main** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).

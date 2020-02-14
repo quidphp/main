@@ -13,7 +13,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // map
-// class that provides more complete methods for a collection
+// class that provides a set of methods for a collection
 class Map extends ArrMap
 {
     // config

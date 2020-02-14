@@ -13,7 +13,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // cart
-// class used to to manage a cart containing different elements
+// class used to to manage a cart containing different items
 class Cart extends Map
 {
     // trait

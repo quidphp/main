@@ -14,7 +14,7 @@ use Quid\Base;
 use Quid\Main;
 
 // _concatenate
-// trait with methods to concatenate files and directories to the target
+// trait with methods to concatenate files and directories
 trait _concatenate
 {
     // configConcatenate

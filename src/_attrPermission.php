@@ -13,7 +13,7 @@ namespace Quid\Main;
 use Quid\Base;
 
 // _attrPermission
-// trait that provides methods to work with permissions in config or attributes
+// trait that provides methods to work with permissions in attr
 trait _attrPermission
 {
     // attrPermissionRef
