@@ -144,8 +144,8 @@ class Request extends Base\Test
         assert(count($r->info(true)) === 28);
 
         // safeInfo
-        assert(count($current->safeInfo()) === 21);
-        assert(count($current->safeInfo(true)) === 22);
+        assert(count($current->safeInfo()) === 19);
+        assert(count($current->safeInfo(true)) === 20);
         $x = new Main\Request($current->info());
         assert($x->absolute() === $current->absolute());
 
@@ -622,6 +622,10 @@ class Request extends Base\Test
         assert($post->post()['james'] === 'true');
         assert($files->post(true,true,true)['ok'][0] === 'bla.php');
         assert($files->post(true,true,true)['ok'][1]['name'] === 'ok.lala');
+
+        // postExport
+        assert($r->postExport()['-genuine-'] === 'what');
+        assert($r->postExport()['password'] === true);
 
         // postJson
         assert(strlen($r->postJson()) === 53);

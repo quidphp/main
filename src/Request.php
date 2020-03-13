@@ -430,12 +430,10 @@ class Request extends Map
         $return['ssl'] = $this->isSsl();
         $return['timestamp'] = $this->timestamp();
         $return['ip'] = $this->ip();
-        $return['post'] = Base\Arr::combine(array_keys($this->post()),true);
+        $return['post'] = $this->postExport();
         $return['files'] = Base\Arr::combine(array_keys($this->filesArray()),true);
-        $return['headers'] = Base\Arr::combine(array_keys($this->headers()),true);
+        $return['headers'] = $this->headers();
         $return['lang'] = $this->lang();
-        $return['userAgent'] = $this->userAgent();
-        $return['referer'] = $this->referer();
         $return['cli'] = $this->isCli();
 
         if($id === true)
@@ -1682,6 +1680,25 @@ class Request extends Map
         $return = [];
         $files = ($includeFiles === true)? $this->filesArray():null;
         $return = Base\Superglobal::postReformat($this->arr(),$safeKey,$stripTags,$includeFiles,$files);
+
+        return $return;
+    }
+
+
+    // postExport
+    // retourne le tableau de post pour une exporation de la requête
+    final public function postExport():array
+    {
+        $return = [];
+        $post = $this->post();
+
+        foreach ($post as $key => $value)
+        {
+            if(Base\Validate::isCol($key))
+            $value = true;
+
+            $return[$key] = $value;
+        }
 
         return $return;
     }
