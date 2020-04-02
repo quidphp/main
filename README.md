@@ -198,4 +198,4 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [Video](test/Video.php) - Class for testing Quid\Main\Video
 - [Xml](test/Xml.php) - Class for testing Quid\Main\Xml
 
-**QuidPHP/Main** testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
+**QuidPHP/Main** PHP testsuite can be run by creating a new [quidphp/project](https://github.com/quidphp/project).
