@@ -270,24 +270,6 @@ class Request extends Base\Test
         assert(!$current->isHeader('host','Acceptz'));
         assert($current->isHeader('host','Accept-language'));
 
-        // isDesktop
-        assert(!$r->isDesktop());
-
-        // isMobile
-        assert(!$r->isMobile());
-
-        // isOldIe
-        assert(!$r->isOldIe());
-
-        // isMac
-        assert(!$r->isMac());
-
-        // isLinux
-        assert(!$r->isLinux());
-
-        // isWindows
-        assert(!$r->isWindows());
-
         // isBot
         assert(!$r->isBot());
 
@@ -704,18 +686,6 @@ class Request extends Base\Test
         // fingerprint
         assert(!empty($current->fingerprint(['User-Agent'])));
         assert($current->fingerprint(['User-Agent']) === Base\Request::fingerprint(['User-Agent']));
-
-        // browserCap
-        assert(count($r2->browserCap()) === 10);
-
-        // browserName
-        assert($r2->browserName() === 'Default Browser');
-
-        // browserPlatform
-        assert($r2->browserPlatform() === 'unknown');
-
-        // browserDevice
-        assert($r2->browserDevice() === 'unknown');
 
         // setFiles
         assert($setFiles->file('test') === null);

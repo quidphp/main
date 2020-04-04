@@ -768,54 +768,6 @@ class Request extends Map
     }
 
 
-    // isDesktop
-    // retourne vrai si le userAgent est desktop
-    final public function isDesktop():bool
-    {
-        return Base\Browser::isDesktop($this->userAgent())? true:false;
-    }
-
-
-    // isMobile
-    // retourne vrai si le userAgent est mobile
-    final public function isMobile():bool
-    {
-        return Base\Browser::isMobile($this->userAgent())? true:false;
-    }
-
-
-    // isOldIe
-    // retourne vrai si le userAgent est Internet Explorer < 9
-    final public function isOldIe():bool
-    {
-        return Base\Browser::isOldIe($this->userAgent())? true:false;
-    }
-
-
-    // isMac
-    // retourne vrai si le userAgent est sur MacOs
-    final public function isMac():bool
-    {
-        return Base\Browser::isMac($this->userAgent())? true:false;
-    }
-
-
-    // isLinux
-    // retourne vrai si le userAgent est sur Linux
-    final public function isLinux():bool
-    {
-        return Base\Browser::isLinux($this->userAgent())? true:false;
-    }
-
-
-    // isWindows
-    // retourne vrai si le userAgent est sur Windows
-    final public function isWindows():bool
-    {
-        return Base\Browser::isWindows($this->userAgent())? true:false;
-    }
-
-
     // isBot
     // retourne vrai si le userAgent est un bot
     final public function isBot():bool
@@ -1925,38 +1877,6 @@ class Request extends Map
     final public function fingerprint(array $keys):?string
     {
         return Base\Header::fingerprint($this->headers(),$keys);
-    }
-
-
-    // browserCap
-    // retourne les capacités du browser en fonction du userAgent
-    final public function browserCap():?array
-    {
-        return (is_string($userAgent = $this->userAgent()))? Base\Browser::cap($userAgent):null;
-    }
-
-
-    // browserName
-    // retourne le nom du browser du userAgent
-    final public function browserName():?string
-    {
-        return (is_string($userAgent = $this->userAgent()))? Base\Browser::name($userAgent):null;
-    }
-
-
-    // browserPlatform
-    // retourne la plateforme du browser du userAgent
-    final public function browserPlatform():?string
-    {
-        return (is_string($userAgent = $this->userAgent()))? Base\Browser::platform($userAgent):null;
-    }
-
-
-    // browserDevice
-    // retourne le device du browser du userAgent
-    final public function browserDevice():?string
-    {
-        return (is_string($userAgent = $this->userAgent()))? Base\Browser::device($userAgent):null;
     }
 
 

@@ -41,12 +41,6 @@ class Session extends Base\Test
         assert($s->isIp(Base\Request::ip()));
         assert($s->isCsrf($s['csrf']));
         assert(!$s->isCaptcha('12'));
-        assert(is_bool($s->isDesktop()));
-        assert(is_bool($s->isMobile()));
-        assert(is_bool($s->isOldIe()));
-        assert(is_bool($s->isMac()));
-        assert(is_bool($s->isLinux()));
-        assert(is_bool($s->isWindows()));
         assert(is_bool($s->isBot()));
         assert($s->getPrefix() === $type.'-');
         assert($s->status() === 2);
@@ -68,10 +62,6 @@ class Session extends Base\Test
         $s->resetRequestCount();
         assert($s->requestCount() === 1);
         assert($s->userAgent() === Base\Request::userAgent());
-        assert(count($s->browserCap()) === 10);
-        assert(!empty($s->browserName()));
-        assert(!empty($s->browserPlatform()));
-        assert(!empty($s->browserDevice()));
         assert($s->ip() === Base\Request::ip());
         assert($s->fingerprint() === null);
         assert($s->lang() === Base\Lang::default());

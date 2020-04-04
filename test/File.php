@@ -350,9 +350,9 @@ class File extends Base\Test
         assert(count($php->innerLines(['emptyLine'=>true,'comment'=>true])) === 22);
         assert($php->innerLines(['initMethod'=>'init'])[10] === 'File::init();');
         assert(count($php->innerLines(['initMethod'=>'init','closure'=>true])) === 14);
-        assert(strlen(Base\Str::lineImplode($php->innerLines(['initMethod'=>'init','closure'=>true]))) === 250);
+        assert(in_array(strlen(Base\Str::lineImplode($php->innerLines(['initMethod'=>'init','closure'=>true]))),[250,263],true));
         assert(count($php::infoFromString($phpString)) === 3);
-        assert(strlen($php::innerLinesFromString($phpString)) === 163);
+        assert(in_array(strlen($php::innerLinesFromString($phpString)),[163,173],true));
 
         // queue
         assert(Main\File\Queue::setUnqueueCallable(function() {
