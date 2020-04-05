@@ -428,7 +428,7 @@ class File extends Base\Test
 
         // video
         assert($video instanceof Main\File\Video);
-        assert($video->mime() === 'inode/x-empty; charset=binary');
+        assert(Base\Mime::isEmpty($video->mime()));
 
         // xml
         assert($xml instanceof Main\File\Xml);

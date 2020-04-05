@@ -41,8 +41,9 @@ class Zip extends Binary
 
             $path = $this->path();
             $archive = new \ZipArchive();
+            $flag = (Base\File::isEmpty($path))? \ZipArchive::OVERWRITE:\ZipArchive::CREATE;
 
-            if($archive->open($path,\ZipArchive::CREATE) === true)
+            if($archive->open($path,$flag) === true)
             $this->archive = $archive;
 
             else
