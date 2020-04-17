@@ -60,7 +60,7 @@ abstract class ServiceRequest extends Service
 
     // requestClass
     // retourne la classe à utiliser pour request
-    final public static function requestClass():string
+    final protected static function requestClass():string
     {
         return Request::getOverloadClass();
     }
@@ -68,7 +68,7 @@ abstract class ServiceRequest extends Service
 
     // userAgent
     // retourne le userAgent à utiliser s'il n'est pas spécifié dans attr
-    final public static function userAgent():string
+    public static function userAgent():string
     {
         return 'QUID/'.Base\Server::quidVersion();
     }
