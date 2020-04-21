@@ -221,11 +221,12 @@ trait _classeObj
         $return = $this->onPrepareThis('sort');
         $type = static::classeOrObj();
         $data =& $return->arr();
+        $sort = $this->mapSortDefault;
 
         if($type === 'obj')
-        $data = Base\Obj::sort(static::$sortDefault,true,$data);
+        $data = Base\Obj::sort($sort,true,$data);
         else
-        $data = Base\Classe::sort(static::$sortDefault,true,$data);
+        $data = Base\Classe::sort($sort,true,$data);
 
         return $return->checkAfter();
     }

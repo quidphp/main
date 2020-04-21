@@ -35,7 +35,7 @@ class Response extends Base\Test
         // clone
 
         // toArray
-        assert(count($response2->toArray()) === 6);
+        assert(count($response2->toArray()) === 7);
 
         // cast
         assert(is_string($response->_cast()));

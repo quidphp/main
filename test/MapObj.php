@@ -13,24 +13,19 @@ namespace Quid\Test\Main;
 use Quid\Base;
 use Quid\Main;
 
-// extenders
-// class for testing Quid\Main\Extenders
-class Extenders extends Base\Test
+// mapObj
+// class for testing Quid\Main\MapObj
+class MapObj extends Base\Test
 {
     // trigger
     final public static function trigger(array $data):bool
     {
-        // prepare
-        $ex = new Main\Extender(__NAMESPACE__);
-        $ex2 = new Main\Extender("Quid\Base");
-
         // construct
-        $s = new Main\Extenders(['ex'=>$ex]);
-        assert($s->isNotEmpty());
+        $x = new Main\MapObj(\Datetime::class);
 
-        // set
-        $s->set('ex2',$ex2);
-        assert($s->count() === 2);
+        // map
+        $x->set(null,new \Datetime('now'));
+        assert($x->count() === 1);
 
         return true;
     }

@@ -23,8 +23,8 @@ class Timeout extends Map
     ];
 
 
-    // map
-    protected static $allow = ['set','unset','serialize','empty']; // méthodes permises
+    // dynamique
+    protected $mapAllow = ['set','unset','serialize','empty']; // méthodes permises
 
 
     // isTimedOut

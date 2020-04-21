@@ -23,13 +23,10 @@ class Com extends Map
     ];
 
 
-    // map
-    protected static $allow = ['push','unshift','unset','empty','splice','index','serialize','jsonSerialize','clone']; // méthodes permises
-    protected static $is = true; // les valeurs doivent passés la méthode is
-
-
     // dynamique
+    protected $mapAllow = ['push','unshift','unset','empty','splice','index','serialize','jsonSerialize','clone']; // méthodes permises
     protected $type = []; // conserve les types acceptés par l'objet (comme pos, neg)
+    protected $mapIs = true; // les valeurs doivent passés la méthode is
 
 
     // construct

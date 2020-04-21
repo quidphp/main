@@ -27,8 +27,8 @@ class Video extends Map
     ];
 
 
-    // map
-    protected static $allow = ['overwrite','serialize','clone']; // méthodes permises
+    // dynamique
+    protected $mapAllow = ['overwrite','serialize','clone']; // méthodes permises
 
 
     // construct

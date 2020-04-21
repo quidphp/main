@@ -19,8 +19,8 @@ class Insert extends Map
     public static $config = [];
 
 
-    // allow
-    protected static $allow = ['set','push','unshift','serialize','clone']; // méthode permises
+    // dynamique
+    protected $mapAllow = ['set','push','unshift','serialize','clone']; // méthode permises
 
 
     // set

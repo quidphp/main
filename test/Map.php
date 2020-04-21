@@ -42,7 +42,7 @@ class Map extends Base\Test
         unset($map['meh']);
         unset($map[0]);
         $serialize = serialize($map);
-        assert(strlen($serialize) === 158);
+        assert(strlen($serialize) === 226);
         $map2 = unserialize($serialize);
         assert($map2 !== $map);
         assert(strlen(json_encode($map)) === 36);
@@ -228,11 +228,11 @@ class Map extends Base\Test
         assert($map->empty()->count() === 0);
         assert($map->overwrite(['test'=>2])->count() === 1);
 
+        // isAllowed
+        assert($map->isAllowed('empty'));
+
         // isSensitive
         assert(Main\Map::isSensitive());
-
-        // isAllowed
-        assert(Main\Map::isAllowed('empty'));
 
         // ArrObj
         $i = 0;

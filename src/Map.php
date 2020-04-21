@@ -20,11 +20,11 @@ class Map extends ArrMap
     public static $config = [];
 
 
-    // map
-    protected static $is = null; // les valeurs doivent passés ce test de validation ou exception, si is est true renvoie à la méthode dynamique is
-    protected static $allow = null; // méthodes permises par la classe
-    protected static $deny = null; // méthodes interdites par la classe
-    protected static $after = []; // les méthodes after, peut y avoir arguments ou non, est public car pourrait être changé dans app
+    // dynamique
+    protected $mapIs = null; // les valeurs doivent passés ce test de validation ou exception, si is est true renvoie à la méthode dynamique is
+    protected $mapAllow = null; // méthodes permises par la classe
+    protected $mapDeny = null; // méthodes interdites par la classe
+    protected $mapAfter = []; // les méthodes after, peut y avoir arguments ou non, est public car pourrait être changé dans app
 
 
     // construct
@@ -263,13 +263,15 @@ class Map extends ArrMap
     // si static is est true, fait appel à la méthode dynamique is
     final protected function checkBefore(bool $array=false,...$values):void
     {
-        if(!empty(static::$is))
+        $is = $this->mapIs;
+
+        if(!empty($is))
         {
             foreach ($values as $value)
             {
                 $exception = false;
-                $is = (static::$is === true)? [$this,'is']:static::$is;
-                $call = (static::$is === true)? 'is':static::$is;
+                $is = ($is === true)? [$this,'is']:$is;
+                $call = ($is === true)? 'is':$is;
 
                 if($array === true && is_array($value))
                 {
@@ -294,7 +296,9 @@ class Map extends ArrMap
     // utiliser par set, sets, unset, empty, overwrite etr emove
     protected function checkAfter():self
     {
-        foreach (static::$after as $key => $value)
+        $after = $this->mapAfter;
+
+        foreach ($after as $key => $value)
         {
             $method = null;
             $arg = [];
@@ -737,33 +741,35 @@ class Map extends ArrMap
     }
 
 
+    // isAllowed
+    // retourne vrai si la méthode est permis par la classe
+    final public function isAllowed($value):bool
+    {
+        $return = false;
+        $allow = $this->mapAllow;
+        $deny = $this->mapDeny;
+
+        if($allow === null && $deny === null)
+        $return = true;
+
+        elseif(is_string($value))
+        {
+            if(empty($allow) || (is_array($allow) && in_array($value,$allow,true)))
+            $return = true;
+
+            if(!empty($deny) && in_array($value,$deny,true))
+            $return = false;
+        }
+
+        return $return;
+    }
+
+
     // isSensitive
     // retourne vrai pour cette classe
     public static function isSensitive():bool
     {
         return true;
-    }
-
-
-    // isAllowed
-    // retourne vrai si la méthode est permis par la classe
-    final public static function isAllowed($value):bool
-    {
-        $return = false;
-
-        if(static::$allow === null && static::$deny === null)
-        $return = true;
-
-        elseif(is_string($value))
-        {
-            if(empty(static::$allow) || (is_array(static::$allow) && in_array($value,static::$allow,true)))
-            $return = true;
-
-            if(!empty(static::$deny) && in_array($value,static::$deny,true))
-            $return = false;
-        }
-
-        return $return;
     }
 }
 ?>

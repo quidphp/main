@@ -13,19 +13,15 @@ namespace Quid\Main;
 
 // extenders
 // class for a collection containing many extender objects
-class Extenders extends Map
+class Extenders extends MapObj
 {
-    // trait
-    use Map\_obj;
-
-
     // config
     public static $config = [];
 
 
-    // map
-    protected static $allow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
-    protected static $is = true; // renvoie à la méthode is
+    // dynamique
+    protected $mapAllow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
+    protected $mapIs = Extender::class; // classe d'objet permis
 
 
     // construct
@@ -36,14 +32,6 @@ class Extenders extends Map
         $this->sets($value);
 
         return;
-    }
-
-
-    // is
-    // vérifie que la valeur est une instance de extender
-    final public function is($value):bool
-    {
-        return ($value instanceof Extender)? true:false;
     }
 
 

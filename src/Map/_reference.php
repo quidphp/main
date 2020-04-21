@@ -30,7 +30,9 @@ trait _reference
     // s'il y a is, fait une validation sur l'ensemble car l'original peut avoir changé
     final protected function onCheckArr():void
     {
-        if(!empty(static::$is) && !Base\Arr::validate(static::$is,$this->data))
+        $is = $this->mapIs;
+
+        if(!empty($is) && !Base\Arr::validate($is,$this->data))
         static::throw('onlyAccepts',static::$is);
 
         return;

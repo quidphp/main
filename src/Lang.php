@@ -71,11 +71,8 @@ class Lang extends Map
     ];
 
 
-    // map
-    protected static $allow = ['sort','set','unset','remove','empty','replace','overwrite','serialize','clone']; // méthodes permises
-
-
     // dynamique
+    protected $mapAllow = ['sort','set','unset','remove','empty','replace','overwrite','serialize','clone']; // méthodes permises
     protected $current = null; // lang courante
 
 

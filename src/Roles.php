@@ -14,22 +14,31 @@ use Quid\Base;
 
 // roles
 // class for a collection containing many roles
-class Roles extends Map
+class Roles extends MapObj
 {
     // trait
     use _inst;
     use Map\_sort;
     use Map\_readOnly;
-    use Map\_obj;
 
 
     // config
     public static $config = [];
 
 
-    // map
-    protected static $allow = ['add','unset','remove','filter','sort','serialize','clone']; // méthodes permises
-    protected static $sortDefault = 'permission'; // défini la méthode pour sort par défaut
+    // dynamique
+    protected $mapAllow = ['add','unset','remove','filter','sort','serialize','clone']; // méthodes permises
+    protected $mapSortDefault = 'permission'; // défini la méthode pour sort par défaut
+
+
+    // construct
+    // renvoie vers le constructeur de mapObj
+    final public function __construct(?array $value=null)
+    {
+        parent::__construct(Role::class,$value);
+
+        return;
+    }
 
 
     // onPrepareKey

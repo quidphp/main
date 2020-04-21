@@ -26,7 +26,7 @@ trait _count
         $data =& $return->arr();
         $data = Base\Arr::unsetAfterCount($count,$data);
 
-        if(empty(static::$after['unsetAfterCount']))
+        if(empty($this->mapAfter['unsetAfterCount']))
         $return->checkAfter();
 
         return $return;

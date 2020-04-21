@@ -27,6 +27,8 @@ class Roles extends Base\Test
         $test = new Main\Role('test',20);
         $rolesIs = new Main\Roles();
 
+        // construct
+
         // onPrepareKey
 
         // onPrepareValue

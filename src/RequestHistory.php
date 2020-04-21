@@ -27,10 +27,10 @@ class RequestHistory extends Map
     ];
 
 
-    // map
-    protected static $is = 'string'; // validate pour l'objet
-    protected static $allow = ['unshift','push','remove','unsetAfterCount','empty','serialize']; // méthodes permises
-    protected static $after = ['unsetAfterCount'=>50]; // maximum de requête conservés
+    // dynamique
+    protected $mapAllow = ['unshift','push','remove','unsetAfterCount','empty','serialize']; // méthodes permises
+    protected $mapAfter = ['unsetAfterCount'=>50]; // maximum de requête conservés
+    protected $mapIs = 'string'; // validate pour l'objet
 
 
     // onPrepareValue

@@ -19,8 +19,8 @@ class Update extends Map
     public static $config = [];
 
 
-    // allow
-    protected static $allow = ['set','serialize','clone']; // méthode permises
+    // dynamique
+    protected $mapAllow = ['set','serialize','clone']; // méthode permises
 
 
     // set

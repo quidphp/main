@@ -24,8 +24,8 @@ class Cart extends Map
     public static $config = [];
 
 
-    // map
-    protected static $allow = ['unset','empty','filter','jsonSerialize','serialize','clone']; // méthodes permises
+    // dynamique
+    protected $mapAllow = ['unset','empty','filter','jsonSerialize','serialize','clone']; // méthodes permises
 
 
     // construct

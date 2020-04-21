@@ -37,8 +37,8 @@ class Concatenator extends Map
     ];
 
 
-    // map
-    protected static $allow = ['unset','serialize','clone']; // méthodes permises
+    // dynamique
+    protected $mapAllow = ['unset','serialize','clone']; // méthodes permises
 
 
     // construct

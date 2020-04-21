@@ -33,12 +33,9 @@ class Extender extends Map
     ];
 
 
-    // map
-    protected static $allow = ['set','unset','remove','filter','serialize','clone']; // méthodes permises
-    protected static $after = ['extendSync']; // appelé après chaque changement à l'objet
-
-
     // dynamique
+    protected $mapAllow = ['set','unset','remove','filter','serialize','clone']; // méthodes permises
+    protected $mapAfter = ['extendSync']; // appelé après chaque changement à l'objet
     protected $extend = []; // garde en mémoire les clés de classe étendus
     protected $overload = []; // garde en mémoire les overloads effectués
 

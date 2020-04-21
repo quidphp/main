@@ -72,7 +72,7 @@ class Request extends Base\Test
         assert($r->_cast() === $uri);
 
         // toArray
-        assert(count($r->toArray()) === 23);
+        assert(count($r->toArray()) === 27);
 
         // jsonSerialize
         assert(strlen($r->toJson()) >= 353);

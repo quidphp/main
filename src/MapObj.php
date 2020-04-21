@@ -11,19 +11,26 @@ declare(strict_types=1);
 
 namespace Quid\Main;
 
-// flash
-// class for a collection containing flash-like data (delete on read)
-class Flash extends Map
+// mapObj
+// class for a collection containing objects
+class MapObj extends Map
 {
     // trait
-    use Map\_flash;
+    use Map\_obj;
 
 
     // config
     public static $config = [];
 
 
-    // dynamique
-    protected $mapAllow = ['set','unset','serialize','empty']; // méthodes permises
+    // construct
+    // renvoie au constructeur parent, mais la classe est mise dans is
+    public function __construct(string $class,$data=null)
+    {
+        $this->mapIs = $class;
+        parent::__construct($data);
+
+        return;
+    }
 }
 ?>

@@ -46,10 +46,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // dynamique
     protected $storage = null; // objet de storage de la session
     protected $class = null; // set la classe du storage
-
-
-    // map
-    protected static $allow = ['set','unset','remove','sort','empty']; // méthodes permises
+    protected $mapAllow = ['set','unset','remove','sort','empty']; // méthodes permises
 
 
     // construct

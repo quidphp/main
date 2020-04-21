@@ -14,10 +14,9 @@ use Quid\Base;
 
 // files
 // class for a collection containing many file objects
-class Files extends Map
+class Files extends MapObj
 {
     // trait
-    use Map\_obj;
     use Map\_sequential;
     use Map\_count;
     use Map\_sort;
@@ -27,8 +26,8 @@ class Files extends Map
     public static $config = [];
 
 
-    // map
-    protected static $allow = ['add','set','unset','remove','empty','unsetAfterCount','filter','sort','sequential','clone']; // méthodes permises
+    // dynamique
+    protected $mapAllow = ['add','set','unset','remove','empty','unsetAfterCount','filter','sort','sequential','clone']; // méthodes permises
 
 
     // construct
@@ -71,6 +70,8 @@ class Files extends Map
     // ajoute un fichier dans l'objet files
     final public function set($key,$value,?array $option=null):parent
     {
+        $this->checkAllowed('set');
+
         if(!$value instanceof File)
         $value = File::newOverload($value,$option);
 

@@ -14,22 +14,22 @@ use Quid\Base;
 
 // services
 // class for a collection containing many service objects
-class Services extends Map
+class Services extends MapObj
 {
     // trait
     use _inst;
     use Map\_sort;
     use Map\_readOnly;
-    use Map\_obj;
 
 
     // config
     public static $config = [];
 
 
-    // map
-    protected static $allow = ['set','unset','remove','sort','clone']; // méthodes permises
-    protected static $sortDefault = 'getServiceKey'; // défini la méthode pour sort par défaut
+    // dynamique
+    protected $mapAllow = ['set','unset','remove','sort','clone']; // méthodes permises
+    protected $mapIs = Service::class; // classe d'objet permis
+    protected $mapSortDefault = 'getServiceKey'; // défini la méthode pour sort par défaut
 
 
     // construct

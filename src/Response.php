@@ -20,11 +20,8 @@ class Response extends Res
     public static $config = [];
 
 
-    // map
-    protected static $allow = ['clone']; // méthodes permises
-
-
     // dynamique
+    protected $mapAllow = ['clone']; // méthodes permises
     protected $id = null; // id unique de la réponse
     protected $request = null; // instance de l'objet request
     protected $header = null; // headers de la réponse

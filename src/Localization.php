@@ -21,7 +21,7 @@ class Localization extends Map
 
 
     // map
-    protected static $allow = ['overwrite','jsonSerialize','serialize','clone']; // méthodes permises
+    protected $mapAllow = ['overwrite','jsonSerialize','serialize','clone']; // méthodes permises
 
 
     // construct

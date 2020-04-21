@@ -31,12 +31,9 @@ class Importer extends Map
     ];
 
 
-    // map
-    protected static $allow = ['set','unset','empty']; // méthodes permises
-    protected static $after = ['clean']; // lance la méthode clean après chaque modification
-
-
     // dynamique
+    protected $mapAllow = ['set','unset','empty']; // méthodes permises
+    protected $mapAfter = ['clean']; // lance la méthode clean après chaque modification
     protected $source = null; // store l'instance de la source
     protected $target = null; // store la target
     protected $required = []; // store les colonnes qui ne peuvent pas être vide
