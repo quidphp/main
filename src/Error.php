@@ -132,7 +132,7 @@ class Error extends Root
     // retourne vrai si l'erreur provient d'une exception
     final public function isException():bool
     {
-        return ($this->getCode() > 30);
+        return $this->getCode() > 30;
     }
 
 

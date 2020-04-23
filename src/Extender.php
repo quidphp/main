@@ -69,7 +69,7 @@ class Extender extends Map
     // doit se retrouver dans le tableau extend
     final public function isExtended($value):bool
     {
-        return (is_string($value) && array_key_exists($value,$this->extend));
+        return is_string($value) && array_key_exists($value,$this->extend);
     }
 
 
@@ -280,7 +280,7 @@ class Extender extends Map
     final public function extended():self
     {
         return $this->filter(function($value,$key) {
-            return ($this->isExtended($key));
+            return $this->isExtended($key);
         });
     }
 

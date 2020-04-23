@@ -537,7 +537,7 @@ class Request extends Map
     // retourne vrai si la requête est ajax
     final public function isAjax():bool
     {
-        return ($this->header('X-Requested-With') === 'XMLHttpRequest');
+        return $this->header('X-Requested-With') === 'XMLHttpRequest';
     }
 
 
@@ -545,7 +545,7 @@ class Request extends Map
     // retourne vrai si la requête est get
     final public function isGet():bool
     {
-        return ($this->method() === 'get');
+        return $this->method() === 'get';
     }
 
 
@@ -553,7 +553,7 @@ class Request extends Map
     // retourne vrai si la requête est post
     final public function isPost():bool
     {
-        return ($this->method() === 'post');
+        return $this->method() === 'post';
     }
 
 
@@ -562,7 +562,7 @@ class Request extends Map
     // ceci peut arriver lors du chargement d'un fichier plus lourd que php ini
     final public function isPostWithoutData():bool
     {
-        return ($this->isPost() && empty($this->post()));
+        return $this->isPost() && empty($this->post());
     }
 
 
@@ -571,7 +571,7 @@ class Request extends Map
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public function isRefererInternal($hosts=null):bool
     {
-        return (!empty($this->referer(true,$hosts)));
+        return !empty($this->referer(true,$hosts));
     }
 
 
@@ -580,7 +580,7 @@ class Request extends Map
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public function isInternalPost($hosts=null):bool
     {
-        return ($this->isPost() && $this->isRefererInternal($hosts));
+        return $this->isPost() && $this->isRefererInternal($hosts);
     }
 
 
@@ -589,7 +589,7 @@ class Request extends Map
     // possible de fournir un tableau d'autres hosts considérés comme internal
     final public function isExternalPost($hosts=null):bool
     {
-        return ($this->isPost() && !$this->isRefererInternal($hosts));
+        return $this->isPost() && !$this->isRefererInternal($hosts);
     }
 
 
@@ -597,7 +597,7 @@ class Request extends Map
     // retourne vrai si la requête est de méthode get et pas ajax et pas cli
     final public function isStandard():bool
     {
-        return ($this->isGet() && !$this->isAjax() && !$this->isCli());
+        return $this->isGet() && !$this->isAjax() && !$this->isCli();
     }
 
 
@@ -605,7 +605,7 @@ class Request extends Map
     // retourne vrai si le chemin de la requête est vide (ou seulement /)
     final public function isPathEmpty():bool
     {
-        return ($this->path(true) === '');
+        return $this->path(true) === '';
     }
 
 
@@ -613,7 +613,7 @@ class Request extends Map
     // retourne vrai si le chemin match de la requête est vide (ou seulement /)
     final public function isPathMatchEmpty():bool
     {
-        return ($this->pathMatch() === '');
+        return $this->pathMatch() === '';
     }
 
 
@@ -630,7 +630,7 @@ class Request extends Map
     // ce doit être une requête de méthode get, sans post et avec chemin sécuritaire
     final public function isCachable():bool
     {
-        return ($this->isGet() && !$this->hasPost() && $this->isPathSafe());
+        return $this->isGet() && !$this->hasPost() && $this->isPathSafe();
     }
 
 
@@ -639,7 +639,7 @@ class Request extends Map
     // ce doit être une requête de méthode get, sans post et avec chemin sécuritaire
     final public function isRedirectable():bool
     {
-        return ($this->isGet() && !$this->hasPost() && $this->isPathSafe());
+        return $this->isGet() && !$this->hasPost() && $this->isPathSafe();
     }
 
 
@@ -648,7 +648,7 @@ class Request extends Map
     // doit être live
     final public function isFailedFileUpload():bool
     {
-        return ($this->isLive() && $this->isPostWithoutData() && Base\Superglobal::hasServerLengthWithoutPost());
+        return $this->isLive() && $this->isPostWithoutData() && Base\Superglobal::hasServerLengthWithoutPost();
     }
 
 
@@ -664,7 +664,7 @@ class Request extends Map
     // retourne vrai si la requête a un query
     final public function hasQuery():bool
     {
-        return (!empty($this->query));
+        return !empty($this->query);
     }
 
 
@@ -672,7 +672,7 @@ class Request extends Map
     // retourne vrai si la requête a une lang
     final public function hasLang():bool
     {
-        return (!empty($this->lang));
+        return !empty($this->lang);
     }
 
 
@@ -680,7 +680,7 @@ class Request extends Map
     // retourne vrai si la requête courante contient des données post
     final public function hasPost():bool
     {
-        return (!empty($this->post()));
+        return !empty($this->post());
     }
 
 
@@ -688,7 +688,7 @@ class Request extends Map
     // retourne vrai si la requête courante contient des données get ou post
     final public function hasData():bool
     {
-        return ($this->hasQuery() || $this->hasPost());
+        return $this->hasQuery() || $this->hasPost();
     }
 
 
@@ -716,7 +716,7 @@ class Request extends Map
     // retourne vrai si la requête courante contient un user
     final public function hasUser():bool
     {
-        return (is_string($this->user()));
+        return is_string($this->user());
     }
 
 
@@ -724,7 +724,7 @@ class Request extends Map
     // retourne vrai si la requête courante contient un pass
     final public function hasPass():bool
     {
-        return (is_string($this->pass()));
+        return is_string($this->pass());
     }
 
 
@@ -732,7 +732,7 @@ class Request extends Map
     // retourne vrai si la requête courante contient un fragment
     final public function hasFragment():bool
     {
-        return (is_string($this->fragment()));
+        return is_string($this->fragment());
     }
 
 
@@ -740,7 +740,7 @@ class Request extends Map
     // retourne vrai si la requête courante contient un ip
     final public function hasIp():bool
     {
-        return (!empty($this->ip()));
+        return !empty($this->ip());
     }
 
 
@@ -748,7 +748,7 @@ class Request extends Map
     // retourne vrai si la requête courante contient un userAgent
     final public function hasUserAgent():bool
     {
-        return (!empty($this->userAgent()));
+        return !empty($this->userAgent());
     }
 
 
@@ -756,7 +756,7 @@ class Request extends Map
     // retourne vrai si le tableau headers n'est pas vide
     final public function hasHeaders():bool
     {
-        return (!empty($this->headers()));
+        return !empty($this->headers());
     }
 
 
@@ -846,7 +846,7 @@ class Request extends Map
     // retourne vrai si le ip est celui fourni
     final public function isIp($value):bool
     {
-        return (is_string($value) && $value === $this->ip());
+        return is_string($value) && $value === $this->ip();
     }
 
 
@@ -854,7 +854,7 @@ class Request extends Map
     // retourne vrai si le ip est local
     final public function isIpLocal():bool
     {
-        return ($this->hasIp() && Base\Ip::isLocal($this->ip()));
+        return $this->hasIp() && Base\Ip::isLocal($this->ip());
     }
 
 
@@ -862,7 +862,7 @@ class Request extends Map
     // retourne vrai si le ip est permis en fonction du whitelist et blacklist gardé dans les config de la classe
     final public function isIpAllowed():bool
     {
-        return ($this->hasIp() && Base\Ip::allowed($this->ip(),$this->getAttr('ipAllowed')));
+        return $this->hasIp() && Base\Ip::allowed($this->ip(),$this->getAttr('ipAllowed'));
     }
 
 
@@ -886,7 +886,7 @@ class Request extends Map
     // retourne vrai si le chemin est un argument (commence par - ) mais que la requête n'est pas cli
     final public function isPathArgumentNotCli():bool
     {
-        return ($this->isPathArgument() && !$this->isCli());
+        return $this->isPathArgument() && !$this->isCli();
     }
 
 
@@ -894,7 +894,7 @@ class Request extends Map
     // retourne vrai si la requête contient des fichiers
     final public function hasFiles():bool
     {
-        return (!empty($this->files));
+        return !empty($this->files);
     }
 
 

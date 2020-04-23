@@ -42,7 +42,7 @@ class Std extends Base\Test
         assert($arr->isCount(2));
         assert($arr['ok'] === 3);
         $new = $arr->filter(function($value,$key) {
-            return (is_int($value));
+            return is_int($value);
         });
         assert($new->count() === 1);
         assert($new->map(function($value) {

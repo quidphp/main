@@ -159,7 +159,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne vrai si la session est démarré et lié
     final public function isStarted():bool
     {
-        return (session_status() === PHP_SESSION_ACTIVE);
+        return session_status() === PHP_SESSION_ACTIVE;
     }
 
 
@@ -167,7 +167,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne vrai si la session est démarré et lié à inst
     final public function isReady():bool
     {
-        return ($this->isStarted() && $this->hasStorage());
+        return $this->isStarted() && $this->hasStorage();
     }
 
 
@@ -294,7 +294,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne vrai si la session a présentement un storage lié
     final public function hasStorage():bool
     {
-        return (!empty($this->storage));
+        return !empty($this->storage);
     }
 
 

@@ -123,7 +123,7 @@ abstract class ServiceMailer extends Service
     // retourne vrai si l'objet email est prêt à être utilisé
     final public function isReady():bool
     {
-        return (!empty($this->mailer));
+        return !empty($this->mailer);
     }
 
 

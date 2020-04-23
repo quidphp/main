@@ -56,7 +56,7 @@ trait _inst
     // retourne vrai si l'objet courant est dans inst
     final public function inInst():bool
     {
-        return (in_array($this,static::$inst,true));
+        return in_array($this,static::$inst,true);
     }
 
 
@@ -125,7 +125,7 @@ trait _inst
     // retourne vrai s'il y a au moins une instance
     final public static function hasInst():bool
     {
-        return (!empty(static::$inst));
+        return !empty(static::$inst);
     }
 
 

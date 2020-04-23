@@ -318,7 +318,7 @@ class Res extends Base\Test
 
         // lineFilter
         assert(strlen($temp->lineFilter(function($line) {
-            return (strlen($line) > 2);
+            return strlen($line) > 2;
         })->read()) === (31 + ($ll * 4)));
 
         // lineMap

@@ -31,7 +31,7 @@ class Timeout extends Map
     // retourne vrai si l'entrée dans l'objet est en timeout
     final public function isTimedOut($key):bool
     {
-        return ($this->getExpire($key) !== null);
+        return $this->getExpire($key) !== null;
     }
 
 

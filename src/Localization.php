@@ -80,7 +80,7 @@ class Localization extends Map
     // retourne vrai si le pays de la localization est USA
     final public function inUsa()
     {
-        return (strtoupper($this->countryCode()) === 'US');
+        return strtoupper($this->countryCode()) === 'US';
     }
 
 
