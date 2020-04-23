@@ -94,7 +94,7 @@ class Com extends Map
     // retourne vrai si le type est supporté par l'objet
     final public function isType($value):bool
     {
-        return (is_string($value) && in_array($value,$this->type,true))? true:false;
+        return (is_string($value) && in_array($value,$this->type,true));
     }
 
 

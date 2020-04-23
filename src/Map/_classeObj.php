@@ -128,7 +128,7 @@ trait _classeObj
         $type = static::classeOrObj();
 
         if(static::isCallable($condition))
-        $return = (Base\Call::withObj($this,$condition,$value,$key,...$args) === true)? true:false;
+        $return = (Base\Call::withObj($this,$condition,$value,$key,...$args) === true);
 
         elseif(is_array($condition))
         {

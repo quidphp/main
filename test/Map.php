@@ -161,18 +161,18 @@ class Map extends Base\Test
         assert($map->first() === 'ok');
         assert($map->first(function($value,$key) use($map) {
             assert($this === $map);
-            return (is_int($value))? true:false;
+            return (is_int($value));
         }) === 2);
         assert($map->first(function($value) use ($map) {
             assert($this === $map);
-            return (is_string($value))? true:false;
+            return (is_string($value));
         }) === 'ok');
 
         // last
         assert($map->last() === 2);
         assert($map->last(function($value) use ($map) {
             assert($this === $map);
-            return (is_string($value))? true:false;
+            return (is_string($value));
         }) === 'LOL');
 
         // get

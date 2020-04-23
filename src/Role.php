@@ -102,7 +102,7 @@ class Role extends Root
     // retourne vrai si le role a l'attribut true
     final public function is($value):bool
     {
-        return ($this->getAttr($value) === true)? true:false;
+        return ($this->getAttr($value) === true);
     }
 
 
@@ -110,7 +110,7 @@ class Role extends Root
     // retourne vrai si la permission est nobody
     final public function isNobody():bool
     {
-        return ($this->permission() <= 1)? true:false;
+        return ($this->permission() <= 1);
     }
 
 
@@ -118,7 +118,7 @@ class Role extends Root
     // retourne vrai si la permission est somebody
     final public function isSomebody():bool
     {
-        return ($this->permission() > 1)? true:false;
+        return ($this->permission() > 1);
     }
 
 

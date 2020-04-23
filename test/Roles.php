@@ -48,6 +48,9 @@ class Roles extends Base\Test
         assert($rolesIs->isSomebody());
         assert(!$nobody->roles()->isSomebody());
 
+        // findByName
+        assert($rolesIs->findByName('admin')->name() === 'admin');
+
         // add
         $roles->add($admin,$nobody,$test);
         assert($roles->isCount(3));

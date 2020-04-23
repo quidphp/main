@@ -341,7 +341,7 @@ class Map extends ArrMap
         $return = true;
 
         if(static::isCallable($condition))
-        $return = (Base\Call::withObj($this,$condition,$value,$key,...$args) === true)? true:false;
+        $return = (Base\Call::withObj($this,$condition,$value,$key,...$args) === true);
 
         return $return;
     }

@@ -747,7 +747,7 @@ class Autoload extends Base\Root
     // retourne vrai si la classe existe, autoload est false
     final public static function exists(string $class):bool
     {
-        return (class_exists($class,false) || trait_exists($class,false) || interface_exists($class,false))? true:false;
+        return (class_exists($class,false) || trait_exists($class,false) || interface_exists($class,false));
     }
 
 

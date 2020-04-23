@@ -274,7 +274,7 @@ class Lang extends Map
     // retourne vrai si la langue courante est la valeur
     final public function isCurrent($value):bool
     {
-        return (Base\Lang::prepareCode($value) === $this->currentLang())? true:false;
+        return (Base\Lang::prepareCode($value) === $this->currentLang());
     }
 
 
@@ -282,7 +282,7 @@ class Lang extends Map
     // retourne vrai si la langue est dans l'objet et n'est pas la langue courante
     final public function isOther($value):bool
     {
-        return ($this->isLang($value) && !$this->isCurrent($value))? true:false;
+        return ($this->isLang($value) && !$this->isCurrent($value));
     }
 
 
@@ -527,7 +527,7 @@ class Lang extends Map
     // vérifie si une valeur existe et est scalar, possibilité de mettre la langue en deuxième argument
     final public function existsText($key,?string $lang=null):bool
     {
-        return (is_scalar($this->take($key,$lang)))? true:false;
+        return (is_scalar($this->take($key,$lang)));
     }
 
 

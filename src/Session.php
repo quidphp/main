@@ -159,7 +159,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne vrai si la session est démarré et lié
     final public function isStarted():bool
     {
-        return (session_status() === PHP_SESSION_ACTIVE)? true:false;
+        return (session_status() === PHP_SESSION_ACTIVE);
     }
 
 
@@ -167,7 +167,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne vrai si la session est démarré et lié à inst
     final public function isReady():bool
     {
-        return ($this->isStarted() && $this->hasStorage())? true:false;
+        return ($this->isStarted() && $this->hasStorage());
     }
 
 
@@ -228,7 +228,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $return = Flash::newOverload();
 
         elseif($mode === 'is')
-        $return = ($value instanceof Flash)? true:false;
+        $return = ($value instanceof Flash);
 
         return $return;
     }
@@ -246,7 +246,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $return = $class::newOverload();
 
         elseif($mode === 'is')
-        $return = ($value instanceof RequestHistory)? true:false;
+        $return = ($value instanceof RequestHistory);
 
         return $return;
     }
@@ -267,7 +267,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $value->resetAll();
 
         elseif($mode === 'is')
-        $return = ($value instanceof Timeout)? true:false;
+        $return = ($value instanceof Timeout);
 
         return $return;
     }
@@ -284,7 +284,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $return = Com::newOverload();
 
         elseif($mode === 'is')
-        $return = ($value instanceof Com)? true:false;
+        $return = ($value instanceof Com);
 
         return $return;
     }
@@ -294,7 +294,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne vrai si la session a présentement un storage lié
     final public function hasStorage():bool
     {
-        return (!empty($this->storage))? true:false;
+        return (!empty($this->storage));
     }
 
 

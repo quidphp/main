@@ -146,6 +146,16 @@ class Roles extends MapObj
     }
 
 
+    // findByName
+    // retourne un role par nom
+    final public function findByName(string $name):?Role
+    {
+        return $this->first(function(Role $role) use($name) {
+            return $role->name() === $name;
+        });
+    }
+
+
     // add
     // ajoute un ou plusieurs objets roles dans l'objet
     // deux objets ne peuvent pas avoir le même nom ou la même permission

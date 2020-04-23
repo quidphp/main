@@ -80,10 +80,10 @@ class File extends Res
         $resource = $this->resource();
 
         if(is_string($mimeGroup))
-        $return = (Base\Res::isEmpty($resource) || (Base\Res::isMimeGroup($group,$resource)))? true:false;
+        $return = (Base\Res::isEmpty($resource) || (Base\Res::isMimeGroup($group,$resource)));
 
         else
-        $return = (Base\Res::isEmpty($resource) || Base\Res::isFileLike($resource))? true:false;
+        $return = (Base\Res::isEmpty($resource) || Base\Res::isFileLike($resource));
 
         return $return;
     }

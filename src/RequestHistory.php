@@ -230,7 +230,7 @@ class RequestHistory extends Map
     // retourne vrai si le tableau est valide pour créer une requête
     final public static function isArrayValid($value):bool
     {
-        return (is_array($value) && Base\Arr::keysExists(['absolute','method','timestamp'],$value))? true:false;
+        return (is_array($value) && Base\Arr::keysExists(['absolute','method','timestamp'],$value));
     }
 }
 ?>

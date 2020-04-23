@@ -30,7 +30,7 @@ class Error extends Dump implements Main\Contract\Log, Main\Contract\FileStorage
     // retourne vrai si les datas fournis sont valides pour logError
     final public static function isStorageDataValid(...$values):bool
     {
-        return (!empty($values) && $values[0] instanceof Main\Error)? true:false;
+        return (!empty($values) && $values[0] instanceof Main\Error);
     }
 
 
