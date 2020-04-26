@@ -10,7 +10,6 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\Map;
-use Quid\Base;
 use Quid\Main;
 
 // _map
