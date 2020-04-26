@@ -28,10 +28,7 @@ trait _queue
     // enregistre la méthode unqueue pour qu'elle s'éxécute au closeDown
     final public static function triggerUnqueueOnCloseDown(?int $limit=null,?int $timeLimit=null,?float $sleep=null):void
     {
-        Base\Response::onCloseDown(function() use($limit,$timeLimit,$sleep) {
-            static::triggerUnqueue($limit,$timeLimit,$sleep);
-            return;
-        });
+        Base\Response::onCloseDown(fn() => static::triggerUnqueue($limit,$timeLimit,$sleep));
 
         return;
     }

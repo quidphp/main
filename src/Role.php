@@ -21,14 +21,14 @@ class Role extends Root
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'useAlso'=>null // configuration à partir d'un ou plusieurs autre rôles
     ];
 
 
     // dynamique
-    protected $permission = null;
-    protected $name = null;
+    protected int $permission;
+    protected string $name;
 
 
     // construct

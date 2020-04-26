@@ -16,7 +16,7 @@ namespace Quid\Main\File;
 class ImageVector extends Image
 {
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>'imageVector'
     ];
 }

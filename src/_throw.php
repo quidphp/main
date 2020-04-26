@@ -21,7 +21,7 @@ trait _throw
     // ajoute la classe et méthode statique appelant au début du message de l'exception
     final protected static function throw(...$values):void
     {
-        $class = Exception::getOverloadClass();
+        $class = Exception::classOverload();
         static::throwCommon($class,$values);
 
         return;
@@ -34,7 +34,7 @@ trait _throw
     // la différence avec throw est qu'il y a maintenant un tableau action en premier argument, qui permet de définir le traitement lors du catched
     final protected static function catchable(?array $option=null,...$values):void
     {
-        $class = CatchableException::getOverloadClass();
+        $class = CatchableException::classOverload();
         static::throwCommon($class,$values,$option);
 
         return;

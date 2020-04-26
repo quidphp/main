@@ -17,7 +17,7 @@ use Quid\Main;
 trait _readOnly
 {
     // dynamique
-    protected $readOnly = false; // si l'objet est présentement en mode read only
+    protected bool $readOnly = false; // si l'objet est présentement en mode read only
 
 
     // clone

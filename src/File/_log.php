@@ -23,7 +23,7 @@ trait _log
 
 
     // config
-    public static $configFileLog = [
+    public static array $configFileLog = [
         'deleteTrim'=>null,
         'write'=>[
             'callback'=>[Base\Debug::class,'varGet']]

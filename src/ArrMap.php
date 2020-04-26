@@ -21,11 +21,11 @@ abstract class ArrMap extends ArrObj
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $data = []; // données de la map
+    protected array $data = []; // données de la map
 
 
     // toString
@@ -97,7 +97,7 @@ abstract class ArrMap extends ArrObj
     // jsonSerialize
     // serialize l'objet avec json_encode
     // encode seulement data
-    public function jsonSerialize()
+    public function jsonSerialize():array
     {
         return $this->data;
     }
@@ -170,23 +170,63 @@ abstract class ArrMap extends ArrObj
 
 
     // each
-    // permet de passer la clé et la valeur dans une closure donné en argument
-    // la closure est appelé avec this de l'objet courant
-    // si on retourne faux, on brise le loop
-    final public function each(callable $callable):self
+    // permet de faire un each dans l'array
+    // si un loop retourne false, brise le loop et retourne false
+    // pour être utile, il faut passer une valeur par référence dans la closure (pas de arrow func)
+    final public function each(\Closure $closure):bool
     {
-        $i = 0;
-        foreach ($this->arr() as $key => $value)
-        {
-            $r = Base\Call::withObj($this,$callable,$value,$key,$i);
+        return Base\Arr::each($this->arr(),$closure);
+    }
 
-            if($r === false)
-            break;
 
-            $i++;
-        }
+    // some
+    // vérifie qu'au moins une entrée du tableau passe le test de la closure
+    final public function some(\Closure $closure):bool
+    {
+        return Base\Arr::some($this->arr(),$closure);
+    }
 
-        return $this;
+
+    // every
+    // vérifie que toutes les entrée du tableau passe le test de la closure
+    final public function every(\Closure $closure):bool
+    {
+        return Base\Arr::every($this->arr(),$closure);
+    }
+
+
+    // find
+    // retourne la première valeur du tableau répondant true à la condition
+    public function find(\Closure $closure)
+    {
+        return Base\Arr::find($this->arr(),$closure);
+    }
+
+
+    // findKey
+    // retourne la première clé du tableau dont la valeur répond true à la condition
+    final public function findKey(\Closure $closure)
+    {
+        return Base\Arr::findKey($this->arr(),$closure);
+    }
+
+
+    // reduce
+    // permet d'envoyer le contenu du tableau dans reduce
+    // l'ordre des arguments est différent que la fonction de base
+    // de même la clé est passé en troisième argument
+    final public function reduce($return,\Closure $closure)
+    {
+        return Base\Arr::reduce($return,$this->arr(),$closure);
+    }
+
+
+    // accumulate
+    // comme reduce, mais le return est automatiquement append
+    // autre différence, si le callback retourne faux brise le loop
+    final public function accumulate($return,\Closure $closure)
+    {
+        return Base\Arr::accumulate($return,$this->arr(),$closure);
     }
 
 

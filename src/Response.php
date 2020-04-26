@@ -17,15 +17,15 @@ use Quid\Base;
 class Response extends Res
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $mapAllow = ['clone']; // méthodes permises
-    protected $id = null; // id unique de la réponse
-    protected $request = null; // instance de l'objet request
-    protected $header = null; // headers de la réponse
-    protected $timestamp = null; // timestamp de réception la réponse
+    protected ?array $mapAllow = ['clone']; // méthodes permises
+    protected string $id; // id unique de la réponse
+    protected Request $request; // instance de l'objet request
+    protected ?array $header = null; // headers de la réponse
+    protected ?int $timestamp = null; // timestamp de réception la réponse
 
 
     // construct
@@ -34,8 +34,8 @@ class Response extends Res
     final public function __construct($request=null,?array $option=null)
     {
         $this->setRequest($request);
-        $this->trigger($option);
         $this->setId();
+        $this->trigger($option);
 
         return;
     }

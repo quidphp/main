@@ -17,7 +17,7 @@ use Quid\Base;
 class File extends Res
 {
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>null, // groupe par défaut, par défaut rien, si tu mets false la classe getClass ne cherchera pas de classe
         'mime'=>null, // définit le mime par défaut à utiliser (par exemple lors de la création d'une ressource temporaire)
         'create'=>false, // crée le fichier si non existant
@@ -27,7 +27,7 @@ class File extends Res
 
 
     // param
-    public static $param = [
+    public static array $param = [
         'storageClass'=>[ // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
             'cache'=>File\Cache::class,
             'error'=>File\Error::class,
@@ -246,7 +246,7 @@ class File extends Res
         }
 
         if(!empty($return))
-        $return = $return::getOverloadClass();
+        $return = $return::classOverload();
 
         return $return;
     }
@@ -340,7 +340,7 @@ class File extends Res
     // fait un overload sur la classe et ensuite passe à new
     final public static function newOverload(...$values):Root
     {
-        return static::getOverloadClass()::new(...$values);
+        return static::classOverload()::new(...$values);
     }
 
 

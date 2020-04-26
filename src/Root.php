@@ -14,13 +14,13 @@ use Quid\Base;
 
 // root
 // abstract class extended by all others
-abstract class Root extends Base\Root implements \Serializable, \JsonSerializable
+abstract class Root extends Base\Root implements \JsonSerializable
 {
     // trait
     use _rootClone;
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 }
 ?>

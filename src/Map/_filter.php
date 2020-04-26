@@ -18,7 +18,7 @@ trait _filter
 {
     // filter
     // permet de filtrer l'objet à partir d'une condition à ce moment seul les entrées true sont gardés
-    final public function filter($condition,...$args):Main\Map
+    final public function filter(\Closure $closure):Main\Map
     {
         $this->checkAllowed('filter');
         $return = $this->onPrepareThis('filter');
@@ -26,7 +26,7 @@ trait _filter
 
         foreach ($return->arr() as $key => $value)
         {
-            if($return->filterCondition($condition,$key,$value,...$args) === false)
+            if(!$closure($value,$key))
             unset($data[$key]);
         }
 

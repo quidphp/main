@@ -89,7 +89,7 @@ class Files extends Base\Test
         // uploadArrayReformat
 
         // obj
-        assert($files->filter(['extension'=>'pdf'])->keys() === [2,11]);
+        assert($files->filter(fn($file) => $file->extension() === 'pdf')->keys() === [2,11]);
         assert(count($files->pair('basename')) > 5);
 
         // map

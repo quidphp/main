@@ -17,7 +17,7 @@ use Quid\Base;
 class Json extends Text
 {
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>'json',
         'read'=>[
             'callback'=>[Base\Json::class,'decode']],

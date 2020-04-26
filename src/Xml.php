@@ -17,11 +17,11 @@ use Quid\Base;
 class Xml extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $xml = null; // garde une copie de l'objet simpleXml
+    protected \SimpleXMLElement $xml; // garde une copie de l'objet simpleXml
 
 
     // construct

@@ -17,7 +17,7 @@ use Quid\Base;
 class Video extends Map
 {
     // config
-    public static $config = [
+    public static array $config = [
         'name'=>'name',
         'date'=>'date',
         'description'=>'description',
@@ -28,7 +28,7 @@ class Video extends Map
 
 
     // dynamique
-    protected $mapAllow = ['overwrite','serialize','clone']; // méthodes permises
+    protected ?array $mapAllow = ['overwrite','serialize','clone']; // méthodes permises
 
 
     // construct

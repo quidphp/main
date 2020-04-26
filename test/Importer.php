@@ -23,9 +23,7 @@ class Importer extends Base\Test
         // prepare
         $source = Main\File::new('[assertCommon]/csv.csv',['toUtf8'=>true]);
         $target = new $source(true);
-        $callback = function(array $return) {
-            return $return;
-        };
+        $callback = fn(array $return) => $return;
 
         // construct
         $import = new Main\Importer($source,$target,['truncate'=>true,'callback'=>$callback]);
@@ -44,13 +42,13 @@ class Importer extends Base\Test
         assert($import->target() instanceof Main\File);
 
         // setCallback
-        assert($import->setCallback(0,function($v) { return $v; }) === $import);
+        assert($import->setCallback(0,fn($v) => $v) === $import);
 
         // setRequired
         assert($import->setRequired(0,true) === $import);
 
         // associate
-        assert($import->associate(1,'name',false,function(string $v,array $ok) { return $v.'ok'; }) === $import);
+        assert($import->associate(1,'name',false,fn(string $v,array $ok) => $v.'ok') === $import);
 
         // getMap
         assert(count($import->getMap(0)) === 4);

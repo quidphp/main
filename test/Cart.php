@@ -87,10 +87,7 @@ class Cart extends Base\Test
         // map
         $cart->add('test',1,['special'=>true]);
         assert($cart->getIndexesFromItem('test') === [1,3]);
-        $cart->filter(function(array $array) {
-            ['item'=>$item] = $array;
-            return $item === 'test2';
-        });
+        $cart->filter(fn(array $array) => $array['item'] === 'test2');
         assert($cart->isCount(1));
         assert($cart->isNotEmpty());
         $cart->unset(2);

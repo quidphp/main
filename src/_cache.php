@@ -17,7 +17,7 @@ use Quid\Base;
 trait _cache
 {
     // cache
-    protected $cache = []; // tableau avec les éléments mis en cache dans l'objet
+    protected array $cache = []; // tableau avec les éléments mis en cache dans l'objet
 
 
     // cache

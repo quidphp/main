@@ -22,7 +22,7 @@ class Request extends Map
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'decode'=>false, // l'uri dans setUri est décodé
         'uri'=>null, // encode l'uri de sortie si utilise output, relative ou absolute
         'idLength'=>null, // longueur du id de la requête
@@ -60,28 +60,28 @@ class Request extends Map
 
 
     // required
-    protected static $required = ['id','scheme','host','path','method']; // propriété requise, ne peuvent pas être null
+    protected static array $required = ['id','scheme','host','path','method']; // propriété requise, ne peuvent pas être null
 
 
     // dynamique
-    protected $id = null; // id unique de la requête
-    protected $scheme = null; // scheme de la requête
-    protected $user = null; // user de la requête
-    protected $pass = null; // pass de la requête
-    protected $host = null; // host de la requête
-    protected $port = null; // port de la requête
-    protected $path = null; // path relative de la requête
-    protected $query = null; // query de la requête, en string
-    protected $fragment = null; // fragment de la requête
-    protected $method = null; // method de la requête
-    protected $ip = null; // ip de la requête
-    protected $headers = []; // headers de la requête
-    protected $timestamp = null; // timestamp de la requête
-    protected $lang = null; // lang de la requête, peut provenir de path
-    protected $files = []; // contient les données de fichier
-    protected $cli = false; // défini si c'est une requête du cli
-    protected $live = false; // défini si la requête représente la live
-    protected $log = null; // permet de conserver des datas à logger
+    protected ?string $id = null; // id unique de la requête
+    protected ?string $scheme = null; // scheme de la requête
+    protected ?string $user = null; // user de la requête
+    protected ?string $pass = null; // pass de la requête
+    protected ?string $host = null; // host de la requête
+    protected ?int $port = null; // port de la requête
+    protected ?string $path = null; // path relative de la requête
+    protected ?string $query = null; // query de la requête, en string
+    protected ?string $fragment = null; // fragment de la requête
+    protected ?string $method = null; // method de la requête
+    protected ?string $ip = null; // ip de la requête
+    protected array $headers = []; // headers de la requête
+    protected ?int $timestamp = null; // timestamp de la requête
+    protected ?string $lang = null; // lang de la requête, peut provenir de path
+    protected array $files = []; // contient les données de fichier
+    protected bool $cli = false; // défini si c'est une requête du cli
+    protected bool $live = false; // défini si la requête représente la live
+    protected ?array $log = null; // permet de conserver des datas à logger
 
 
     // construct
@@ -925,7 +925,7 @@ class Request extends Map
 
     // checkAfter
     // lancé après chaque méthode en écriture, cast le tableau post
-    final public function checkAfter():parent
+    final public function checkAfter():self
     {
         $this->data = Base\Arrs::cast($this->data);
 

@@ -21,7 +21,7 @@ class En extends Base\Lang\En
 
 
     // config
-    public static $config = [
+    public static array $config = [
 
         // error
         'error'=>[

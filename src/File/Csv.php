@@ -18,7 +18,7 @@ use Quid\Main;
 class Csv extends Text implements Main\Contract\Import
 {
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>'csv',
         'read'=>[ // option pour read
             'callback'=>[self::class,'readCallback'],

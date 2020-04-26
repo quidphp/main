@@ -41,13 +41,9 @@ class Std extends Base\Test
         assert($arr->insertIndex(0,['ok'=>3]) === $arr);
         assert($arr->isCount(2));
         assert($arr['ok'] === 3);
-        $new = $arr->filter(function($value,$key) {
-            return is_int($value);
-        });
+        $new = $arr->filter(fn($value,$key) => is_int($value));
         assert($new->count() === 1);
-        assert($new->map(function($value) {
-            return (is_int($value))? true:$value;
-        })['ok'] === true);
+        assert($new->map(fn($value) => (is_int($value))? true:$value)['ok'] === true);
         $base = new Main\Std([1,'james','ok'=>'test']);
         $base2 = new Main\Std([1,2,3]);
         assert(!$base->isIndexed());

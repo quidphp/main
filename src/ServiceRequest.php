@@ -17,7 +17,7 @@ use Quid\Base;
 abstract class ServiceRequest extends Service
 {
     // config
-    public static $config = [
+    public static array $config = [
         'target'=>null, // cible du service
         'ping'=>2,
         'responseCode'=>200
@@ -62,7 +62,7 @@ abstract class ServiceRequest extends Service
     // retourne la classe à utiliser pour request
     final protected static function requestClass():string
     {
-        return Request::getOverloadClass();
+        return Request::classOverload();
     }
 
 

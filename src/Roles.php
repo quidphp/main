@@ -23,12 +23,12 @@ class Roles extends MapObj
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $mapAllow = ['add','unset','remove','filter','sort','serialize','clone']; // méthodes permises
-    protected $mapSortDefault = 'permission'; // défini la méthode pour sort par défaut
+    protected ?array $mapAllow = ['add','unset','remove','filter','sort','serialize','clone']; // méthodes permises
+    protected ?string $mapSortDefault = 'permission'; // défini la méthode pour sort par défaut
 
 
     // construct
@@ -64,7 +64,7 @@ class Roles extends MapObj
     {
         if(is_array($return))
         {
-            $class = Role::getOverloadClass();
+            $class = Role::classOverload();
             $return = new $class(...array_values($return));
         }
 
@@ -150,9 +150,7 @@ class Roles extends MapObj
     // retourne un role par nom
     final public function findByName(string $name):?Role
     {
-        return $this->first(function(Role $role) use($name) {
-            return $role->name() === $name;
-        });
+        return $this->find(fn(Role $role) => $role->name() === $name);
     }
 
 
@@ -191,7 +189,7 @@ class Roles extends MapObj
     // retorne le premier role nobody
     final public function nobody():?Role
     {
-        return $this->first(['isNobody'=>true]);
+        return $this->find(fn($role) => $role->isNobody());
     }
 
 

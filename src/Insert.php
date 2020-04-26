@@ -16,16 +16,16 @@ namespace Quid\Main;
 class Insert extends Map
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $mapAllow = ['set','push','unshift','serialize','clone']; // méthode permises
+    protected ?array $mapAllow = ['set','push','unshift','serialize','clone']; // méthode permises
 
 
     // set
     // comme set, mais vérifie que la clé n'existe pas
-    final public function set($key,$value):parent
+    final public function set($key,$value):self
     {
         if($key !== null && $this->exists($key))
         static::throw('cannotUpdateExistingKey');

@@ -87,8 +87,8 @@ class Roles extends Base\Test
         assert($roles->not(1) !== $roles);
         assert($roles->not(1)->isCount(2));
         assert($roles->not($roles)->isEmpty());
-        assert($roles->filter(['permission'=>80]) !== $roles);
-        assert($roles->filter(['permission'=>80])->isCount(1));
+        assert($roles->filter(fn($role) => $role->permission() === 80) !== $roles);
+        assert($roles->filter(fn($role) => $role->permission() === 80)->isCount(1));
         assert($roles->add($roles2)->isCount(5));
 
         return true;

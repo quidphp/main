@@ -17,11 +17,11 @@ use Quid\Base;
 abstract class Service extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $serviceKey = null; // enregistre la clé de l'objet, utilisé dans l'objet services
+    protected ?string $serviceKey = null; // enregistre la clé de l'objet, utilisé dans l'objet services
 
 
     // construct

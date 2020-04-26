@@ -23,7 +23,7 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'dirname'=>'[storage]/queue',
         'extension'=>'txt',
         'unqueue'=>null // callable à mettre pour le unqueue
@@ -49,7 +49,7 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
         $callable = $this->getAttr('unqueue');
 
         if(static::isCallable($callable))
-        $return = Base\Call::withObj($this,$callable);
+        $return = $callable($this);
 
         else
         static::throw('noCallableForUnqueue');

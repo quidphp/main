@@ -17,7 +17,7 @@ use Quid\Base;
 class Importer extends Map
 {
     // config
-    public static $config = [
+    public static array $config = [
         'action'=>'insert', // action par défaut
         'empty'=>false, // empty lors du trigger, booléean
         'slim'=>true, // réduit la taille du tableau de retour dans prepareReturn
@@ -27,17 +27,17 @@ class Importer extends Map
         'update'=>null, // option pour update
         'delete'=>null, // option pour delete
         'truncate'=>null, // option pour truncate
-        'lineCallback'=>null // callable pour chaque ligne
+        'lineCallback'=>null // callback pour chaque ligne
     ];
 
 
     // dynamique
-    protected $mapAllow = ['set','unset','empty']; // méthodes permises
-    protected $mapAfter = ['clean']; // lance la méthode clean après chaque modification
-    protected $source = null; // store l'instance de la source
-    protected $target = null; // store la target
-    protected $required = []; // store les colonnes qui ne peuvent pas être vide
-    protected $callable = []; // store les callbacks pour les différentes colonnes
+    protected Contract\Import $source; // store l'instance de la source
+    protected Contract\Import $target; // store la target
+    protected ?array $mapAllow = ['set','unset','empty']; // méthodes permises
+    protected array $mapAfter = ['clean']; // lance la méthode clean après chaque modification
+    protected array $required = []; // store les colonnes qui ne peuvent pas être vide
+    protected array $callback = []; // store les callbacks pour les différentes colonnes
 
 
     // construct
@@ -96,7 +96,7 @@ class Importer extends Map
     // set
     // set pour importer
     // key doit être int et value doit être une string représentant un nom de colonne
-    final public function set($key,$value):parent
+    final public function set($key,$value):self
     {
         $value = Base\Obj::cast($value);
 
@@ -115,10 +115,10 @@ class Importer extends Map
     // setCallback
     // lie une callback à une colonne déjà set
     // envoie une exception si la clé n'existe pas
-    final public function setCallback($key,?callable $callable):self
+    final public function setCallback($key,?\Closure $callback):self
     {
         $this->checkExists($key);
-        $this->callable[$key] = $callable;
+        $this->callback[$key] = $callback;
 
         return $this;
     }
@@ -137,13 +137,13 @@ class Importer extends Map
 
 
     // clean
-    // enlève les callables et required pour toutes les clés de colonnes inexistants
+    // enlève les callbacks et required pour toutes les clés de colonnes inexistants
     final protected function clean():void
     {
-        foreach ($this->callable as $key => $value)
+        foreach ($this->callback as $key => $value)
         {
             if(!$this->exists($key))
-            unset($this->callable[$key]);
+            unset($this->callback[$key]);
         }
 
         foreach ($this->required as $key => $value)
@@ -159,19 +159,19 @@ class Importer extends Map
     // associate
     // lie une colonne de la source, à une colonne dans la target
     // peut aussi marquer une colonne comme requise
-    // peut aussi lié une callable qui agira comme array_map
-    final public function associate($key,$value,bool $required=false,?callable $callable=null):self
+    // peut aussi lié une callback qui agira comme array_map
+    final public function associate($key,$value,bool $required=false,?\Closure $callback=null):self
     {
         $this->set($key,$value);
         $this->setRequired($key,$required);
-        $this->setCallback($key,$callable);
+        $this->setCallback($key,$callback);
 
         return $this;
     }
 
 
     // getMap
-    // retourne un tableau avec la clé de colonne, la colonne et si présent, la callable et le statut required
+    // retourne un tableau avec la clé de colonne, la colonne et si présent, la callback et le statut required
     final public function getMap($key):?array
     {
         $return = null;
@@ -182,7 +182,7 @@ class Importer extends Map
             $return[0] = $key;
             $return[1] = $value;
             $return[2] = $this->required[$key] ?? false;
-            $return[3] = $this->callable[$key] ?? null;
+            $return[3] = $this->callback[$key] ?? null;
         }
 
         return $return;
@@ -190,7 +190,7 @@ class Importer extends Map
 
 
     // getMaps
-    // retourne un tableau multidimensionnel avec tous les liens colonnes et callable
+    // retourne un tableau multidimensionnel avec tous les liens colonnes et callback
     final public function getMaps():array
     {
         $return = [];
@@ -205,7 +205,7 @@ class Importer extends Map
 
 
     // checkMaps
-    // retourne un tableau multidimensionnel avec tous les liens colonnes et callable
+    // retourne un tableau multidimensionnel avec tous les liens colonnes et callback
     // envoie une exception si vide
     final public function checkMaps():array
     {
@@ -314,10 +314,10 @@ class Importer extends Map
                     $original = $v;
                     $col = $maps[$k][1];
                     $required = $maps[$k][2] ?? false;
-                    $callable = $maps[$k][3] ?? null;
+                    $callback = $maps[$k][3] ?? null;
 
-                    if(static::isCallable($callable))
-                    $v = $callable($v,$value,$line);
+                    if(static::isCallable($callback))
+                    $v = $callback($v,$value,$line);
 
                     if($v === false || ($required === true && Base\Vari::isReallyEmpty($v)))
                     {

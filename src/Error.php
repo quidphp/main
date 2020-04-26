@@ -21,7 +21,7 @@ class Error extends Root
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'lang'=>null, // langue de l'erreur
         'cast'=>'titleMessage', // méthode à utiliser pour cast
         'errorLog'=>true, // l'erreur est loggé dans php.log
@@ -52,19 +52,19 @@ class Error extends Root
 
 
     // lang
-    protected static $lang = null; // objet pour lang
-    protected static $com = null; // objet pour com
+    protected static ?Lang $lang = null; // objet pour lang
+    protected static ?Com $com = null; // objet pour com
 
 
     // dynamic
-    protected $message = null; // message de l'erreur
-    protected $code = null; // code de l'erreur
-    protected $file = null; // fichier de l'erreur
-    protected $line = null; // ligne de l'erreur
-    protected $trace = []; // trace de l'erreur
+    protected ?string $message = null; // message de l'erreur
+    protected ?int $code = null; // code de l'erreur
+    protected ?string $file = null; // fichier de l'erreur
+    protected ?int $line = null; // ligne de l'erreur
+    protected array $trace = []; // trace de l'erreur
     protected $info = null; // info sur l'erreur
-    protected $stack = null; // stack pour les exceptions
-    protected $content = null; // contenu additionnelle pour les exceptions
+    protected ?array $stack = null; // stack pour les exceptions
+    protected ?string $content = null; // contenu additionnelle pour les exceptions
 
 
     // construct
@@ -254,8 +254,8 @@ class Error extends Root
     // les attrs traceLength et traceArgs sont utilisés ici si les arguments length et args ne sont pas spécifiés
     final public function getTrace(?int $length=null,?bool $args=null):array
     {
-        $length = $length ?? $this->getAttr('traceLength',true) ?? 1;
-        $args = $args ?? $this->getAttr('traceArgs') ?? false;
+        $length ??= $this->getAttr('traceLength',true) ?? 1;
+        $args ??= $this->getAttr('traceArgs') ?? false;
         $return = Base\Debug::traceSlice(0,$length,$this->getFile(),$this->getLine(),$args,$this->trace);
 
         return $return;

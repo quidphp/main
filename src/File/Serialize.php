@@ -17,7 +17,7 @@ use Quid\Base;
 class Serialize extends Text
 {
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>null,
         'read'=>[
             'callback'=>[Base\Crypt::class,'unserialize']],

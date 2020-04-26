@@ -274,9 +274,7 @@ class Res extends Base\Test
         assert(Base\Arrs::is($res->lineChunk(2)));
 
         // lineChunkWalk
-        assert(count($res->lineChunkWalk(function() {
-            return true;
-        })) === 3);
+        assert(count($res->lineChunkWalk(fn() => true)) === 3);
 
         // lineReturns
 
@@ -317,14 +315,10 @@ class Res extends Base\Test
         assert(strlen($temp->lineInsert(1,'insert')->read()) === (33 + ($ll * 5)));
 
         // lineFilter
-        assert(strlen($temp->lineFilter(function($line) {
-            return strlen($line) > 2;
-        })->read()) === (31 + ($ll * 4)));
+        assert(strlen($temp->lineFilter(fn($line) => strlen($line) > 2)->read()) === (31 + ($ll * 4)));
 
         // lineMap
-        assert(strlen($temp->lineMap(function($line) {
-            return $line.'A';
-        })->read()) === (36 + ($ll * 4)));
+        assert(strlen($temp->lineMap(fn($line) => $line.'A')->read()) === (36 + ($ll * 4)));
 
         // empty
         assert($temp->empty()->read() === '');

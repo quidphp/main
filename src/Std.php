@@ -27,6 +27,6 @@ class Std extends Map
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 }
 ?>

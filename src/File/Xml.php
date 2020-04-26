@@ -16,7 +16,7 @@ namespace Quid\Main\File;
 class Xml extends Text
 {
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>'xml'
     ];
 }

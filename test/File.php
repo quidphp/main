@@ -355,8 +355,8 @@ class File extends Base\Test
         assert(in_array(strlen($php::innerLinesFromString($phpString)),[163,173],true));
 
         // queue
-        assert(Main\File\Queue::setUnqueueCallable(function() {
-            assert($this instanceof Main\File\Queue);
+        assert(Main\File\Queue::setUnqueueCallable(function($value) {
+            assert($value instanceof Main\File\Queue);
             return 'test';
         }) === null);
         assert(is_int(Main\File\Queue::storageAll()->unlink()));

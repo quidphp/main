@@ -18,16 +18,17 @@ use Quid\Main;
 trait _map
 {
     // map
-    // permet d'utiliser une callable pour changer les valeurs de l'objet
+    // permet d'utiliser une closure pour changer les valeurs de l'objet
     // la nouvelle valeur est passé dans la méthode set
-    final public function map(callable $map,...$args):Main\Map
+    // la clé est envoyé en deuxième argument
+    final public function map(\Closure $closure):Main\Map
     {
         $this->checkAllowed('map');
         $return = $this->onPrepareThis('map');
 
         foreach ($this->arr() as $key => $value)
         {
-            $new = Base\Call::withObj($return,$map,$value,$key,...$args);
+            $new = $closure($value,$key);
 
             if($new !== $value)
             $return->set($key,$new);

@@ -17,11 +17,11 @@ use Quid\Base;
 class Res extends ArrObj
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // base
-    protected static $base = [ // tableau des méthodes en clé et condtion (check) en valeur
+    protected static array $base = [ // tableau des méthodes en clé et condtion (check) en valeur
         'isEmpty'=>null,
         'isNotEmpty'=>null,
         'isReadable'=>null,
@@ -657,7 +657,7 @@ class Res extends ArrObj
     // si callback retourne faux, la colonne existante est stocké et fermé
     // si callback retourne null, la ligne est stocké si la colonne est ouverte, sinon elle est ignoré
     // retourne un tableau multidimensionnel colonne
-    final public function lineChunkWalk(callable $callback,?array $option=null):?array
+    final public function lineChunkWalk(\Closure $callback,?array $option=null):?array
     {
         $return = Base\Res::lineChunkWalk($callback,$this->resource(),Base\Arr::plus($this->readOption(),$option));
 
@@ -842,7 +842,7 @@ class Res extends ArrObj
     // permet de passer chaque ligne de la resource dans un callback
     // si le callback retourne faux, la ligne est retiré
     // la ressource est automatiquement modifié
-    final public function lineFilter(callable $callback,?array $option=null):self
+    final public function lineFilter(\Closure $callback,?array $option=null):self
     {
         Base\Res::lineFilter($callback,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
 
@@ -853,7 +853,7 @@ class Res extends ArrObj
     // lineMap
     // permet de passer chaque ligne de la resource dans un callback
     // la ligne est remplacé par la valeur de retour du callback
-    final public function lineMap(callable $callback,?array $option=null):self
+    final public function lineMap(\Closure $callback,?array $option=null):self
     {
         Base\Res::lineMap($callback,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
 

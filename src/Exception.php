@@ -14,7 +14,7 @@ use Quid\Base;
 
 // exception
 // class for a default exception
-class Exception extends \Exception implements \Serializable, \JsonSerializable
+class Exception extends \Exception implements \JsonSerializable
 {
     // trait
     use _root;
@@ -22,7 +22,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'code'=>31, // code de l'exception
         'cleanBuffer'=>false,
         'output'=>false,
@@ -31,7 +31,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
 
 
     // dynamique
-    protected $args = null; // retourne l'argument initial message du constructeur
+    protected array $args; // retourne l'argument initial message du constructeur
 
 
     // construct
@@ -163,7 +163,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     // envoie à la classse error et trigge l'erreur
     final public function trigger(?array $attr=null):Error
     {
-        $class = Error::getOverloadClass();
+        $class = Error::classOverload();
         $return = $class::exception($this,$attr);
 
         return $return;
@@ -270,7 +270,7 @@ class Exception extends \Exception implements \Serializable, \JsonSerializable
     {
         $exceptionOption = ($exception instanceof self)? $exception->attr():null;
         $attr = Base\Arr::replace(static::$config,$exceptionOption,$attr);
-        $class = Error::getOverloadClass();
+        $class = Error::classOverload();
         $return = $class::exception($exception,$attr);
 
         return $return;

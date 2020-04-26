@@ -17,7 +17,7 @@ use Quid\Base;
 trait _inst
 {
     // inst
-    protected static $inst = []; // tableau avec les instances
+    protected static array $inst = []; // tableau avec les instances
 
 
     // onPrepareSetInst

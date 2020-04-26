@@ -17,7 +17,7 @@ use Quid\Main;
 abstract class Binary extends Main\File
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 }
 
 // init

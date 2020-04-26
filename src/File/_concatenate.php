@@ -18,7 +18,7 @@ use Quid\Main;
 trait _concatenate
 {
     // configConcatenate
-    public static $configConcatenate = [
+    public static array $configConcatenate = [
         'concatenator'=>null,
         'concatenateService'=>null,
         'concatenateExtension'=>null
@@ -63,7 +63,7 @@ trait _concatenate
     // retourne la classe du service
     final protected function concatenateService():string
     {
-        return $this->getAttr('concatenateService')::getOverloadClass();
+        return $this->getAttr('concatenateService')::classOverload();
     }
 
 

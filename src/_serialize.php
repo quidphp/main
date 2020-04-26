@@ -15,41 +15,30 @@ namespace Quid\Main;
 // trait that provides methods for serializing and unserializing object
 trait _serialize
 {
-    // serialize
-    // serialize un objet
+    // __serialize
+    // méthode magique pour serializer un objet
     // toutes les propriétés sont serialize
-    public function serialize():string
+    public function __serialize():array
     {
-        $return = '';
-        $data = get_object_vars($this);
-
-        if(is_array($data))
-        $return = serialize($data);
-
-        return $return;
+        return get_object_vars($this);
     }
 
 
-    // unserialize
-    // unserialize un objet
+    // __unserialize
+    // méthode magiqu pour unserialize un objet
     // si une des propritétés n'existe pas, envoie une exception
-    public function unserialize($data)
+    public function __unserialize(array $data):void
     {
-        $data = unserialize($data);
-
-        if(is_array($data))
+        foreach ($data as $key => $value)
         {
-            foreach ($data as $key => $value)
-            {
-                if(is_string($key) && property_exists($this,$key))
-                $this->$key = $value;
+            if(is_string($key) && property_exists($this,$key))
+            $this->$key = $value;
 
-                else
-                static::throw('propertyDoesNotExist',$key);
-            }
+            else
+            static::throw('propertyDoesNotExist',$key);
         }
 
-        return $this;
+        return;
     }
 
 

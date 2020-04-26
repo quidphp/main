@@ -23,13 +23,13 @@ class Services extends MapObj
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $mapAllow = ['set','unset','remove','sort','clone']; // méthodes permises
+    protected ?array $mapAllow = ['set','unset','remove','sort','clone']; // méthodes permises
     protected $mapIs = Service::class; // classe d'objet permis
-    protected $mapSortDefault = 'getServiceKey'; // défini la méthode pour sort par défaut
+    protected ?string $mapSortDefault = 'getServiceKey'; // défini la méthode pour sort par défaut
 
 
     // construct
@@ -49,7 +49,7 @@ class Services extends MapObj
     // set
     // ajoute un rôle à l'objet roles
     // le init config de role est lancé avant l'ajout
-    final public function set($key,$value):parent
+    final public function set($key,$value):self
     {
         if(!is_string($key))
         static::throw('onlyStringKeyAllowed');

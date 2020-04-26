@@ -23,15 +23,17 @@ trait _root
     use _attr;
 
 
-    // invoke
+    // __invoke
     // invoke la méthode
     public function __invoke(...$args)
     {
-        return static::throw('notAllowed');
+        static::throw('notAllowed');
+
+        return;
     }
 
 
-    // toString
+    // __toString
     // cast l'objet en string
     public function __toString():string
     {
@@ -39,35 +41,83 @@ trait _root
     }
 
 
-    // isset
+    // __isset
     // isset sur propriété innacessible
-    public function __isset(string $key)
+    public function __isset(string $key):bool
     {
-        return static::throw('notAllowed');
+        static::throw('notAllowed');
+
+        return false;
     }
 
 
-    // get
+    // __get
     // get sur propriété innacessible
     public function __get(string $key)
     {
-        return static::throw('notAllowed',$key);
+        static::throw('notAllowed',$key);
+
+        return;
     }
 
 
-    // set
+    // __set
     // set sur propriété innacessible
-    public function __set(string $key,$value)
+    public function __set(string $key,$value):void
     {
-        return static::throw('notAllowed',$key);
+        static::throw('notAllowed',$key);
+
+        return;
     }
 
 
-    // unset
+    // __unset
     // unset sur propriété innacessible
-    public function __unset(string $key)
+    public function __unset(string $key):void
     {
-        return static::throw('notAllowed',$key);
+        static::throw('notAllowed',$key);
+
+        return;
+    }
+
+
+    // __serialize
+    // ce qui se passe en cas de serialize
+    public function __serialize():array
+    {
+        static::throw('notAllowed');
+
+        return [];
+    }
+
+
+    // __unserialize
+    // ce qui se passe en cas de unserialize
+    public function __unserialize(array $data):void
+    {
+        static::throw('notAllowed');
+
+        return;
+    }
+
+
+    // jsonSerialize
+    // ce qui se passe en cas de jsonSerialize, utiliser par l'interface
+    public function jsonSerialize()
+    {
+        static::throw('notAllowed');
+
+        return;
+    }
+
+
+    // cast
+    // utiliser pour transformer des objet dans les classes base
+    public function _cast()
+    {
+        static::throw('notAllowed');
+
+        return;
     }
 
 
@@ -87,35 +137,11 @@ trait _root
     }
 
 
-    // cast
-    // utiliser pour transformer des objet dans les classes base
-    public function _cast()
-    {
-        return static::throw('notAllowed');
-    }
-
-
     // serialize
-    // ce qui se passe en cas de serialize
-    public function serialize()
+    // retourne une version serialize de l'objet
+    final public function serialize():string
     {
-        return static::throw('notAllowed');
-    }
-
-
-    // unserialize
-    // ce qui se passe en cas de unserialize
-    public function unserialize($data)
-    {
-        return static::throw('notAllowed');
-    }
-
-
-    // jsonSerialize
-    // ce qui se passe en cas de jsonSerialize
-    public function jsonSerialize()
-    {
-        return static::throw('notAllowed');
+        return serialize($this);
     }
 
 
@@ -136,7 +162,7 @@ trait _root
 
 
     // callThis
-    // appele une closure avec un bind entre this et l'objet courant
+    // appele une closure avec un bind de l'objet courant comme this
     final public function callThis(\Closure $closure,...$args)
     {
         return Base\Call::bindTo($this,$closure,...$args);

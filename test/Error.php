@@ -129,7 +129,7 @@ class Error extends Base\Test
         assert($error->name() === 'Error');
 
         // trigger
-        $fatal->setAttr('callback',function($error) { $error->makeSilent(); });
+        $fatal->setAttr('callback',fn($error) => $error->makeSilent());
         $fatal->trigger();
 
         // dispatch

@@ -18,13 +18,13 @@ use Quid\Main;
 class Zip extends Binary
 {
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>'zip'
     ];
 
 
     // dynamique
-    protected $archive = null; // garde une copie de l'objet zipArchive
+    protected ?\ZipArchive $archive = null; // garde une copie de l'objet zipArchive
 
 
     // archive

@@ -17,7 +17,7 @@ use Quid\Base;
 trait _attr
 {
     // dynamique
-    protected $attr = []; // conserve les attributs
+    protected array $attr = []; // conserve les attributs
 
 
     // attrRef
@@ -66,14 +66,13 @@ trait _attr
 
 
     // getAttr
-    // retourne un attribut
-    // possible d'appeler si call est true
+    // retourne un attribut,  possible d'appeler si call est true
     final public function getAttr($key,bool $call=false,...$args)
     {
         $return = Base\Arrs::get($key,$this->attrRef());
 
         if($call === true && static::isCallable($return))
-        $return = Base\Call::withObj($this,$return,...$args);
+        $return = $return($this,...$args);
 
         return $return;
     }

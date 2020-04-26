@@ -67,6 +67,8 @@ class Com extends Base\Test
         assert($com->payload('neg','login/ok',null,null,[]) === ['neg','login/ok',null,null]);
         assert($com->payload('neutral','row/1',null,null,['neg','no change',null,null,['pos','tryAgain']])[4][0][4][0] === ['pos','tryAgain',null,null]);
 
+        // findCommon
+
         // update
 
         // unshift

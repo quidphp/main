@@ -16,11 +16,11 @@ namespace Quid\Main;
 class Extenders extends MapObj
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $mapAllow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
+    protected ?array $mapAllow = ['set','unset','remove','filter','sort','serialize','clone']; // méthodes permises
     protected $mapIs = Extender::class; // classe d'objet permis
 
 
@@ -38,7 +38,7 @@ class Extenders extends MapObj
     // set
     // envoie une exception si key n'est pas string
     // renvoie au set de map
-    final public function set($key,$value):parent
+    final public function set($key,$value):self
     {
         if(!is_string($key))
         static::throw('onlyAcceptsStringKeys');

@@ -17,11 +17,11 @@ use Quid\Base;
 class Localization extends Map
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // map
-    protected $mapAllow = ['overwrite','jsonSerialize','serialize','clone']; // méthodes permises
+    protected ?array $mapAllow = ['overwrite','jsonSerialize','serialize','clone']; // méthodes permises
 
 
     // construct

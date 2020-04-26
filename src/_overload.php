@@ -38,9 +38,9 @@ trait _overload
     }
 
 
-    // getOverloadClass
+    // classOverload
     // retourne la classe à utiliser pour un overload
-    final public static function getOverloadClass():string
+    final public static function classOverload():string
     {
         return Autoload::getOverload(static::getOverloadKey(),static::class);
     }
@@ -50,7 +50,7 @@ trait _overload
     // retourne une nouvelle instance de la classe mais en utilisant le nom de classe overloader si existant
     public static function newOverload(...$values):self
     {
-        $class = static::getOverloadClass();
+        $class = static::classOverload();
         $return = new $class(...$values);
 
         return $return;

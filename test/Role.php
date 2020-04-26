@@ -30,6 +30,7 @@ class Role extends Base\Test
         assert(count($admin->toArray()) === 4);
         assert(!empty($admin->toJson()));
         $serialize = serialize($admin);
+        assert($admin->serialize() === $serialize);
         assert(unserialize($serialize)->permission() === 80);
 
         // cast

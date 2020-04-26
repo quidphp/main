@@ -21,6 +21,10 @@ trait _classeObj
     use _filter;
 
 
+    // dynamique
+    protected ?string $mapSortDefault = null; // défini la méthode pour sort par défaut
+
+
     // classeOrObj
     // retourne si le trait doit utilisé l'appelation de classe :: ou d'objet ->
     abstract public static function classeOrObj():string;
@@ -40,9 +44,7 @@ trait _classeObj
     final public function only(...$values)
     {
         $values = $this->prepareKeys(...$values);
-        return $this->filter(function($value,$key) use($values) {
-            return in_array($key,$values,true);
-        });
+        return $this->filter(fn($value,$key) => in_array($key,$values,true));
     }
 
 
@@ -114,42 +116,6 @@ trait _classeObj
 
             else
             static::throw('invalidReturnValue');
-        }
-
-        return $return;
-    }
-
-
-    // filterCondition
-    // utilisé par les méthodes comme filter pour vérifier si une entrée respecte une condition
-    final protected function filterCondition($condition,$key,$value,...$args):bool
-    {
-        $return = true;
-        $type = static::classeOrObj();
-
-        if(static::isCallable($condition))
-        $return = (Base\Call::withObj($this,$condition,$value,$key,...$args) === true);
-
-        elseif(is_array($condition))
-        {
-            foreach ($condition as $k => $v)
-            {
-                $return = false;
-                if(is_string($k))
-                {
-                    if($type === 'obj')
-                    {
-                        if($value->$k(...$args) === $v)
-                        $return = true;
-                    }
-
-                    elseif($value::$k(...$args) === $v)
-                    $return = true;
-                }
-
-                if($return === false)
-                break;
-            }
         }
 
         return $return;

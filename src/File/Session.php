@@ -18,7 +18,7 @@ use Quid\Main;
 class Session extends Serialize implements Main\Contract\Session, Main\Contract\FileStorage
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // storageDirname

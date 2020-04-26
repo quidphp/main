@@ -17,7 +17,7 @@ use Quid\Base;
 class Calendar extends Widget
 {
     // config
-    public static $config = [
+    public static array $config = [
         'formatCurrent'=>'calendar', // format de date pour le mois
         'head'=>'head',
         'current'=>'current',
@@ -26,9 +26,9 @@ class Calendar extends Widget
 
 
     // dynamique
-    protected $timestamp = null; // contient le timestamp du mois à afficher
-    protected $format = null; // permet de storer un format à mettre dans les attributs de td
-    protected $selected = null; // contient les timestamp sélectionnés
+    protected int $timestamp; // contient le timestamp du mois à afficher
+    protected ?string $format = null; // permet de storer un format à mettre dans les attributs de td
+    protected ?array $selected = null; // contient les timestamp sélectionnés
 
 
     // construct

@@ -23,11 +23,11 @@ class Files extends MapObj
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $mapAllow = ['add','set','unset','remove','empty','unsetAfterCount','filter','sort','sequential','clone']; // méthodes permises
+    protected ?array $mapAllow = ['add','set','unset','remove','empty','unsetAfterCount','filter','sort','sequential','clone']; // méthodes permises
 
 
     // construct
@@ -68,7 +68,7 @@ class Files extends MapObj
 
     // set
     // ajoute un fichier dans l'objet files
-    final public function set($key,$value,?array $option=null):parent
+    final public function set($key,$value,?array $option=null):self
     {
         $this->checkAllowed('set');
 
@@ -158,19 +158,19 @@ class Files extends MapObj
 
     // concatenate
     // permet de concatener tous les fichiers et retourner le rendu dans un fichier
-    final public function concatenate($target,?callable $callable=null,string $separator=PHP_EOL,?array $option=null):File
+    final public function concatenate($target,?\Closure $closure=null,string $separator=PHP_EOL,?array $option=null):File
     {
         $return = File::newCreate($target,$option);
-        Base\Res::concatenate($return->resource(),$callable,$separator,...$this->pair('resource'));
+        Base\Res::concatenate($return->resource(),$closure,$separator,...$this->pair('resource'));
         return $return;
     }
 
 
     // concatenateString
     // permet de concatener tous les fichiers et retourner le rendu combiné dans une string
-    final public function concatenateString(?callable $callable=null,string $separator=PHP_EOL):?string
+    final public function concatenateString(?\Closure $closure=null,string $separator=PHP_EOL):?string
     {
-        return Base\Res::concatenateString($callable,$separator,...$this->pair('resource'));
+        return Base\Res::concatenateString($closure,$separator,...$this->pair('resource'));
     }
 
 

@@ -43,7 +43,8 @@ trait _insensitive
         $return->checkBefore(true,...$values);
 
         $data =& $return->arr();
-        $data = Base\Arr::iprepend($data,...$values);
+        $values[] = $data;
+        $data = Base\Arr::iappend(...$values);
 
         return $return->checkAfter();
     }

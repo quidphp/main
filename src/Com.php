@@ -17,15 +17,15 @@ use Quid\Base;
 class Com extends Map
 {
     // config
-    public static $config = [
+    public static array $config = [
         'default'=>'neg', // type par défaut
         'all'=>['neg','pos','neutral'] // tous les types
     ];
 
 
     // dynamique
-    protected $mapAllow = ['push','unshift','unset','empty','splice','index','serialize','jsonSerialize','clone']; // méthodes permises
-    protected $type = []; // conserve les types acceptés par l'objet (comme pos, neg)
+    protected ?array $mapAllow = ['push','unshift','unset','empty','splice','index','serialize','jsonSerialize','clone']; // méthodes permises
+    protected array $type = []; // conserve les types acceptés par l'objet (comme pos, neg)
     protected $mapIs = true; // les valeurs doivent passés la méthode is
 
 
@@ -54,7 +54,7 @@ class Com extends Map
     final protected function onPrepareValue($return)
     {
         if(is_array($return) && count($return) === 2)
-        $return = $this->find($return,$this->arr());
+        $return = $this->findCommon($return,$this->arr());
 
         return $return;
     }
@@ -209,9 +209,9 @@ class Com extends Map
     }
 
 
-    // find
+    // findCommon
     // méthode utilisé par onPrepareValue et update pour trouver un élément de communication commun
-    final public function find(array $return,array $data)
+    final public function findCommon(array $return,array $data)
     {
         $return = array_values($return);
         $value = $this->payload(...$return);
@@ -256,7 +256,7 @@ class Com extends Map
                     if(is_array($z) && array_key_exists(0,$z) && array_key_exists(1,$z) && !empty($return[4]))
                     {
                         $find = [$z[0],$z[1]];
-                        $val = $this->find($find,$return[4]);
+                        $val = $this->findCommon($find,$return[4]);
 
                         if(!empty($val))
                         {
@@ -286,7 +286,7 @@ class Com extends Map
     // unshift
     // ajoute une valeur au début du tableau
     // bloque les doublons
-    final public function unshift(...$values):parent
+    final public function unshift(...$values):self
     {
         $data =& $this->arr();
 
@@ -314,7 +314,7 @@ class Com extends Map
     // push
     // ajoute une valeur à la fin du tableau
     // bloque les doublons
-    final public function push(...$values):parent
+    final public function push(...$values):self
     {
         $data =& $this->arr();
 

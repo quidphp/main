@@ -16,11 +16,11 @@ namespace Quid\Main;
 abstract class Widget extends Root
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $callback = []; // tableau de callback pour la classe
+    protected array $callback = []; // tableau de callback pour la classe
 
 
     // toString
@@ -59,9 +59,9 @@ abstract class Widget extends Root
 
     // setCallback
     // attribute un tableau ou objet callback à la classe
-    final public function setCallback(string $key,?callable $value):self
+    final public function setCallback(string $key,?\Closure $closure):self
     {
-        $this->callback[$key] = $value;
+        $this->callback[$key] = $closure;
 
         return $this;
     }
@@ -69,7 +69,7 @@ abstract class Widget extends Root
 
     // callback
     // retourne un callback lié, si existant
-    final public function callback(string $key):?callable
+    final public function callback(string $key):?\Closure
     {
         return (array_key_exists($key,$this->callback))? $this->callback[$key]:null;
     }

@@ -17,14 +17,14 @@ use Quid\Base;
 class Map extends ArrMap
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
     protected $mapIs = null; // les valeurs doivent passés ce test de validation ou exception, si is est true renvoie à la méthode dynamique is
-    protected $mapAllow = null; // méthodes permises par la classe
-    protected $mapDeny = null; // méthodes interdites par la classe
-    protected $mapAfter = []; // les méthodes after, peut y avoir arguments ou non, est public car pourrait être changé dans app
+    protected ?array $mapAllow = null; // méthodes permises par la classe
+    protected ?array $mapDeny = null; // méthodes interdites par la classe
+    protected array $mapAfter = []; // les méthodes after, peut y avoir arguments ou non, est public car pourrait être changé dans app
 
 
     // construct
@@ -55,30 +55,30 @@ class Map extends ArrMap
     // serialize
     // serialize un objet map
     // toutes les propriétés sont serialize
-    public function serialize():string
+    public function __serialize():array
     {
         $this->checkAllowed('serialize');
 
-        return parent::serialize();
+        return parent::__serialize();
     }
 
 
     // unserialize
     // unserialize un objet map
     // si une des propritétés n'existe pas, envoie une exception
-    public function unserialize($data)
+    public function __unserialize(array $data):void
     {
         $this->checkAllowed('serialize');
-        parent::unserialize($data);
+        parent::__unserialize($data);
 
-        return $this;
+        return;
     }
 
 
     // jsonSerialize
     // serialize l'objet avec json_encode
     // encode seulement data
-    public function jsonSerialize()
+    public function jsonSerialize():array
     {
         $this->checkAllowed('jsonSerialize');
         return parent::jsonSerialize();
@@ -334,19 +334,6 @@ class Map extends ArrMap
     }
 
 
-    // filterCondition
-    // utilisé par les méthodes comme first, last (ou filter) pour vérifier si une entrée respecte une condition
-    protected function filterCondition($condition,$key,$value,...$args):bool
-    {
-        $return = true;
-
-        if(static::isCallable($condition))
-        $return = (Base\Call::withObj($this,$condition,$value,$key,...$args) === true);
-
-        return $return;
-    }
-
-
     // is
     // méthode appelé si static is est true
     public function is($value):bool
@@ -506,54 +493,30 @@ class Map extends ArrMap
 
 
     // first
-    // retourne la première valeur du tableau ou la première répondant true à la condition
+    // retourne la première valeur du tableau
     // n'a pas à être étendu
-    final public function first($condition=null,...$args)
+    final public function first()
     {
-        $return = null;
-
-        if(!empty($condition))
-        {
-            foreach ($this->arr() as $key => $value)
-            {
-                if($this->filterCondition($condition,$key,$value,...$args) === true)
-                {
-                    $return = $value;
-                    break;
-                }
-            }
-        }
-
-        else
         $return = Base\Arr::valueFirst($this->arr());
-
         return $this->onPrepareReturn($return);
     }
 
 
     // last
-    // retourne la dernière valeur du tableau ou la dernière répondant true à la condition
+    // retourne la dernière valeur du tableau
     // n'a pas à être étendu
-    final public function last($condition=null,...$args)
+    final public function last()
     {
-        $return = null;
-
-        if(!empty($condition))
-        {
-            foreach (array_reverse($this->arr(),true) as $key => $value)
-            {
-                if($this->filterCondition($condition,$key,$value,...$args) === true)
-                {
-                    $return = $value;
-                    break;
-                }
-            }
-        }
-
-        else
         $return = Base\Arr::valueLast($this->arr());
-
         return $this->onPrepareReturn($return);
+    }
+
+
+    // find
+    // retourne la première valeur du tableau répondant true à la condition
+    final public function find(\Closure $closure)
+    {
+        return $this->onPrepareReturn(parent::find($closure));
     }
 
 

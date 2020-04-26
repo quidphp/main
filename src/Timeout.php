@@ -17,14 +17,14 @@ use Quid\Base;
 class Timeout extends Map
 {
     // config
-    public static $config = [
+    public static array $config = [
         'max'=>1, // après combien de tentative le timeout est déclenché
         'timeout'=>600 // durée du timeout
     ];
 
 
     // dynamique
-    protected $mapAllow = ['set','unset','serialize','empty']; // méthodes permises
+    protected ?array $mapAllow = ['set','unset','serialize','empty']; // méthodes permises
 
 
     // isTimedOut
@@ -54,7 +54,7 @@ class Timeout extends Map
 
     // set
     // permet d'ajouter ou modifier une entrée dans l'objet
-    final public function set($key,$value):parent
+    final public function set($key,$value):self
     {
         return $this->change($key,$value,false);
     }

@@ -21,11 +21,11 @@ class Cart extends Map
 
 
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // dynamique
-    protected $mapAllow = ['unset','empty','filter','jsonSerialize','serialize','clone']; // méthodes permises
+    protected ?array $mapAllow = ['unset','empty','filter','jsonSerialize','serialize','clone']; // méthodes permises
 
 
     // construct

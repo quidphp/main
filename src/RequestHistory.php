@@ -22,14 +22,14 @@ class RequestHistory extends Map
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'extra'=>['redirectable'=>true] // clé extra à utiliser pour générer la string de requête
     ];
 
 
     // dynamique
-    protected $mapAllow = ['unshift','push','remove','unsetAfterCount','empty','serialize']; // méthodes permises
-    protected $mapAfter = ['unsetAfterCount'=>50]; // maximum de requête conservés
+    protected ?array $mapAllow = ['unshift','push','remove','unsetAfterCount','empty','serialize']; // méthodes permises
+    protected array $mapAfter = ['unsetAfterCount'=>50]; // maximum de requête conservés
     protected $mapIs = 'string'; // validate pour l'objet
 
 

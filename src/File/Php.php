@@ -21,7 +21,7 @@ class Php extends Text
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>'php',
         'concatenateExtension'=>'php',
         'nameMatch'=>['class ','abstract class ','final class ','trait ','interface ']

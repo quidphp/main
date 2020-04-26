@@ -16,7 +16,7 @@ namespace Quid\Main\File;
 class Video extends Binary
 {
     // config
-    public static $config = [
+    public static array $config = [
         'group'=>'video'
     ];
 }

@@ -53,7 +53,8 @@ trait _arr
         $return->checkBefore(true,...$values);
 
         $data =& $return->arr();
-        $data = Base\Arr::prepend($data,...$values);
+        $values[] = $data;
+        $data = Base\Arr::append(...$values);
 
         return $return->checkAfter();
     }

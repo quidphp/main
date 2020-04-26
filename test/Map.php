@@ -42,7 +42,7 @@ class Map extends Base\Test
         unset($map['meh']);
         unset($map[0]);
         $serialize = serialize($map);
-        assert(strlen($serialize) === 226);
+        assert(strlen($serialize) === 218);
         $map2 = unserialize($serialize);
         assert($map2 !== $map);
         assert(strlen(json_encode($map)) === 36);
@@ -58,12 +58,15 @@ class Map extends Base\Test
         assert($map->isMinCount([1,2,3]));
         assert($map->isMaxCount(3));
         assert($map->isMaxCount([1,2,3]));
-        assert($map->each(function($value,$key,$index) use($map) {
-            assert($this === $map);
-            assert(is_int($index));
-            if($index === 1)
-            return false;
-        }));
+        assert($map->each(fn($value,$key) => ($key === 'WHAT')) === false);
+        assert($map->each(fn($value,$key) => (is_string($key))) === true);
+        assert($map->reduce(null,fn($r,$value) => $r .= $value) === 'okLOL2');
+        assert($map->accumulate(null,fn($value) => $value) === 'okLOL2');
+        assert(!$map->some(fn($value) => is_array($value)));
+        assert($map->some(fn($value) => is_int($value)));
+        assert($map->every(fn($value) => is_scalar($value)));
+        assert(!$map->every(fn($value) => is_string($value)));
+        assert($map->findKey(fn($value) => is_int($value)) === 'james');
 
         // clone
 
@@ -105,8 +108,6 @@ class Map extends Base\Test
         // checkAfter
 
         // checkAllowed
-
-        // filterCondition
 
         // is
 
@@ -159,21 +160,13 @@ class Map extends Base\Test
 
         // first
         assert($map->first() === 'ok');
-        assert($map->first(function($value,$key) use($map) {
-            assert($this === $map);
-            return is_int($value);
-        }) === 2);
-        assert($map->first(function($value) use ($map) {
-            assert($this === $map);
-            return is_string($value);
-        }) === 'ok');
 
         // last
         assert($map->last() === 2);
-        assert($map->last(function($value) use ($map) {
-            assert($this === $map);
-            return is_string($value);
-        }) === 'LOL');
+
+        // find
+        assert($map->find(fn($value,$key) => is_int($value)) === 2);
+        assert($map->find(fn($value) => is_string($value)) === 'ok');
 
         // get
         assert($map->get('test') === 'ok');

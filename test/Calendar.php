@@ -22,13 +22,9 @@ class Calendar extends Base\Test
     {
         // construct
         $cal = new Main\Calendar([2018,12]);
-        $cal->setCallback('day',function($v) {
-            return "-$v-";
-        })->setCallback('prev',function() {
-            return 'PREV';
-        })->setCallback('next',function() {
-            return 'NEXT';
-        });
+        $cal->setCallback('day',fn(int $v) => "-$v-")
+        ->setCallback('prev',fn() => 'PREV')
+        ->setCallback('next',fn() => 'NEXT');
         $cal2 = clone $cal;
         assert(Base\Arrs::is($cal->toArray()));
         assert($cal->callback('prev') instanceof \Closure);

@@ -17,14 +17,14 @@ use Quid\Base;
 trait _arrObj
 {
     // dynamique
-    protected $index = 0; // indique la position actuelle du arrobj, lors des foreach
+    protected int $index = 0; // indique la position actuelle du arrobj, lors des foreach
 
 
     // arr
     // méthode abstracte à implémenter dans chaque classe utilisant le trait
     // la méthode peut retourner la référence du tableau à utiliser, sinon offset et offunset ne fonctionne pas
     // mettre la méthode protégé pour empêcher les modifications du tableau par l'extérieur
-    protected abstract function arr():array;
+    abstract protected function arr():array;
 
 
     // current

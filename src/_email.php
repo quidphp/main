@@ -17,7 +17,7 @@ use Quid\Base;
 trait _email
 {
     // config
-    public static $configEmail = [
+    public static array $configEmail = [
         'segment'=>null // custom, caractère à utiliser pour les segments
     ];
 

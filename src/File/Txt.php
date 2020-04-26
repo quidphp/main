@@ -16,7 +16,7 @@ namespace Quid\Main\File;
 class Txt extends Text
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 }
 
 // init

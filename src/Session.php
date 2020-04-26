@@ -22,7 +22,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'base'=>[ // toutes les méthodes renvoyé à base, la session doit être ready
             'isLang','isIp','isCsrf','isCaptcha','isBot',
             'getPrefix','expire','timestampCurrent','timestampPrevious','timestampDifference','requestCount','resetRequestCount',
@@ -44,9 +44,9 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
 
     // dynamique
-    protected $storage = null; // objet de storage de la session
-    protected $class = null; // set la classe du storage
-    protected $mapAllow = ['set','unset','remove','sort','empty']; // méthodes permises
+    protected string $class; // set la classe du storage
+    protected ?Contract\Session $storage = null; // objet de storage de la session
+    protected ?array $mapAllow = ['set','unset','remove','sort','empty']; // méthodes permises
 
 
     // construct
@@ -79,7 +79,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $this->data =& $_SESSION;
 
         $com = $this->com();
-        $class = Error::getOverloadClass();
+        $class = Error::classOverload();
         $class::setCom($com);
 
         return;
@@ -91,7 +91,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     protected function onEnd():void
     {
         $this->storage = null;
-        $class = Error::getOverloadClass();
+        $class = Error::classOverload();
         $class::setCom(null);
 
         return;
@@ -453,7 +453,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // efface le contenu de la session et du tableau session
     // la méthode parent de map est appelé
     // la session elle-même n'est pas effacé, seul son contenu est effacé
-    final public function empty():parent
+    final public function empty():self
     {
         $this->checkReady();
         parent::empty();

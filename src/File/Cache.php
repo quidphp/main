@@ -21,7 +21,7 @@ class Cache extends Serialize implements Main\Contract\FileStorage
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'dirname'=>'[storageCache]'
     ];
 }

@@ -22,7 +22,7 @@ class Extender extends Map
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'methodIgnore'=>null, // nom d'une méthode statique, si elle retourne true il faut ignorer la classe
         'onlyClass'=>true, // la méthode dans base/autoload charge seulement les classes à partir du nom de fichier
         'noSubDir'=>false, // envoie une exception dans onAddNamespace si un dossier contient un sous-directoire
@@ -34,10 +34,10 @@ class Extender extends Map
 
 
     // dynamique
-    protected $mapAllow = ['set','unset','remove','filter','serialize','clone']; // méthodes permises
-    protected $mapAfter = ['extendSync']; // appelé après chaque changement à l'objet
-    protected $extend = []; // garde en mémoire les clés de classe étendus
-    protected $overload = []; // garde en mémoire les overloads effectués
+    protected ?array $mapAllow = ['set','unset','remove','filter','serialize','clone']; // méthodes permises
+    protected array $mapAfter = ['extendSync']; // appelé après chaque changement à l'objet
+    protected array $extend = []; // garde en mémoire les clés de classe étendus
+    protected array $overload = []; // garde en mémoire les overloads effectués
 
 
     // construct
@@ -218,7 +218,7 @@ class Extender extends Map
     // ajoute une classe à l'objet extender
     // exception envoyé si une classe existe déjà et que la nouvelle ne l'étend pas
     // les traits et interfaces sont ignorés
-    final public function set($key,$value):parent
+    final public function set($key,$value):self
     {
         $methodIgnore = $this->getAttr('methodIgnore');
         $subClass = $this->getAttr('subClass');
@@ -279,9 +279,7 @@ class Extender extends Map
     // retourne un clone de l'objet avec seulement les classes étendus
     final public function extended():self
     {
-        return $this->filter(function($value,$key) {
-            return $this->isExtended($key);
-        });
+        return $this->filter(fn($value,$key) => $this->isExtended($key));
     }
 
 

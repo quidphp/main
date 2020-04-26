@@ -21,7 +21,7 @@ class Error extends Dump implements Main\Contract\Log, Main\Contract\FileStorage
 
 
     // config
-    public static $config = [
+    public static array $config = [
         'deleteTrim'=>50
     ];
 

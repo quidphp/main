@@ -17,7 +17,7 @@ use Quid\Base;
 abstract class Image extends Binary
 {
     // config
-    public static $config = [];
+    public static array $config = [];
 
 
     // img
@@ -27,7 +27,7 @@ abstract class Image extends Binary
     {
         $return = null;
         $src = $this->pathToUri($absolute) ?? $this->resource();
-        $alt = $alt ?? $this->getAttr('defaultAlt');
+        $alt ??= $this->getAttr('defaultAlt');
         $return = Base\Html::img($src,$alt,$attr);
 
         return $return;

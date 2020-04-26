@@ -17,7 +17,7 @@ use Quid\Base;
 class Concatenator extends Map
 {
     // config
-    public static $config = [
+    public static array $config = [
         'empty'=>true, // si le fichier est effacé au lancement du trigger
         'start'=>null, // contenu à mettre en début de rendu, peut être une callable
         'end'=>null, // contenu à mettre en fin de rendu, peut être une callable
@@ -38,7 +38,7 @@ class Concatenator extends Map
 
 
     // dynamique
-    protected $mapAllow = ['unset','serialize','clone']; // méthodes permises
+    protected ?array $mapAllow = ['unset','serialize','clone']; // méthodes permises
 
 
     // construct
@@ -75,7 +75,7 @@ class Concatenator extends Map
     // chaque entrée peut avoir ses propres options
     final public function addStr(string $value,?array $attr=null):self
     {
-        return $this->add(function() use($value) { return $value; },$attr);
+        return $this->add(fn() => $value,$attr);
     }
 
 

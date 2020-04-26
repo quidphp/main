@@ -17,7 +17,7 @@ use Quid\Base;
 abstract class ServiceMailer extends Service
 {
     // config
-    public static $config = [
+    public static array $config = [
         'queue'=>null, // queue pour email
         'log'=>null, // classe pour log
         'key'=>null, // clé pour le service
@@ -29,11 +29,11 @@ abstract class ServiceMailer extends Service
 
 
     // dispatch
-    protected static $dispatch = 'queue'; // détermine la méthode à utiliser pour dispatch
+    protected static string $dispatch = 'queue'; // détermine la méthode à utiliser pour dispatch
 
 
     // dynamique
-    protected $mailer = null; // contient l'instance du mailer
+    protected ?object $mailer = null; // contient l'instance du mailer
 
 
     // construct
@@ -220,9 +220,7 @@ abstract class ServiceMailer extends Service
     // retourne null
     final public function sendOnCloseDown($value):void
     {
-        Base\Response::onCloseDown(function() use($value) {
-            $this->trigger($value);
-        });
+        Base\Response::onCloseDown(fn() => $this->trigger($value));
 
         return;
     }
