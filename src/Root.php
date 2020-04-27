@@ -21,6 +21,6 @@ abstract class Root extends Base\Root implements \JsonSerializable
 
 
     // config
-    public static array $config = [];
+    protected static array $config = [];
 }
 ?>

@@ -17,7 +17,7 @@ use Quid\Base;
 class ImageRaster extends Image
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'imageRaster'
     ];
 

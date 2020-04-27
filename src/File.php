@@ -17,7 +17,7 @@ use Quid\Base;
 class File extends Res
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>null, // groupe par défaut, par défaut rien, si tu mets false la classe getClass ne cherchera pas de classe
         'mime'=>null, // définit le mime par défaut à utiliser (par exemple lors de la création d'une ressource temporaire)
         'create'=>false, // crée le fichier si non existant
@@ -27,7 +27,7 @@ class File extends Res
 
 
     // param
-    public static array $param = [
+    protected static array $param = [
         'storageClass'=>[ // défini les classes storages, un dirname dans celui défini de la classe doit utilisé un objet particulier
             'cache'=>File\Cache::class,
             'error'=>File\Error::class,

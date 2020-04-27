@@ -17,7 +17,7 @@ use Quid\Base;
 class Concatenator extends Map
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'empty'=>true, // si le fichier est effacé au lancement du trigger
         'start'=>null, // contenu à mettre en début de rendu, peut être une callable
         'end'=>null, // contenu à mettre en fin de rendu, peut être une callable

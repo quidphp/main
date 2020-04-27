@@ -16,7 +16,7 @@ namespace Quid\Main;
 abstract class Widget extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // dynamique

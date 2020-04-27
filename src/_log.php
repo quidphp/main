@@ -17,7 +17,7 @@ use Quid\Base;
 trait _log
 {
     // queue
-    public static int $queue = 0; // nombre de logs queues pour la classe
+    protected static int $queue = 0; // nombre de logs queues pour la classe
 
 
     // logOnCloseDown

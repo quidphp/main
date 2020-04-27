@@ -20,7 +20,7 @@ class Css extends Text
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'css',
         'concatenateExtension'=>['css','scss']
     ];

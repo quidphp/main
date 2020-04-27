@@ -21,7 +21,7 @@ class Email extends Json implements Main\Contract\Email
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'mailer'=>[]
     ];
 

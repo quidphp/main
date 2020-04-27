@@ -21,7 +21,7 @@ class Log extends Dump implements Main\Contract\Log, Main\Contract\FileStorage
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'dirname'=>'[storageLog]',
         'deleteTrim'=>50
     ];

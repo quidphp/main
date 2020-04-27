@@ -16,7 +16,7 @@ namespace Quid\Main\File;
 class Font extends Binary
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'font'
     ];
 }

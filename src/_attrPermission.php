@@ -130,7 +130,7 @@ trait _attrPermission
 
         $also = $role->useAlso();
         if(!empty($also))
-        $loop = Base\Arr::append($loop,(array) $also);
+        $loop = Base\Arr::merge($loop,(array) $also);
 
         $loop[] = $role->name();
 

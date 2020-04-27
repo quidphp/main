@@ -21,7 +21,7 @@ class Role extends Root
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'useAlso'=>null // configuration à partir d'un ou plusieurs autre rôles
     ];
 

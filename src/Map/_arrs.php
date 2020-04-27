@@ -50,7 +50,7 @@ trait _arrs
     // version arrs de exists
     final public function exists(...$keys):bool
     {
-        return Base\Arrs::keysExists($this->prepareKeys(...$keys),$this->arr(),static::isSensitive());
+        return Base\Arrs::keysExists($this->prepareKeys(...$keys),$this->arr(),$this->isSensitive());
     }
 
 
@@ -58,7 +58,7 @@ trait _arrs
     // version arrs de in
     final public function in(...$values):bool
     {
-        return Base\Arrs::ins($this->prepareValues(...$values),$this->arr(),static::isSensitive());
+        return Base\Arrs::ins($this->prepareValues(...$values),$this->arr(),$this->isSensitive());
     }
 
 
@@ -66,7 +66,7 @@ trait _arrs
     // version arrs de keys
     final public function keys($value=null):array
     {
-        return Base\Arrs::keys($this->arr(),$this->onPrepareValue($value),static::isSensitive());
+        return Base\Arrs::keys($this->arr(),$this->onPrepareValue($value),$this->isSensitive());
     }
 
 
@@ -74,7 +74,7 @@ trait _arrs
     // version arrs de search
     final public function search($value)
     {
-        return Base\Arrs::search($this->onPrepareValue($value),$this->arr(),static::isSensitive());
+        return Base\Arrs::search($this->onPrepareValue($value),$this->arr(),$this->isSensitive());
     }
 
 
@@ -90,7 +90,7 @@ trait _arrs
     // version arrs de get
     final public function get($key)
     {
-        return $this->onPrepareReturn(Base\Arrs::get($this->onPrepareKey($key),$this->arr(),static::isSensitive()));
+        return $this->onPrepareReturn(Base\Arrs::get($this->onPrepareKey($key),$this->arr(),$this->isSensitive()));
     }
 
 
@@ -98,7 +98,7 @@ trait _arrs
     // version arrs de gets
     final public function gets(...$keys)
     {
-        return $this->onPrepareReturns(Base\Arrs::gets($this->prepareKeys(...$keys),$this->arr(),static::isSensitive()));
+        return $this->onPrepareReturns(Base\Arrs::gets($this->prepareKeys(...$keys),$this->arr(),$this->isSensitive()));
     }
 
 
@@ -126,7 +126,7 @@ trait _arrs
         $return = $this->onPrepareThis('set');
         $key = $this->onPrepareKey($key);
         $value = $this->onPrepareValueSet($value);
-        Base\Arrs::setRef($key,$value,$return->arr(),static::isSensitive());
+        Base\Arrs::setRef($key,$value,$return->arr(),$this->isSensitive());
 
         return $return->checkAfter();
     }
@@ -138,7 +138,7 @@ trait _arrs
     {
         $this->checkAllowed('unset');
         $return = $this->onPrepareThis('unset');
-        Base\Arrs::unsetsRef($return->prepareKeys(...$keys),$return->arr(),static::isSensitive());
+        Base\Arrs::unsetsRef($return->prepareKeys(...$keys),$return->arr(),$this->isSensitive());
 
         return $return->checkAfter();
     }
@@ -174,7 +174,7 @@ trait _arrs
         $this->checkAllowed('remove');
         $return = $this->onPrepareThis('remove');
         $data =& $return->arr();
-        $data = Base\Arrs::valuesStrip($return->prepareValues(...$values),$data,static::isSensitive());
+        $data = Base\Arrs::valuesStrip($return->prepareValues(...$values),$data,$this->isSensitive());
 
         return $return->checkAfter();
     }

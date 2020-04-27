@@ -49,7 +49,7 @@ trait _queue
 
             foreach ($queues as $key => $obj)
             {
-                if(method_exists($obj,'unqueue'))
+                if($obj->hasMethod('unqueue'))
                 {
                     $return[$key] = $obj->unqueue();
 

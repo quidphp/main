@@ -22,7 +22,7 @@ class Extender extends Map
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'methodIgnore'=>null, // nom d'une méthode statique, si elle retourne true il faut ignorer la classe
         'onlyClass'=>true, // la méthode dans base/autoload charge seulement les classes à partir du nom de fichier
         'noSubDir'=>false, // envoie une exception dans onAddNamespace si un dossier contient un sous-directoire

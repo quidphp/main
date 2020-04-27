@@ -728,7 +728,7 @@ class Request extends Base\Test
 
         // default
         $currentReset->setHeaders($currentReset->headers());
-        assert(count($currentReset->default(Main\Request::$config['default'])) === 8);
+        assert(count($currentReset->default(Main\Request::getConfig('default'))) === 8);
         assert($r->default(['method'=>'post'])['method'] === 'post');
 
         // live

@@ -17,7 +17,7 @@ use Quid\Base;
 class Map extends ArrMap
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // dynamique
@@ -211,7 +211,7 @@ class Map extends ArrMap
             $key = $this->onPrepareKey($key);
 
             if($key instanceof self)
-            $return = Base\Arr::append($return,...$key->keys());
+            $return = Base\Arr::merge($return,...$key->keys());
 
             else
             $return[] = $key;
@@ -232,7 +232,7 @@ class Map extends ArrMap
             $value = $this->onPrepareValue($value);
 
             if($value instanceof self)
-            $return = Base\Arr::append($return,...$value->values());
+            $return = Base\Arr::merge($return,...$value->values());
 
             else
             $return[] = $value;
@@ -376,7 +376,7 @@ class Map extends ArrMap
     // retourne vrai si la ou les clés existe dans la map
     public function exists(...$keys):bool
     {
-        return Base\Arr::keysExists($this->prepareKeys(...$keys),$this->arr(),static::isSensitive());
+        return Base\Arr::keysExists($this->prepareKeys(...$keys),$this->arr(),$this->isSensitive());
     }
 
 
@@ -431,7 +431,7 @@ class Map extends ArrMap
     // retourne vrai si la ou les valeurs sont dans la map
     public function in(...$values):bool
     {
-        return Base\Arr::ins($this->prepareValues(...$values),$this->arr(),static::isSensitive());
+        return Base\Arr::ins($this->prepareValues(...$values),$this->arr(),$this->isSensitive());
     }
 
 
@@ -471,7 +471,7 @@ class Map extends ArrMap
     // possibilité de retourner les clés ayant la valeur
     public function keys($value=null):array
     {
-        return Base\Arr::keys($this->arr(),$this->onPrepareValue($value),static::isSensitive());
+        return Base\Arr::keys($this->arr(),$this->onPrepareValue($value),$this->isSensitive());
     }
 
 
@@ -479,7 +479,7 @@ class Map extends ArrMap
     // retourne la première clé d'une valeur dans la map
     public function search($value)
     {
-        return Base\Arr::search($this->onPrepareValue($value),$this->arr(),static::isSensitive());
+        return Base\Arr::search($this->onPrepareValue($value),$this->arr(),$this->isSensitive());
     }
 
 
@@ -524,7 +524,7 @@ class Map extends ArrMap
     // retourne une valeur d'une clé dans la map
     public function get($key)
     {
-        return $this->onPrepareReturn(Base\Arr::get($this->onPrepareKey($key),$this->arr(),static::isSensitive()));
+        return $this->onPrepareReturn(Base\Arr::get($this->onPrepareKey($key),$this->arr(),$this->isSensitive()));
     }
 
 
@@ -532,7 +532,7 @@ class Map extends ArrMap
     // retourne plusieurs valeurs de clés dans la map
     public function gets(...$keys)
     {
-        return $this->onPrepareReturns(Base\Arr::gets($this->prepareKeys(...$keys),$this->arr(),static::isSensitive()));
+        return $this->onPrepareReturns(Base\Arr::gets($this->prepareKeys(...$keys),$this->arr(),$this->isSensitive()));
     }
 
 
@@ -557,7 +557,7 @@ class Map extends ArrMap
     // utilise les clés start et end
     final public function slice($start,$end)
     {
-        return $this->onPrepareReturns(Base\Arr::slice($this->onPrepareKey($start),$this->onPrepareKey($end),$this->arr(),static::isSensitive()));
+        return $this->onPrepareReturns(Base\Arr::slice($this->onPrepareKey($start),$this->onPrepareKey($end),$this->arr(),$this->isSensitive()));
     }
 
 
@@ -582,7 +582,7 @@ class Map extends ArrMap
         $value = $this->onPrepareValueSet($value);
 
         if($key === null || Base\Arr::isKey($key))
-        Base\Arr::setRef($key,$value,$return->arr(),static::isSensitive());
+        Base\Arr::setRef($key,$value,$return->arr(),$this->isSensitive());
 
         else
         static::throw('invalidKey');
@@ -611,7 +611,7 @@ class Map extends ArrMap
     {
         $this->checkAllowed('unset');
         $return = $this->onPrepareThis('unset');
-        Base\Arr::unsetsRef($this->prepareKeys(...$keys),$return->arr(),static::isSensitive());
+        Base\Arr::unsetsRef($this->prepareKeys(...$keys),$return->arr(),$this->isSensitive());
 
         return $return->checkAfter();
     }
@@ -624,7 +624,7 @@ class Map extends ArrMap
         $this->checkAllowed('remove');
         $return = $this->onPrepareThis('remove');
         $data =& $return->arr();
-        $data = Base\Arr::valuesStrip($this->prepareValues(...$values),$data,static::isSensitive());
+        $data = Base\Arr::valuesStrip($this->prepareValues(...$values),$data,$this->isSensitive());
 
         return $return->checkAfter();
     }
@@ -730,7 +730,7 @@ class Map extends ArrMap
 
     // isSensitive
     // retourne vrai pour cette classe
-    public static function isSensitive():bool
+    public function isSensitive():bool
     {
         return true;
     }

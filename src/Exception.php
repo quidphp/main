@@ -22,7 +22,7 @@ class Exception extends \Exception implements \JsonSerializable
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'code'=>31, // code de l'exception
         'cleanBuffer'=>false,
         'output'=>false,

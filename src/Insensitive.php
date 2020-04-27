@@ -20,6 +20,6 @@ class Insensitive extends Map
 
 
     // config
-    public static array $config = [];
+    protected static array $config = [];
 }
 ?>

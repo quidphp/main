@@ -20,7 +20,7 @@ class Flash extends Map
 
 
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // dynamique

@@ -20,7 +20,7 @@ class Js extends Text
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'js',
         'concatenateExtension'=>['js','jsx']
     ];

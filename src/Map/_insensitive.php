@@ -27,7 +27,7 @@ trait _insensitive
         $return->checkBefore(true,...$values);
 
         $data =& $return->arr();
-        $data = Base\Arr::iappend($data,...$values);
+        $data = Base\Arr::imerge($data,...$values);
 
         return $return->checkAfter();
     }
@@ -44,7 +44,7 @@ trait _insensitive
 
         $data =& $return->arr();
         $values[] = $data;
-        $data = Base\Arr::iappend(...$values);
+        $data = Base\Arr::imerge(...$values);
 
         return $return->checkAfter();
     }
@@ -52,7 +52,7 @@ trait _insensitive
 
     // isSensitive
     // retourne faux
-    final public static function isSensitive():bool
+    final public function isSensitive():bool
     {
         return false;
     }

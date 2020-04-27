@@ -21,7 +21,7 @@ class Error extends Root
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'lang'=>null, // langue de l'erreur
         'cast'=>'titleMessage', // méthode à utiliser pour cast
         'errorLog'=>true, // l'erreur est loggé dans php.log

@@ -31,7 +31,7 @@ trait _serialize
     {
         foreach ($data as $key => $value)
         {
-            if(is_string($key) && property_exists($this,$key))
+            if(is_string($key) && $this->hasProperty($key))
             $this->$key = $value;
 
             else

@@ -17,7 +17,7 @@ use Quid\Base;
 abstract class ServiceVideo extends ServiceRequest
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'required'=>[], // clés requises
         'video'=>[], // permet de convertir une clé vers une autre, passé comme option dans l'objet vidéo
         'target'=>null

@@ -25,8 +25,8 @@ class Com extends Base\Test
         $fr = $boot->getAttr('assert/lang/fr');
         $en = $boot->getAttr('assert/lang/en');
         $lang = new Main\Lang(['en','fr']);
-        $lang->changeLang('fr')->overwrite($fr::$config);
-        $lang->changeLang('en')->overwrite($en::$config);
+        $lang->changeLang('fr')->overwrite($fr::config());
+        $lang->changeLang('en')->overwrite($en::config());
 
         // construct
         $com = new Main\Com();

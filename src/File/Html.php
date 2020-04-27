@@ -16,7 +16,7 @@ namespace Quid\Main\File;
 class Html extends Text
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'html'
     ];
 }

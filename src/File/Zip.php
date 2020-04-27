@@ -18,7 +18,7 @@ use Quid\Main;
 class Zip extends Binary
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'zip'
     ];
 

@@ -21,7 +21,7 @@ class Fr extends Base\Lang\Fr
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
 
         // error
         'error'=>[

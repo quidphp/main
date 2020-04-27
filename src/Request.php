@@ -22,7 +22,7 @@ class Request extends Map
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'decode'=>false, // l'uri dans setUri est décodé
         'uri'=>null, // encode l'uri de sortie si utilise output, relative ou absolute
         'idLength'=>null, // longueur du id de la requête
@@ -126,7 +126,7 @@ class Request extends Map
         {
             $key = current($args);
 
-            if(is_string($key) && property_exists($this,$key) && method_exists($this,$key))
+            if(is_string($key) && $this->hasProperty($key) && $this->hasMethod($key))
             $return = $this->$key();
 
             else
@@ -251,7 +251,7 @@ class Request extends Map
     final public function getAttrBase(string $key)
     {
         $return = $this->getAttr($key);
-        $base = Base\Request::$config[$key] ?? null;
+        $base = Base\Request::getConfig($key);
 
         if($base !== null)
         {
@@ -494,7 +494,7 @@ class Request extends Map
             {
                 $method = 'set'.ucfirst($key);
 
-                if(method_exists($this,$method))
+                if($this->hasMethod($method))
                 $this->$method($value);
             }
         }

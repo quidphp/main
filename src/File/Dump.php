@@ -17,7 +17,7 @@ use Quid\Base;
 class Dump extends Html
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'write'=>[
             'callback'=>[Base\Debug::class,'varGet']]
     ];

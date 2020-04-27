@@ -28,7 +28,7 @@ class Lang extends Base\Test
 
         // construct
         $lang = new Main\Lang(['fr','en','de'],['onLoad'=>function(string $value) { }]);
-        assert($lang->overwrite($fr::$config)->isNotEmpty());
+        assert($lang->overwrite($fr::config())->isNotEmpty());
         $lang['test'] = ['ok'=>['test'=>'what']];
 
         // invoke
@@ -118,7 +118,7 @@ class Lang extends Base\Test
 
         // take
         assert($lang->isEmpty());
-        assert($lang->changeLang('en')->overwrite($en::$config)->changeLang('fr')->changeLang('fr')->overwrite($fr::$config)->isNotEmpty());
+        assert($lang->changeLang('en')->overwrite($en::config())->changeLang('fr')->changeLang('fr')->overwrite($fr::config())->isNotEmpty());
         assert(!$lang->isEmpty());
         assert($lang->isNotEmpty());
         $lang->replace(['lol'=>['lol2'=>false,'lol1'=>1,'lol3'=>'oui','lol4'=>'non','lol5'=>[1,'ok'=>'okfr'],'fr'=>'yepfr','replace'=>'Mon%l% [remplacement]']]);
@@ -398,7 +398,7 @@ class Lang extends Base\Test
         assert($lang->get($lang->search('value3')) === 'value3');
         assert(count($lang->unset('lol/lol2/ok')->get('lol/lol2')) === 2);
         assert($lang->empty()->isEmpty());
-        assert($lang->overwrite($fr::$config)->isNotEmpty());
+        assert($lang->overwrite($fr::config())->isNotEmpty());
         assert($lang->count() > 2);
         assert(Base\Arr::isMulti($lang->keys()));
         assert($lang->set(['lol',null,2,null],'new')->get('lol/0/2/0') === 'new');

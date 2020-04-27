@@ -17,7 +17,7 @@ use Quid\Base;
 class Calendar extends Widget
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'formatCurrent'=>'calendar', // format de date pour le mois
         'head'=>'head',
         'current'=>'current',

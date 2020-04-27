@@ -16,7 +16,7 @@ namespace Quid\Main;
 class Extenders extends MapObj
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // dynamique

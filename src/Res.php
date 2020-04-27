@@ -17,7 +17,7 @@ use Quid\Base;
 class Res extends ArrObj
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // base
@@ -334,7 +334,7 @@ class Res extends ArrObj
     {
         foreach ($methods as $method)
         {
-            if(method_exists($this,$method) && $this->$method() !== true)
+            if($this->hasMethod($method) && $this->$method() !== true)
             static::throw($method);
 
             elseif($this->base($method,false) !== true)

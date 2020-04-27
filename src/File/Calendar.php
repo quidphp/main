@@ -17,7 +17,7 @@ use Quid\Base;
 class Calendar extends Text
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'calendar',
         'model'=>'BEGIN:VCALENDAR
 		VERSION:2.0

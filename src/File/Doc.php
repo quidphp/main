@@ -16,7 +16,7 @@ namespace Quid\Main\File;
 class Doc extends Text
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'doc'
     ];
 }

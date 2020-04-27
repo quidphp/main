@@ -18,7 +18,7 @@ use Quid\Main;
 class Csv extends Text implements Main\Contract\Import
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'group'=>'csv',
         'read'=>[ // option pour read
             'callback'=>[self::class,'readCallback'],
@@ -70,20 +70,28 @@ class Csv extends Text implements Main\Contract\Import
     // peut encoder le retour, trim chaque valeur ainsi que caster les valeurs numériques string
     final protected function lineReturn($return)
     {
-        $closure = function(string $return,array $option) {
-            if(!empty($option['toUtf8']))
-            $return = Base\Encoding::toUtf8($return);
+        $attr = $this->attr();
+        $closure = function($return) use($attr) {
+            if(is_string($return))
+            {
+                if(!empty($attr['toUtf8']))
+                $return = Base\Encoding::toUtf8($return);
 
-            if(!empty($option['fixUnicode']))
-            $return = Base\Str::fixUnicode($return);
+                if(!empty($attr['fixUnicode']))
+                $return = Base\Str::fixUnicode($return);
 
-            if(!empty($option['whiteSpace']))
-            $return = Base\Str::removeWhiteSpace($return);
+                if(!empty($attr['whiteSpace']))
+                $return = Base\Str::removeWhiteSpace($return);
+            }
 
             return $return;
         };
 
-        $return = Base\Call::map('string',$closure,$return,$this->attr());
+        if(is_string($return))
+        $return = $closure($return);
+
+        elseif(is_array($return))
+        $return = Base\Arr::map($return,$closure);
 
         $cast = $this->getAttr('cast');
         if($cast === true && is_array($return))

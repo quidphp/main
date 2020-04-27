@@ -17,7 +17,7 @@ use Quid\Base;
 class Com extends Map
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'default'=>'neg', // type par défaut
         'all'=>['neg','pos','neutral'] // tous les types
     ];
@@ -476,7 +476,7 @@ class Com extends Map
         foreach ($data as $key => $value)
         {
             if(is_array($value) && array_key_exists(4,$value))
-            $keep = Base\Arr::append($keep,$value[4]);
+            $keep = Base\Arr::merge($keep,$value[4]);
         }
 
         if(!empty($keep))

@@ -21,7 +21,7 @@ trait _arr
     // retourne vrai si les clés fournis sont l'ensemble des clés de la map
     final public function are(...$keys):bool
     {
-        return Base\Arr::keysAre($this->prepareKeys(...$keys),$this->arr(),static::isSensitive());
+        return Base\Arr::keysAre($this->prepareKeys(...$keys),$this->arr(),$this->isSensitive());
     }
 
 
@@ -36,7 +36,7 @@ trait _arr
         $return->checkBefore(true,...$values);
 
         $data =& $return->arr();
-        $data = Base\Arr::append($data,...$values);
+        $data = Base\Arr::merge($data,...$values);
 
         return $return->checkAfter();
     }
@@ -54,7 +54,7 @@ trait _arr
 
         $data =& $return->arr();
         $values[] = $data;
-        $data = Base\Arr::append(...$values);
+        $data = Base\Arr::merge(...$values);
 
         return $return->checkAfter();
     }
@@ -126,7 +126,7 @@ trait _arr
             if(empty($replace) || $return->checkBefore(true,$replace))
             {
                 $data =& $return->arr();
-                $data = Base\Arr::splice($return->onPrepareKey($start),$return->onPrepareKey($end),$data,$replace,static::isSensitive());
+                $data = Base\Arr::splice($return->onPrepareKey($start),$return->onPrepareKey($end),$data,$replace,$this->isSensitive());
             }
         }
 
@@ -150,7 +150,7 @@ trait _arr
             if(empty($replace) || $return->checkBefore(true,$replace))
             {
                 $data =& $return->arr();
-                $data = Base\Arr::spliceIndex($offset,$length,$data,$replace,static::isSensitive());
+                $data = Base\Arr::spliceIndex($offset,$length,$data,$replace,$this->isSensitive());
             }
         }
 
@@ -174,7 +174,7 @@ trait _arr
             $return->checkBefore(true,$replace);
 
             $data =& $return->arr();
-            $data = Base\Arr::insert($return->onPrepareKey($start),$replace,$data,static::isSensitive());
+            $data = Base\Arr::insert($return->onPrepareKey($start),$replace,$data,$this->isSensitive());
         }
 
         else
@@ -197,7 +197,7 @@ trait _arr
             $return->checkBefore(true,$replace);
 
             $data =& $return->arr();
-            $data = Base\Arr::insertIndex($offset,$replace,$data,static::isSensitive());
+            $data = Base\Arr::insertIndex($offset,$replace,$data,$this->isSensitive());
         }
 
         else

@@ -18,7 +18,7 @@ use Quid\Main;
 trait _storage
 {
     // config
-    public static array $configFileStorage = [
+    protected static array $configFileStorage = [
         'dirname'=>null, // dirname par défaut
         'inc'=>0 // chiffre qui s'auto incrémente à chaque ajout d'un élément de cette classe
     ];

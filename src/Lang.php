@@ -22,7 +22,7 @@ class Lang extends Map
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'pattern'=>'%', // caractère utilisé pour option text pattern
         'onLoad'=>null, // callback utilisé lors de l'appel à la méthode load, cette méthode est appelé lorsque le tableau d'une langue est vide
         'wrapKeys'=>'[]', // wrap les clés lors du replace

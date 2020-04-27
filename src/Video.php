@@ -17,7 +17,7 @@ use Quid\Base;
 class Video extends Map
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'name'=>'name',
         'date'=>'date',
         'description'=>'description',

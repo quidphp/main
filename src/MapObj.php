@@ -20,7 +20,7 @@ class MapObj extends Map
 
 
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // construct

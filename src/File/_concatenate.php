@@ -18,7 +18,7 @@ use Quid\Main;
 trait _concatenate
 {
     // configConcatenate
-    public static array $configConcatenate = [
+    protected static array $configConcatenate = [
         'concatenator'=>null,
         'concatenateService'=>null,
         'concatenateExtension'=>null

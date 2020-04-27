@@ -17,7 +17,7 @@ use Quid\Base;
 abstract class Image extends Binary
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // img

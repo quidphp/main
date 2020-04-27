@@ -225,7 +225,7 @@ class Map extends Base\Test
         assert($map->isAllowed('empty'));
 
         // isSensitive
-        assert(Main\Map::isSensitive());
+        assert($map->isSensitive());
 
         // ArrObj
         $i = 0;

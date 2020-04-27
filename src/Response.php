@@ -17,7 +17,7 @@ use Quid\Base;
 class Response extends Res
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // dynamique
@@ -182,7 +182,7 @@ class Response extends Res
     // génère un id unique en utilisant la config id length
     final protected function setId():void
     {
-        $this->id = Base\Str::random(Base\Response::$config['idLength']);
+        $this->id = Base\Str::random(Base\Response::getConfig('idLength'));
 
         return;
     }

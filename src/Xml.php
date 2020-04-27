@@ -17,7 +17,7 @@ use Quid\Base;
 class Xml extends Root
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // dynamique

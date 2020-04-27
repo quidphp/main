@@ -17,7 +17,7 @@ use Quid\Base;
 class Autoload extends Base\Root
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'alias'=>[], // liste d'alias pour le lazy load
         'aliasEnding'=>'Alias', // fin de nom de classe pour les alias automatique
         'closure'=>[], // tableau de nom de classe avec closure, pour charger des classes sans inclure de fichiers
@@ -651,7 +651,7 @@ class Autoload extends Base\Root
                             $array[$file] = $v;
                         }
 
-                        $return = Base\Arr::iappendUnique($return,$array);
+                        $return = Base\Arr::imergeUnique($return,$array);
                     }
                 }
             }
@@ -702,7 +702,7 @@ class Autoload extends Base\Root
             $classes = Base\Classe::declared($value,$onlyClass,$dig);
             $classes = Base\Autoload::removeAlias($classes);
             $closures = static::getClosureByNamespace($value,$onlyClass,$dig);
-            $return = Base\Arr::iappendUnique($classes,$closures,$return);
+            $return = Base\Arr::imergeUnique($classes,$closures,$return);
         }
 
         return $return;

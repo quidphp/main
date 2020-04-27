@@ -22,7 +22,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'base'=>[ // toutes les méthodes renvoyé à base, la session doit être ready
             'isLang','isIp','isCsrf','isCaptcha','isBot',
             'getPrefix','expire','timestampCurrent','timestampPrevious','timestampDifference','requestCount','resetRequestCount',
@@ -318,7 +318,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $return = ['class'=>static::class];
         $return['storageClass'] = $this->getStorageClass();
         $return['attr'] = $this->attr();
-        $return = Base\Arr::append($return,Base\Session::info());
+        $return = Base\Arr::merge($return,Base\Session::info());
 
         return $return;
     }

@@ -17,7 +17,7 @@ use Quid\Base;
 class Localization extends Map
 {
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // map

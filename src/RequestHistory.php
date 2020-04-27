@@ -22,7 +22,7 @@ class RequestHistory extends Map
 
 
     // config
-    public static array $config = [
+    protected static array $config = [
         'extra'=>['redirectable'=>true] // clé extra à utiliser pour générer la string de requête
     ];
 

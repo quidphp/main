@@ -17,7 +17,7 @@ use Quid\Base;
 trait _email
 {
     // config
-    public static array $configEmail = [
+    protected static array $configEmail = [
         'segment'=>null // custom, caractère à utiliser pour les segments
     ];
 
@@ -35,7 +35,7 @@ trait _email
         $delimiter = $this->getSegmentChars();
         $subject = $this->subject();
         $body = $this->body();
-        $return = Base\Arr::appendUnique($return,Base\Segment::get($delimiter,$subject),Base\Segment::get($delimiter,$body));
+        $return = Base\Arr::mergeUnique($return,Base\Segment::get($delimiter,$subject),Base\Segment::get($delimiter,$body));
 
         return $return;
     }

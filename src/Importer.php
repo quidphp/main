@@ -17,7 +17,7 @@ use Quid\Base;
 class Importer extends Map
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'action'=>'insert', // action par défaut
         'empty'=>false, // empty lors du trigger, booléean
         'slim'=>true, // réduit la taille du tableau de retour dans prepareReturn

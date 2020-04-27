@@ -23,7 +23,7 @@ class Roles extends MapObj
 
 
     // config
-    public static array $config = [];
+    protected static array $config = [];
 
 
     // dynamique
@@ -224,7 +224,7 @@ class Roles extends MapObj
 
             if(is_string($name) && is_array($args))
             {
-                $args = Base\Arr::append($name,$args);
+                $args = Base\Arr::merge($name,$args);
                 $return->add($args);
             }
 

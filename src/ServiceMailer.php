@@ -17,7 +17,7 @@ use Quid\Base;
 abstract class ServiceMailer extends Service
 {
     // config
-    public static array $config = [
+    protected static array $config = [
         'queue'=>null, // queue pour email
         'log'=>null, // classe pour log
         'key'=>null, // clé pour le service

@@ -145,6 +145,22 @@ trait _root
     }
 
 
+    // hasProperty
+    // retourne vrai si l'objet a la propriété
+    final public function hasProperty(string $prop):bool
+    {
+        return property_exists($this,$prop);
+    }
+
+
+    // hasMethod
+    // retourne vrai si l'objet a la méthode
+    final public function hasMethod(string $method):bool
+    {
+        return method_exists($this,$method);
+    }
+
+
     // splId
     // retourne le id unique de l'objet
     final public function splId():int
