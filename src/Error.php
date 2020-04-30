@@ -1014,7 +1014,7 @@ class Error extends Root
     // callback pour retourner la longueur du trace
     final public static function getTraceLength():int
     {
-        return 20;
+        return (Base\Server::isCli())? 10:20;
     }
 
 

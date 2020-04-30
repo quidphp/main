@@ -57,16 +57,13 @@ abstract class ServiceVideo extends ServiceRequest
 
     // makeVideo
     // créer un objet video en utilisation les options de la classe
-    final public static function makeVideo($value):?Video
+    final public static function makeVideo(array $value):?Video
     {
         $return = null;
         $option = static::videoOption();
         $required = static::videoRequired();
 
-        if(is_string($value))
-        $value = Base\Json::decode($value);
-
-        if(is_array($value) && !empty($value) && Base\Arr::keysExists($required,$value))
+        if(Base\Arr::keysExists($required,$value))
         $return = Video::newOverload($value,$option);
 
         return $return;

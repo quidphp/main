@@ -1672,6 +1672,21 @@ class Request extends Map
     }
 
 
+    // postTimestamp
+    // retourne le timestamp du post, tel que stocké dans le champ caché du formulaire
+    final public function postTimestamp():?int
+    {
+        $return = null;
+        $post = $this->post();
+        $timestamp = Base\Html::getTimestampName();
+
+        if(!empty($timestamp) && !empty($post) && array_key_exists($timestamp,$post))
+        $return = $post[$timestamp];
+
+        return $return;
+    }
+
+
     // csrf
     // retourne la chaîne csrf de la requête
     final public function csrf():?string

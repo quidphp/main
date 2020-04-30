@@ -615,6 +615,9 @@ class Request extends Base\Test
         // postQuery
         assert(strlen($r->postQuery()) === 51);
 
+        // postTimestamp
+        assert($r->postTimestamp() === null);
+
         // csrf
         assert(strlen($post->csrf()) === 40);
 

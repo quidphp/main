@@ -20,22 +20,49 @@ trait _log
     protected static int $queue = 0; // nombre de logs queues pour la classe
 
 
-    // logOnCloseDown
+    // logCloseDownCliNow
+    // permet de logger maintenant si on est en cli, sinon envoie en closedown
+    final public static function logCloseDownCliNow(...$values):void
+    {
+        if(Base\Server::isCli())
+        static::log(...$values);
+
+        else
+        static::logCloseDown(...$values);
+
+        return;
+    }
+
+
+    // logCloseDown
     // queue l'insertion d'une nouvelle entrée du log au closeDown
     // lance logTrim si c'est le dernier élément de la queue
-    final public static function logOnCloseDown(...$values):void
+    final public static function logCloseDown(...$values):void
     {
         Base\Response::onCloseDown(function() use($values) {
             static::log(...$values);
-            static::$queue--;
 
-            if(static::$queue === 0)
-            static::logTrim();
+            if(static::$queue > 0)
+            {
+                static::$queue--;
+                static::logAfter();
+            }
 
             return;
         });
 
         static::$queue++;
+
+        return;
+    }
+
+
+    // logAfter
+    // code à lancer après la création du log
+    public static function logAfter():void
+    {
+        if(static::$queue === 0)
+        static::logTrim();
 
         return;
     }

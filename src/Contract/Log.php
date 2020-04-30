@@ -20,9 +20,14 @@ interface Log
     public static function log(...$values):?self;
 
 
-    // logOnCloseDown
+    // logCloseDownCliNow
+    // permet de logger maintenant si on est en cli, sinon envoie en closedown
+    public static function logCloseDownCliNow(...$values):void;
+
+
+    // logCloseDown
     // queue la création d'une nouvelle entrée du log au closeDown
-    public static function logOnCloseDown(...$values):void;
+    public static function logCloseDown(...$values):void;
 
 
     // logTrim

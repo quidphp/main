@@ -447,7 +447,7 @@ class Com extends Map
             $this->posNeg($pos,$neg);
 
             if($option['log'] === true && !empty($log))
-            $log::logOnCloseDown($type,['key'=>$type,'bool'=>$bool,'pos'=>$pos,'neg'=>$neg]);
+            $log::logCloseDown($type,['key'=>$type,'bool'=>$bool,'pos'=>$pos,'neg'=>$neg]);
 
             if($option['strict'] === true && !empty($neg))
             static::throw($type,$neg);
