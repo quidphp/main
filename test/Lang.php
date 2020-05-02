@@ -292,7 +292,7 @@ class Lang extends Base\Test
         assert($lang->dateStr('year') === 'année');
 
         // datePlaceholder
-        assert(count($lang->datePlaceholder()) === 3);
+        assert(count($lang->datePlaceholder()) === 4);
         assert($lang->datePlaceholder('dateToDay','en') === 'MM-DD-YYYY');
         assert($lang->datePlaceholder('dateToDay') === 'JJ-MM-AAAA');
 

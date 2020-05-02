@@ -371,7 +371,7 @@ abstract class ServiceMailer extends Service
         $log = $this->logClass();
 
         if(!empty($log))
-        $log::new($status,$this->messageWithOption($message,false));
+        $log::log($status,$this->messageWithOption($message,false));
 
         return;
     }
