@@ -538,9 +538,9 @@ class Request extends Base\Test
         assert($r3->unsetQuery('james','ok2')->query() === 'ok=yes&bla=3');
 
         // setArgv
-        assert($r7->setArgv(['james','--username=2','--tets=lol','--test=3','--test','-james','ok.php']) === $r7);
-        assert($r7->query() === 'username=2&tets=lol&test=');
-        assert($r7->queryArray() === ['username'=>2,'tets'=>'lol','test'=>'']);
+        assert($r7->setArgv(['james','--lol=false','--username=2','--tets=lol','--test=3','--test','-james','ok.php']) === $r7);
+        assert($r7->query() === 'lol=false&username=2&tets=lol&test=1');
+        assert($r7->queryArray() === ['lol'=>'false','username'=>2,'tets'=>'lol','test'=>1]);
 
         // fragment
         assert($r->fragment() === 'lastchance');

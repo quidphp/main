@@ -1462,7 +1462,7 @@ class Request extends Map
     // permet de lier des query à la requête à partir d'un tableau d'options de cli
     final public function setArgv(array $values):self
     {
-        $query = Base\Cli::parseLongOptions(...$values);
+        $query = Base\Cli::parseOpt(...array_values($values));
 
         if(!empty($query))
         $this->setQuery($query);
