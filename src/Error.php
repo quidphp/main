@@ -584,7 +584,7 @@ class Error extends Root
     // écrit le message d'erreur log
     final protected function errorLog():self
     {
-        Base\Error::log($this->getOutputArray(false));
+        Base\Error::log($this->getOutputArray(null,false));
 
         return $this;
     }
@@ -711,11 +711,11 @@ class Error extends Root
 
     // html
     // génère le html de l'erreur
-    final public function html():string
+    final public function html($outputDepth=null):string
     {
         $return = '';
 
-        foreach ($this->getOutputArray() as $k => $v)
+        foreach ($this->getOutputArray($outputDepth) as $k => $v)
         {
             // stack
             if($k === 5)
@@ -805,10 +805,10 @@ class Error extends Root
 
     // getOutputArray
     // retourne les entrées du tableau de output qu'il faut afficher selon l'attr outputDepth
-    final public function getOutputArray(bool $showTrace=true):array
+    final public function getOutputArray($outputDepth=null,bool $showTrace=true):array
     {
         $return = [];
-        $outputDepth = $this->getAttr('outputDepth');
+        $outputDepth ??= $this->getAttr('outputDepth');
 
         if(!empty($outputDepth))
         {
@@ -993,15 +993,26 @@ class Error extends Root
     }
 
 
+    // boolToOutputDepth
+    // retourne la depth à utiliser à partir d'un boolean
+    final public static function boolToOutputDepth(bool $value):int
+    {
+        if($value === true)
+        $return = 7;
+
+        elseif($value === false)
+        $return = 2;
+
+        return $return;
+    }
+
+
     // setDefaultOutputDepth
     // change la valeur par défaut du output depth dans attr avant la création de l'objet erreur
     final public static function setDefaultOutputDepth($value):void
     {
-        if($value === true)
-        $value = 7;
-
-        elseif($value === false)
-        $value = 2;
+        if(is_bool($value))
+        $value = static::boolToOutputDepth($value);
 
         if(is_int($value))
         static::$config['outputDepth'] = $value;

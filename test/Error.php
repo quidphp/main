@@ -210,6 +210,8 @@ class Error extends Base\Test
 
         // setCom
 
+        // boolToOutputDepth
+
         // setDefaultOutputDepth
 
         // getTraceLength

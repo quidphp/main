@@ -212,7 +212,7 @@ class Exception extends \Exception implements \JsonSerializable
     // catched
     // envoie à la classse error et trigge l'erreur
     // utilise les config catched (donc devrait générer une erreur silencieuse)
-    final public function catched(?array $attr=null):Error
+    final public function catched($attr=null):Error
     {
         return static::staticCatched($this,$attr);
     }
@@ -266,14 +266,32 @@ class Exception extends \Exception implements \JsonSerializable
 
     // staticCatched
     // permet d'attraper une exception non quid et de lui faire le traitement catched
-    final public static function staticCatched(\Exception $exception,?array $attr=null):Error
+    // si attribut est false, met tous les paramètres error ayant un impact à false
+    final public static function staticCatched(\Exception $exception,$attr=null):Error
     {
+        if($attr === false)
+        $attr = ['output'=>false,'kill'=>false,'com'=>false,'log'=>false,'cleanBuffer'=>false];
+
         $exceptionOption = ($exception instanceof self)? $exception->attr():null;
         $attr = Base\Arr::replace(static::$config,$exceptionOption,$attr);
         $class = Error::classOverload();
         $return = $class::exception($exception,$attr);
 
         return $return;
+    }
+
+
+    // staticToArray
+    // retourne un tableau à partir d'une exception
+    final public static function staticToArray(\Exception $exception):array
+    {
+        $error = static::staticCatched($exception,false);
+
+        return [
+            'message'=>$error->getMessage(),
+            'file'=>$error->getFile(),
+            'line'=>$error->getLine(),
+        ];
     }
 }
 ?>

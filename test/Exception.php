@@ -83,6 +83,9 @@ class Exception extends Base\Test
         // staticCatched
         assert(Main\Exception::staticCatched($i) instanceof Main\Error);
 
+        // staticToArray
+        assert(count(Main\Exception::staticToArray($i)) === 3);
+
         // exception
         assert(!$e instanceof Main\Contract\Catchable);
         assert($e->getCode() === 31);
