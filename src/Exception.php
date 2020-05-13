@@ -265,27 +265,28 @@ class Exception extends \Exception implements \JsonSerializable
 
 
     // staticCatched
-    // permet d'attraper une exception non quid et de lui faire le traitement catched
-    // si attribut est false, met tous les paramètres error ayant un impact à false
-    final public static function staticCatched(\Exception $exception,$attr=null):Error
+    // permet d'attraper une throwable non quid et de lui faire le traitement catched
+    // si attr est array, alors merge par dessus un tableau d'option ou tout est à false
+    // si null utilise seulement les attributs de l'exception
+    final public static function staticCatched(\Throwable $throwable,?array $attr=null):Error
     {
-        if($attr === false)
-        $attr = ['output'=>false,'kill'=>false,'com'=>false,'log'=>false,'cleanBuffer'=>false];
+        if(is_array($attr))
+        $attr = Base\Arr::replace(['output'=>false,'kill'=>false,'com'=>false,'log'=>false,'cleanBuffer'=>false],$attr);
 
-        $exceptionOption = ($exception instanceof self)? $exception->attr():null;
-        $attr = Base\Arr::replace(static::$config,$exceptionOption,$attr);
+        $throwableOption = ($throwable instanceof self)? $throwable->attr():null;
+        $attr = Base\Arr::replace(static::$config,$throwableOption,$attr);
         $class = Error::classOverload();
-        $return = $class::exception($exception,$attr);
+        $return = $class::exception($throwable,$attr);
 
         return $return;
     }
 
 
     // staticToArray
-    // retourne un tableau à partir d'une exception
-    final public static function staticToArray(\Exception $exception):array
+    // retourne un tableau à partir d'une throwable
+    final public static function staticToArray(\Throwable $throwable):array
     {
-        $error = static::staticCatched($exception,false);
+        $error = static::staticCatched($throwable,[]);
 
         return [
             'message'=>$error->getMessage(),

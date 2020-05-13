@@ -33,7 +33,8 @@ class Error extends Root
         'callback'=>null, // fonction de callback envoyé au début du trigger
         'cleanBuffer'=>null, // vide le buffer
         'com'=>false, // met l'erreur dans com
-        'log'=>null, // classes pour log, peut être string ou array, s'il y a en plusieurs utilise seulement le premier qui fonctionne
+        'log'=>true, // envoie au log ou non
+        'logClass'=>null, // classes pour log, peut être string ou array, s'il y a en plusieurs utilise seulement le premier qui fonctionne
         'kill'=>true, // fin de php
         'default'=>22, // code par défaut si vide
         'doc'=>['html'=>"data-error='fatal'",'head'=>null], // attribut pour les balises lors de la création de la page html, fournir des string pas de un array
@@ -557,7 +558,7 @@ class Error extends Root
         $this->errorLog();
 
         // log
-        if(!empty($this->getAttr('log')))
+        if($this->getAttr('log') === true)
         $this->log();
 
         // com
@@ -596,7 +597,7 @@ class Error extends Root
     final public function log():?Contract\Log
     {
         $return = null;
-        $logs = $this->getAttr('log');
+        $logs = $this->getAttr('logClass');
 
         if(!empty($logs))
         {
