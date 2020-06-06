@@ -32,5 +32,23 @@ trait _filter
 
         return $return->checkAfter();
     }
+
+
+    // filterKeep
+    // garde seulement les clés données en argument
+    final public function filterKeep(...$values)
+    {
+        $values = $this->prepareKeys(...$values);
+        return $this->filter(fn($value,$key) => in_array($key,$values,true));
+    }
+
+
+    // filterReject
+    // garde seulement les clés non données en argument
+    final public function filterReject(...$values)
+    {
+        $values = $this->prepareKeys(...$values);
+        return $this->filter(fn($value,$key) => !in_array($key,$values,true));
+    }
 }
 ?>

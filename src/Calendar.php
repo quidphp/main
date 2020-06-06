@@ -104,6 +104,9 @@ class Calendar extends Widget
         if(Base\Datetime::isToday($value))
         $return[] = 'today';
 
+        if(Base\Datetime::isWeekend($value))
+        $return[] = 'weekend';
+
         if(Base\Datetime::isMonth($value,null,$this->timestamp()))
         $return[] = 'in';
 

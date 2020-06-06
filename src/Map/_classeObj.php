@@ -38,24 +38,6 @@ trait _classeObj
     }
 
 
-    // only
-    // garde seulement les valeurs données en argument
-    // utilise filter
-    final public function only(...$values)
-    {
-        $values = $this->prepareKeys(...$values);
-        return $this->filter(fn($value,$key) => in_array($key,$values,true));
-    }
-
-
-    // not
-    // clone l'objet et enlève les valeurs données via unset
-    final public function not(...$values)
-    {
-        return $this->clone()->unset(...$values);
-    }
-
-
     // pair
     // retourne un tableau associatif avec le clé et le résultat d'une méthode
     final public function pair(string $method,...$args):array
@@ -70,52 +52,6 @@ trait _classeObj
 
             else
             $return[$key] = $value::$method(...$args);
-        }
-
-        return $return;
-    }
-
-
-    // pairEqual
-    // retourne vrai si le résultat de toutes les méthodes est la valeur donnée en deuxième argument
-    final public function pairEqual($equal,string $method,...$args):bool
-    {
-        $return = false;
-        $type = static::classeOrObj();
-
-        foreach ($this->arr() as $value)
-        {
-            $result = ($type === 'obj')? $value->$method(...$args):$value::$method(...$args);
-            $return = ($result === $equal);
-
-            if($return === false)
-            break;
-        }
-
-        return $return;
-    }
-
-
-    // pairStr
-    // retourne une string avec le résultat combiné d'une méthode
-    // exception envoyé si résultat d'une méthode non scalaire et non null
-    final public function pairStr(string $method,...$args):string
-    {
-        $return = '';
-        $type = static::classeOrObj();
-
-        foreach ($this->arr() as $key => $value)
-        {
-            if($type === 'obj')
-            $str = $value->$method(...$args);
-            else
-            $str = $value::$method(...$args);
-
-            if(is_scalar($str) || $str === null)
-            $return .= $str;
-
-            else
-            static::throw('invalidReturnValue');
         }
 
         return $return;

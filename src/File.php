@@ -183,10 +183,7 @@ class File extends Res
     // retourne le mime groupe par défaut pour la classe
     final public static function defaultMimeGroup():?string
     {
-        $return = static::$config['group'] ?? null;
-        $return = (empty($return))? null:$return;
-
-        return $return;
+        return static::$config['group'] ?? null;
     }
 
 
