@@ -51,6 +51,7 @@ class Lang extends Map
             'numberMoneyFormat'=>'number/moneyFormat',
             'numberPhoneFormat'=>'number/phoneFormat',
             'numberSizeFormat'=>'number/sizeFormat',
+            'dateLocale'=>'date/locale',
             'dateMonth'=>'date/month',
             'dateFormat'=>'date/format',
             'dateStr'=>'date/str',
@@ -990,6 +991,14 @@ class Lang extends Map
     final public function numberSizeFormat(?string $key=null,?string $lang=null)
     {
         return $this->take($this->getPath('numberSizeFormat',$key),$lang);
+    }
+
+
+    // dateLocale
+    // retourne la locale pour la date
+    final public function dateLocale(?string $lang=null):?string
+    {
+        return $this->take($this->getPath('dateLocale'),$lang);
     }
 
 

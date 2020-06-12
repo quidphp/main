@@ -297,6 +297,9 @@ class File extends Base\Test
         assert($raster->safeBasename() === 'jpg.jpg');
         assert(strlen($rasterStorage->img()) > 2500);
         assert(strlen($captcha->captcha('test','[assertCommon]/ttf.ttf')->img()) > 2000);
+        Base\Html::setUriOption('img',['append'=>true,'exists'=>false]);
+        assert(strlen(Base\Html::img($raster)) === 57);
+        Base\Html::setUriOption('img',['append'=>false,'exists'=>false]);
 
         // imageVector
         assert($vector instanceof Main\File\Image);

@@ -279,6 +279,9 @@ class Lang extends Base\Test
         assert(count($lang->numberSizeFormat()) === 2);
         assert($lang->numberSizeFormat('text/0') === 'Octet');
 
+        // dateLocale
+        assert($lang->dateLocale() === 'fr-CA');
+
         // dateMonth
         assert(count($lang->dateMonth()) === 12);
         assert($lang->dateMonth(1) === 'Janvier');

@@ -20,6 +20,7 @@ abstract class ServiceVideo extends ServiceRequest
     protected static array $config = [
         'required'=>[], // clés requises
         'video'=>[], // permet de convertir une clé vers une autre, passé comme option dans l'objet vidéo
+        'hostsValid'=>[], // hosts valide pour le service video
         'target'=>null
     ];
 
@@ -31,6 +32,7 @@ abstract class ServiceVideo extends ServiceRequest
     {
         $return = null;
         $request = $this->request($value);
+
         $response = $request->trigger();
         $json = $response->body(true);
 
@@ -52,6 +54,24 @@ abstract class ServiceVideo extends ServiceRequest
     final public function request($value,?array $option=null):Request
     {
         return static::makeRequest(static::target(['value'=>$value]),Base\Arr::plus($this->attr(),$option));
+    }
+
+
+    // isValidInput
+    // retourne vrai si le service est compatible avec le input
+    // pour ce faire compare les hosts
+    final public static function isValidInput($value):bool
+    {
+        $return = false;
+
+        if(is_string($value))
+        {
+            $host = Base\Uri::host($value);
+            if(!empty($host) && in_array($host,static::$config['hostsValid'],true))
+            $return = true;
+        }
+
+        return $return;
     }
 
 
