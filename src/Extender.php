@@ -77,18 +77,7 @@ class Extender extends Map
     // retourne vrai si toutes les classes sont des sous classes de
     final public function areSubClassOf(string $class):bool
     {
-        $return = true;
-
-        foreach ($this->toArray() as $value)
-        {
-            if(!is_subclass_of($value,$class,true))
-            {
-                $return = false;
-                break;
-            }
-        }
-
-        return $return;
+        return $this->every(fn($value) => is_subclass_of($value,$class,true));
     }
 
 
@@ -146,18 +135,7 @@ class Extender extends Map
     // retourne la première classe qui n'est pas une sous-classe de
     final public function firstNotSubClassOf(string $class):?string
     {
-        $return = null;
-
-        foreach ($this as $value)
-        {
-            if(!is_subclass_of($value,$class,true))
-            {
-                $return = $value;
-                break;
-            }
-        }
-
-        return $return;
+        return $this->find(fn($value) => !is_subclass_of($value,$class,true));
     }
 
 

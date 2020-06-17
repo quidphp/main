@@ -66,14 +66,7 @@ class RequestHistory extends Map
     // prépare le retour pour indexes, gets et slice
     final protected function onPrepareReturns(array $array):self
     {
-        $return = new static();
-
-        foreach ($array as $key => $value)
-        {
-            $return->push($value);
-        }
-
-        return $return;
+        return new static($array);
     }
 
 

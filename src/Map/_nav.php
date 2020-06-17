@@ -20,13 +20,8 @@ trait _nav
     // permet de slice l'objet à partir d'une page et d'une limite
     final public function pageSlice(int $page,int $limit):self
     {
-        $return = new static();
         $slice = Base\Nav::pageSlice($page,$limit,$this->arr());
-
-        if(is_array($slice))
-        $return = $this->gets(...array_keys($slice));
-
-        return $return;
+        return (is_array($slice))? $this->gets(...array_keys($slice)):new static();
     }
 
 

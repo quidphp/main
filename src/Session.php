@@ -302,12 +302,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne la row de la session ou envoie une exception si non existante
     final public function storage():Contract\Session
     {
-        $return = $this->storage;
-
-        if(!$return instanceof Contract\Session)
-        static::throw();
-
-        return $return;
+        return static::checkClass($this->storage,Contract\Session::class);
     }
 
 

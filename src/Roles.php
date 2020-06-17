@@ -76,18 +76,7 @@ class Roles extends MapObj
     // retourne vrai si un des rôles à l'attribut à true
     final public function isOne($value):bool
     {
-        $return = false;
-
-        foreach ($this as $role)
-        {
-            if($role->is($value))
-            {
-                $return = true;
-                break;
-            }
-        }
-
-        return $return;
+        return $this->some(fn($role) => $role->is($value));
     }
 
 
@@ -95,35 +84,15 @@ class Roles extends MapObj
     // retourne vrai si tous les rôles ont l'attribut à true
     final public function isAll($value):bool
     {
-        $return = false;
-
-        foreach ($this as $role)
-        {
-            $return = $role->is($value);
-
-            if($return === false)
-            break;
-        }
-
-        return $return;
+        return $this->every(fn($role) => $role->is($value));
     }
 
 
     // isNobody
-    // retourne vrai si tout les rôles sont nobody
+    // retourne vrai si tous les rôles sont nobody
     final public function isNobody():bool
     {
-        $return = false;
-
-        foreach ($this as $role)
-        {
-            $return = $role->isNobody();
-
-            if($return === false)
-            break;
-        }
-
-        return $return;
+        return $this->every(fn($role) => $role->isNobody());
     }
 
 
@@ -131,18 +100,7 @@ class Roles extends MapObj
     // retourne vrai si un des rôle est somebody
     final public function isSomebody():bool
     {
-        $return = false;
-
-        foreach ($this as $role)
-        {
-            if($role->isSomebody())
-            {
-                $return = true;
-                break;
-            }
-        }
-
-        return $return;
+        return $this->some(fn($role) => $role->isSomebody());
     }
 
 
@@ -150,7 +108,7 @@ class Roles extends MapObj
     // retourne un role par nom
     final public function findByName(string $name):?Role
     {
-        return $this->find(fn(Role $role) => $role->name() === $name);
+        return $this->find(fn($role) => $role->name() === $name);
     }
 
 
@@ -166,8 +124,7 @@ class Roles extends MapObj
 
         foreach ($values as $value)
         {
-            if(!$value instanceof Role)
-            static::throw('requires Role');
+            static::checkClass($value,Role::class);
 
             $permission = $value->permission();
             $name = $value->name();

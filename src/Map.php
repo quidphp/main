@@ -99,14 +99,14 @@ class Map extends ArrMap
     // par défaut, les clés non scalar sont envoyés dans obj/cast et les array dans arrs/keyPrepare
     protected function onPrepareKey($return)
     {
-        if($return instanceof self)
-        $return = $return;
+        if(!$return instanceof self)
+        {
+            if(!is_scalar($return))
+            $return = Base\Obj::cast($return);
 
-        elseif(!is_scalar($return))
-        $return = Base\Obj::cast($return);
-
-        if(is_array($return))
-        $return = Base\Arrs::keyPrepare($return);
+            if(is_array($return))
+            $return = Base\Arrs::keyPrepare($return);
+        }
 
         return $return;
     }

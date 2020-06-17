@@ -22,10 +22,7 @@ trait _arrs
     // ne change pas les array
     final protected function onPrepareKey($return)
     {
-        if($return instanceof self)
-        $return = $return;
-
-        elseif(!is_scalar($return))
+        if(!$return instanceof self && !is_scalar($return))
         $return = Base\Obj::cast($return);
 
         return $return;

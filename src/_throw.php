@@ -16,6 +16,23 @@ use Quid\Base;
 // trait that provides static methods to throw exception from an object
 trait _throw
 {
+    // checkClass
+    // lance une exception si la variable n'est pas de la classe
+    // retourne la variable
+    protected static function checkClass($return,string $class,...$args):object
+    {
+        if(!$return instanceof $class)
+        {
+            if(empty($args))
+            $args = [$return];
+
+            static::throw('expected',$class,...$args);
+        }
+
+        return $return;
+    }
+
+
     // throw
     // lance une nouvelle exception
     // ajoute la classe et méthode statique appelant au début du message de l'exception
