@@ -34,8 +34,6 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
     final protected function onUnqueue():void
     {
         $this->unlink();
-
-        return;
     }
 
 
@@ -80,8 +78,6 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
     final public static function setUnqueueCallable(\Closure $closure):void
     {
         static::$config['unqueue'] = $closure;
-
-        return;
     }
 }
 

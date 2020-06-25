@@ -45,8 +45,6 @@ class Video extends Map
 
         else
         static::throw('requires','jsonStringOrArray');
-
-        return;
     }
 
 

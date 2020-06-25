@@ -75,8 +75,6 @@ class Email extends Json implements Main\Contract\Email
     final public static function setMailer(string $key,Main\ServiceMailer $value):void
     {
         static::$config['mailer'][$key] = $value;
-
-        return;
     }
 }
 

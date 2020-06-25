@@ -106,8 +106,6 @@ class Csv extends Text implements Main\Contract\Import
     final public function sourceRewind():void
     {
         $this->seekRewind();
-
-        return;
     }
 
 

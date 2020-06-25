@@ -21,8 +21,6 @@ trait _reference
     final public function __construct(array &$value)
     {
         $this->data =& $value;
-
-        return;
     }
 
 
@@ -34,8 +32,6 @@ trait _reference
 
         if(!empty($is) && !Base\Arr::validate($is,$this->data))
         static::throw('onlyAccepts',static::$is);
-
-        return;
     }
 }
 ?>

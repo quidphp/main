@@ -42,8 +42,6 @@ abstract class ServiceMailer extends Service
     {
         parent::__construct($attr);
         $this->prepare();
-
-        return;
     }
 
 
@@ -106,8 +104,6 @@ abstract class ServiceMailer extends Service
     {
         $this->checkReady();
         $this->mailer = null;
-
-        return;
     }
 
 
@@ -221,8 +217,6 @@ abstract class ServiceMailer extends Service
     final public function sendOnCloseDown($value):void
     {
         Base\Response::onCloseDown(fn() => $this->trigger($value));
-
-        return;
     }
 
 
@@ -372,8 +366,6 @@ abstract class ServiceMailer extends Service
 
         if(!empty($log))
         $log::log($status,$this->messageWithOption($message,false));
-
-        return;
     }
 
 
@@ -422,8 +414,6 @@ abstract class ServiceMailer extends Service
 
         else
         static::throw($value);
-
-        return;
     }
 
 

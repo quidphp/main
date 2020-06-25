@@ -37,8 +37,6 @@ trait _serialize
             else
             static::throw('propertyDoesNotExist',$key);
         }
-
-        return;
     }
 
 

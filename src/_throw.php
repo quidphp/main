@@ -40,8 +40,6 @@ trait _throw
     {
         $class = Exception::classOverload();
         static::throwCommon($class,$values);
-
-        return;
     }
 
 
@@ -53,8 +51,6 @@ trait _throw
     {
         $class = CatchableException::classOverload();
         static::throwCommon($class,$values,$option);
-
-        return;
     }
 
 
@@ -65,8 +61,6 @@ trait _throw
         $source = (static::class !== self::class)? static::class:null;
         $message = Base\Exception::classFunction(Base\Debug::traceIndex(3),$source,$values);
         throw new $class($message,null,$option,...$values);
-
-        return;
     }
 }
 ?>

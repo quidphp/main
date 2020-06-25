@@ -78,8 +78,6 @@ class Error extends Root
         $this->prepareThrowable($value);
         else
         $this->prepare($value,$code);
-
-        return;
     }
 
 
@@ -189,8 +187,6 @@ class Error extends Root
     final protected function setMessage(string $message):void
     {
         $this->message = $message;
-
-        return;
     }
 
 
@@ -209,8 +205,6 @@ class Error extends Root
     {
         $this->code = $code;
         $this->attr($this->getType());
-
-        return;
     }
 
 
@@ -227,8 +221,6 @@ class Error extends Root
     final protected function setFile(string $file):void
     {
         $this->file = $file;
-
-        return;
     }
 
 
@@ -245,8 +237,6 @@ class Error extends Root
     final protected function setLine(int $line):void
     {
         $this->line = $line;
-
-        return;
     }
 
 
@@ -285,8 +275,6 @@ class Error extends Root
             $unshift = ['file'=>$this->getFile(),'line'=>$this->getLine()];
             array_unshift($this->trace,$unshift);
         }
-
-        return;
     }
 
 
@@ -306,8 +294,6 @@ class Error extends Root
     {
         if(is_scalar($value))
         $this->info = $value;
-
-        return;
     }
 
 
@@ -325,8 +311,6 @@ class Error extends Root
     final protected function setStack(array $value):void
     {
         $this->stack = $value;
-
-        return;
     }
 
 
@@ -343,8 +327,6 @@ class Error extends Root
     final protected function setContent(?string $value):void
     {
         $this->content = $value;
-
-        return;
     }
 
 
@@ -390,8 +372,6 @@ class Error extends Root
             $this->setTrace($trace);
             $this->setInfo($info);
         }
-
-        return;
     }
 
 
@@ -439,8 +419,6 @@ class Error extends Root
         $this->setInfo($info);
         $this->setStack($stack);
         $this->setContent($content);
-
-        return;
     }
 
 
@@ -642,8 +620,6 @@ class Error extends Root
 
         else
         $this->outputHtml();
-
-        return;
     }
 
 
@@ -668,8 +644,6 @@ class Error extends Root
     final public function outputCli():void
     {
         Base\Buffer::flushEcho($this->cli());
-
-        return;
     }
 
 
@@ -705,8 +679,6 @@ class Error extends Root
         }
 
         Base\Buffer::flushEcho($html);
-
-        return;
     }
 
 
@@ -971,8 +943,6 @@ class Error extends Root
     final public static function setLang(?Lang $lang):void
     {
         static::$lang = $lang;
-
-        return;
     }
 
 
@@ -989,8 +959,6 @@ class Error extends Root
     final public static function setCom(?Com $com):void
     {
         static::$com = $com;
-
-        return;
     }
 
 
@@ -1017,8 +985,6 @@ class Error extends Root
 
         if(is_int($value))
         static::$config['outputDepth'] = $value;
-
-        return;
     }
 
 
@@ -1035,8 +1001,6 @@ class Error extends Root
     final public static function setDocHead(string $value):void
     {
         static::$config['doc']['head'] = $value;
-
-        return;
     }
 
 
@@ -1051,8 +1015,6 @@ class Error extends Root
         Base\Uri::setNotFound([CatchableException::class,'throw']);
         Base\File::setNotFound([CatchableException::class,'throw']);
         Base\Obj::setCastError([Exception::class,'throw']);
-
-        return;
     }
 }
 ?>

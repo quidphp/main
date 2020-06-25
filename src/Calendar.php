@@ -37,8 +37,6 @@ class Calendar extends Widget
     {
         $this->makeAttr($attr);
         $this->setTimestamp($value);
-
-        return;
     }
 
 

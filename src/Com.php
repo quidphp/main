@@ -35,8 +35,6 @@ class Com extends Map
     {
         $this->makeAttr($attr);
         $this->setType($value);
-
-        return;
     }
 
 
@@ -141,8 +139,6 @@ class Com extends Map
 
         else
         static::throw();
-
-        return;
     }
 
 

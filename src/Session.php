@@ -57,8 +57,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $this->makeAttr($attr);
         $this->setStorageClass($class);
         $this->start();
-
-        return;
     }
 
 
@@ -67,8 +65,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     final protected function onCheckArr():void
     {
         $this->checkReady();
-
-        return;
     }
 
 
@@ -81,8 +77,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $com = $this->com();
         $class = Error::classOverload();
         $class::setCom($com);
-
-        return;
     }
 
 
@@ -93,8 +87,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $this->storage = null;
         $class = Error::classOverload();
         $class::setCom(null);
-
-        return;
     }
 
 
@@ -104,8 +96,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     {
         if($this->isReady())
         $this->commit();
-
-        return;
     }
 
 
@@ -142,8 +132,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
 
         else
         static::throw();
-
-        return;
     }
 
 
@@ -522,8 +510,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         Base\Session::setSid($sid);
 
         Base\Session::setSaveHandler($this,$this->getAttr('registerShutdown'));
-
-        return;
     }
 
 

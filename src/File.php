@@ -66,8 +66,6 @@ class File extends Res
         $attr = $this->prepareOption($value,$attr);
         $this->makeAttr($attr);
         parent::__construct($value,$attr);
-
-        return;
     }
 
 
@@ -149,8 +147,6 @@ class File extends Res
     final public function unlinkOnShutdown():void
     {
         Base\File::unlinkOnShutdown($this->path());
-
-        return;
     }
 
 
@@ -364,8 +360,6 @@ class File extends Res
     {
         Base\Mime::register($mime,$extension,$name,$families);
         static::$param['groupClass'][$name] = static::class;
-
-        return;
     }
 
 
@@ -374,8 +368,6 @@ class File extends Res
     final public static function registerStorage(string $name):void
     {
         static::$param['storageClass'][$name] = static::class;
-
-        return;
     }
 
 
@@ -384,8 +376,6 @@ class File extends Res
     final public static function registerUtil(string $name):void
     {
         static::$param['utilClass'][$name] = static::class;
-
-        return;
     }
 
 

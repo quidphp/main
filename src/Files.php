@@ -36,8 +36,6 @@ class Files extends MapObj
     {
         if(!empty($values))
         $this->add(...$values);
-
-        return;
     }
 
 

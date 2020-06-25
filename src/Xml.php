@@ -30,8 +30,6 @@ class Xml extends Root
     {
         $urlset = Base\Xml::urlset($urlset) ?? $urlset;
         $this->xml = new \SimpleXMLElement($urlset);
-
-        return;
     }
 
 

@@ -28,8 +28,6 @@ trait _root
     public function __invoke(...$args)
     {
         static::throw('notAllowed');
-
-        return;
     }
 
 
@@ -56,8 +54,6 @@ trait _root
     public function __get(string $key)
     {
         static::throw('notAllowed',$key);
-
-        return;
     }
 
 
@@ -66,8 +62,6 @@ trait _root
     public function __set(string $key,$value):void
     {
         static::throw('notAllowed',$key);
-
-        return;
     }
 
 
@@ -76,8 +70,6 @@ trait _root
     public function __unset(string $key):void
     {
         static::throw('notAllowed',$key);
-
-        return;
     }
 
 
@@ -96,8 +88,6 @@ trait _root
     public function __unserialize(array $data):void
     {
         static::throw('notAllowed');
-
-        return;
     }
 
 
@@ -106,8 +96,6 @@ trait _root
     public function jsonSerialize()
     {
         static::throw('notAllowed');
-
-        return;
     }
 
 
@@ -116,8 +104,6 @@ trait _root
     public function _cast()
     {
         static::throw('notAllowed');
-
-        return;
     }
 
 

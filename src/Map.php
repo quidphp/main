@@ -36,8 +36,6 @@ class Map extends ArrMap
 
         if(!empty($data))
         $this->makeOverwrite($data);
-
-        return;
     }
 
 
@@ -47,8 +45,6 @@ class Map extends ArrMap
     {
         $this->checkAllowed('clone');
         parent::__clone();
-
-        return;
     }
 
 
@@ -70,8 +66,6 @@ class Map extends ArrMap
     {
         $this->checkAllowed('serialize');
         parent::__unserialize($data);
-
-        return;
     }
 
 
@@ -286,8 +280,6 @@ class Map extends ArrMap
                 static::throw('onlyAccepts',$call);
             }
         }
-
-        return;
     }
 
 
@@ -686,8 +678,6 @@ class Map extends ArrMap
         static::throw('requireArray');
 
         $return->checkAfter();
-
-        return;
     }
 
 

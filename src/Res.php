@@ -138,8 +138,6 @@ class Res extends ArrObj
     public function __construct($value,?array $option=null)
     {
         $this->setResource($value,$option);
-
-        return;
     }
 
 
@@ -191,8 +189,6 @@ class Res extends ArrObj
     {
         $arr = Base\Arr::set($key,$value,$this->arr());
         $this->overwrite($arr);
-
-        return;
     }
 
 
@@ -209,8 +205,6 @@ class Res extends ArrObj
 
         else
         static::throw('arrayAccess','doesNotExist');
-
-        return;
     }
 
 
@@ -238,8 +232,6 @@ class Res extends ArrObj
     public function setResource($value,?array $option=null):void
     {
         $this->resource = [$value,$option];
-
-        return;
     }
 
 
@@ -248,8 +240,6 @@ class Res extends ArrObj
     final public function unsetResource():void
     {
         $this->resource = null;
-
-        return;
     }
 
 

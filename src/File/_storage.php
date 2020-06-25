@@ -50,8 +50,6 @@ trait _storage
     final public static function setStorageDirname(string $value):void
     {
         static::$config['dirname'] = $value;
-
-        return;
     }
 
 

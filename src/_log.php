@@ -29,8 +29,6 @@ trait _log
 
         else
         static::logCloseDown(...$values);
-
-        return;
     }
 
 
@@ -47,13 +45,9 @@ trait _log
                 static::$queue--;
                 static::logAfter();
             }
-
-            return;
         });
 
         static::$queue++;
-
-        return;
     }
 
 
@@ -63,8 +57,6 @@ trait _log
     {
         if(static::$queue === 0)
         static::logTrim();
-
-        return;
     }
 }
 ?>

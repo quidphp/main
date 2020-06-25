@@ -51,8 +51,6 @@ class Extender extends Map
             $namespaces = array_values((array) $namespaces);
             $this->addNamespace(...$namespaces);
         }
-
-        return;
     }
 
 
@@ -373,8 +371,6 @@ class Extender extends Map
                 break;
             }
         }
-
-        return;
     }
 }
 ?>

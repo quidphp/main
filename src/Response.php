@@ -36,8 +36,6 @@ class Response extends Res
         $this->setRequest($request);
         $this->setId();
         $this->trigger($option);
-
-        return;
     }
 
 
@@ -81,8 +79,6 @@ class Response extends Res
         $request = Request::newOverload($request);
 
         $this->request = $request;
-
-        return;
     }
 
 
@@ -101,8 +97,6 @@ class Response extends Res
         $request = $this->request();
         $exec = $request->curlExec($option);
         $this->setExec($exec);
-
-        return;
     }
 
 
@@ -119,8 +113,6 @@ class Response extends Res
 
         else
         static::throw('invalidExecArray');
-
-        return;
     }
 
 
@@ -129,8 +121,6 @@ class Response extends Res
     final protected function setHeaders(array $headers):void
     {
         $this->header = $headers;
-
-        return;
     }
 
 
@@ -154,8 +144,6 @@ class Response extends Res
 
         else
         static::throw('invalidResource');
-
-        return;
     }
 
 
@@ -164,8 +152,6 @@ class Response extends Res
     final protected function setTimestamp(int $value):void
     {
         $this->timestamp = $value;
-
-        return;
     }
 
 
@@ -183,8 +169,6 @@ class Response extends Res
     final protected function setId():void
     {
         $this->id = Base\Str::random(Base\Response::getConfig('idLength'));
-
-        return;
     }
 
 

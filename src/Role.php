@@ -41,8 +41,6 @@ class Role extends Root
         $this->makeAttr($attr);
         $this->setName($name);
         $this->setPermission($permission);
-
-        return;
     }
 
 
@@ -67,8 +65,6 @@ class Role extends Root
     final public function setPermission(int $value):void
     {
         $this->permission = $value;
-
-        return;
     }
 
 
@@ -85,8 +81,6 @@ class Role extends Root
     final public function setName(string $value):void
     {
         $this->name = $value;
-
-        return;
     }
 
 

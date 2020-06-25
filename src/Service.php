@@ -29,8 +29,6 @@ abstract class Service extends Root
     public function __construct(?array $attr=null)
     {
         $this->makeAttr($attr);
-
-        return;
     }
 
 
@@ -48,8 +46,6 @@ abstract class Service extends Root
     final public function setServiceKey(string $key):void
     {
         $this->serviceKey = $key;
-
-        return;
     }
 
 

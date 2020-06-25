@@ -47,8 +47,6 @@ class Importer extends Map
         $this->makeAttr($attr);
         $this->setSource($source);
         $this->setTarget($target);
-
-        return;
     }
 
 
@@ -151,8 +149,6 @@ class Importer extends Map
             if(!$this->exists($key))
             unset($this->required[$key]);
         }
-
-        return;
     }
 
 

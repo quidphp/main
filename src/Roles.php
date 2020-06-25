@@ -36,8 +36,6 @@ class Roles extends MapObj
     final public function __construct(?array $value=null)
     {
         parent::__construct(Role::class,$value);
-
-        return;
     }
 
 

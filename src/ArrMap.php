@@ -74,8 +74,6 @@ abstract class ArrMap extends ArrObj
     public function offsetSet($key,$value):void
     {
         $this->set($key,$value);
-
-        return;
     }
 
 
@@ -89,8 +87,6 @@ abstract class ArrMap extends ArrObj
 
         else
         static::throw('arrayAccess','doesNotExist');
-
-        return;
     }
 
 

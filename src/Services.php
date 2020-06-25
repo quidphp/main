@@ -41,8 +41,6 @@ class Services extends MapObj
             $this->sets($value);
             $this->sortDefault();
         }
-
-        return;
     }
 
 

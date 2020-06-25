@@ -29,8 +29,6 @@ class MapObj extends Map
     {
         $this->mapIs = $class;
         parent::__construct($data);
-
-        return;
     }
 }
 ?>

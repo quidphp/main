@@ -29,8 +29,6 @@ trait _queue
     final public static function triggerUnqueueOnCloseDown(?int $limit=null,?int $timeLimit=null,?float $sleep=null):void
     {
         Base\Response::onCloseDown(fn() => static::triggerUnqueue($limit,$timeLimit,$sleep));
-
-        return;
     }
 
 

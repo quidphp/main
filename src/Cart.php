@@ -42,8 +42,6 @@ class Cart extends Map
                 $this->add(...array_values($value));
             }
         }
-
-        return;
     }
 
 

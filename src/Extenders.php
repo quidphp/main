@@ -30,8 +30,6 @@ class Extenders extends MapObj
     {
         if(!empty($value))
         $this->sets($value);
-
-        return;
     }
 
 

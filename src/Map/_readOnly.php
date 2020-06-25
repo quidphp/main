@@ -25,8 +25,6 @@ trait _readOnly
     final public function __clone()
     {
         $this->readOnly(false);
-
-        return;
     }
 
 

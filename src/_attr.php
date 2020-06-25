@@ -52,8 +52,6 @@ trait _attr
 
         else
         static::throw();
-
-        return;
     }
 
 

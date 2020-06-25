@@ -43,8 +43,6 @@ class Exception extends \Exception implements \JsonSerializable
         $this->makeAttr($attr);
         $this->setArgs(...$args);
         parent::__construct(Base\Exception::message($message),$this->getAttr('code'),$previous);
-
-        return;
     }
 
 
@@ -77,8 +75,6 @@ class Exception extends \Exception implements \JsonSerializable
     final protected function setArgs(...$values):void
     {
         $this->args = $values;
-
-        return;
     }
 
 
@@ -175,8 +171,6 @@ class Exception extends \Exception implements \JsonSerializable
     final public function echoOutput():void
     {
         $this->error()->output();
-
-        return;
     }
 
 
@@ -224,8 +218,6 @@ class Exception extends \Exception implements \JsonSerializable
     final public static function throw(...$values):void
     {
         throw new static(Base\Exception::classFunction(Base\Debug::traceIndex(2),null,$values));
-
-        return;
     }
 
 

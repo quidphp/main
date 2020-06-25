@@ -111,8 +111,6 @@ class Request extends Map
         $this->setDefault(true);
 
         $this->setLive($live);
-
-        return;
     }
 
 
@@ -150,8 +148,6 @@ class Request extends Map
     final protected function onSetInst():void
     {
         $this->readOnly(true);
-
-        return;
     }
 
 
@@ -160,8 +156,6 @@ class Request extends Map
     final protected function onUnsetInst():void
     {
         $this->readOnly(false);
-
-        return;
     }
 
 
@@ -204,8 +198,6 @@ class Request extends Map
     final protected function setLive(bool $value):void
     {
         $this->live = $value;
-
-        return;
     }
 
 

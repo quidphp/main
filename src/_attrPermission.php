@@ -161,8 +161,6 @@ trait _attrPermission
         $all[$key] = [];
 
         $all[$key] = Base\Arrs::replace($all[$key],$value);
-
-        return;
     }
 }
 ?>

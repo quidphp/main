@@ -112,8 +112,6 @@ trait _email
     final public function sendOnCloseDown($key,$to,?array $replace=null,?array $message=null):void
     {
         $this->sendMethod('sendOnCloseDown',$key,$to,$replace,$message);
-
-        return;
     }
 
 

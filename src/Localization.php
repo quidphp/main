@@ -37,8 +37,6 @@ class Localization extends Map
 
         else
         static::throw('requires','jsonStringOrArray');
-
-        return;
     }
 
 

@@ -83,8 +83,6 @@ class Lang extends Map
     {
         $this->makeAttr($attr);
         $this->setLang(null,$all);
-
-        return;
     }
 
 
@@ -102,8 +100,6 @@ class Lang extends Map
     {
         if(Base\Lang::hasCallable())
         static::throw('baseLangAlreadyHasAnInst');
-
-        return;
     }
 
 
@@ -116,8 +112,6 @@ class Lang extends Map
 
         $class = Error::classOverload();
         $class::setLang($this);
-
-        return;
     }
 
 
@@ -130,8 +124,6 @@ class Lang extends Map
 
         elseif(!Base\Lang::getCallable() === $this->getCallable())
         static::throw('baseLangHasAnotherPrimary');
-
-        return;
     }
 
 
@@ -143,8 +135,6 @@ class Lang extends Map
 
         $class = Error::classOverload();
         $class::setLang(null);
-
-        return;
     }
 
 
@@ -158,8 +148,6 @@ class Lang extends Map
             $this->checkInst();
             Base\Lang::set($this->currentLang(),$this->allLang());
         }
-
-        return;
     }
 
 

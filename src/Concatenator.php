@@ -46,8 +46,6 @@ class Concatenator extends Map
     final public function __construct(?array $attr=null)
     {
         $this->makeAttr($attr);
-
-        return;
     }
 
 

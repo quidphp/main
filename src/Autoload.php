@@ -37,8 +37,6 @@ class Autoload extends Base\Root
     {
         $attr = ['type'=>$type,'miss'=>$miss,'init'=>$init,'arg'=>$arg];
         $this->setAttr($attr);
-
-        return;
     }
 
 
@@ -47,8 +45,6 @@ class Autoload extends Base\Root
     final protected function setAttr(array $value):void
     {
         $this->attr = $value;
-
-        return;
     }
 
 
@@ -96,8 +92,6 @@ class Autoload extends Base\Root
 
         else
         $this->hit[] = $value;
-
-        return;
     }
 
 
@@ -113,8 +107,6 @@ class Autoload extends Base\Root
             if(!in_array($value,$this->miss,true))
             $this->miss[] = $value;
         }
-
-        return;
     }
 
 
@@ -327,8 +319,6 @@ class Autoload extends Base\Root
     final public static function setAlias(string $key,string $value):void
     {
         static::$config['alias'][$key] = $value;
-
-        return;
     }
 
 
@@ -342,8 +332,6 @@ class Autoload extends Base\Root
             if(is_string($key) && is_string($value))
             static::$config['alias'][$key] = $value;
         }
-
-        return;
     }
 
 
@@ -353,8 +341,6 @@ class Autoload extends Base\Root
     {
         if(array_key_exists($key,static::$config['alias']))
         unset(static::$config['alias'][$key]);
-
-        return;
     }
 
 
@@ -371,8 +357,6 @@ class Autoload extends Base\Root
     final public static function emptyAlias():void
     {
         static::$config['alias'] = [];
-
-        return;
     }
 
 
@@ -427,8 +411,6 @@ class Autoload extends Base\Root
     final public static function setClosure(string $namespace,string $class,\Closure $closure):void
     {
         static::$config['closure'][$namespace][$class] = $closure;
-
-        return;
     }
 
 
@@ -506,8 +488,6 @@ class Autoload extends Base\Root
     final public static function setOverload(string $key,string $value):void
     {
         static::$config['overload'][$key] = $value;
-
-        return;
     }
 
 
@@ -520,8 +500,6 @@ class Autoload extends Base\Root
             if(is_string($key) && is_string($value))
             static::$config['overload'][$key] = $value;
         }
-
-        return;
     }
 
 
@@ -531,8 +509,6 @@ class Autoload extends Base\Root
     {
         if(array_key_exists($key,static::$config['overload']))
         unset(static::$config['overload'][$key]);
-
-        return;
     }
 
 
@@ -549,8 +525,6 @@ class Autoload extends Base\Root
     final public static function emptyOverload():void
     {
         static::$config['overload'] = [];
-
-        return;
     }
 
 

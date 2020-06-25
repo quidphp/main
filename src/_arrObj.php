@@ -110,8 +110,6 @@ trait _arrObj
     public function offsetSet($key,$value):void
     {
         Base\Arr::setRef($key,$value,$this->arr());
-
-        return;
     }
 
 
@@ -125,8 +123,6 @@ trait _arrObj
 
         else
         static::throw('arrayAccess','doesNotExist');
-
-        return;
     }
 }
 ?>
