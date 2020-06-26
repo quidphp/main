@@ -435,7 +435,6 @@ class Res extends ArrObj
 
     // setContextEol
     // permet changer la valeur eol au sein du contexte de la ressource
-    // peut être null ou false
     final public function setContextEol($separator):self
     {
         $set = Base\Res::setContextEol($separator,$this->resource());

@@ -25,7 +25,6 @@ abstract class ServiceVideo extends ServiceRequest
 
     // query
     // lance la requête et retourne un objet video en cas de succès
-    // plusieurs exceptions peuvent être envoyés
     final public function query($value):?Video
     {
         $return = null;
