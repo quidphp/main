@@ -33,8 +33,9 @@ trait _log
     // et lance le logTrim
     final public static function log(...$values):?Main\Contract\Log
     {
+        static::logHad();
         $return = static::storage(...$values);
-        static::logTrim();
+        static::logAfter();
 
         return $return;
     }

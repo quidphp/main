@@ -2042,7 +2042,7 @@ class Request extends Map
             if(!in_array($code,$responseCode,true))
             {
                 $strCode = implode(', ',$responseCode);
-                $code = ($code === null)? 0:$code;
+                $code ??= 0;
                 static::catchable(null,'responseCodeShouldBe',$strCode,'not',$code);
             }
         }

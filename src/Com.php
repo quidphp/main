@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Main;
 use Quid\Base;
+use Quid\Base\Html;
 
 // com
 // class that provides the logic to store positive, negative or neutral communication messages
@@ -109,7 +110,7 @@ class Com extends Map
     // retourne le type ou le type par défaut si null
     final public function type(?string $type=null):string
     {
-        return ($type === null)? $this->getAttr('default'):$type;
+        return $type ?? $this->getAttr('default');
     }
 
 
@@ -714,8 +715,6 @@ class Com extends Map
         {
             $obj = $this->lang($obj);
 
-            $return .= Base\Html::ulOpen();
-
             foreach ($data as $value)
             {
                 $value = $this->prepare($value,$obj,$lang,$option);
@@ -723,20 +722,17 @@ class Com extends Map
                 if(!empty($value) && in_array($value[0],$types,true))
                 {
                     $attr = Base\Attr::append($value[0],$value[2]);
-                    $span = Base\Html::span($value[1]);
-                    $return .= Base\Html::liOpen($span,$attr);
+                    $html = Html::span($value[1]);
 
                     if(!empty($value[3]) && is_array($value[3]))
-                    $return .= $this->makeOutput(null,$value[3],$obj,$lang,$option);
+                    $html .= $this->makeOutput(null,$value[3],$obj,$lang,$option);
 
-                    $return .= Base\Html::liClose();
+                    $return .= Html::li($html,$attr);
                 }
             }
-
-            $return .= Base\Html::ulClose();
         }
 
-        return $return;
+        return Html::ulCond($return);
     }
 
 

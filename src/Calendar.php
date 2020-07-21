@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Main;
 use Quid\Base;
+use Quid\Base\Html;
 
 // calendar
 // class that provides logic for the calendar widget
@@ -196,10 +197,7 @@ class Calendar extends Widget
     // génère le calendrier en html
     final public function output():string
     {
-        $return = $this->head();
-        $return .= $this->body();
-
-        return $return;
+        return $this->head().$this->body();
     }
 
 
@@ -207,7 +205,7 @@ class Calendar extends Widget
     // génère la partie supérieure du calendrier
     final protected function head():string
     {
-        $return = Base\Html::divOp($this->getAttr('head'));
+        $return = '';
         $timestamp = $this->timestamp();
 
         $callback = $this->callback('prev');
@@ -220,9 +218,8 @@ class Calendar extends Widget
         $formatCurrent = $this->getAttr('formatCurrent');
         if(!empty($formatCurrent))
         {
-            $return .= Base\Html::divOp($this->getAttr('current'));
-            $return .= Base\Datetime::format($formatCurrent,$timestamp);
-            $return .= Base\Html::divCl();
+            $format = Base\Datetime::format($formatCurrent,$timestamp);
+            $return .= Html::div($format,$this->getAttr('current'));
         }
 
         $callback = $this->callback('next');
@@ -232,9 +229,7 @@ class Calendar extends Widget
             $return .= $callback($nextTimestamp,$this);
         }
 
-        $return .= Base\Html::divCl();
-
-        return $return;
+        return Html::div($return,$this->getAttr('head'));
     }
 
 
@@ -242,48 +237,42 @@ class Calendar extends Widget
     // génère la table du calendrier
     final protected function body():string
     {
-        $return = Base\Html::divOp($this->getAttr('body'));
-        $return .= Base\Html::tableOp();
-        $return .= $this->tableHead();
-        $return .= $this->tableBody();
-        $return .= Base\Html::tableCl();
-        $return .= Base\Html::divCl();
+        $r = '';
+        $head = $this->tableHead();
+        $body = $this->tableBody();
+        $r .= Html::table([$head],$body);
 
-        return $return;
+        return Html::div($r,$this->getAttr('body'));
     }
 
 
     // tableHead
-    // génère le thead de la table du calendrier
-    final protected function tableHead():string
+    // génère le tableau du thead de la table du calendrier
+    final protected function tableHead():array
     {
-        $return = '';
-        $ths = [];
+        $return = [];
         $daysShort = Base\Datetime::getDaysShort();
 
         if(!empty($daysShort) && count($daysShort) === 7)
         {
             foreach ($daysShort as $value)
             {
-                $span = Base\Html::span($value);
-                $ths[] = [$span];
+                $span = Html::span($value);
+                $return[] = [$span];
             }
         }
-
-        $return = Base\Html::thead($ths);
 
         return $return;
     }
 
 
     // tableBody
-    // génère le tbody de la table du calendrier
-    final protected function tableBody():string
+    // génère le tableau du tbody de la table du calendrier
+    final protected function tableBody():array
     {
-        $return = '';
+        $return = [];
         $structure = $this->structure();
         $callback = $this->callback('day');
-        $trs = [];
 
         foreach ($structure as $weekNo => $weekDays)
         {
@@ -310,7 +299,7 @@ class Calendar extends Widget
 
                             else
                             {
-                                $span = Base\Html::span($day);
+                                $span = Html::span($day);
                                 $td = [$span,$attr];
                             }
 
@@ -321,11 +310,9 @@ class Calendar extends Widget
                 }
 
                 if(!empty($tds))
-                $trs[] = [$tds];
+                $return[] = [$tds];
             }
         }
-
-        $return = Base\Html::tbody(...$trs);
 
         return $return;
     }

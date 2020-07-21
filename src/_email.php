@@ -45,8 +45,8 @@ trait _email
     // une exception est envoyé si tous les segments requis ne sont pas fournis dans replace
     final public function prepareMessage($to,?array $replace=null,?array $return=null):array
     {
-        $return = ($return === null)? []:$return;
-        $replace = ($replace === null)? []:$replace;
+        $return ??= [];
+        $replace ??= [];
         $replace = Base\Obj::cast($replace);
         $segment = $this->messageSegment();
 

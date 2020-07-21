@@ -174,7 +174,7 @@ class Lang extends Map
     {
         $return = [];
         $this->onCheckArr();
-        $lang = ($lang === null)? $this->currentLang():$lang;
+        $lang ??= $this->currentLang();
 
         if(array_key_exists($lang,$this->data))
         {

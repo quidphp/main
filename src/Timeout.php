@@ -134,7 +134,7 @@ class Timeout extends Map
         $data =& $this->arr();
         $key = $this->onPrepareKey($key);
 
-        $count = ($count === null)? $data[$key]['max']:$count;
+        $count ??= $data[$key]['max'];
         $data[$key]['count'] = $count;
         $this->setTimestamp($key,$timestamp);
 
