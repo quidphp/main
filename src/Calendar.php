@@ -148,16 +148,7 @@ class Calendar extends Widget
         $selected = $this->selected();
 
         if(is_array($selected))
-        {
-            foreach ($selected as $v)
-            {
-                if(is_numeric($v) && Base\Datetime::isDay($v,null,$value))
-                {
-                    $return = true;
-                    break;
-                }
-            }
-        }
+        $return = Base\Arr::some($selected,fn($v) => (is_numeric($v) && Base\Datetime::isDay($v,null,$value)));
 
         return $return;
     }

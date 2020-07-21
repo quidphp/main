@@ -693,10 +693,7 @@ class Request extends Map
         $genuine2 = Base\Html::getGenuineName(2);
 
         if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post[$genuine]))
-        {
-            if($two === false || (array_key_exists($genuine2,$post) && !empty($post[$genuine2])))
-            $return = true;
-        }
+        $return = ($two === false || (array_key_exists($genuine2,$post) && !empty($post[$genuine2])));
 
         return $return;
     }

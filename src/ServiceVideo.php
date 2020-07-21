@@ -64,8 +64,7 @@ abstract class ServiceVideo extends ServiceRequest
         if(is_string($value))
         {
             $host = Base\Uri::host($value);
-            if(!empty($host) && in_array($host,static::$config['hostsValid'],true))
-            $return = true;
+            $return = (!empty($host) && in_array($host,static::$config['hostsValid'],true));
         }
 
         return $return;

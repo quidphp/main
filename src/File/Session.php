@@ -47,10 +47,8 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
     // écrit de nouvelles données dans le fichier session
     final public function sessionWrite(string $data):bool
     {
-        $return = true;
         $this->overwrite($data,['callback'=>null]);
-
-        return $return;
+        return true;
     }
 
 
@@ -102,13 +100,8 @@ class Session extends Serialize implements Main\Contract\Session, Main\Contract\
     // retourne vrai si le sid exists pour le nom donné
     final public static function sessionExists(string $path,string $name,string $sid):bool
     {
-        $return = false;
         $path = static::sessionPath($path,$name,$sid);
-
-        if(Base\File::is($path))
-        $return = true;
-
-        return $return;
+        return Base\File::is($path);
     }
 
 

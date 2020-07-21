@@ -220,13 +220,8 @@ class Lang extends Map
     // retourne vrai si la valeur est une lang de l'objet
     final public function isLang($value):bool
     {
-        $return = false;
         $value = Base\Lang::prepareCode($value);
-
-        if(!empty($value) && in_array($value,$this->allLang(),true))
-        $return = true;
-
-        return $return;
+        return !empty($value) && in_array($value,$this->allLang(),true);
     }
 
 
@@ -245,15 +240,10 @@ class Lang extends Map
     // retourne vrai si la lang existe et le contenu a été chargé
     final public function isLangLoaded($value):bool
     {
-        $return = false;
-
         if($value === null)
         $value = $this->currentLang();
 
-        if($this->isLang($value) && is_array($this->data[$value]))
-        $return = true;
-
-        return $return;
+        return $this->isLang($value) && is_array($this->data[$value]);
     }
 
 

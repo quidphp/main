@@ -107,9 +107,7 @@ trait _concatenate
         if(is_string($to) && !empty($to) && !empty($from))
         {
             $extension = static::concatenateExtension();
-
-            if($overwrite === true || Base\Dir::isOlderThanFrom($to,$from,true,['visible'=>true,'extension'=>$extension]))
-            $return = true;
+            $return = ($overwrite === true || Base\Dir::isOlderThanFrom($to,$from,true,['visible'=>true,'extension'=>$extension]));
         }
 
         return $return;

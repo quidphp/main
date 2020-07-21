@@ -530,18 +530,8 @@ class Autoload extends Base\Root
     // retourne vrai s'il y a un autoload du type fourni en argument présentement enregistré
     final public static function isRegistered(string $type):bool
     {
-        $return = false;
-
-        foreach (Base\Autoload::all() as $key => $value)
-        {
-            if(is_array($value) && $value[0] instanceof self && $value[0]->type() === $type)
-            {
-                $return = true;
-                break;
-            }
-        }
-
-        return $return;
+        $closure = fn($value) => is_array($value) && $value[0] instanceof self && $value[0]->type() === $type;
+        return Base\Arr::some(Base\Autoload::all(),$closure);
     }
 
 

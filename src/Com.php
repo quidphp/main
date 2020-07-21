@@ -77,9 +77,7 @@ class Com extends Map
             if($this->isType($type))
             {
                 $path = Base\Arr::get(1,$value);
-
-                if(is_string($path) && !empty($path))
-                $return = true;
+                $return = (is_string($path) && !empty($path));
             }
         }
 

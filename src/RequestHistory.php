@@ -80,13 +80,8 @@ class RequestHistory extends Map
     // retourne vrai si l'uri est dans l'objet
     final public function hasUri($value):bool
     {
-        $return = false;
-
         $uris = $this->absolute();
-        if(is_string($value) && in_array($value,$uris,true))
-        $return = true;
-
-        return $return;
+        return is_string($value) && in_array($value,$uris,true);
     }
 
 

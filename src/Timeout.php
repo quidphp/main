@@ -41,10 +41,7 @@ class Timeout extends Map
         $value = $this->get($key);
 
         if(is_array($value))
-        {
-            if(is_int($value['count']) && is_int($value['max']) && $value['count'] >= $value['max'])
-            $return = true;
-        }
+        $return = (is_int($value['count']) && is_int($value['max']) && $value['count'] >= $value['max']);
 
         return $return;
     }

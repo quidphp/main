@@ -617,7 +617,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
     final public function open($path,$name):bool
     {
-        $return = false;
         $this->checkStarted();
 
         if(!is_string($name) || empty($name))
@@ -626,9 +625,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         if($path !== Base\Session::getSavePath())
         static::throw('invalidPath');
 
-        $return = true;
-
-        return $return;
+        return true;
     }
 
 
@@ -710,11 +707,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // appele la méthode onEnd
     final public function close():bool
     {
-        $return = true;
         $this->checkStarted();
         $this->onEnd();
 
-        return $return;
+        return true;
     }
 
 
@@ -737,18 +733,14 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
     final public function gc($lifetime):bool
     {
-        $return = false;
         $this->checkReady();
         $class = $this->getStorageClass();
         $path = Base\Session::getSavePath(true);
         $name = Base\Session::name();
         $storage = $this->storage;
-
         $gc = $class::sessionGarbageCollect($path,$name,$lifetime,$storage);
-        if(is_int($gc))
-        $return = true;
 
-        return $return;
+        return is_int($gc);
     }
 }
 ?>
