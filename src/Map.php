@@ -52,7 +52,6 @@ class Map extends ArrMap
     public function __serialize():array
     {
         $this->checkAllowed('serialize');
-
         return parent::__serialize();
     }
 
@@ -156,13 +155,44 @@ class Map extends ArrMap
     }
 
 
+    // isAllowed
+    // retourne vrai si la méthode est permis par la classe
+    final public function isAllowed($value):bool
+    {
+        $return = false;
+        $allow = $this->mapAllow;
+        $deny = $this->mapDeny;
+
+        if($allow === null && $deny === null)
+        $return = true;
+
+        elseif(is_string($value))
+        {
+            if(empty($allow) || (is_array($allow) && in_array($value,$allow,true)))
+            $return = true;
+
+            if(!empty($deny) && in_array($value,$deny,true))
+            $return = false;
+        }
+
+        return $return;
+    }
+
+
+    // isSensitive
+    // retourne vrai pour cette classe
+    public function isSensitive():bool
+    {
+        return true;
+    }
+
+
     // arr
     // retourne une référence du tableau
     // méthode protégé pour empêcher des modifications par l'extérieur
     protected function &arr():array
     {
         $this->onCheckArr();
-
         return $this->data;
     }
 
@@ -374,18 +404,7 @@ class Map extends ArrMap
     // retourne la première clé dans le tableau
     final public function existsFirst(...$keys)
     {
-        $return = null;
-
-        foreach ($keys as $key)
-        {
-            if($this->exists($key))
-            {
-                $return = $key;
-                break;
-            }
-        }
-
-        return $return;
+        return Base\Arr::find($keys,fn($key) => $this->exists($key));
     }
 
 
@@ -394,15 +413,7 @@ class Map extends ArrMap
     // sinon envoie une exception
     final public function checkGet($key)
     {
-        $return = null;
-
-        if($this->exists($key))
-        $return = $this->get($key);
-
-        else
-        static::throw($key);
-
-        return $return;
+        return $this->get($key) ?? static::throw($key);
     }
 
 
@@ -430,18 +441,7 @@ class Map extends ArrMap
     // n'a pas à être étendu
     final public function inFirst(...$values)
     {
-        $return = null;
-
-        foreach ($values as $value)
-        {
-            if($this->in($value))
-            {
-                $return = $value;
-                break;
-            }
-        }
-
-        return $return;
+        return Base\Arr::find($values,fn($value) => $this->in($value));
     }
 
 
@@ -689,38 +689,6 @@ class Map extends ArrMap
         $data = [];
 
         return $this->checkAfter();
-    }
-
-
-    // isAllowed
-    // retourne vrai si la méthode est permis par la classe
-    final public function isAllowed($value):bool
-    {
-        $return = false;
-        $allow = $this->mapAllow;
-        $deny = $this->mapDeny;
-
-        if($allow === null && $deny === null)
-        $return = true;
-
-        elseif(is_string($value))
-        {
-            if(empty($allow) || (is_array($allow) && in_array($value,$allow,true)))
-            $return = true;
-
-            if(!empty($deny) && in_array($value,$deny,true))
-            $return = false;
-        }
-
-        return $return;
-    }
-
-
-    // isSensitive
-    // retourne vrai pour cette classe
-    public function isSensitive():bool
-    {
-        return true;
     }
 }
 ?>

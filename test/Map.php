@@ -90,6 +90,12 @@ class Map extends Base\Test
 
         // onCheckArr
 
+        // isAllowed
+        assert($map->isAllowed('empty'));
+
+        // isSensitive
+        assert($map->isSensitive());
+
         // arr
 
         // recursive
@@ -218,12 +224,6 @@ class Map extends Base\Test
         // empty
         assert($map->empty()->count() === 0);
         assert($map->overwrite(['test'=>2])->count() === 1);
-
-        // isAllowed
-        assert($map->isAllowed('empty'));
-
-        // isSensitive
-        assert($map->isSensitive());
 
         // ArrObj
         $i = 0;

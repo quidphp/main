@@ -297,8 +297,6 @@ class Request extends Map
     // absolut est true si le host de la requête n'est pas celui courant
     final public function uri(?bool $absolute=null):string
     {
-        $return = '';
-
         if($absolute === null)
         $absolute = ($this->isSchemeHostCurrent())? false:true;
 
@@ -307,9 +305,7 @@ class Request extends Map
         else
         $parse = ['path'=>$this->path(),'query'=>$this->query(),'fragment'=>$this->fragment()];
 
-        $return = Base\Uri::build($parse);
-
-        return $return;
+        return Base\Uri::build($parse);
     }
 
 
