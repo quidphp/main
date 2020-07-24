@@ -278,18 +278,15 @@ class File extends Res
 
         foreach (static::$param['storageClass'] as $class)
         {
-            if(is_a($class,Contract\FileStorage::class,true))
-            {
-                $storage = $class::storageDirname();
-                if($storage === $value || Base\Finder::isParent($storage,$value))
-                {
-                    $return = $class;
-                    break;
-                }
-            }
-
-            else
+            if(!is_a($class,Contract\FileStorage::class,true))
             static::throw($class,'mustImplement',Contract\FileStorage::class);
+
+            $storage = $class::storageDirname();
+            if($storage === $value || Base\Finder::isParent($storage,$value))
+            {
+                $return = $class;
+                break;
+            }
         }
 
         return $return;

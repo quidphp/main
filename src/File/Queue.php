@@ -40,16 +40,12 @@ class Queue extends Serialize implements Main\Contract\Queue, Main\Contract\File
     // envoie une exception si pas de callable lié
     final public function unqueue()
     {
-        $return = null;
         $callable = $this->getAttr('unqueue');
 
-        if(static::isCallable($callable))
-        $return = $callable($this);
-
-        else
+        if(!static::isCallable($callable))
         static::throw('noCallableForUnqueue');
 
-        return $return;
+        return $callable($this);
     }
 
 

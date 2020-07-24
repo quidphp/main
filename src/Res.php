@@ -195,14 +195,11 @@ class Res extends ArrObj
     // envoie une exception si non existant
     final public function offsetUnset($key):void
     {
-        if($this->offsetExists($key))
-        {
-            $arr = Base\Arr::unset($key,$this->arr());
-            $this->overwrite($arr);
-        }
-
-        else
+        if(!$this->offsetExists($key))
         static::throw('arrayAccess','doesNotExist');
+
+        $arr = Base\Arr::unset($key,$this->arr());
+        $this->overwrite($arr);
     }
 
 
@@ -238,6 +235,30 @@ class Res extends ArrObj
     final public function unsetResource():void
     {
         $this->resource = null;
+    }
+
+
+    // setFromResource
+    // méthode utilisé par toutes les méthodes rename pour resources
+    final protected function setFromResource($value):self
+    {
+        if(!is_resource($value))
+        static::throw();
+
+        $this->setResource($value);
+
+        return $this;
+    }
+
+
+    // returnFromBase
+    // méthode protégé utilisé pour le retour de méthodes, envoie une exception si la valeur n'est pas true
+    final protected function returnFromBase($value,...$args):self
+    {
+        if($value !== true)
+        static::throw(...$args);
+
+        return $this;
     }
 
 
@@ -398,12 +419,7 @@ class Res extends ArrObj
     // n'a pas besoin d'être phpWritable
     final public function setPhpContextOption(string $key,$value):self
     {
-        $set = Base\Res::setPhpContextOption($key,$value,$this->resource());
-
-        if($set !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::setPhpContextOption($key,$value,$this->resource()));
     }
 
 
@@ -411,12 +427,7 @@ class Res extends ArrObj
     // permet de lier un mime au sein du contexte de la ressource
     final public function setContextMime(string $mime):self
     {
-        $set = Base\Res::setContextMime($mime,$this->resource());
-
-        if($set !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::setContextMime($mime,$this->resource()));
     }
 
 
@@ -424,12 +435,7 @@ class Res extends ArrObj
     // permet de lier un basename au sein du contexte de la ressource
     final public function setContextBasename(string $basename):self
     {
-        $set = Base\Res::setContextBasename($basename,$this->resource());
-
-        if($set !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::setContextBasename($basename,$this->resource()));
     }
 
 
@@ -437,12 +443,7 @@ class Res extends ArrObj
     // permet changer la valeur eol au sein du contexte de la ressource
     final public function setContextEol($separator):self
     {
-        $set = Base\Res::setContextEol($separator,$this->resource());
-
-        if($set !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::setContextEol($separator,$this->resource()));
     }
 
 
@@ -460,12 +461,7 @@ class Res extends ArrObj
     // envoie une exception en cas d'échec
     final public function permissionChange($mode):self
     {
-        $change = Base\Res::permissionChange($mode,$this->resource());
-
-        if($change !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::permissionChange($mode,$this->resource()));
     }
 
 
@@ -474,12 +470,7 @@ class Res extends ArrObj
     // envoie une exception en cas d'échec
     final public function ownerChange($user):self
     {
-        $change = Base\Res::ownerChange($user,$this->resource());
-
-        if($change !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::ownerChange($user,$this->resource()));
     }
 
 
@@ -488,12 +479,7 @@ class Res extends ArrObj
     // envoie une exception en cas d'échec
     final public function groupChange($group):self
     {
-        $change = Base\Res::groupChange($group,$this->resource());
-
-        if($change !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::groupChange($group,$this->resource()));
     }
 
 
@@ -576,7 +562,6 @@ class Res extends ArrObj
     final public function lines($offset=0,$length=true,?array $option=null):?array
     {
         $return = Base\Res::lines($offset,$length,$this->resource(),Base\Arr::plus($this->readOption(),$option));
-
         return $this->lineReturns($return);
     }
 
@@ -586,7 +571,6 @@ class Res extends ArrObj
     final public function line(?array $option=null)
     {
         $return = Base\Res::line($this->resource(),Base\Arr::plus($this->readOption(),$option));
-
         return $this->lineReturn($return);
     }
 
@@ -597,7 +581,6 @@ class Res extends ArrObj
     final public function lineRef($offset=true,$length=true,int &$i,?array $option=null)
     {
         $return = Base\Res::lineRef($this->resource(),$offset,$length,$i,Base\Arr::plus($this->readOption(),$option));
-
         return $this->lineReturn($return);
     }
 
@@ -607,7 +590,6 @@ class Res extends ArrObj
     final public function lineFirst(?array $option=null)
     {
         $return = Base\Res::lineFirst($this->resource(),Base\Arr::plus($this->readOption(),$option));
-
         return $this->lineReturn($return);
     }
 
@@ -617,7 +599,6 @@ class Res extends ArrObj
     final public function lineLast(?array $option=null)
     {
         $return = Base\Res::lineLast($this->resource(),Base\Arr::plus($this->readOption(),$option));
-
         return $this->lineReturn($return);
     }
 
@@ -716,12 +697,7 @@ class Res extends ArrObj
     // envoie une exception si le contenu n'a pas été écrit en entier
     final public function write($content,?array $option=null):self
     {
-        $r = Base\Res::write($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option));
-
-        if($r !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::write($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option)));
     }
 
 
@@ -730,12 +706,7 @@ class Res extends ArrObj
     // ne tient pas compte de writeOption
     final public function writeRaw($content,?array $option=null):self
     {
-        $r = Base\Res::write($content,$this->resource(),$option);
-
-        if($r !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::write($content,$this->resource(),$option));
     }
 
 
@@ -744,12 +715,7 @@ class Res extends ArrObj
     // envoie une exception si le contenu n'a pas été écrit en entier
     final public function overwrite($content,?array $option=null):self
     {
-        $r = Base\Res::overwrite($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option));
-
-        if($r !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::overwrite($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option)));
     }
 
 
@@ -759,12 +725,7 @@ class Res extends ArrObj
     // envoie une exception si le contenu n'a pas été écrit en entier
     final public function prepend($content,?array $option=null):self
     {
-        $r = Base\Res::prepend($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option));
-
-        if($r !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::prepend($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option)));
     }
 
 
@@ -773,12 +734,7 @@ class Res extends ArrObj
     // envoie une exception si le contenu n'a pas été écrit en entier
     final public function append($content,?array $option=null):self
     {
-        $r = Base\Res::append($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option));
-
-        if($r !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::append($content,$this->resource(),Base\Arr::plus($this->writeOption(),$option)));
     }
 
 
@@ -788,7 +744,6 @@ class Res extends ArrObj
     final public function lineSplice(int $offset,int $length,$replace=null,?array $option=null):self
     {
         Base\Res::lineSplice($offset,$length,$this->resource(),$replace,true,Base\Arr::plus($this->writeOption(),$option));
-
         return $this;
     }
 
@@ -798,7 +753,6 @@ class Res extends ArrObj
     final public function lineSpliceFirst($replace=null,?array $option=null):self
     {
         Base\Res::lineSpliceFirst($this->resource(),$replace,true,Base\Arr::plus($this->writeOption(),$option));
-
         return $this;
     }
 
@@ -808,7 +762,6 @@ class Res extends ArrObj
     final public function lineSpliceLast($replace=null,?array $option=null):self
     {
         Base\Res::lineSpliceLast($this->resource(),$replace,true,Base\Arr::plus($this->writeOption(),$option));
-
         return $this;
     }
 
@@ -820,7 +773,6 @@ class Res extends ArrObj
     final public function lineInsert(int $offset,$replace,?array $option=null):self
     {
         Base\Res::lineInsert($offset,$replace,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
-
         return $this;
     }
 
@@ -832,7 +784,6 @@ class Res extends ArrObj
     final public function lineFilter(\Closure $callback,?array $option=null):self
     {
         Base\Res::lineFilter($callback,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
-
         return $this;
     }
 
@@ -843,7 +794,6 @@ class Res extends ArrObj
     final public function lineMap(\Closure $callback,?array $option=null):self
     {
         Base\Res::lineMap($callback,$this->resource(),true,Base\Arr::plus($this->writeOption(),$option));
-
         return $this;
     }
 
@@ -855,7 +805,6 @@ class Res extends ArrObj
     final public function empty(int $size=0,?array $option=null):self
     {
         Base\Res::empty($this->resource(),$size,$option);
-
         return $this;
     }
 
@@ -865,12 +814,7 @@ class Res extends ArrObj
     // envoie une exception en cas d'échec
     final public function touch():self
     {
-        $touch = Base\Res::touch($this->resource());
-
-        if($touch !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::touch($this->resource()));
     }
 
 
@@ -879,15 +823,7 @@ class Res extends ArrObj
     // met à jour la resource de l'objet ou envoie une exception
     final public function rename($target):self
     {
-        $rename = Base\Res::rename($target,$this->resource());
-
-        if(is_resource($rename))
-        $this->setResource($rename);
-
-        else
-        static::throw();
-
-        return $this;
+        return $this->setFromResource(Base\Res::rename($target,$this->resource()));
     }
 
 
@@ -896,15 +832,7 @@ class Res extends ArrObj
     // met à jour la resource de l'objet ou envoie une exception
     final public function changeDirname($dirname):self
     {
-        $rename = Base\Res::changeDirname($dirname,$this->resource());
-
-        if(is_resource($rename))
-        $this->setResource($rename);
-
-        else
-        static::throw();
-
-        return $this;
+        return $this->setFromResource(Base\Res::changeDirname($dirname,$this->resource()));
     }
 
 
@@ -913,15 +841,7 @@ class Res extends ArrObj
     // met à jour la resource de l'objet ou envoie une exception
     final public function changeBasename(string $basename):self
     {
-        $rename = Base\Res::changeBasename($basename,$this->resource());
-
-        if(is_resource($rename))
-        $this->setResource($rename);
-
-        else
-        static::throw();
-
-        return $this;
+        return $this->setFromResource(Base\Res::changeBasename($basename,$this->resource()));
     }
 
 
@@ -930,15 +850,7 @@ class Res extends ArrObj
     // met à jour la resource de l'objet ou envoie une exception
     final public function changeExtension(string $extension):self
     {
-        $rename = Base\Res::changeExtension($extension,$this->resource());
-
-        if(is_resource($rename))
-        $this->setResource($rename);
-
-        else
-        static::throw();
-
-        return $this;
+        return $this->setFromResource(Base\Res::changeExtension($extension,$this->resource()));
     }
 
 
@@ -947,15 +859,7 @@ class Res extends ArrObj
     // met à jour la resource de l'objet ou envoie une exception
     final public function removeExtension():self
     {
-        $rename = Base\Res::removeExtension($this->resource());
-
-        if(is_resource($rename))
-        $this->setResource($rename);
-
-        else
-        static::throw();
-
-        return $this;
+        return $this->setFromResource(Base\Res::removeExtension($this->resource()));
     }
 
 
@@ -964,15 +868,7 @@ class Res extends ArrObj
     // met à jour la resource de l'objet ou envoie une exception
     final public function moveUploaded($target):self
     {
-        $rename = Base\Res::moveUploaded($target,$this->resource());
-
-        if(is_resource($rename))
-        $this->setResource($rename);
-
-        else
-        static::throw();
-
-        return $this;
+        return $this->setFromResource(Base\Res::moveUploaded($target,$this->resource()));
     }
 
 
@@ -981,12 +877,7 @@ class Res extends ArrObj
     // la resource reste la même, envoie une exception en cas d'échec
     final public function copy($to):self
     {
-        $copy = Base\Res::copy($to,$this->resource());
-
-        if($copy !== true)
-        static::throw('fileWasNotCopied',$to);
-
-        return $this;
+        return $this->returnFromBase(Base\Res::copy($to,$this->resource()),'fileWasNotCopied',$to);
     }
 
 
@@ -995,12 +886,7 @@ class Res extends ArrObj
     // la resource reste la même, envoie une exception en cas d'échec
     final public function copyInDirname(string $basename):self
     {
-        $copy = Base\Res::copyInDirname($basename,$this->resource());
-
-        if($copy !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::copyInDirname($basename,$this->resource()));
     }
 
 
@@ -1009,12 +895,7 @@ class Res extends ArrObj
     // la resource reste la même, envoie une exception en cas d'échec
     final public function copyWithBasename($dirname):self
     {
-        $copy = Base\Res::copyWithBasename($dirname,$this->resource());
-
-        if($copy !== true)
-        static::throw();
-
-        return $this;
+        return $this->returnFromBase(Base\Res::copyWithBasename($dirname,$this->resource()));
     }
 
 
@@ -1041,7 +922,6 @@ class Res extends ArrObj
     // retourne un objet file, avec la bonne classe selon le mime group
     final public function toFile($value,?array $option=null):File
     {
-        $return = null;
         $option = Base\Arr::plus(['create'=>true],$option);
         $this->check('isResponsable');
         $mimeGroup = $this->mimeGroup();
@@ -1051,9 +931,7 @@ class Res extends ArrObj
         $class = File::getClassFromGroup($mimeGroup) ?? $class;
 
         $return = $class::newOverload($value,$option);
-        $return->write($this);
-
-        return $return;
+        return $return->write($this);
     }
 }
 ?>

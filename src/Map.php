@@ -666,14 +666,11 @@ class Map extends ArrMap
         $data =& $return->arr();
         $value = $return->onPrepareReplace($value);
 
-        if(is_array($value))
-        {
-            $this->checkBefore(false,...array_values($value));
-            $data = $value;
-        }
-
-        else
+        if(!is_array($value))
         static::throw('requireArray');
+
+        $this->checkBefore(false,...array_values($value));
+        $data = $value;
 
         $return->checkAfter();
     }

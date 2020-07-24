@@ -120,6 +120,12 @@ class Res extends Base\Test
 
         // setResource
 
+        // unsetResource
+
+        // setFromResource
+
+        // returnFromBase
+
         // resource
         assert(is_resource($res->resource()));
 

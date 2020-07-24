@@ -149,14 +149,11 @@ trait _arrs
         $values = $return->prepareReplaces(...$values);
         $return->checkBefore(true,...$values);
 
-        if(Base\Arr::validate('array',$values))
-        {
-            $data =& $return->arr();
-            $data = Base\Arrs::replace($data,...$values);
-        }
-
-        else
+        if(!Base\Arr::validate('array',$values))
         static::throw('requireArray');
+
+        $data =& $return->arr();
+        $data = Base\Arrs::replace($data,...$values);
 
         return $this->checkAfter();
     }

@@ -104,22 +104,19 @@ class Files extends MapObj
     // peut envoyer une exception
     final public function dirMethod(string $method,...$args):self
     {
-        if(strpos($method,'get') === 0)
-        {
-            $files = Base\Dir::$method(...$args);
+        if(strpos($method,'get') !== 0)
+        static::throw('invalidMethod',$method);
 
-            if(is_array($files))
+        $files = Base\Dir::$method(...$args);
+
+        if(is_array($files))
+        {
+            foreach ($files as $v)
             {
-                foreach ($files as $v)
-                {
-                    if(!is_dir($v))
-                    $this->set(null,$v);
-                }
+                if(!is_dir($v))
+                $this->set(null,$v);
             }
         }
-
-        else
-        static::throw('invalidMethod',$method);
 
         return $this;
     }

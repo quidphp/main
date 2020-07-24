@@ -98,14 +98,11 @@ trait _arr
         $values = $return->prepareReplaces(...$values);
         $return->checkBefore(true,...$values);
 
-        if(Base\Arr::validate('array',$values))
-        {
-            $data =& $return->arr();
-            $data = Base\Arr::replace($data,...$values);
-        }
-
-        else
+        if(!Base\Arr::validate('array',$values))
         static::throw('requireArray');
+
+        $data =& $return->arr();
+        $data = Base\Arr::replace($data,...$values);
 
         return $return->checkAfter();
     }
@@ -119,17 +116,14 @@ trait _arr
         $return = $this->onPrepareThis('splice');
         $replace = $return->onPrepareReplace($replace);
 
-        if(is_array($replace) || $replace === null)
-        {
-            if(empty($replace) || $return->checkBefore(true,$replace))
-            {
-                $data =& $return->arr();
-                $data = Base\Arr::splice($return->onPrepareKey($start),$return->onPrepareKey($end),$data,$replace,$this->isSensitive());
-            }
-        }
-
-        else
+        if(!is_array($replace) && $replace !== null)
         static::throw('replaceMustBeArrayOrNull');
+
+        if(empty($replace) || $return->checkBefore(true,$replace))
+        {
+            $data =& $return->arr();
+            $data = Base\Arr::splice($return->onPrepareKey($start),$return->onPrepareKey($end),$data,$replace,$this->isSensitive());
+        }
 
         return $return->checkAfter();
     }
@@ -143,17 +137,14 @@ trait _arr
         $return = $this->onPrepareThis('splice');
         $replace = $return->onPrepareReplace($replace);
 
-        if(is_array($replace) || $replace === null)
-        {
-            if(empty($replace) || $return->checkBefore(true,$replace))
-            {
-                $data =& $return->arr();
-                $data = Base\Arr::spliceIndex($offset,$length,$data,$replace,$this->isSensitive());
-            }
-        }
-
-        else
+        if(!is_array($replace) && $replace !== null)
         static::throw('replaceMustBeArrayOrNull');
+
+        if(empty($replace) || $return->checkBefore(true,$replace))
+        {
+            $data =& $return->arr();
+            $data = Base\Arr::spliceIndex($offset,$length,$data,$replace,$this->isSensitive());
+        }
 
         return $return->checkAfter();
     }
@@ -167,16 +158,12 @@ trait _arr
         $return = $this->onPrepareThis('insert');
         $replace = $return->onPrepareReplace($replace);
 
-        if(is_array($replace) || $replace === null)
-        {
-            $return->checkBefore(true,$replace);
-
-            $data =& $return->arr();
-            $data = Base\Arr::insert($return->onPrepareKey($start),$replace,$data,$this->isSensitive());
-        }
-
-        else
+        if(!is_array($replace) && $replace !== null)
         static::throw('replaceMustBeArrayOrNull');
+
+        $return->checkBefore(true,$replace);
+        $data =& $return->arr();
+        $data = Base\Arr::insert($return->onPrepareKey($start),$replace,$data,$this->isSensitive());
 
         return $return->checkAfter();
     }
@@ -190,16 +177,12 @@ trait _arr
         $return = $this->onPrepareThis('insert');
         $replace = $return->onPrepareReplace($replace);
 
-        if(is_array($replace) || $replace === null)
-        {
-            $return->checkBefore(true,$replace);
-
-            $data =& $return->arr();
-            $data = Base\Arr::insertIndex($offset,$replace,$data,$this->isSensitive());
-        }
-
-        else
+        if(!is_array($replace) && $replace !== null)
         static::throw('replaceMustBeArrayOrNull');
+
+        $return->checkBefore(true,$replace);
+        $data =& $return->arr();
+        $data = Base\Arr::insertIndex($offset,$replace,$data,$this->isSensitive());
 
         return $return->checkAfter();
     }

@@ -296,41 +296,37 @@ class Importer extends Map
         $return = ['action'=>null,'valid'=>false,'error'=>null,'save'=>false,'int'=>null,'data'=>[],'source'=>$value];
         $maps = $this->checkMaps();
         $keys = array_keys($maps);
+        $line = [];
 
-        if(Base\Arr::keysExists($keys,$value))
+        if(!Base\Arr::keysExists($keys,$value))
+        static::throw('invalidLine',...array_values($value));
+
+        foreach ($value as $k => $v)
         {
-            $line = [];
-
-            foreach ($value as $k => $v)
+            if(array_key_exists($k,$maps))
             {
-                if(array_key_exists($k,$maps))
+                $original = $v;
+                $col = $maps[$k][1];
+                $required = $maps[$k][2] ?? false;
+                $callback = $maps[$k][3] ?? null;
+
+                if(static::isCallable($callback))
+                $v = $callback($v,$value,$line);
+
+                if($v === false || ($required === true && Base\Vari::isReallyEmpty($v)))
                 {
-                    $original = $v;
-                    $col = $maps[$k][1];
-                    $required = $maps[$k][2] ?? false;
-                    $callback = $maps[$k][3] ?? null;
-
-                    if(static::isCallable($callback))
-                    $v = $callback($v,$value,$line);
-
-                    if($v === false || ($required === true && Base\Vari::isReallyEmpty($v)))
-                    {
-                        $return['error'] = [$col=>$original];
-                        break;
-                    }
-
-                    else
-                    $line[$col] = $v;
+                    $return['error'] = [$col=>$original];
+                    break;
                 }
-            }
 
-            $return['data'] = $line;
-            if(!empty($line))
-            $return = $this->oneAfter($return);
+                else
+                $line[$col] = $v;
+            }
         }
 
-        else
-        static::throw('invalidLine',...array_values($value));
+        $return['data'] = $line;
+        if(!empty($line))
+        $return = $this->oneAfter($return);
 
         return $return;
     }

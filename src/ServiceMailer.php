@@ -195,9 +195,7 @@ abstract class ServiceMailer extends Service
         $return['error'] = $error;
 
         $strip = ['password'];
-        $return = Base\Arr::keysStrip($strip,$return);
-
-        return $return;
+        return Base\Arr::keysStrip($strip,$return);
     }
 
 
@@ -252,14 +250,7 @@ abstract class ServiceMailer extends Service
     // permet d'envoyer plusieurs messages à partir d'un tableau multidimensionnel
     final public function sendLoop(array $values,bool $onCloseDown=false):array
     {
-        $return = [];
-
-        foreach ($values as $key => $value)
-        {
-            $return[$key] = $this->sendNowOrOnCloseDown($value,$onCloseDown);
-        }
-
-        return $return;
+        return Base\Arr::accumulate([],$values,fn($value) => $this->sendNowOrOnCloseDown($value,$onCloseDown));
     }
 
 
@@ -270,25 +261,18 @@ abstract class ServiceMailer extends Service
     // si queue failed, c'est probablement à cause des permissions de l'user
     final public function queue($value):bool
     {
-        $return = false;
         $message = $this->prepareMessage($value);
         $queue = $this->queueClass();
 
-        if(!empty($queue))
-        {
-            $row = $queue::queue($this->messageWithOption($message,false));
-
-            if(!empty($row))
-            $return = true;
-
-            else
-            static::throw('emailQueueFailed');
-        }
-
-        else
+        if(empty($queue))
         static::throw('noQueueClass');
 
-        return $return;
+        $row = $queue::queue($this->messageWithOption($message,false));
+
+        if(empty($row))
+        static::throw('emailQueueFailed');
+
+        return true;
     }
 
 
@@ -296,19 +280,13 @@ abstract class ServiceMailer extends Service
     // permet de queue un courriel test
     final public function queueTest($value):bool
     {
-        $return = null;
         $value = $this->messageCastObj($value);
 
-        if($value === null || is_array($value))
-        {
-            $value = Base\Email::prepareTestMessage($value);
-            $return = $this->queue($value);
-        }
-
-        else
+        if($value !== null && !is_array($value))
         static::throw();
 
-        return $return;
+        $value = Base\Email::prepareTestMessage($value);
+        return $this->queue($value);
     }
 
 
@@ -316,14 +294,7 @@ abstract class ServiceMailer extends Service
     // permet de queue plusieurs messages à partir d'un tableau multidimensionnel
     final public function queueLoop(array $values):array
     {
-        $return = [];
-
-        foreach ($values as $key => $value)
-        {
-            $return[$key] = $this->queue($value);
-        }
-
-        return $return;
+        return Base\Arr::accumulate([],$values,fn($value) => $this->queue($value));
     }
 
 
@@ -333,11 +304,8 @@ abstract class ServiceMailer extends Service
     // envoie une exception si la méthode est invalide
     final public function dispatch($value):?bool
     {
-        $return = null;
         $dispatch = static::getDispatch();
-        $return = $this->$dispatch($value);
-
-        return $return;
+        return $this->$dispatch($value);
     }
 
 
@@ -345,14 +313,7 @@ abstract class ServiceMailer extends Service
     // permet de dispatch plusieurs messages à partir d'un tableau multidimensionnel
     final public function dispatchLoop(array $values):array
     {
-        $return = [];
-
-        foreach ($values as $key => $value)
-        {
-            $return[$key] = $this->dispatch($value);
-        }
-
-        return $return;
+        return Base\Arr::accumulate([],$values,fn($value) => $this->dispatch($value));
     }
 
 

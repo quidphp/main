@@ -75,17 +75,14 @@ trait _classeObj
             if(is_object($k))
             $k = Base\Obj::cast($k);
 
-            if(Base\Arr::isKey($k))
-            {
-                if(!array_key_exists($k,$return))
-                $return[$k] = new static();
-
-                $data =& $return[$k]->arr();
-                $data[$key] = $value;
-            }
-
-            else
+            if(!Base\Arr::isKey($k))
             static::throw('notAnArrayKey',$value);
+
+            if(!array_key_exists($k,$return))
+            $return[$k] = new static();
+
+            $data =& $return[$k]->arr();
+            $data[$key] = $value;
         }
 
         return $return;

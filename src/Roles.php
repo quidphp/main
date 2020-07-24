@@ -175,14 +175,11 @@ class Roles extends MapObj
             if(is_int($args))
             $args = [$args];
 
-            if(is_string($name) && is_array($args))
-            {
-                $args = Base\Arr::merge($name,$args);
-                $return->add($args);
-            }
-
-            else
+            if(!(is_string($name) && is_array($args)))
             static::throw();
+
+            $args = Base\Arr::merge($name,$args);
+            $return->add($args);
         }
 
         return $return;

@@ -952,17 +952,14 @@ class Request extends Map
     // value ne peut pas être null
     final public function setScheme(string $value):self
     {
-        if(Base\Uri::isSchemeValid($value))
-        {
-            $this->property('scheme',$value);
-
-            $port = Base\Http::port($value);
-            if(is_int($port) && $port !== $this->port)
-            $this->setPort($port);
-        }
-
-        else
+        if(!Base\Uri::isSchemeValid($value))
         static::throw('unsupportedScheme');
+
+        $this->property('scheme',$value);
+
+        $port = Base\Http::port($value);
+        if(is_int($port) && $port !== $this->port)
+        $this->setPort($port);
 
         return $this;
     }

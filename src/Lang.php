@@ -172,22 +172,16 @@ class Lang extends Map
     // méthode protégé pour empêcher des modifications de l'objet par l'extérieur
     final protected function &arr(?string $lang=null):array
     {
-        $return = [];
         $this->onCheckArr();
         $lang ??= $this->currentLang();
 
-        if(array_key_exists($lang,$this->data))
-        {
-            if(!is_array($this->data[$lang]))
-            $this->load($lang);
-
-            $return =& $this->data[$lang];
-        }
-
-        else
+        if(!array_key_exists($lang,$this->data))
         static::throw('invalidLangCode');
 
-        return $return;
+        if(!is_array($this->data[$lang]))
+        $this->load($lang);
+
+        return $this->data[$lang];
     }
 
 
@@ -737,10 +731,8 @@ class Lang extends Map
 
         if($error === true && $option['error'] === true)
         {
-            if(empty($this->take($key,$lang)))
-            static::throw($key);
-            else
-            static::throw('requiresString',$key);
+            $exception = (empty($this->take($key,$lang)))? [$key]:['requiresString',$key];
+            static::throw(...$exception);
         }
 
         return $return;

@@ -99,22 +99,19 @@ class Zip extends Binary
 
         $value = Base\Finder::normalize($value);
 
-        if(Base\File::isReadable($value))
-        {
-            if(!is_string($local))
-            $local = Base\Path::basename($value);
-
-            if(is_string($local))
-            {
-                if($option['safeBasename'] === true)
-                $local = Base\Path::safeBasename($local);
-
-                $return = $archive->addFile($value,$local);
-            }
-        }
-
-        else
+        if(!Base\File::isReadable($value))
         static::throw('fileNotReadable');
+
+        if(!is_string($local))
+        $local = Base\Path::basename($value);
+
+        if(is_string($local))
+        {
+            if($option['safeBasename'] === true)
+            $local = Base\Path::safeBasename($local);
+
+            $return = $archive->addFile($value,$local);
+        }
 
         return $return;
     }
