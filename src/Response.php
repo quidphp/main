@@ -102,15 +102,12 @@ class Response extends Res
     // traite un tableau exec, en provenance de request curlExec
     final protected function setExec(array $exec):void
     {
-        if(Base\Arr::keysExists(['header','resource','timestamp'],$exec))
-        {
-            $this->setHeaders($exec['header']);
-            $this->setResource($exec['resource']);
-            $this->setTimestamp($exec['timestamp']);
-        }
-
-        else
+        if(!Base\Arr::keysExists(['header','resource','timestamp'],$exec))
         static::throw('invalidExecArray');
+
+        $this->setHeaders($exec['header']);
+        $this->setResource($exec['resource']);
+        $this->setTimestamp($exec['timestamp']);
     }
 
 
@@ -137,11 +134,10 @@ class Response extends Res
         if(!empty($this->resource))
         static::throw('resourceAlreadySet');
 
-        if(Base\Res::isPhpTemp($value))
-        $this->resource = $value;
-
-        else
+        if(!Base\Res::isPhpTemp($value))
         static::throw('invalidResource');
+
+        $this->resource = $value;
     }
 
 

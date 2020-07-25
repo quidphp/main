@@ -571,11 +571,10 @@ class Map extends ArrMap
         $key = $this->onPrepareKey($key);
         $value = $this->onPrepareValueSet($value);
 
-        if($key === null || Base\Arr::isKey($key))
-        Base\Arr::setRef($key,$value,$return->arr(),$this->isSensitive());
-
-        else
+        if($key !== null && !Base\Arr::isKey($key))
         static::throw('invalidKey');
+
+        Base\Arr::setRef($key,$value,$return->arr(),$this->isSensitive());
 
         return $return->checkAfter();
     }

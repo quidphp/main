@@ -128,14 +128,11 @@ class Com extends Map
         if($value === null)
         $value = $this->getAttr('all');
 
-        if(is_array($value) && Base\Arr::validate('string',$value))
-        {
-            $this->data = [];
-            $this->type = array_values($value);
-        }
-
-        else
+        if(!is_array($value) || !Base\Arr::validate('string',$value))
         static::throw();
+
+        $this->data = [];
+        $this->type = array_values($value);
     }
 
 
@@ -144,10 +141,7 @@ class Com extends Map
     // envoie une exception si introuvable
     protected function lang(?Lang $return=null):Lang
     {
-        if(empty($return))
-        static::throw();
-
-        return $return;
+        return $return ?: static::throw();
     }
 
 
@@ -178,15 +172,12 @@ class Com extends Map
                 {
                     if(!empty($in))
                     {
-                        if(count($in) >= 2)
-                        {
-                            $value = $this->payload(...$in);
-                            if(!empty($value))
-                            $deep[] = $value;
-                        }
-
-                        else
+                        if(count($in) < 2)
                         static::throw('typeAndPath','requiredForDeep');
+
+                        $value = $this->payload(...$in);
+                        if(!empty($value))
+                        $deep[] = $value;
                     }
                 }
 
@@ -195,10 +186,7 @@ class Com extends Map
             }
         }
 
-        if(empty($return))
-        static::throw($type,$path);
-
-        return $return;
+        return $return ?: static::throw($type,$path);
     }
 
 
@@ -232,45 +220,42 @@ class Com extends Map
     // in est unshift ou push
     final protected function update(string $method,array $value,array $return):array
     {
-        if(in_array($method,['unshift','push'],true))
+        if(!in_array($method,['unshift','push'],true))
+        static::throw();
+
+        if(array_key_exists(2,$value) && is_array($value[2]) && !empty($value[2]))
+        $return[2] = Base\Arr::replace($return[2] ?? [],$value[2]);
+
+        if(array_key_exists(3,$value) && !empty($value[3]))
+        $return[3] = Base\Attr::append($return[3] ?? null,$value[3]);
+
+        if(array_key_exists(4,$value) && is_array($value[4]) && !empty($value[4]))
         {
-            if(array_key_exists(2,$value) && is_array($value[2]) && !empty($value[2]))
-            $return[2] = Base\Arr::replace($return[2] ?? [],$value[2]);
+            $return[4] = (!empty($return[4]))? $return[4]:[];
 
-            if(array_key_exists(3,$value) && !empty($value[3]))
-            $return[3] = Base\Attr::append($return[3] ?? null,$value[3]);
-
-            if(array_key_exists(4,$value) && is_array($value[4]) && !empty($value[4]))
+            foreach ($value[4] as $z)
             {
-                $return[4] = (!empty($return[4]))? $return[4]:[];
-
-                foreach ($value[4] as $z)
+                if(is_array($z) && array_key_exists(0,$z) && array_key_exists(1,$z) && !empty($return[4]))
                 {
-                    if(is_array($z) && array_key_exists(0,$z) && array_key_exists(1,$z) && !empty($return[4]))
+                    $find = [$z[0],$z[1]];
+                    $val = $this->findCommon($find,$return[4]);
+
+                    if(!empty($val))
                     {
-                        $find = [$z[0],$z[1]];
-                        $val = $this->findCommon($find,$return[4]);
+                        $k = array_search($val,$return[4],true);
 
-                        if(!empty($val))
+                        if(is_int($k))
                         {
-                            $k = array_search($val,$return[4],true);
-
-                            if(is_int($k))
-                            {
-                                $return[4][$k] = $this->update($method,$z,$return[4][$k]);
-                                unset($z);
-                            }
+                            $return[4][$k] = $this->update($method,$z,$return[4][$k]);
+                            unset($z);
                         }
                     }
-
-                    if(isset($z))
-                    $return[4] = Base\Arr::$method($return[4],$z);
                 }
+
+                if(isset($z))
+                $return[4] = Base\Arr::$method($return[4],$z);
             }
         }
-
-        else
-        static::throw();
 
         return $return;
     }

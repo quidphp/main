@@ -42,7 +42,6 @@ trait _root
     public function __isset(string $key):bool
     {
         static::throw('notAllowed');
-
         return false;
     }
 
@@ -76,7 +75,6 @@ trait _root
     public function __serialize():array
     {
         static::throw('notAllowed');
-
         return [];
     }
 

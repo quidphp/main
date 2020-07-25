@@ -52,15 +52,12 @@ class Concatenator extends Map
     // chaque entrée peut avoir ses propres options
     final public function add($value,?array $attr=null):self
     {
-        if(!empty($value))
-        {
-            $data =& $this->arr();
-            $array = [$value,$attr];
-            $data[] = $array;
-        }
-
-        else
+        if(empty($value))
         static::throw('valueCannotBeEmpty');
+
+        $data =& $this->arr();
+        $array = [$value,$attr];
+        $data[] = $array;
 
         return $this;
     }
@@ -233,19 +230,17 @@ class Concatenator extends Map
             else
             $content = Base\File::read(true,true,$value);
 
-            if(is_string($content))
-            {
-                $content = $this->prepareEntryFile($content,$attr);
-
-                if(strlen($str) && is_string($separator))
-                $str .= $separator;
-
-                $str .= $content;
-            }
-
-            else
+            if(!is_string($content))
             static::throw('unreadable',$value);
+
+            $content = $this->prepareEntryFile($content,$attr);
+
+            if(strlen($str) && is_string($separator))
+            $str .= $separator;
+
+            $str .= $content;
         }
+
         $return .= $str;
 
         if(is_string($end))

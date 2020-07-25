@@ -105,15 +105,12 @@ trait _inst
     {
         $value = $this->instName();
 
-        if(is_string($value) && array_key_exists($value,static::$inst))
-        {
-            $this->onPrepareUnsetInst();
-            unset(static::$inst[$value]);
-            $this->onUnsetInst();
-        }
-
-        else
+        if(!is_string($value) || !array_key_exists($value,static::$inst))
         static::throw('nameDoesNotExists');
+
+        $this->onPrepareUnsetInst();
+        unset(static::$inst[$value]);
+        $this->onUnsetInst();
 
         return $this;
     }

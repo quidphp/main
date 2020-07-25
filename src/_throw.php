@@ -14,18 +14,22 @@ use Quid\Base;
 // trait that provides static methods to throw exception from an object
 trait _throw
 {
-    // checkClass
-    // lance une exception si la variable n'est pas de la classe
+    // typecheck
+    // lance une exception si la variable n'est pas compatible au type donnée en deuxième argument
     // retourne la variable
-    protected static function checkClass($return,string $class,...$args):object
+    protected static function typecheck($return,$type,...$args)
     {
-        if(!$return instanceof $class)
-        {
-            if(empty($args))
-            $args = [$return];
+        $throw = false;
+        $args = $args ?: [$return];
 
-            static::throw('expected',$class,...$args);
-        }
+        if($type === true && empty($type))
+        $throw = true;
+
+        elseif(is_string($type) && !$return instanceof $type)
+        $throw = true;
+
+        if($throw === true)
+        static::throw('expected',$type,...$args);
 
         return $return;
     }

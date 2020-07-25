@@ -55,15 +55,10 @@ abstract class ArrMap extends ArrObj
     // envoie une exception si non existant
     public function offsetGet($key)
     {
-        $return = null;
-
-        if($this->exists($key))
-        $return = $this->get($key);
-
-        else
+        if(!$this->exists($key))
         static::throw('arrayAccess','doesNotExist');
 
-        return $return;
+        return $this->get($key);
     }
 
 
@@ -80,11 +75,10 @@ abstract class ArrMap extends ArrObj
     // envoie une exception si non existant
     public function offsetUnset($key):void
     {
-        if($this->exists($key))
-        $this->unset($key);
-
-        else
+        if(!$this->exists($key))
         static::throw('arrayAccess','doesNotExist');
+
+        $this->unset($key);
     }
 
 

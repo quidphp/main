@@ -45,21 +45,17 @@ trait _queue
 
             foreach ($queues as $key => $obj)
             {
-                if($obj->hasMethod('unqueue'))
-                {
-                    $return[$key] = $obj->unqueue();
-
-                    $obj->onUnqueue();
-
-                    if(is_numeric($sleep))
-                    Base\Response::sleep($sleep);
-
-                    if(is_int($maxTime) && Base\Datetime::now() > $maxTime)
-                    break;
-                }
-
-                else
+                if(!$obj->hasMethod('unqueue'))
                 static::throw('objectRequiresMethod','unqueue');
+
+                $return[$key] = $obj->unqueue();
+                $obj->onUnqueue();
+
+                if(is_numeric($sleep))
+                Base\Response::sleep($sleep);
+
+                if(is_int($maxTime) && Base\Datetime::now() > $maxTime)
+                break;
             }
         }
 

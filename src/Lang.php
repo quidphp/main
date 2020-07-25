@@ -374,14 +374,11 @@ class Lang extends Map
         {
             $value = Base\Lang::prepareCode($value);
 
-            if(is_string($value) && !$this->isLang($value))
-            {
-                $this->data[$value] = null;
-                $this->onChange();
-            }
-
-            else
+            if(!is_string($value) || $this->isLang($value))
             static::throw();
+
+            $this->data[$value] = null;
+            $this->onChange();
         }
 
         return $this;
@@ -398,20 +395,14 @@ class Lang extends Map
         {
             $value = Base\Lang::prepareCode($value);
 
-            if(is_string($value) && $this->isLang($value))
-            {
-                if($this->isCurrent($value))
-                static::throw('cannotRemoveCurrentLang');
-
-                else
-                {
-                    unset($this->data[$value]);
-                    $this->onChange();
-                }
-            }
-
-            else
+            if(!is_string($value) || !$this->isLang($value))
             static::throw();
+
+            if($this->isCurrent($value))
+            static::throw('cannotRemoveCurrentLang');
+
+            unset($this->data[$value]);
+            $this->onChange();
         }
 
         return $this;
@@ -427,17 +418,14 @@ class Lang extends Map
         $value = Base\Lang::prepareCode($value);
         $current = $this->current;
 
-        if($this->isLang($value))
-        {
-            if($value !== $current)
-            {
-                $this->current = $value;
-                $this->onChange();
-            }
-        }
-
-        else
+        if(!$this->isLang($value))
         static::throw();
+
+        if($value !== $current)
+        {
+            $this->current = $value;
+            $this->onChange();
+        }
 
         return $this;
     }
@@ -1115,14 +1103,7 @@ class Lang extends Map
     final public function relation($value=null,?string $lang=null,bool $sort=false)
     {
         $return = $this->take($this->getPath('relation',$value),$lang);
-
-        if($return === null)
-        {
-            $return = $this->take($value,$lang);
-
-            if($return === null)
-            static::throw('notFound',$value);
-        }
+        $return ??= $this->take($value,$lang) ?? static::throw('notFound',$value);
 
         if($sort === true && is_array($return) && !empty($return))
         ksort($return);
@@ -1170,10 +1151,7 @@ class Lang extends Map
     // retourne une string
     final public function getPath(string $type,$append=null):string
     {
-        $return = $this->getAttr(['path',$type]);
-
-        if($return === null)
-        static::throw('invalidPath');
+        $return = $this->getAttr(['path',$type]) ?? static::throw('invalidPath');
 
         if(is_array($return))
         $return = Base\Arrs::keyPrepare($return);

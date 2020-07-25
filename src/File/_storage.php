@@ -149,21 +149,18 @@ trait _storage
     {
         $return = null;
 
-        if(static::isStorageDataValid(...$values))
-        {
-            $path = static::storagePath(...$values);
-            $data = static::storageData(...$values);
-            $file = new static($path,['create'=>true]);
-
-            if(!empty($file))
-            {
-                $return = $file->write($data);
-                static::$config['inc']++;
-            }
-        }
-
-        else
+        if(!static::isStorageDataValid(...$values))
         static::throw('invalidData');
+
+        $path = static::storagePath(...$values);
+        $data = static::storageData(...$values);
+        $file = new static($path,['create'=>true]);
+
+        if(!empty($file))
+        {
+            $return = $file->write($data);
+            static::$config['inc']++;
+        }
 
         return $return;
     }

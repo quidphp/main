@@ -60,10 +60,7 @@ class Email extends Json implements Main\Contract\Email
         else
         $return = current(static::$config['mailer']);
 
-        if(empty($return))
-        static::throw('noMailerAtKey',$key);
-
-        return $return;
+        return $return ?: static::throw('noMailerAtKey',$key);
     }
 
 

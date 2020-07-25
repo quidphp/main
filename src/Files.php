@@ -71,13 +71,10 @@ class Files extends MapObj
         if(!$value instanceof File)
         $value = File::newOverload($value,$option);
 
-        if($value instanceof File)
-        parent::set($key,$value);
-
-        else
+        if(!$value instanceof File)
         static::throw('invalidFile');
 
-        return $this;
+        return parent::set($key,$value);
     }
 
 
@@ -209,10 +206,7 @@ class Files extends MapObj
     // retourne la resource zip
     final public function zip($value,?string $local=null,?array $option=null):File\Zip
     {
-        $return = File\Zip::new($value,['create'=>true]);
-
-        if(empty($return))
-        static::throw('cannotCreateZipArchive');
+        $return = File\Zip::new($value,['create'=>true]) ?: static::throw('cannotCreateZipArchive');
 
         if(!$return->addFiles($this,$option))
         static::throw('couldNotAddFilesToZipArchive');

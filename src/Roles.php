@@ -120,7 +120,7 @@ class Roles extends MapObj
 
         foreach ($values as $value)
         {
-            static::checkClass($value,Role::class);
+            static::typecheck($value,Role::class);
 
             $permission = $value->permission();
             $name = $value->name();
@@ -175,7 +175,7 @@ class Roles extends MapObj
             if(is_int($args))
             $args = [$args];
 
-            if(!(is_string($name) && is_array($args)))
+            if(!is_string($name) || !is_array($args))
             static::throw();
 
             $args = Base\Arr::merge($name,$args);

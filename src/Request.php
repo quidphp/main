@@ -1012,13 +1012,10 @@ class Request extends Map
     // value ne peut pas être null
     final public function setHost(string $value):self
     {
-        if(Base\Http::isHost($value))
-        $this->property('host',$value);
-
-        else
+        if(!Base\Http::isHost($value))
         static::throw();
 
-        return $this;
+        return $this->property('host',$value);
     }
 
 
@@ -1380,13 +1377,10 @@ class Request extends Map
         if(is_array($value))
         $value = Base\Uri::buildQuery($value,false);
 
-        if(is_string($value) || $value === null)
-        $this->property('query',$value);
-
-        else
+        if(!is_string($value) && $value !== null)
         static::throw();
 
-        return $this;
+        return $this->property('query',$value);
     }
 
 
@@ -1565,13 +1559,10 @@ class Request extends Map
     // value ne peut pas être null
     final public function setMethod(string $value):self
     {
-        if(Base\Http::isMethod($value))
-        $this->property('method',strtolower($value));
-
-        else
+        if(!Base\Http::isMethod($value))
         static::throw();
 
-        return $this;
+        return $this->property('method',strtolower($value));
     }
 
 
@@ -1734,13 +1725,10 @@ class Request extends Map
     // value peut être null
     final public function setIp(?string $value):self
     {
-        if($value === null || Base\Ip::is($value))
-        $this->property('ip',$value);
-
-        else
+        if($value !== null && !Base\Ip::is($value))
         static::throw();
 
-        return $this;
+        return $this->property('ip',$value);
     }
 
 
@@ -1958,7 +1946,6 @@ class Request extends Map
     // retourne un objet Res avec la resource curl a utilisé pour la requête
     final public function curl(?array $option=null):Res
     {
-        $return = null;
         $lowOption = ['userAgent'=>$this->userAgent()];
         $highOption = ['uri'=>['encode'=>true],'ssl'=>$this->isSsl(),'port'=>$this->port()];
         $option = Base\Arr::plus($lowOption,$this->attr(),$option,$highOption);
@@ -1968,13 +1955,10 @@ class Request extends Map
         $header = $this->headers();
         $res = Base\Res::curl($uri,false,$post,$header,$option);
 
-        if(!empty($res))
-        $return = Res::newOverload($res);
-
-        else
+        if(empty($res))
         static::throw();
 
-        return $return;
+        return Res::newOverload($res);
     }
 
 

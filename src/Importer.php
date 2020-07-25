@@ -102,9 +102,7 @@ class Importer extends Map
         if(!is_scalar($value))
         static::throw('valueMustBeScalar');
 
-        parent::set($key,$value);
-
-        return $this;
+        return parent::set($key,$value);
     }
 
 
@@ -203,12 +201,7 @@ class Importer extends Map
     // envoie une exception si vide
     final public function checkMaps():array
     {
-        $return = $this->getMaps();
-
-        if(empty($return))
-        static::throw('noColumnMapped');
-
-        return $return;
+        return $this->getMaps() ?: static::throw('noColumnMapped');
     }
 
 

@@ -30,11 +30,10 @@ class Localization extends Map
         if(is_string($value))
         $value = Base\Json::decode($value);
 
-        if(is_array($value))
-        $this->overwrite($value);
-
-        else
+        if(!is_array($value))
         static::throw('requires','jsonStringOrArray');
+
+        $this->overwrite($value);
     }
 
 

@@ -162,10 +162,7 @@ abstract class ServiceMailer extends Service
             $return = Base\Email::prepareMessage($value,false);
         }
 
-        if(empty($return))
-        static::throw('invalidMessage');
-
-        return $return;
+        return $return ?: static::throw('invalidMessage');
     }
 
 
@@ -230,19 +227,13 @@ abstract class ServiceMailer extends Service
     // permet d'envoyer un courriel test
     final public function sendTest($value=null,bool $onCloseDown=false):?bool
     {
-        $return = null;
         $value = $this->messageCastObj($value);
 
-        if($value === null || is_array($value))
-        {
-            $value = Base\Email::prepareTestMessage($value);
-            $return = $this->sendNowOrOnCloseDown($value,$onCloseDown);
-        }
-
-        else
+        if($value !== null && !is_array($value))
         static::throw();
 
-        return $return;
+        $value = Base\Email::prepareTestMessage($value);
+        return $this->sendNowOrOnCloseDown($value,$onCloseDown);
     }
 
 
@@ -262,15 +253,9 @@ abstract class ServiceMailer extends Service
     final public function queue($value):bool
     {
         $message = $this->prepareMessage($value);
-        $queue = $this->queueClass();
-
-        if(empty($queue))
-        static::throw('noQueueClass');
-
-        $row = $queue::queue($this->messageWithOption($message,false));
-
-        if(empty($row))
-        static::throw('emailQueueFailed');
+        $message = $this->messageWithOption($message,false);
+        $queue = $this->queueClass() ?: static::throw('noQueueClass');
+        $row = $queue::queue($message) ?: static::throw('emailQueueFailed');
 
         return true;
     }

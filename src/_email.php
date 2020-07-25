@@ -77,23 +77,13 @@ trait _email
     // la méthode peut retourner null dans le cas de sendOnCloseDown
     final protected function sendMethod(string $method,$key,$to,?array $replace=null,?array $message=null):?bool
     {
-        $return = false;
         $email = ($key instanceof ServiceMailer)? $key:static::serviceMailer($key);
-        $message = $this->prepareMessage($to,$replace,$message);
+        $message = $this->prepareMessage($to,$replace,$message) ?: static::throw('invalidMesasge');
 
-        if(!empty($email))
-        {
-            if(!empty($message))
-            $return = $email->$method($message);
-
-            else
-            static::throw('invalidMesasge');
-        }
-
-        else
+        if(empty($email))
         static::throw('noEmailObject');
 
-        return $return;
+        return $email->$method($message);
     }
 
 

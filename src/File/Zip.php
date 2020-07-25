@@ -31,8 +31,6 @@ class Zip extends Binary
     // une exception peut être envoyé si la resource n'est pas un vrai fichier
     final public function archive():\ZipArchive
     {
-        $return = null;
-
         if(empty($this->archive))
         {
             $this->check('isFile');
@@ -41,16 +39,13 @@ class Zip extends Binary
             $archive = new \ZipArchive();
             $flag = (Base\File::isEmpty($path))? \ZipArchive::OVERWRITE:\ZipArchive::CREATE;
 
-            if($archive->open($path,$flag) === true)
-            $this->archive = $archive;
-
-            else
+            if($archive->open($path,$flag) !== true)
             static::throw('cannotCreateNewZipArchive');
+
+            $this->archive = $archive;
         }
 
-        $return = $this->archive;
-
-        return $return;
+        return $this->archive;
     }
 
 

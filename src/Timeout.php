@@ -298,17 +298,14 @@ class Timeout extends Map
         $return['count'] = (empty($return['count']))? 0:$return['count'];
         $return['timestamp'] = (empty($return['timestamp']))? null:$return['timestamp'];
 
-        if(array_key_exists('max',$return) && array_key_exists('timeout',$return))
-        {
-            if(!is_int($return['max']) || $return['max'] <= 0)
-            static::throw($return['max'],'invalidMax');
-
-            if(!is_int($return['timeout']) || $return['timeout'] <= 0)
-            static::throw($return['timeout'],'invalidTimeout');
-        }
-
-        else
+        if(!array_key_exists('max',$return) || !array_key_exists('timeout',$return))
         static::throw('invalidArray');
+
+        if(!is_int($return['max']) || $return['max'] <= 0)
+        static::throw($return['max'],'invalidMax');
+
+        if(!is_int($return['timeout']) || $return['timeout'] <= 0)
+        static::throw($return['timeout'],'invalidTimeout');
 
         return $return;
     }

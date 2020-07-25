@@ -90,15 +90,10 @@ trait _arrObj
     // envoie une exception si non existant
     public function offsetGet($key)
     {
-        $return = null;
-
-        if($this->offsetExists($key))
-        $return = Base\Arr::get($key,$this->arr());
-
-        else
+        if(!$this->offsetExists($key))
         static::throw('arrayAccess','doesNotExist');
 
-        return $return;
+        return Base\Arr::get($key,$this->arr());
     }
 
 
@@ -116,11 +111,10 @@ trait _arrObj
     // envoie une exception si non existant
     public function offsetUnset($key):void
     {
-        if($this->offsetExists($key))
-        Base\Arr::unsetRef($key,$this->arr());
-
-        else
+        if(!$this->offsetExists($key))
         static::throw('arrayAccess','doesNotExist');
+
+        Base\Arr::unsetRef($key,$this->arr());
     }
 }
 ?>

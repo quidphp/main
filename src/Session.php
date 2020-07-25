@@ -125,11 +125,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // applique la classe de storage
     final protected function setStorageClass(string $value):void
     {
-        if(class_exists($value,true) && Base\Classe::hasInterface(Contract\Session::class,$value))
-        $this->class = $value;
-
-        else
+        if(!class_exists($value,true) || !Base\Classe::hasInterface(Contract\Session::class,$value))
         static::throw();
+
+        $this->class = $value;
     }
 
 
@@ -185,7 +184,6 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // merge avec la structure de base/session
     final public function getStructure():array
     {
-        $return = [];
         $structure = $this->getAttr('structure');
 
         if(is_array($structure))
@@ -197,9 +195,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
             }
         }
 
-        $return = Base\Session::getStructure($structure);
-
-        return $return;
+        return Base\Session::getStructure($structure);
     }
 
 
@@ -288,7 +284,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // retourne la row de la session ou envoie une exception si non existante
     final public function storage():Contract\Session
     {
-        return static::checkClass($this->storage,Contract\Session::class);
+        return static::typecheck($this->storage,Contract\Session::class);
     }
 
 
@@ -324,6 +320,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     final protected function checkSid($sid):self
     {
         $prefix = Base\Session::getPrefix();
+
         if(!is_string($sid) || !Base\Session::validateId($sid,$prefix))
         static::throw();
 
@@ -351,11 +348,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     {
         $this->checkReady();
 
-        if(Base\Session::regenerateId($delete))
-        $this->onStart();
-
-        else
+        if(!Base\Session::regenerateId($delete))
         static::throw();
+
+        $this->onStart();
 
         return $this;
     }
@@ -477,20 +473,16 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // envoie une exception en cas d'échec, lance onStart en cas de succès
     final public function start():self
     {
-        if(!$this->isStarted())
-        {
-            $this->setDefault();
-            $return = Base\Session::start($this->getStructure(),$this->getAttr('setCookie'));
-
-            if($return === true)
-            $this->onStart();
-
-            else
-            static::throw('didNotStartProperly');
-        }
-
-        else
+        if($this->isStarted())
         static::throw('alreadyStarted');
+
+        $this->setDefault();
+        $return = Base\Session::start($this->getStructure(),$this->getAttr('setCookie'));
+
+        if($return !== true)
+        static::throw('didNotStartProperly');
+
+        $this->onStart();
 
         return $this;
     }
@@ -634,12 +626,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
     final public function validateId($sid):bool
     {
-        $return = false;
         $this->checkStarted();
         $prefix = Base\Session::getPrefix();
-        $return = Base\Session::validateId($sid,$prefix);
 
-        return $return;
+        return Base\Session::validateId($sid,$prefix);
     }
 
 
@@ -648,28 +638,20 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
     final public function read($sid):string
     {
-        $return = '';
         $this->checkStarted();
         $this->checkSid($sid);
         $name = Base\Session::name();
         $class = $this->getStorageClass();
         $path = Base\Session::getSavePath(true);
         $this->storage = null;
-        $storage = $class::sessionRead($path,$name,$sid);
+        $storage = $class::sessionRead($path,$name,$sid) ?: $class::sessionCreate($path,$name,$sid);
 
-        if(empty($storage))
-        $storage = $class::sessionCreate($path,$name,$sid);
-
-        if($storage instanceof Contract\Session)
-        {
-            $this->storage = $storage;
-            $return = $storage->sessionData();
-        }
-
-        else
+        if(!$storage instanceof Contract\Session)
         static::throw('couldNotSelectOrInsert');
 
-        return $return;
+        $this->storage = $storage;
+
+        return $storage->sessionData();
     }
 
 
@@ -678,12 +660,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
     final public function write($sid,$data):bool
     {
-        $return = false;
         $this->checkStarted();
         $this->checkSid($sid);
-        $return = $this->storage()->sessionWrite($data);
 
-        return $return;
+        return $this->storage()->sessionWrite($data);
     }
 
 
@@ -692,12 +672,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
     final public function updateTimestamp($sid,$data):bool
     {
-        $return = false;
         $this->checkReady();
         $this->checkSid($sid);
-        $return = $this->storage()->sessionUpdateTimestamp();
 
-        return $return;
+        return $this->storage()->sessionUpdateTimestamp();
     }
 
 
@@ -719,12 +697,10 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
     final public function destroy($sid):bool
     {
-        $return = false;
         $this->checkReady();
         $this->checkSid($sid);
-        $return = $this->storage()->sessionDestroy();
 
-        return $return;
+        return $this->storage()->sessionDestroy();
     }
 
 
