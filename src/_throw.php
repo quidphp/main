@@ -22,7 +22,19 @@ trait _throw
         $throw = false;
         $args = $args ?: [$return];
 
-        if($type === true && empty($type))
+        if($return === null)
+        $throw = true;
+
+        elseif($type === true && empty($return))
+        $throw = true;
+
+        elseif($type === 'string' && !is_string($return))
+        $throw = true;
+
+        elseif($type === 'int' && !is_int($return))
+        $throw = true;
+
+        elseif($type === 'numeric' && !is_numeric($return))
         $throw = true;
 
         elseif(is_string($type) && !$return instanceof $type)
