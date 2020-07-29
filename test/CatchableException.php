@@ -25,6 +25,11 @@ class CatchableException extends Base\Test
         assert($e instanceof Main\Contract\Catchable);
         assert($e->getCode() === 32);
 
+        // throw
+        assert($e::typecheck('test','string') === 'test');
+        assert($e::typecheck('z',true) === 'z');
+        assert($e::typecheck($e,Main\Contract\Catchable::class) === $e);
+
         return true;
     }
 }

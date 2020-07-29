@@ -17,7 +17,7 @@ trait _throw
     // typecheck
     // lance une exception si la variable n'est pas compatible au type donnée en deuxième argument
     // retourne la variable
-    protected static function typecheck($return,$type,...$args)
+    public static function typecheck($return,$type,...$args)
     {
         $throw = false;
         $args = $args ?: [$return];
@@ -28,14 +28,14 @@ trait _throw
         elseif($type === true && empty($return))
         $throw = true;
 
-        elseif($type === 'string' && !is_string($return))
-        $throw = true;
+        elseif($type === 'string')
+        $throw = !is_string($return);
 
-        elseif($type === 'int' && !is_int($return))
-        $throw = true;
+        elseif($type === 'int')
+        $throw = !is_int($return);
 
-        elseif($type === 'numeric' && !is_numeric($return))
-        $throw = true;
+        elseif($type === 'numeric')
+        $throw = !is_numeric($return);
 
         elseif(is_string($type) && !$return instanceof $type)
         $throw = true;
