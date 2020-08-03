@@ -25,9 +25,12 @@ abstract class ServiceRequest extends Service
     // target
     // retourne la target du service
     // envoie une exception si vide
-    final public static function target(?array $replace=null):string
+    final public static function target(?array $replace=null,?string $key=null):string
     {
         $return = static::$config['target'] ?? null;
+
+        if(is_string($key) && is_array($return))
+        $return = $return[$key] ?? null;
 
         if(is_string($return) && !empty($return) && !empty($replace))
         {

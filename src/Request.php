@@ -40,6 +40,7 @@ class Request extends Map
         'sslCipher'=>null, // pour curl
         'userAgent'=>null, // pour curl
         'postJson'=>false, // le tableau post est encodé en json, pour curl
+        'castData'=>true, // si les datas sont cast
         'ipAllowed'=>[ // paramètre par défaut pour la méhode isIpAllowed
             'whiteList'=>null, // tableau de ip whiteList
             'blackList'=>null, // tableau de ip blackList
@@ -910,6 +911,7 @@ class Request extends Map
     // lancé après chaque méthode en écriture, cast le tableau post
     final public function checkAfter():self
     {
+        if($this->getAttr('castData') === true)
         $this->data = Base\Arrs::cast($this->data);
 
         return $this;
