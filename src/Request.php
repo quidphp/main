@@ -1949,7 +1949,7 @@ class Request extends Map
     final public function curl(?array $option=null):Res
     {
         $lowOption = ['userAgent'=>$this->userAgent()];
-        $highOption = ['uri'=>['encode'=>true],'ssl'=>$this->isSsl(),'port'=>$this->port()];
+        $highOption = ['uri'=>['encode'=>true],'ssl'=>$this->isSsl(),'port'=>$this->port(),'method'=>$this->method()];
         $option = Base\Arr::plus($lowOption,$this->attr(),$option,$highOption);
 
         $uri = $this->absolute($option['uri']);
