@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Quid\Main;
 use Quid\Base;
+use Quid\Base\Html;
 
 // lang
 // class for a collection object containing language texts and translations
@@ -626,7 +627,7 @@ class Lang extends Map
         }
 
         if(!empty($option['html']))
-        $return = Base\Html::arg($return,$option['html']);
+        $return = Html::arg($return,$option['html']);
 
         if(isset($option['pattern']))
         {
@@ -810,7 +811,6 @@ class Lang extends Map
 
     // html
     // fait une méthode text
-    // le résultat valide est passé dans Base\Html::arg
     final public function html($html,$key,?array $replace=null,?string $lang=null,?array $option=null):?string
     {
         return $this->text($key,$replace,$lang,Base\Arr::plus($option,['html'=>$html]));

@@ -8,7 +8,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\File;
-use Quid\Base;
+use Quid\Base\Html;
 
 // image
 // abstract class for an image file (raster or vector)
@@ -26,7 +26,7 @@ abstract class Image extends Binary
         $return = null;
         $src = $this->pathToUri($absolute) ?? $this->resource();
         $alt ??= $this->getAttr('defaultAlt');
-        $return = Base\Html::img($src,$alt,$attr);
+        $return = Html::img($src,$alt,$attr);
 
         return $return;
     }

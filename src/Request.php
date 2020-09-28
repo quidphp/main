@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Quid\Main;
 use Quid\Base;
+use Quid\Base\Cli;
+use Quid\Base\Html;
 
 // request
 // class with methods to manage an HTTP request
@@ -686,8 +688,8 @@ class Request extends Map
     {
         $return = false;
         $post = $this->post();
-        $genuine = Base\Html::getGenuineName();
-        $genuine2 = Base\Html::getGenuineName(2);
+        $genuine = Html::getGenuineName();
+        $genuine2 = Html::getGenuineName(2);
 
         if(!empty($genuine) && !empty($post) && array_key_exists($genuine,$post) && empty($post[$genuine]))
         $return = ($two === false || (array_key_exists($genuine2,$post) && !empty($post[$genuine2])));
@@ -1438,7 +1440,7 @@ class Request extends Map
     // permet de lier des query à la requête à partir d'un tableau d'options de cli
     final public function setArgv(array $values):self
     {
-        $query = Base\Cli::parseOpt(...array_values($values));
+        $query = Cli::parseOpt(...array_values($values));
 
         if(!empty($query))
         $this->setQuery($query);
@@ -1651,7 +1653,7 @@ class Request extends Map
     {
         $return = null;
         $post = $this->post();
-        $timestamp = Base\Html::getTimestampName();
+        $timestamp = Html::getTimestampName();
 
         if(!empty($timestamp) && !empty($post) && array_key_exists($timestamp,$post))
         $return = $post[$timestamp];

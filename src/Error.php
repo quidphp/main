@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Quid\Main;
 use Quid\Base;
+use Quid\Base\Cli;
+use Quid\Base\Html;
 
 // error
 // class used as a basic error handler
@@ -654,7 +656,7 @@ class Error extends Root
         foreach ($this->getOutputArray() as $k => $v)
         {
             $preset = ($k <= 2)? 'neg':'neutral';
-            $return .= Base\Cli::preset($preset,$v);
+            $return .= Cli::preset($preset,$v);
         }
 
         return $return;
@@ -673,7 +675,7 @@ class Error extends Root
         if(empty($buffer))
         {
             $doc = $this->getAttr('doc');
-            $html = Base\Html::docSimple($this->title(),$html,$doc);
+            $html = Html::docSimple($this->title(),$html,$doc);
         }
 
         Base\Buffer::flushEcho($html);
@@ -703,7 +705,7 @@ class Error extends Root
             // autre
             else
             {
-                $v = Base\Html::specialChars($v);
+                $v = Html::specialChars($v);
                 $return .= "<h$k>$v</h$k>";
             }
         }
