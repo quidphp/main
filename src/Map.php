@@ -542,6 +542,23 @@ class Map extends ArrMap
     }
 
 
+    // random
+    // retourne une valeur random de la map
+    final public function random()
+    {
+        $return = null;
+        $count = $this->count();
+
+        if($count > 0)
+        {
+            $index = Base\Crypt::randomInt(null,0,($count - 1));
+            $return = $this->index($index);
+        }
+
+        return $return;
+    }
+
+
     // slice
     // permet de slice une ou plusieurs clés->valeurs de la map
     // utilise les clés start et end

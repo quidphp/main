@@ -186,6 +186,9 @@ class Map extends Base\Test
         // indexes
         assert($map->indexes(0,1) === ['ok','LOL']);
 
+        // random
+        assert(!empty($map->random()));
+
         // slice
         assert(count($map->slice('test','james')) === 3);
 
