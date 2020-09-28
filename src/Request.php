@@ -1998,7 +1998,7 @@ class Request extends Map
         $throw = [$info['errorNo'],$info['error']];
 
         if(empty($throw) && empty($exec['resource']))
-        $throw = ['responseHasNoResource'];
+        $throw = ['responseHasNoResource',$exec['meta']['error'] ?? null];
 
         if(empty($throw) && !Base\Res::isPhpTemp($exec['resource']))
         $throw = ['responseHasInvalidResource'];
