@@ -15,7 +15,9 @@ use Quid\Base;
 abstract class Service extends Root
 {
     // config
-    protected static array $config = [];
+    protected static array $config = [
+        'serviceType'=>'default'
+    ];
 
 
     // dynamique
@@ -36,6 +38,14 @@ abstract class Service extends Root
     final public function _cast():?string
     {
         return null;
+    }
+
+
+    // isServiceType
+    // retourne vrai si le type de service est celui donné en argument
+    final public function isServiceType($value):bool
+    {
+        return $this->getServiceType() === $value;
     }
 
 
@@ -61,27 +71,11 @@ abstract class Service extends Root
     }
 
 
-    // docOpenJs
-    // élément à ajouter en js dans le docOpen
-    public function docOpenJs()
+    // getServiceType
+    // retourne le type de service
+    final public function getServiceType():string
     {
-        return;
-    }
-
-
-    // docOpenScript
-    // élément à ajouter en script dans le docOpen
-    public function docOpenScript()
-    {
-        return;
-    }
-
-
-    // docCloseScript
-    // élément à ajouter en script dans le docClose
-    public function docCloseScript()
-    {
-        return;
+        return $this->getAttr('serviceType');
     }
 
 

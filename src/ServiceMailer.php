@@ -368,4 +368,7 @@ abstract class ServiceMailer extends Service
         return (static::class !== self::class && !Base\Fqcn::sameName(static::class,self::class))? 'Service':null;
     }
 }
+
+// init
+ServiceMailer::__init();
 ?>
