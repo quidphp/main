@@ -138,6 +138,9 @@ class Error extends Base\Test
 
         // com
 
+        // getOutputMode
+        assert($error->getOutputMode() === 'html');
+
         // output
 
         // getOutput
@@ -150,6 +153,8 @@ class Error extends Base\Test
 
         // outputHtml
 
+        // outputJson
+
         // html
         assert(Base\Html::is($error->html()));
         assert(is_string($error->html()));
@@ -157,6 +162,9 @@ class Error extends Base\Test
         $x = new Main\Error($e->toArray(),null,['outputDepth'=>7]);
         $y = new Main\Error($x->toArray(),null,['outputDepth'=>7]);
         assert($x->html() !== $y->html()); // id est différent
+
+        // json
+        assert(count($error->json()) === 5);
 
         // makeOutputArray
         assert(count($warning->makeOutputArray()) === 5);
@@ -168,7 +176,7 @@ class Error extends Base\Test
         assert(count($error->getOutputArray()) === 3);
 
         // attr
-        assert(count($error->attr()) === 20);
+        assert(count($error->attr()) === 21);
 
         // handler
 

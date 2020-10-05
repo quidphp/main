@@ -26,6 +26,7 @@ class Error extends Root
         'cast'=>'titleMessage', // méthode à utiliser pour cast
         'errorLog'=>true, // l'erreur est loggé dans php.log
         'output'=>true, // output à l'écran
+        'outputMode'=>null, // si le output de l'erreur doit être un tableau ou du html
         'outputDepth'=>3, // niveau de précision du output
         'traceArgs'=>false, // affiche des arguments dans trace
         'traceLength'=>[self::class,'getTraceLength'], // longueur du trace
@@ -610,15 +611,35 @@ class Error extends Root
     }
 
 
+    // getOutputMode
+    // retourne le output mode de l'erreur
+    // support pour cli,
+    final public function getOutputMode():string
+    {
+        if(Base\Server::isCli())
+        $return = 'cli';
+
+        else
+        $return = $this->getAttr('outputMode') ?? 'html';
+
+        return $return;
+    }
+
+
     // output
     // fait un output de l'erreur
     // output différent si c'est cli ou non
     final public function output():void
     {
-        if(Base\Server::isCli())
+        $mode = $this->getOutputMode();
+
+        if($mode === 'cli')
         $this->outputCli();
 
-        else
+        elseif($mode === 'json')
+        $this->outputJson();
+
+        elseif($mode === 'html')
         $this->outputHtml();
     }
 
@@ -668,6 +689,7 @@ class Error extends Root
     final public function outputHtml():void
     {
         Base\Response::serverError();
+        Base\Response::setContentType('html');
 
         $buffer = Base\Buffer::get();
         $html = $this->html();
@@ -679,6 +701,21 @@ class Error extends Root
         }
 
         Base\Buffer::flushEcho($html);
+    }
+
+
+    // outputJson
+    // envoie le output en json
+    final public function outputJson():void
+    {
+        Base\Response::serverError();
+        Base\Response::setContentType('json');
+        $json = $this->json();
+        $doc = ['title'=>$this->title()];
+        $json['doc'] = $doc;
+        $json = Base\Json::encode($json);
+
+        Base\Buffer::cleanAllEcho($json);
     }
 
 
@@ -709,6 +746,25 @@ class Error extends Root
                 $return .= "<h$k>$v</h$k>";
             }
         }
+
+        return $return;
+    }
+
+
+    // json
+    // retourne le tableau à utiliser pour le outputJson de l'erreur
+    final public function json($outputDepth=null):array
+    {
+        $return = [];
+        $json = $this->getOutputArray($outputDepth,false);
+
+        $return['error'] = 'fatal';
+        $return['code'] = Base\Response::code();
+        $return['title'] = $json[1] ?? '?';
+        $return['message'] = $json[2] ?? '';
+
+        if(!empty($json[3]))
+        $return['file'] = $json[3];
 
         return $return;
     }
@@ -1001,6 +1057,14 @@ class Error extends Root
     final public static function setDocHead(string $value):void
     {
         static::$config['doc']['head'] = $value;
+    }
+
+
+    // setOutputMode
+    // permet de changer le output mode par défaut des erreurs
+    final public static function setOutputMode(string $value):void
+    {
+        static::$config['outputMode'] = $value;
     }
 
 
