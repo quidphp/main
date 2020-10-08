@@ -1765,7 +1765,7 @@ class Request extends Map
 
         if(is_string($referer) && !empty($referer))
         {
-            if($internal === false || Base\Uri::isInternal($referer,$hosts))
+            if($internal === false || Base\Uri::host($referer) === 'localhost' || Base\Uri::isInternal($referer,$hosts))
             $return = $referer;
         }
 
