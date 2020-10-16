@@ -92,7 +92,7 @@ trait _classeObj
     // sortBy
     // sort l'objet par le résultat d'une méthode
     // clone l'objet
-    final public function sortBy(string $method,bool $sort=true,...$args):self
+    final public function sortBy($method,bool $sort=true,...$args):self
     {
         $this->checkAllowed('sort');
         $return = $this->onPrepareThis('sortBy');
