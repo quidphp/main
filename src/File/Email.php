@@ -34,7 +34,7 @@ class Email extends Json implements Main\Contract\Email
 
     // subject
     // retourne le sujet du email
-    final public function subject():string
+    final public function subject(?string $lang=null):string
     {
         return $this->readGet('subject');
     }
@@ -42,7 +42,7 @@ class Email extends Json implements Main\Contract\Email
 
     // body
     // retourne le body du email
-    final public function body():string
+    final public function body(?string $lang=null):string
     {
         return $this->readGet('body');
     }

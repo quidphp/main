@@ -21,32 +21,32 @@ interface Email
 
     // subject
     // retourne le sujet du email
-    public function subject():string;
+    public function subject(?string $lang=null):string;
 
 
     // body
     // retourne le body du email
-    public function body():string;
+    public function body(?string $lang=null):string;
 
 
     // send
     // envoie le courriel maintenant
-    public function send($key,$to,?array $replace=null,?array $message=null):bool;
+    public function send($key,$to,?array $replace=null,?string $lang=null,?array $message=null):bool;
 
 
     // sendOnCloseDown
     // envoie le courriel à la fermeture du script
-    public function sendOnCloseDown($key,$to,?array $replace=null,?array $message=null):void;
+    public function sendOnCloseDown($key,$to,?array $replace=null,?string $lang=null,?array $message=null):void;
 
 
     // queue
     // queue le courriel pour envoie plus tard
-    public function queue($key,$to,?array $replace=null,?array $message=null):bool;
+    public function queue($key,$to,?array $replace=null,?string $lang=null,?array $message=null):bool;
 
 
     // dispatch
     // dispatch le courriel selon la méthode par défaut défini dans la classe de courriel
-    public function dispatch($key,$to,?array $replace=null,?array $message=null):bool;
+    public function dispatch($key,$to,?array $replace=null,?string $lang=null,?array $message=null):bool;
 
 
     // getSegmentChars
