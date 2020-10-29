@@ -166,7 +166,7 @@ class Res extends ArrObj
 
 
     // cast
-    // retourne le contenu de la resource sous forme de string
+    // retourne la resource
     public function _cast()
     {
         return $this->resource();
