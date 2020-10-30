@@ -600,8 +600,8 @@ class Request extends Base\Test
         assert($r->post(true,true) === ['password'=>123,'bla'=>'OK']);
         assert($post->post()['test'] === 123);
         assert($post->post()['james'] === 'true');
-        assert($files->post(true,true,true)['ok'][0] === 'bla.php');
-        assert($files->post(true,true,true)['ok'][1]['name'] === 'ok.lala');
+        assert($files->post(true,true,null,true)['ok'][0] === 'bla.php');
+        assert($files->post(true,true,null,true)['ok'][1]['name'] === 'ok.lala');
 
         // postExport
         assert($r->postExport()['-genuine-'] === 'what');
@@ -700,8 +700,8 @@ class Request extends Base\Test
         assert($file->filesArray()['ok']['name'] === 'test.jpg');
         assert(count($setFile->filesArray()['test']) === 5);
         assert(count($setFiles->filesArray()['test']) === 1);
-        assert(count($setFile->post(true,true,true)['test']) === 5);
-        assert(count($setFiles->post(true,true,true)['test']) === 1);
+        assert(count($setFile->post(true,true,null,true)['test']) === 5);
+        assert(count($setFiles->post(true,true,null,true)['test']) === 1);
         assert($setFile->post() === []);
 
         // files

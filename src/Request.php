@@ -1602,13 +1602,10 @@ class Request extends Map
     // possibilité d'enlever les tags html dans le tableau de retour
     // possibilité d'inclure les données chargés en provenance de files comme variable post
     // les données de files sont reformat par défaut, mais post a toujours précédente sur files
-    final public function post(bool $safeKey=false,bool $stripTags=false,bool $includeFiles=false):array
+    final public function post(bool $safeKey=false,bool $stripTags=false,?string $notStart=null,bool $includeFiles=false):array
     {
-        $return = [];
         $files = ($includeFiles === true)? $this->filesArray():null;
-        $return = Base\Superglobal::postReformat($this->arr(),$safeKey,$stripTags,$includeFiles,$files);
-
-        return $return;
+        return Base\Superglobal::postReformat($this->arr(),$safeKey,$stripTags,$notStart,$includeFiles,$files);
     }
 
 
@@ -1635,7 +1632,7 @@ class Request extends Map
     // retourne le tableau post de la requête sous forme de json
     final public function postJson(bool $onlyCol=false,bool $stripTags=false,bool $includeFiles=false):string
     {
-        return Base\Json::encode($this->post($onlyCol,$stripTags,$includeFiles));
+        return Base\Json::encode($this->post($onlyCol,$stripTags,null,$includeFiles));
     }
 
 
