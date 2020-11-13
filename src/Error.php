@@ -28,6 +28,7 @@ class Error extends Root
         'output'=>true, // output à l'écran
         'outputMode'=>null, // si le output de l'erreur doit être un tableau ou du html
         'outputDepth'=>3, // niveau de précision du output
+        'messageMaxLength'=>2000, // spécifie la longueur maximale du message, peut éviter des overflow
         'traceArgs'=>false, // affiche des arguments dans trace
         'traceLength'=>[self::class,'getTraceLength'], // longueur du trace
         'traceLengthArray'=>5, // longueur du trace pour toArray
@@ -177,9 +178,10 @@ class Error extends Root
 
     // getMessage
     // retourne le message de l'erreur
-    final public function getMessage():string
+    final public function getMessage(?int $maxLength=null):string
     {
-        return $this->message;
+        $maxLength ??= $this->getAttr('messageMaxLength');
+        return substr($this->message,0,$maxLength);
     }
 
 

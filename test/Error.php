@@ -176,7 +176,7 @@ class Error extends Base\Test
         assert(count($error->getOutputArray()) === 3);
 
         // attr
-        assert(count($error->attr()) === 21);
+        assert(count($error->attr()) === 22);
 
         // handler
 
