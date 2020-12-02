@@ -151,7 +151,7 @@ abstract class ServiceMailer extends Service
         {
             foreach ($value as $k => $v)
             {
-                if(is_object($v) && method_exists($v,'toEmail'))
+                if(is_object($v) && $v->hasMethod('toEmail'))
                 $value[$k] = $v->toEmail();
             }
 
@@ -171,7 +171,7 @@ abstract class ServiceMailer extends Service
     // utilisé pour modèles de courriel
     final protected function messageCastObj($return)
     {
-        if(is_object($return) && method_exists($return,'sendEmail'))
+        if(is_object($return) && $return->hasMethod('sendEmail'))
         $return = $return->sendEmail();
 
         return $return;

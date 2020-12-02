@@ -111,7 +111,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
             $return = Base\Session::$key(...$args);
         }
 
-        elseif(method_exists(Base\Session::class,$key))
+        elseif(Base\Session::classHasMethod($key))
         $return = Base\Session::$key(...$args);
 
         else
@@ -125,7 +125,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // applique la classe de storage
     final protected function setStorageClass(string $value):void
     {
-        if(!class_exists($value,true) || !Base\Classe::hasInterface(Contract\Session::class,$value))
+        if(!class_exists($value,true) || !$value::classHasInterface(Contract\Session::class))
         static::throw();
 
         $this->class = $value;

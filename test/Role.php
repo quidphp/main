@@ -55,6 +55,9 @@ class Role extends Base\Test
         assert(!$nobody->isSomebody());
         assert($admin->isSomebody());
 
+        // output
+        assert($admin->output() === ['permission'=>80,'name'=>'Admin']);
+
         // useAlso
         assert($admin->useAlso() === null);
 

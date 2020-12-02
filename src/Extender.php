@@ -290,7 +290,7 @@ class Extender extends Map
                 $key = Base\Fqcn::append($prepend,$key);
             }
 
-            elseif(method_exists($value,'getOverloadKey'))
+            elseif($value::classHasMethod('getOverloadKey'))
             $key = $value::getOverloadKey();
 
             else

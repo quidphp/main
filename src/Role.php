@@ -114,6 +114,17 @@ class Role extends Root
     }
 
 
+    // output
+    // permet de faire un output du rôle (permission et name)
+    public function output():array
+    {
+        return [
+            'permission'=>$this->permission(),
+            'name'=>$this->name()
+        ];
+    }
+
+
     // useAlso
     // retourne un tableau de classe de role compatible avec le role courant
     // est utilisé dans le trait _attrPermission

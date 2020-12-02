@@ -131,15 +131,15 @@ trait _root
     // retourne vrai si l'objet a la propriété
     final public function hasProperty(string $prop):bool
     {
-        return property_exists($this,$prop);
+        return Base\Obj::hasProperty($prop,$this);
     }
 
 
     // hasMethod
-    // retourne vrai si l'objet a la méthode
+    // retourne vrai si l'objet a la méthode dynamique
     final public function hasMethod(string $method):bool
     {
-        return method_exists($this,$method);
+        return Base\Obj::hasMethod($method,$this);
     }
 
 
