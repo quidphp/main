@@ -21,7 +21,7 @@ interface Import
     // sourceOne
     // retourne une entrée de la source
     // i agit comme référence
-    public function sourceOne($offset=true,$length=true,int &$i,?array $option=null);
+    public function sourceOne($offset,$length,int &$i,?array $option=null);
 
 
     // targetInsert

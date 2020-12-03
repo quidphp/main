@@ -288,7 +288,7 @@ class Res extends ArrObj
             if(is_resource($value))
             $return = $this->resource = $value;
         }
-
+        
         if(!is_resource($return))
         static::throw('cannotOpen',$remember);
 
@@ -578,7 +578,7 @@ class Res extends ArrObj
     // lineRef
     // retourne la ligne courante de la resource à partir d'un offset, length et un i
     // le i doit être passé par référence
-    final public function lineRef($offset=true,$length=true,int &$i,?array $option=null)
+    final public function lineRef($offset,$length,int &$i,?array $option=null)
     {
         $return = Base\Res::lineRef($this->resource(),$offset,$length,$i,Base\Arr::plus($this->readOption(),$option));
         return $this->lineReturn($return);

@@ -45,7 +45,7 @@ abstract class ServiceRequest extends Service
     // makeRequest
     // retourne un nouvel objet requête
     // utilise la classe requête dans requestClass et les attrs dans requestOption
-    final protected static function makeRequest($value=null,array $attr):Request
+    final protected static function makeRequest($value,array $attr):Request
     {
         $return = null;
         $class = static::requestClass();

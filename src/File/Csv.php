@@ -110,7 +110,7 @@ class Csv extends Text implements Main\Contract\Import
     // sourceOne
     // retourne une entrée de la source
     // i agit comme référence
-    final public function sourceOne($offset=true,$length=true,int &$i,?array $option=null)
+    final public function sourceOne($offset,$length,int &$i,?array $option=null)
     {
         return $this->lineRef($offset,$length,$i,$option);
     }
