@@ -288,7 +288,7 @@ class Res extends ArrObj
             if(is_resource($value))
             $return = $this->resource = $value;
         }
-        
+
         if(!is_resource($return))
         static::throw('cannotOpen',$remember);
 
