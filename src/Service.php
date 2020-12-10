@@ -84,7 +84,8 @@ abstract class Service extends Root
     // sinon envoie une exception attrapable
     final public static function checkPing(string $host,int $port=80,int $timeout=2):bool
     {
-        return Request::checkPing($host,$port,$timeout);
+        $request = Request::newOverload(['scheme'=>'http','host'=>$host,'port'=>$port]);
+        return $request->checkPing();
     }
 
 

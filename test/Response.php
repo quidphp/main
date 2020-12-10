@@ -158,7 +158,6 @@ class Response extends Base\Test
         assert($response3->basename() === 'json.json');
         assert($response->filename() === 'jpg');
         assert($response->extension() === 'jpg');
-        assert(count($response->curlInfo()) >= 26);
 
         // arrObj
         assert(count($response) === 7);

@@ -718,10 +718,14 @@ class Request extends Base\Test
         assert($r->redirect() === '/en/lavieestlaide');
         assert($current->redirect() === null);
 
+        // ping
+        assert($r->ping());
+
+        // checkPing
+
         // curl
         $curl = $r->curl();
-        assert($curl instanceof Main\Res);
-        assert(Base\Res::isCurl($curl->resource()));
+        assert(Base\Curl::is($curl));
 
         // curlExec
 
@@ -734,8 +738,6 @@ class Request extends Base\Test
 
         // live
         assert(Main\Request::live() instanceof Main\Request);
-
-        // checkPing
 
         // inst
 

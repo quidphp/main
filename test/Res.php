@@ -46,7 +46,6 @@ class Res extends Base\Test
         assert(!$res->isBinary());
         assert($res->isStream());
         assert($res->isRegularType());
-        assert(!$res->isCurl());
         assert(!$res->isFinfo());
         assert(!$res->isContext());
         assert($res->isFile());
@@ -168,7 +167,6 @@ class Res extends Base\Test
         assert($res->mimeGroup() === 'php');
         assert(is_array($res->param()));
         assert(is_array($res->contextOption()));
-        assert($res->curlInfo() === null);
         assert(is_int($res->position()));
         assert($res->lineCount() === 3);
         assert(strlen($res->pathToUriOrBase64()) === 123);

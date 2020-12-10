@@ -1943,9 +1943,32 @@ class Request extends Map
     }
 
 
+    // ping
+    // permet de faire un ping sur le host et port de la requête
+    final public function ping(int $timeout=2,?string $proxyHost=null,?int $proxyPort=null):bool
+    {
+        $host = $proxyHost ?? $this->host();
+        $port = $proxyPort ?? $this->port();
+        return Base\Network::isOnline($host,$port,$timeout);
+    }
+
+
+    // checkPing
+    // fait un ping et envoie une exception si impossible à rejoindre
+    final public function checkPing(int $timeout=2,?string $proxyHost=null,?int $proxyPort=null):bool
+    {
+        $return = $this->ping($timeout,$proxyHost,$proxyPort);
+
+        if($return === false)
+        static::catchable(null,'hostUnreachable',$host,$port);
+
+        return $return;
+    }
+
+
     // curl
-    // retourne un objet Res avec la resource curl a utilisé pour la requête
-    final public function curl(?array $option=null):Res
+    // retourne la resource ou l'objet curl handle
+    final public function curl(?array $option=null)
     {
         $lowOption = ['userAgent'=>$this->userAgent()];
         $highOption = ['uri'=>['encode'=>true],'ssl'=>$this->isSsl(),'port'=>$this->port(),'method'=>$this->method()];
@@ -1954,37 +1977,24 @@ class Request extends Map
         $uri = $this->absolute($option['uri']);
         $post = ($this->isPost())? $this->post():null;
         $header = $this->headers();
-        $res = Base\Res::curl($uri,false,$post,$header,$option);
+        $return = Base\Curl::make($uri,false,$post,$header,$option) ?? static::throw();
 
-        if(empty($res))
-        static::throw();
-
-        return Res::newOverload($res);
+        return $return;
     }
 
 
     // curlExec
     // lance la requête curl sur la requête courante
     // retourne un tableau avec les headers, la resource et le timestamp
-    final public function curlExec(?array $option=null):?array
+    final public function curlExec(?array $option=null):array
     {
-        $return = null;
         $option = Base\Arr::plus($this->attr(),$option);
 
         if(!empty($option['ping']) && is_int($option['ping']))
-        {
-            $host = $this->host();
-            $port = $this->port();
-
-            if(is_string($option['proxyHost']) && is_int($option['proxyPort']))
-            static::checkPing($option['proxyHost'],$option['proxyPort'],$option['ping']);
-
-            else
-            static::checkPing($host,$port,$option['ping']);
-        }
+        $this->checkPing($option['ping'],$option['proxyHost'] ?? null,$option['proxyPort'] ?? null);
 
         $curl = $this->curl($option);
-        $exec = $curl->curlExec();
+        $exec = Base\Curl::exec($curl);
         $throw = null;
         $code = null;
 
@@ -2025,12 +2035,11 @@ class Request extends Map
         if(!empty($throw))
         static::throw(...$throw);
 
-        $return = [];
-        $return['header'] = $exec['header'];
-        $return['resource'] = $exec['resource'];
-        $return['timestamp'] = Base\Datetime::now();
-
-        return $return;
+        return [
+            'header'=>$exec['header'],
+            'resource'=>$exec['resource'],
+            'timestamp'=>Base\Datetime::now()
+        ];
     }
 
 
@@ -2071,20 +2080,6 @@ class Request extends Map
     final public static function live():self
     {
         return new static(null);
-    }
-
-
-    // checkPing
-    // vérifie que l'hôte est joignable sur le port spécifié
-    // sinon envoie une exception attrapable
-    final public static function checkPing(string $host,int $port=80,int $timeout=2):bool
-    {
-        $return = Base\Network::isOnline($host,$port,$timeout);
-
-        if($return === false)
-        static::catchable(null,'hostUnreachable',$host,$port);
-
-        return $return;
     }
 }
 ?>
