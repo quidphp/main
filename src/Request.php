@@ -34,7 +34,7 @@ class Request extends Map
         'dnsGlobalCache'=>false, // pour curl
         'userPassword'=>null, // pour curl
         'proxyHost'=>null, // hôte pour proxy, pour curl
-        'proxyPort'=>8080, // port pour proxy, pour curl
+        'proxyPort'=>null, // port pour proxy, pour curl
         'proxyPassword'=>null, // pour curl
         'followLocation'=>false, // pour curl
         'ssl'=>null, // pour curl
@@ -1958,6 +1958,8 @@ class Request extends Map
     final public function checkPing(int $timeout=2,?string $proxyHost=null,?int $proxyPort=null):bool
     {
         $return = $this->ping($timeout,$proxyHost,$proxyPort);
+        $host = $proxyHost ?? $this->host();
+        $port = $proxyPort ?? $this->port();
 
         if($return === false)
         static::catchable(null,'hostUnreachable',$host,$port);
