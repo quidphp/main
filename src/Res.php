@@ -307,14 +307,7 @@ class Res extends ArrObj
             $condition = static::$base[$method];
 
             if($condition !== null)
-            {
-                $condition = (array) $condition;
-
-                foreach ($condition as $value)
-                {
-                    $this->check($value);
-                }
-            }
+            Base\Arr::each((array) $condition,fn($value) => $this->check($value));
 
             foreach ($args as $key => $value)
             {
@@ -606,13 +599,7 @@ class Res extends ArrObj
     final public function lineChunk(int $each,bool $preserve=true,?array $option=null):?array
     {
         $return = Base\Res::lineChunk($each,$this->resource(),$preserve,Base\Arr::plus($this->readOption(),$option));
-
-        foreach ($return as $key => $value)
-        {
-            $return[$key] = $this->lineReturns($value);
-        }
-
-        return $return;
+        return Base\Arr::map($return,fn($value) => $this->lineReturns($value));
     }
 
 
@@ -625,13 +612,7 @@ class Res extends ArrObj
     final public function lineChunkWalk(\Closure $callback,?array $option=null):?array
     {
         $return = Base\Res::lineChunkWalk($callback,$this->resource(),Base\Arr::plus($this->readOption(),$option));
-
-        foreach ($return as $key => $value)
-        {
-            $return[$key] = $this->lineReturns($value);
-        }
-
-        return $return;
+        return Base\Arr::map($return,fn($value) => $this->lineReturns($value));
     }
 
 
@@ -639,12 +620,7 @@ class Res extends ArrObj
     // gère la valeur de retour pour lines
     final protected function lineReturns(array $return):array
     {
-        foreach ($return as $key => $value)
-        {
-            $return[$key] = $this->lineReturn($value);
-        }
-
-        return $return;
+        return Base\Arr::map($return,fn($value) => $this->lineReturn($value));
     }
 
 
