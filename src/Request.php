@@ -1564,7 +1564,7 @@ class Request extends Map
     final public function setMethod(string $value):self
     {
         if(!Base\Http::isMethod($value))
-        static::throw();
+        static::throw('invalidMethod',$value);
 
         return $this->property('method',strtolower($value));
     }
