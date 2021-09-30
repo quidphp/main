@@ -1958,11 +1958,9 @@ class Request extends Map
     final public function checkPing(int $timeout=2,?string $proxyHost=null,?int $proxyPort=null):bool
     {
         $return = $this->ping($timeout,$proxyHost,$proxyPort);
-        $host = $proxyHost ?? $this->host();
-        $port = $proxyPort ?? $this->port();
 
         if($return === false)
-        static::catchable(null,'hostUnreachable',$host,$port);
+        static::catchable(null,'hostUnreachable',$proxyHost ?? $this->host(),$proxyPort ?? $this->port());
 
         return $return;
     }

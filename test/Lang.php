@@ -271,7 +271,7 @@ class Lang extends Base\Test
         assert($lang->numberMoneyFormat('decimal') === 2);
 
         // numberPhoneFormat
-        assert(count($lang->numberPhoneFormat()) === 2);
+        assert(count($lang->numberPhoneFormat()) === 3);
 
         // numberSizeFormat
         assert(count($lang->numberSizeFormat()) === 2);
