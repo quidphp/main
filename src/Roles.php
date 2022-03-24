@@ -68,6 +68,23 @@ class Roles extends MapObj
     }
 
 
+    // cast
+    // renvoie vers toSet
+    // permet une facilité d'utilisation losque l'objet est passé en base de données
+    final public function _cast():array
+    {
+        return $this->toSet();
+    }
+
+
+    // toSet
+    // retourne un tableau avec les permissions des rôles
+    final public function toSet():array
+    {
+        return array_values(Base\Obj::cast($this->toArray()));
+    }
+
+
     // isOne
     // retourne vrai si un des rôles à l'attribut à true
     final public function isOne($value):bool

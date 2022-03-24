@@ -24,6 +24,7 @@ class Roles extends Base\Test
         $nobody = new Main\Role('nobody',1,['nobody'=>true]);
         $test = new Main\Role('test',20);
         $rolesIs = new Main\Roles();
+        $rolesIs->add($admin,$nobody,$test);
 
         // construct
 
@@ -31,8 +32,13 @@ class Roles extends Base\Test
 
         // onPrepareValue
 
+        // _cast
+        assert($rolesIs->_cast() === [80,1,20]);
+
+        // toSet
+        assert($rolesIs->toSet() === [80,1,20]);
+
         // isOne
-        $rolesIs->add($admin,$nobody,$test);
         assert($rolesIs->isOne('admin'));
 
         // isAll
