@@ -707,6 +707,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // gc
     // processus de garbage collect
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
+    #[\ReturnTypeWillChange]
     final public function gc($lifetime):bool
     {
         $this->checkReady();

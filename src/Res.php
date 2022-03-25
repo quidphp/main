@@ -27,7 +27,6 @@ class Res extends ArrObj
         'isBinary'=>null,
         'isStream'=>null,
         'isRegularType'=>null,
-        'isFinfo'=>null,
         'isContext'=>null,
         'isFile'=>null,
         'isFileExists'=>null,

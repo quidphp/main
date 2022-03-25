@@ -89,6 +89,7 @@ trait _root
 
     // jsonSerialize
     // ce qui se passe en cas de jsonSerialize, utiliser par l'interface
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         static::throw('notAllowed');

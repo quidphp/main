@@ -567,7 +567,7 @@ class Com extends Map
     // prepareIn
     // méthode utilisé pour générer le tableau de communication pour une structure complexe à multiple niveaux
     // n'ajoute pas à l'objet
-    final public function prepareIn(string $type,?string $inType=null,array $array,?array $replace=null):array
+    final public function prepareIn(string $type,?string $inType,array $array,?array $replace=null):array
     {
         $return = [];
         $this->checkType($type);

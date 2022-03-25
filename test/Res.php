@@ -46,7 +46,6 @@ class Res extends Base\Test
         assert(!$res->isBinary());
         assert($res->isStream());
         assert($res->isRegularType());
-        assert(!$res->isFinfo());
         assert(!$res->isContext());
         assert($res->isFile());
         assert($res->isFileExists());

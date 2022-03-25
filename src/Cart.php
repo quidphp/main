@@ -219,7 +219,7 @@ class Cart extends Map
 
     // commit
     // méthode protégé qui fait des changements au tableau de l'objet
-    final protected function commit(?int $index=null,$value,int $quantity,?array $attr=null):self
+    final protected function commit(?int $index,$value,int $quantity,?array $attr=null):self
     {
         $value = $this->onPrepareValue($value);
 

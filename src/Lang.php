@@ -677,7 +677,7 @@ class Lang extends Map
 
     // textNotFound
     // gère le résultat d'une requête text non trouvé
-    final protected function textNotFound($key,?array $replace=null,?string $lang=null,array $option):?string
+    final protected function textNotFound($key,?array $replace,?string $lang,array $option):?string
     {
         $return = null;
         $key = Base\Arrs::keyPrepare($key);
