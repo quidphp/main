@@ -139,7 +139,7 @@ class Error extends Base\Test
         // com
 
         // getOutputMode
-        assert($error->getOutputMode() === 'html');
+        assert(in_array($error->getOutputMode(),['html','cli'],true));
 
         // output
 

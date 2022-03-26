@@ -23,7 +23,7 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 
 ## Requirement
 **QuidPHP/Main** requires the following:
-- PHP 7.3 or 7.4
+- PHP 7.4, 8.0 or 8.1 
 - All PHP extensions required by [quidphp/base](https://github.com/quidphp/base)
 
 ## Dependency
@@ -33,7 +33,7 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 The dependency will be resolved by using the [Composer](https://getcomposer.org) installation process.
 
 ## Comment
-**QuidPHP/Main** code is commented and all methods are explained. However, most of the comments are currently written in French.
+**QuidPHP/Main** code is commented and all methods are explained. However, most of the comments are written in French.
 
 ## Convention
 **QuidPHP/Main** is built on the following conventions:
@@ -45,7 +45,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
 
 ## Overview
-**QuidPHP/Main** contains 115 classes, traits and interfaces. Here is an overview:
+**QuidPHP/Main** contains 117 classes, traits and interfaces. Here is an overview:
 - [ArrMap](src/ArrMap.php) - Abstract class that provides base methods to make a collection
 - [ArrObj](src/ArrObj.php) - Abstract class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 - [Arrs](src/Arrs.php) - Class for a collection containing a multidimensional array
@@ -56,6 +56,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [Com](src/Com.php) - Class that provides the logic to store positive, negative or neutral communication messages
 - [Concatenator](src/Concatenator.php) - Class used to concatenate the content of many files or directories
 - [Contract](src/Contract)
+    - [Cache](src/Contract/Cache.php) - Interface to detail the methods required for implementing caching functionality to an object
     - [Catchable](src/Contract/Catchable.php) - Interface to mark an exception as catchable
     - [Email](src/Contract/Email.php) - Interface to describe methods of an objet containing an email
     - [FileStorage](src/Contract/FileStorage.php) - Interface to describe a file objet which has a defined storage folder
@@ -130,6 +131,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
     - [_reference](src/Map/_reference.php) - Trait that permits the collection to work from a reference array source
     - [_sequential](src/Map/_sequential.php) - Trait that makes sure the keys of the collection are always sequential
     - [_sort](src/Map/_sort.php) - Trait that provides methods to change the order of entries within the collection
+- [MapObj](src/MapObj.php) - Class for a collection containing objects
 - [Request](src/Request.php) - Class with methods to manage an HTTP request
 - [RequestHistory](src/RequestHistory.php) - Class for a collection containing an history of requests
 - [Res](src/Res.php) - Class with methods to manage a resource
@@ -164,7 +166,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [_throw](src/_throw.php) - Trait that provides static methods to throw exception from an object
 
 ## Testing
-**QuidPHP/Main** contains 32 test classes:
+**QuidPHP/Main** contains 33 test classes:
 - [Arrs](test/Arrs.php) - Class for testing Quid\Main\Arrs
 - [Autoload](test/Autoload.php) - Class for testing Quid\Main\Autoload
 - [Calendar](test/Calendar.php) - Class for testing Quid\Main\Calendar
@@ -185,6 +187,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [Lang](test/Lang.php) - Class for testing Quid\Main\Lang
 - [Localization](test/Localization.php) - Class for testing Quid\Main\Localization
 - [Map](test/Map.php) - Class for testing Quid\Main\Map
+- [MapObj](test/MapObj.php) - Class for testing Quid\Main\MapObj
 - [Request](test/Request.php) - Class for testing Quid\Main\Request
 - [RequestHistory](test/RequestHistory.php) - Class for testing Quid\Main\RequestHistory
 - [Res](test/Res.php) - Class for testing Quid\Main\Res
