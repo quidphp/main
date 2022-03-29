@@ -8,7 +8,7 @@ declare(strict_types=1);
  */
 
 namespace Quid\Main\File;
-use Quid\Base\Html;
+use Quid\Base;
 
 // image
 // abstract class for an image file (raster or vector)
@@ -31,7 +31,7 @@ abstract class Image extends Binary
         if($base64 === true)
         $option['base64'] = true;
 
-        $return = Html::img($src,$alt,$attr,$option);
+        $return = Base\Html::img($src,$alt,$attr,$option); // garde base/html, fait une bogue dans preload
 
         return $return;
     }
