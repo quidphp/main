@@ -2,7 +2,7 @@
     "name": "quidphp/main",
     "type": "library",
     "description": "PHP library that provides a set of base objects and collections",
-    "keywords": ["quidphp","quid","framework"],
+    "keywords": ["quidphp","quid","php-framework"],
     "homepage": "https://quidphp.com",
     "license": "MIT",
     "authors": [{

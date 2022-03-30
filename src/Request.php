@@ -758,7 +758,7 @@ class Request extends Map
     // retourne vrai si le userAgent est un bot
     final public function isBot():bool
     {
-        return Base\Browser::isBot($this->userAgent());
+        return Base\UserAgent::isBot($this->userAgent());
     }
 
 
