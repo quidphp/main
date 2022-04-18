@@ -707,8 +707,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
     // gc
     // processus de garbage collect
     // ne pas appelé directement, remplie une condition de SessionHandlerInterface
-    #[\ReturnTypeWillChange]
-    final public function gc($lifetime):bool
+    final public function gc($lifetime):int|false
     {
         $this->checkReady();
         $class = $this->getStorageClass();
@@ -717,7 +716,7 @@ class Session extends Map implements \SessionHandlerInterface, \SessionUpdateTim
         $storage = $this->storage;
         $gc = $class::sessionGarbageCollect($path,$name,$lifetime,$storage);
 
-        return is_int($gc);
+        return is_int($gc) ? $gc:false;
     }
 }
 ?>

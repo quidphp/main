@@ -27,8 +27,7 @@ trait _arrObj
 
     // current
     // retourne la valeur du tableau à l'index courante
-    #[\ReturnTypeWillChange]
-    final public function current()
+    final public function current():mixed
     {
         return Base\Arr::index($this->index,$this->arr());
     }
@@ -36,8 +35,7 @@ trait _arrObj
 
     // key
     // retourne la clé du tableau à l'index courant
-    #[\ReturnTypeWillChange]
-    final public function key()
+    final public function key():mixed
     {
         return Base\Arr::indexKey($this->index,$this->arr());
     }
@@ -45,23 +43,17 @@ trait _arrObj
 
     // next
     // incrémente l'index du tableau
-    #[\ReturnTypeWillChange]
-    final public function next():self
+    final public function next():void
     {
         $this->index++;
-
-        return $this;
     }
 
 
     // rewind
     // ramène l'index du tableau à 0
-    #[\ReturnTypeWillChange]
-    final public function rewind():self
+    final public function rewind():void
     {
         $this->index = 0;
-
-        return $this;
     }
 
 
@@ -92,8 +84,7 @@ trait _arrObj
     // offsetGet
     // retourne la valeur de la clé dans le tableau
     // envoie une exception si non existant
-    #[\ReturnTypeWillChange]
-    public function offsetGet($key)
+    public function offsetGet($key):mixed
     {
         if(!$this->offsetExists($key))
         static::throw('arrayAccess','doesNotExist');

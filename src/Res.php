@@ -155,7 +155,7 @@ class Res extends ArrObj
     // jsonSerialize
     // serialize l'objet avec json_encode
     // encode le tableau des lignes de la resource
-    final public function jsonSerialize()
+    final public function jsonSerialize():mixed
     {
         return $this->read();
     }

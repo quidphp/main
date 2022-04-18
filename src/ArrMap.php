@@ -53,7 +53,7 @@ abstract class ArrMap extends ArrObj
     // offsetGet
     // envoie à la méthode get lors de l'accès tableau
     // envoie une exception si non existant
-    public function offsetGet($key)
+    public function offsetGet($key):mixed
     {
         if(!$this->exists($key))
         static::throw('arrayAccess','doesNotExist');
