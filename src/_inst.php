@@ -116,14 +116,6 @@ trait _inst
     }
 
 
-    // hasInst
-    // retourne vrai s'il y a au moins une instance
-    final public static function hasInst():bool
-    {
-        return !empty(static::$inst);
-    }
-
-
     // isInst
     // retourne vrai si l'instance existe
     // peut soumettre une instance, le nom ou l'index

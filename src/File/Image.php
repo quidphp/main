@@ -21,7 +21,7 @@ abstract class Image extends Binary
     // img
     // génère un tag img à partir du fichier image
     // note si l'image n'a pas un chemin accessible via http, la resource sera affiché sous forme de base64
-    final public function img($alt=null,$attr=null,bool $absolute=false,bool $base64=false):?string
+    final public function img($alt=null,$attr=null,?bool $absolute=null,bool $base64=false):?string
     {
         $return = null;
         $src = $this->pathToUri($absolute) ?? $this->resource();
