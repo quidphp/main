@@ -387,7 +387,7 @@ class Error extends Root
         $trace = $value->getTrace();
         $file = $value->getFile();
         $line = $value->getLine();
-        $info = get_class($value);
+        $info = $value::class;
         $content = (method_exists($value,'content'))? $value->content():null;
         $stack = Exception::stack($value);
 

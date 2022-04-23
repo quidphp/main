@@ -273,7 +273,7 @@ class File extends Base\Test
         assert($raster2->isEmpty());
         assert($raster->isNotEmpty());
         assert($raster->isMimeGroup('imageRaster'));
-        assert(count($raster->info()) === 18);
+        assert(count($raster->info()) === 19);
         assert(count($raster->stat()) === 26);
         assert($raster->size() > 0);
         assert($raster->mime() === 'image/jpeg; charset=binary');

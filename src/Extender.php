@@ -87,7 +87,7 @@ class Extender extends Map
         foreach ($values as $value)
         {
             if(is_object($value))
-            $value = get_class($value);
+            $value = $value::class;
 
             $this->set(null,$value);
         }
@@ -282,7 +282,7 @@ class Extender extends Map
         foreach ($this->arr() as $value)
         {
             if(is_object($value))
-            $value = get_class($value);
+            $value = $value::class;
 
             if(is_string($prepend) && !empty($prepend))
             {

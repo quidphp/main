@@ -143,7 +143,7 @@ class Response extends Base\Test
         assert(!empty($response->absolute()));
 
         // trait resRead
-        assert(count($response->info()) === 18);
+        assert(count($response->info()) === 19);
         assert(count($response->stat()) === 26);
         assert(Base\Res::isPhpTemp($response->resource()));
         assert($response3->isMimeGroup('json'));

@@ -242,7 +242,7 @@ class Exception extends \Exception implements \JsonSerializable
     // utiliser pour le stack trace dans core/error
     final public static function output(\Throwable $throwable):string
     {
-        $return = get_class($throwable);
+        $return = $throwable::class;
         $return .= ' (#'.$throwable->getCode().') -> ';
         $return .= $throwable->getMessage();
         $return .= ' -> ';

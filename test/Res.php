@@ -135,7 +135,7 @@ class Res extends Base\Test
         assert(is_int($res->dateAccess()));
         assert(is_string($res->dateModify(true)));
         assert(is_int($res->dateInodeModify()));
-        assert(count($res->info()) === 18);
+        assert(count($res->info()) === 19);
         assert(count($res->responseMeta()) === 4);
         assert($res->type() === 'stream');
         assert($res->kind() === 'file');
