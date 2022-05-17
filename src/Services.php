@@ -16,7 +16,6 @@ class Services extends MapObj
 {
     // trait
     use _inst;
-    use Map\_sort;
     use Map\_readOnly;
 
 
@@ -27,7 +26,6 @@ class Services extends MapObj
     // dynamique
     protected ?array $mapAllow = ['set','unset','filter','remove','sort','clone']; // méthodes permises
     protected $mapIs = Service::class; // classe d'objet permis
-    protected ?string $mapSortDefault = 'getServiceKey'; // défini la méthode pour sort par défaut
 
 
     // construct

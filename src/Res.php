@@ -713,7 +713,7 @@ class Res extends ArrObj
     // lineSplice
     // permet d'enlever et éventuellement remplacer des lignes dans la ressource
     // offset accepte un chiffre négatif
-    final public function lineSplice(int $offset,int $length,$replace=null,?array $option=null):self
+    final public function lineSplice(int $offset,?int $length,$replace=null,?array $option=null):self
     {
         Base\Res::lineSplice($offset,$length,$this->resource(),$replace,true,Base\Arr::plus($this->writeOption(),$option));
         return $this;
