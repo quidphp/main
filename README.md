@@ -12,7 +12,7 @@
 **QuidPHP/Main** is available as an open-source software under the [MIT license](LICENSE).
 
 ## Documentation
-**QuidPHP/Main** documentation is being written. Once ready, it will be available at [QuidPHP/Docs](https://github.com/quidphp/docs).
+**QuidPHP/Main** documentation is available at [QuidPHP/Docs](https://github.com/quidphp/docs).
 
 ## Installation
 **QuidPHP/Main** can be easily installed with [Composer](https://getcomposer.org). It is available on [Packagist](https://packagist.org/packages/quidphp/main).
@@ -23,8 +23,8 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 
 ## Requirement
 **QuidPHP/Main** requires the following:
-- PHP 7.4, 8.0 or 8.1 
-- All PHP extensions required by [quidphp/base](https://github.com/quidphp/base)
+- PHP 8.1
+- All requirements of [quidphp/base](https://github.com/quidphp/base)
 
 ## Dependency
 **QuidPHP/Main** has the following dependency:
@@ -33,19 +33,19 @@ Once installed, the **Quid\Main** namespace will be available within your PHP ap
 The dependency will be resolved by using the [Composer](https://getcomposer.org) installation process.
 
 ## Comment
-**QuidPHP/Main** code is commented and all methods are explained. However, most of the comments are written in French.
+**QuidPHP/Main** code is commented and all methods are explained (in French).
 
 ## Convention
 **QuidPHP/Main** is built on the following conventions:
-- *Traits*: Traits filenames start with an underscore (_).
-- *Interfaces*: Interfaces are stored within the Contract subdirectory.
-- *Type*: Files, function arguments and return types are strict typed.
-- *Dynamic*: Classes are dynamic and objects need to be instantiated, very few static methods
-- *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
 - *Coding*: No curly braces are used in a IF statement if the condition can be resolved in only one statement.
+- *Config*: A special $config static property exists in all classes. This property gets recursively merged with the parents' property on initialization.
+- *Dynamic*: Classes are dynamic and objects need to be instantiated, very few static methods
+- *Interfaces*: Interfaces are stored within the Contract subdirectory.
+- *Traits*: Traits filenames start with an underscore (_).
+- *Type*: Files, function arguments and return types are strict typed.
 
 ## Overview
-**QuidPHP/Main** contains 117 classes, traits and interfaces. Here is an overview:
+**QuidPHP/Main** contains 118 classes, traits and interfaces. Here is an overview:
 - [ArrMap](src/ArrMap.php) - Abstract class that provides base methods to make a collection
 - [ArrObj](src/ArrObj.php) - Abstract class that implements the methods necessary for the ArrayAccess, Countable and Iterator interfaces
 - [Arrs](src/Arrs.php) - Class for a collection containing a multidimensional array
@@ -136,6 +136,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [RequestHistory](src/RequestHistory.php) - Class for a collection containing an history of requests
 - [Res](src/Res.php) - Class with methods to manage a resource
 - [Response](src/Response.php) - Class with methods to manage an HTTP response
+- [ResponseCurrent](src/ResponseCurrent.php) - Class for an object that acts as representation of current response
 - [Role](src/Role.php) - Class that provides basic logic for a role
 - [Roles](src/Roles.php) - Class for a collection containing many roles
 - [Root](src/Root.php) - Abstract class extended by all others
@@ -166,7 +167,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [_throw](src/_throw.php) - Trait that provides static methods to throw exception from an object
 
 ## Testing
-**QuidPHP/Main** contains 33 test classes:
+**QuidPHP/Main** contains 34 test classes:
 - [Arrs](test/Arrs.php) - Class for testing Quid\Main\Arrs
 - [Autoload](test/Autoload.php) - Class for testing Quid\Main\Autoload
 - [Calendar](test/Calendar.php) - Class for testing Quid\Main\Calendar
@@ -192,6 +193,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [RequestHistory](test/RequestHistory.php) - Class for testing Quid\Main\RequestHistory
 - [Res](test/Res.php) - Class for testing Quid\Main\Res
 - [Response](test/Response.php) - Class for testing Quid\Main\Response
+- [ResponseCurrent](test/ResponseCurrent.php) - Class for testing Quid\Main\ResponseCurrent
 - [Role](test/Role.php) - Class for testing Quid\Main\Role
 - [Roles](test/Roles.php) - Class for testing Quid\Main\Roles
 - [Session](test/Session.php) - Class for testing Quid\Main\Session
