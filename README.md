@@ -166,7 +166,7 @@ The dependency will be resolved by using the [Composer](https://getcomposer.org)
 - [_serialize](src/_serialize.php) - Trait that provides methods for serializing and unserializing object
 - [_throw](src/_throw.php) - Trait that provides static methods to throw exception from an object
 
-## Testing
+### Testing
 **QuidPHP/Main** contains 34 test classes:
 - [Arrs](test/Arrs.php) - Class for testing Quid\Main\Arrs
 - [Autoload](test/Autoload.php) - Class for testing Quid\Main\Autoload
